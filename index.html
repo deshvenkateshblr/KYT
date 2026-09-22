@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KYT - Know Your Travel</title>
+    
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        kyt: {
+                            bg: '#F8FAFC',
+                            card: '#FFFFFF',
+                            text: '#0F172A',
+                            subtext: '#64748B',
+                            accent: '#3B82F6',
+                            done: '#10B981',
+                        }
+                    },
+                    animation: {
+                        'slide-in-right': 'slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+                        'slide-in-left': 'slideInLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+                        'pop': 'pop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+                        'fade-in': 'fadeIn 0.2s ease-out forwards'
+                    },
+                    keyframes: {
+                        slideInRight: {
+                            '0%': { transform: 'translateX(100%)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' },
+                        },
+                        slideInLeft: {
+                            '0%': { transform: 'translateX(-100%)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' },
+                        },
+                        pop: {
+                            '0%': { transform: 'scale(0.95)' },
+                            '50%': { transform: 'scale(1.02)' },
+                            '100%': { transform: 'scale(1)' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overscroll-behavior-y: none;
+        }
+        
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .prevent-select {
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* --- VCR Button Styles --- */
+        .vcr-btn {
+            position: relative;
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .vcr-inactive {
+            background-color: #f1f5f9; 
+            color: #64748b; 
+            border: 2px solid #e2e8f0; 
+            box-shadow: 0 6px 0 0 #cbd5e1, 0 10px 10px -5px rgba(0,0,0,0.05); 
+            transform: translateY(0);
+        }
+        
+        .vcr-inactive:active {
+            box-shadow: 0 2px 0 0 #cbd5e1, 0 4px 4px -2px rgba(0,0,0,0.05);
+            transform: translateY(4px);
+        }
+
+        .vcr-on-active {
+            background-color: #3b82f6; 
+            color: white;
+            border: 2px solid #2563eb; 
+            box-shadow: 0 0 0 0 transparent, inset 0 3px 6px rgba(0,0,0,0.15); 
+            transform: translateY(6px);
+        }
+
+        .vcr-done-active {
+            background-color: #10b981; 
+            color: white;
+            border: 2px solid #059669; 
+            box-shadow: 0 0 0 0 transparent, inset 0 3px 6px rgba(0,0,0,0.15); 
+            transform: translateY(6px);
+        }
+    </style>
+</head>
+
+<body class="bg-kyt-bg text-kyt-text font-sans min-h-screen flex flex-col items-center overflow-x-hidden relative">
+
+    <main id="main-view" class="w-full max-w-md px-4 pt-10 pb-8 flex-1 flex flex-col relative h-full transition-opacity duration-300">
+        
+        <div class="absolute top-6 right-6 z-30">
+            <button id="btn-edit-trip" class="p-3 bg-white/80 backdrop-blur-md rounded-full shadow-sm text-kyt-subtext hover:text-kyt-text hover:bg-white active:scale-90 transition-all border border-slate-100">
+                <i data-lucide="settings-2" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <header class="text-center mb-8 flex flex-col items-center mt-4">
+            <h1 id="live-time" class="text-[3.5rem] font-extrabold tracking-tight text-kyt-text mb-1 leading-none drop-shadow-sm" style="font-feature-settings: 'tnum';">
+                --:--
+            </h1>
+            <p id="live-date" class="text-sm font-semibold text-kyt-subtext uppercase tracking-widest bg-white/50 px-4 py-1.5 rounded-full shadow-sm backdrop-blur-sm">
+                Loading...
+            </p>
+        </header>
+
+        <section class="flex flex-col items-center mb-6 z-10 px-6">
+            <p class="text-[11px] font-bold text-kyt-accent uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+                <i data-lucide="plane" class="w-3.5 h-3.5"></i> Current Trip
+            </p>
+            <h2 id="main-trip-title" class="text-2xl font-extrabold tracking-tight text-kyt-text text-center leading-tight">Bengaluru to Goa Weekend</h2>
+        </section>
+
+        <div class="relative w-full flex-1 flex flex-col min-h-[500px] prevent-select">
+            <button id="btn-prev" class="absolute left-0 top-1/2 -translate-y-1/2 -ml-3 md:-ml-12 z-20 bg-white/80 backdrop-blur-md rounded-full p-2 shadow-lg text-kyt-text hover:bg-white active:scale-90 transition-all disabled:opacity-0 disabled:pointer-events-none">
+                <i data-lucide="chevron-left" class="w-6 h-6"></i>
+            </button>
+
+            <div id="carousel-track" class="w-full h-full relative overflow-visible flex items-center justify-center cursor-grab active:cursor-grabbing pb-8">
+                <article id="hero-card" class="bg-white rounded-[2rem] w-full p-6 shadow-2xl shadow-blue-900/5 border border-slate-100 flex flex-col will-change-transform">
+                    <!-- Dynamic content injected here via JS -->
+                </article>
+            </div>
+
+            <button id="btn-next" class="absolute right-0 top-1/2 -translate-y-1/2 -mr-3 md:-mr-12 z-20 bg-white/80 backdrop-blur-md rounded-full p-2 shadow-lg text-kyt-text hover:bg-white active:scale-90 transition-all disabled:opacity-0 disabled:pointer-events-none">
+                <i data-lucide="chevron-right" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </main>
+
+    <aside id="config-view" class="fixed inset-0 bg-kyt-bg z-50 flex flex-col w-full max-w-md mx-auto hidden animate-fade-in overflow-hidden">
+        
+        <div class="px-6 pt-12 pb-6 bg-white border-b border-slate-100 shadow-sm flex items-center justify-between">
+            <h2 class="text-xl font-extrabold text-kyt-text">Configure Trip</h2>
+            <button id="btn-close-config" class="p-2 -mr-2 text-kyt-subtext hover:text-kyt-text bg-slate-50 rounded-full active:scale-90 transition-transform">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-6 space-y-8 no-scrollbar">
+            <section>
+                <label for="input-trip-name" class="block text-[11px] font-bold text-kyt-subtext uppercase tracking-widest mb-2">Trip Name</label>
+                <input type="text" id="input-trip-name" class="w-full text-lg font-bold text-kyt-text bg-white border-2 border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-kyt-accent focus:ring-4 focus:ring-blue-500/10 transition-all shadow-sm" placeholder="e.g. Summer Vacation">
+            </section>
+
+            <section>
+                <div class="flex justify-between items-end mb-4">
+                    <label class="block text-[11px] font-bold text-kyt-subtext uppercase tracking-widest">Timeline Steps</label>
+                    <span id="step-count-badge" class="text-xs font-bold bg-blue-100 text-kyt-accent px-2 py-0.5 rounded-md">3 items</span>
+                </div>
+                
+                <div id="config-steps-list" class="space-y-3">
+                    <!-- Steps injected here -->
+                </div>
+
+                <button id="btn-add-step" class="mt-4 w-full py-4 border-2 border-dashed border-slate-300 rounded-xl text-slate-500 font-bold hover:bg-slate-50 hover:border-slate-400 hover:text-slate-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="plus" class="w-5 h-5"></i>
+                    Add New Step
+                </button>
+            </section>
+        </div>
+
+        <div class="p-6 bg-white border-t border-slate-100 shadow-[0_-10px_20px_-10px_rgba(0,0,0,0.05)]">
+            <button id="btn-save-config" class="w-full py-4 bg-kyt-text text-white font-extrabold rounded-2xl shadow-lg shadow-slate-900/20 hover:bg-slate-800 active:scale-[0.98] transition-all text-lg">
+                Save & Close
+            </button>
+        </div>
+    </aside>
+
+    <aside id="step-form-view" class="fixed inset-0 bg-kyt-bg z-[60] flex flex-col w-full max-w-md mx-auto hidden animate-fade-in overflow-hidden">
+        
+        <div class="px-6 pt-12 pb-6 bg-white border-b border-slate-100 shadow-sm flex items-center justify-between">
+            <h2 id="form-view-title" class="text-xl font-extrabold text-kyt-text">Add Step</h2>
+            <button id="btn-close-form" class="p-2 -mr-2 text-kyt-subtext hover:text-kyt-text bg-slate-50 rounded-full active:scale-90 transition-transform">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar">
+            
+            <input type="hidden" id="form-step-id" value="">
+
+            <section>
+                <label for="form-step-title" class="block text-[11px] font-bold text-kyt-subtext uppercase tracking-widest mb-2">Step Title</label>
+                <input type="text" id="form-step-title" class="w-full text-lg font-bold text-kyt-text bg-white border-2 border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-kyt-accent focus:ring-4 focus:ring-blue-500/10 transition-all shadow-sm" placeholder="e.g. Flight to NYC">
+            </section>
+
+            <section>
+                <label class="block text-[11px] font-bold text-kyt-subtext uppercase tracking-widest mb-2">Category</label>
+                <div class="flex gap-3 overflow-x-auto no-scrollbar pb-2 pt-1 px-1 -mx-1">
+                    <label class="cursor-pointer shrink-0 vcr-btn vcr-inactive rounded-[1.2rem] overflow-hidden">
+                        <input type="radio" name="step-icon" value="plane" class="peer hidden" checked>
+                        <div class="w-[72px] h-[72px] flex flex-col items-center justify-center text-slate-400 peer-checked:text-white peer-checked:bg-kyt-accent transition-colors">
+                            <i data-lucide="plane" class="w-6 h-6 mb-1"></i>
+                            <span class="text-[10px] font-extrabold uppercase tracking-wide">Travel</span>
+                        </div>
+                    </label>
+                    <label class="cursor-pointer shrink-0 vcr-btn vcr-inactive rounded-[1.2rem] overflow-hidden">
+                        <input type="radio" name="step-icon" value="bed" class="peer hidden">
+                        <div class="w-[72px] h-[72px] flex flex-col items-center justify-center text-slate-400 peer-checked:text-white peer-checked:bg-indigo-500 transition-colors">
+                            <i data-lucide="bed" class="w-6 h-6 mb-1"></i>
+                            <span class="text-[10px] font-extrabold uppercase tracking-wide">Stay</span>
+                        </div>
+                    </label>
+                    <label class="cursor-pointer shrink-0 vcr-btn vcr-inactive rounded-[1.2rem] overflow-hidden">
+                        <input type="radio" name="step-icon" value="utensils" class="peer hidden">
+                        <div class="w-[72px] h-[72px] flex flex-col items-center justify-center text-slate-400 peer-checked:text-white peer-checked:bg-orange-500 transition-colors">
+                            <i data-lucide="utensils" class="w-6 h-6 mb-1"></i>
+                            <span class="text-[10px] font-extrabold uppercase tracking-wide">Food</span>
+                        </div>
+                    </label>
+                    <label class="cursor-pointer shrink-0 vcr-btn vcr-inactive rounded-[1.2rem] overflow-hidden">
+                        <input type="radio" name="step-icon" value="ticket" class="peer hidden">
+                        <div class="w-[72px] h-[72px] flex flex-col items-center justify-center text-slate-400 peer-checked:text-white peer-checked:bg-emerald-500 transition-colors">
+                            <i data-lucide="ticket" class="w-6 h-6 mb-1"></i>
+                            <span class="text-[10px] font-extrabold uppercase tracking-wide">Activity</span>
+                        </div>
+                    </label>
+                    <label class="cursor-pointer shrink-0 vcr-btn vcr-inactive rounded-[1.2rem] overflow-hidden">
+                        <input type="radio" name="step-icon" value="shopping-bag" class="peer hidden">
+                        <div class="w-[72px] h-[72px] flex flex-col items-center justify-center text-slate-400 peer-checked:text-white peer-checked:bg-pink-500 transition-colors">
+                            <i data-lucide="shopping-bag" class="w-6 h-6 mb-1"></i>
+                            <span class="text-[10px] font-extrabold uppercase tracking-wide">Shop</span>
+                        </div>
+                    </label>
+                </div>
+            </section>
+
+            <section>
+                <label for="form-step-time" class="block text-[11px] font-bold text-kyt-subtext uppercase tracking-widest mb-2">Target Date & Time</label>
+                <input type="datetime-local" id="form-step-time" class="w-full text-base font-bold text-kyt-text bg-white border-2 border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-kyt-accent shadow-sm">
+            </section>
+
+            <section class="relative">
+                <label for="form-step-where" class="block text-[11px] font-bold text-kyt-subtext uppercase tracking-widest mb-2">Location Name / Address</label>
+                <div class="relative mb-3">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <i data-lucide="map-pin" class="w-5 h-5 text-slate-400"></i>
+                    </div>
+                    <input type="text" id="form-step-where" autocomplete="off" class="w-full text-base font-bold text-kyt-text bg-white border-2 border-slate-200 rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:border-kyt-accent shadow-sm" placeholder="e.g. Kempegowda Airport Terminal 2">
+                </div>
+
+                <label for="form-step-map-url" class="block text-[11px] font-bold text-kyt-subtext uppercase tracking-widest mb-2 mt-4">Direct Google Maps URL (Optional)</label>
+                <div class="relative mb-3">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <i data-lucide="link" class="w-5 h-5 text-slate-400"></i>
+                    </div>
+                    <input type="url" id="form-step-map-url" class="w-full text-base font-medium text-slate-700 bg-white border-2 border-slate-200 rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:border-kyt-accent shadow-sm" placeholder="https://maps.app.goo.gl/...">
+                </div>
+            </section>
+
+            <section>
+                <label for="form-step-notes" class="block text-[11px] font-bold text-kyt-subtext uppercase tracking-widest mb-2">Notes & Details</label>
+                <textarea id="form-step-notes" rows="3" class="w-full text-base font-medium text-slate-700 bg-white border-2 border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-kyt-accent shadow-sm resize-none" placeholder="Booking references, reminders..."></textarea>
+            </section>
+
+            <section>
+                <div class="flex justify-between items-end mb-2">
+                    <label class="block text-[11px] font-bold text-kyt-subtext uppercase tracking-widest">Attachments (Max 4)</label>
+                    <span id="attachment-count-badge" class="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-md">0/4</span>
+                </div>
+                
+                <div id="form-attachments-list" class="space-y-2 mb-3 empty:hidden"></div>
+
+                <div id="attachment-error" class="text-rose-600 text-[11px] font-bold mb-3 hidden bg-rose-50 p-3 rounded-xl border border-rose-100 flex gap-2 items-start">
+                    <i data-lucide="alert-circle" class="w-4 h-4 shrink-0 mt-0.5"></i>
+                    <span id="attachment-error-text">File is too large. Please use a Drive link instead.</span>
+                </div>
+                
+                <div class="flex gap-2" id="attachment-controls">
+                    <input type="file" id="form-step-file" class="hidden" multiple accept="application/pdf,image/*,.doc,.docx">
+                    <button type="button" onclick="document.getElementById('form-step-file').click()" class="flex-1 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-600 font-bold hover:bg-slate-100 active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-sm shadow-sm">
+                        <i data-lucide="upload" class="w-4 h-4"></i> Upload File
+                    </button>
+                    <button type="button" id="btn-show-link-input" class="flex-1 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-600 font-bold hover:bg-slate-100 active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-sm shadow-sm">
+                        <i data-lucide="link" class="w-4 h-4"></i> Add Link
+                    </button>
+                </div>
+                
+                <div id="link-input-container" class="hidden mt-3 flex gap-2 animate-fade-in">
+                    <input type="url" id="form-step-link-url" class="flex-1 text-sm font-medium text-slate-700 bg-white border-2 border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-kyt-accent shadow-sm" placeholder="Paste Drive/Web link...">
+                    <button type="button" id="btn-add-link" class="px-4 bg-kyt-text text-white font-bold rounded-xl shadow-sm hover:bg-slate-800 transition-all text-sm">Add</button>
+                </div>
+            </section>
+                
+            <div class="pb-10"></div>
+        </div>
+
+        <div class="p-6 bg-white border-t border-slate-100 shadow-[0_-10px_20px_-10px_rgba(0,0,0,0.05)]">
+            <button id="btn-save-step" class="w-full py-4 bg-kyt-accent text-white font-extrabold rounded-2xl shadow-lg shadow-blue-500/30 hover:bg-blue-600 active:scale-[0.98] transition-all text-lg flex items-center justify-center gap-2">
+                <i data-lucide="save" class="w-5 h-5"></i>
+                Save Step
+            </button>
+        </div>
+    </aside>
+
+    <script>
+        let tripName = "Bengaluru to Goa Weekend";
+
+        const now = new Date();
+        const oneHourAgo = new Date(now.getTime() - (60 * 60 * 1000));
+        const fifteenMinsFromNow = new Date(now.getTime() + (15 * 60 * 1000));
+        const threeHoursFromNow = new Date(now.getTime() + (3 * 60 * 60 * 1000));
+
+        let stepsData = [
+            {
+                id: 1,
+                title: "Head to BLR Airport",
+                icon: "car",
+                where: "Kempegowda International Airport Terminal 2",
+                mapUrl: "", 
+                targetTime: oneHourAgo,
+                notes: "Take an Uber via Bellary Road. Terminal 2 is for Air India / Vistara.",
+                attachments: [{ type: 'link', name: 'Uber Receipt', url: '#' }],
+                status: "done" 
+            },
+            {
+                id: 2,
+                title: "Relax at 080 Lounge",
+                icon: "coffee",
+                where: "080 Domestic Lounge, Terminal 2, Bengaluru",
+                mapUrl: "https://maps.app.goo.gl/hGgTj23N4k2V78G87", 
+                targetTime: fifteenMinsFromNow,
+                notes: "Use Priority Pass. Quiet zone is upstairs.",
+                attachments: [{ type: 'link', name: 'Lounge Pass', url: '#' }],
+                status: "on"
+            },
+            {
+                id: 3,
+                title: "Boarding Flight to GOX",
+                icon: "plane-takeoff",
+                where: "Gate D4, Terminal 2, Bengaluru Airport",
+                mapUrl: "",
+                targetTime: threeHoursFromNow,
+                notes: "Have ID and boarding pass ready. Group 2 boarding.",
+                attachments: [{ type: 'link', name: 'Boarding Pass', url: '#' }],
+                status: "todo"
+            }
+        ];
+
+        let currentIndex = 1;
+
+        const cardElement = document.getElementById('hero-card');
+        const trackElement = document.getElementById('carousel-track');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+        const mainTripTitle = document.getElementById('main-trip-title');
+        
+        const mainView = document.getElementById('main-view');
+        const configView = document.getElementById('config-view');
+        const btnEditTrip = document.getElementById('btn-edit-trip');
+        const btnCloseConfig = document.getElementById('btn-close-config');
+        const btnSaveConfig = document.getElementById('btn-save-config');
+        const btnAddStep = document.getElementById('btn-add-step');
+        const inputTripName = document.getElementById('input-trip-name');
+        const configStepsList = document.getElementById('config-steps-list');
+        const stepCountBadge = document.getElementById('step-count-badge');
+
+        const stepFormView = document.getElementById('step-form-view');
+        const formViewTitle = document.getElementById('form-view-title');
+        const btnCloseForm = document.getElementById('btn-close-form');
+        const btnSaveStep = document.getElementById('btn-save-step');
+        
+        const formStepId = document.getElementById('form-step-id');
+        const formStepTitle = document.getElementById('form-step-title');
+        const formStepTime = document.getElementById('form-step-time');
+        const formStepWhere = document.getElementById('form-step-where');
+        const formStepMapUrl = document.getElementById('form-step-map-url');
+        const formStepNotes = document.getElementById('form-step-notes');
+        
+        const formStepFile = document.getElementById('form-step-file');
+        const formAttachmentsList = document.getElementById('form-attachments-list');
+        const btnShowLinkInput = document.getElementById('btn-show-link-input');
+        const linkInputContainer = document.getElementById('link-input-container');
+        const btnAddLink = document.getElementById('btn-add-link');
+        const formStepLinkUrl = document.getElementById('form-step-link-url');
+        const attachmentError = document.getElementById('attachment-error');
+        const attachmentErrorText = document.getElementById('attachment-error-text');
+        const attachmentCountBadge = document.getElementById('attachment-count-badge');
+        const attachmentControls = document.getElementById('attachment-controls');
+
+        let tempAttachments = [];
+        const MAX_ATTACHMENTS = 4;
+        const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+
+        function toDatetimeLocal(date) {
+            const pad = (n) => n.toString().padStart(2, '0');
+            return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+        }
+
+        function updateClock() {
+            const timeElement = document.getElementById("live-time");
+            const dateElement = document.getElementById("live-date");
+            const currentTime = new Date();
+            
+            timeElement.textContent = currentTime.toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
+            
+            dateElement.textContent = currentTime.toLocaleDateString('en-US', {
+                weekday: 'long',
+                month: 'short',
+                day: 'numeric'
+            });
+
+            if (currentTime.getSeconds() === 0 && configView.classList.contains('hidden')) {
+                renderCard(); 
+            }
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        function getRelativeTimeString(targetDate) {
+            const currentTime = new Date();
+            const diffMs = targetDate - currentTime;
+            const diffMins = Math.round(diffMs / 60000);
+            const absMins = Math.abs(diffMins);
+            
+            if (absMins === 0) return "Right now";
+            
+            const hours = Math.floor(absMins / 60);
+            const mins = absMins % 60;
+            
+            let timeString = "";
+            if (hours > 0) timeString += `${hours} hr `;
+            if (mins > 0) timeString += `${mins} min`;
+            timeString = timeString.trim();
+            
+            if (diffMins > 0) {
+                return `in ${timeString}`;
+            } else {
+                return `${timeString} ago`;
+            }
+        }
+
+        function formatTimeExact(date) {
+            return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+        }
+
+        function renderCard(direction = null) {
+            const step = stepsData[currentIndex];
+            mainTripTitle.textContent = tripName;
+            
+            const attachmentsHTML = step.attachments.map(att => {
+                if (att.type === 'file') {
+                    return `
+                        <a href="${att.data}" download="${att.name}" class="flex items-center gap-2 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 transition-colors shadow-sm">
+                            <i data-lucide="file" class="w-3.5 h-3.5 text-kyt-accent shrink-0"></i>
+                            <span class="text-[12px] font-semibold text-slate-700 truncate max-w-[140px]">${att.name}</span>
+                        </a>
+                    `;
+                } else {
+                    return `
+                        <a href="${att.url}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 transition-colors shadow-sm">
+                            <i data-lucide="link" class="w-3.5 h-3.5 text-kyt-accent shrink-0"></i>
+                            <span class="text-[12px] font-semibold text-slate-700 truncate max-w-[140px]">${att.name}</span>
+                        </a>
+                    `;
+                }
+            }).join('');
+
+            const exactTimeStr = formatTimeExact(step.targetTime);
+            const relativeTimeStr = getRelativeTimeString(step.targetTime);
+            
+            let mapLink = step.mapUrl && step.mapUrl.trim() !== "" ? step.mapUrl : "";
+            if (!mapLink) {
+                mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(step.where)}`;
+            }
+            
+            const onBtnClass = step.status === 'on' ? 'vcr-on-active' : 'vcr-inactive';
+            const doneBtnClass = step.status === 'done' ? 'vcr-done-active' : 'vcr-inactive';
+            
+            let relativeColor = "text-kyt-accent";
+            if(step.status === 'done') relativeColor = "text-kyt-subtext";
+            else if (step.targetTime < new Date()) relativeColor = "text-rose-500"; 
+
+            const cardContent = `
+                <div class="flex-1 flex flex-col">
+                    <div class="flex justify-end items-center mb-5 h-6">
+                        ${step.status === 'on' ? `<div class="flex items-center gap-2"><span class="text-[10px] font-bold text-kyt-accent uppercase tracking-widest">In Progress</span><span class="flex h-3 w-3 relative"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-kyt-accent opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-kyt-accent"></span></span></div>` : ''}
+                        ${step.status === 'done' ? `<div class="flex items-center gap-1.5"><span class="text-[10px] font-bold text-kyt-done uppercase tracking-widest">Completed</span><i data-lucide="check-circle" class="w-5 h-5 text-kyt-done"></i></div>` : ''}
+                    </div>
+
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="p-3 bg-blue-50 text-kyt-accent rounded-2xl shrink-0">
+                            <i data-lucide="${step.icon}" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-kyt-text leading-tight">${step.title}</h3>
+                    </div>
+
+                    <div class="space-y-4 mb-6 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                        <div class="flex items-start gap-3">
+                            <i data-lucide="clock" class="w-5 h-5 text-kyt-subtext mt-0.5 shrink-0"></i>
+                            <div>
+                                <p class="text-[13px] font-bold text-kyt-subtext uppercase tracking-wide mb-0.5">When</p>
+                                <div class="flex items-baseline gap-2">
+                                    <p class="text-[16px] font-extrabold text-kyt-text">${exactTimeStr}</p>
+                                    <p class="text-[13px] font-bold ${relativeColor} bg-white px-2 py-0.5 rounded-md shadow-sm border border-slate-100">${relativeTimeStr}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <i data-lucide="map-pin" class="w-5 h-5 text-kyt-subtext mt-0.5 shrink-0"></i>
+                            <div class="flex-1">
+                                <p class="text-[13px] font-bold text-kyt-subtext uppercase tracking-wide mb-0.5">Where</p>
+                                <div class="flex items-center justify-between gap-2">
+                                    <p class="text-[15px] font-bold text-kyt-text">${step.where}</p>
+                                    <a href="${mapLink}" target="_blank" rel="noopener noreferrer" class="shrink-0 bg-blue-100/50 text-kyt-accent hover:bg-blue-100 p-2 rounded-xl transition-colors flex items-center gap-1.5 shadow-sm border border-blue-200/50">
+                                        <span class="text-[10px] font-extrabold uppercase tracking-wider">Map</span>
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    ${step.notes ? `
+                    <div class="mb-5">
+                        <p class="text-[11px] font-bold text-kyt-subtext uppercase tracking-widest mb-2">Notes</p>
+                        <p class="text-[14px] text-slate-700 leading-relaxed font-medium">
+                            ${step.notes}
+                        </p>
+                    </div>
+                    ` : ''}
+
+                    ${step.attachments.length > 0 ? `
+                    <div class="mb-4">
+                        <div class="flex flex-wrap gap-2">
+                            ${attachmentsHTML}
+                        </div>
+                    </div>
+                    ` : ''}
+
+                    <div class="flex-grow"></div>
+
+                    <div class="mt-4 pt-6 border-t-2 border-slate-100/60 flex justify-center gap-6 px-1 pb-2">
+                        <button class="vcr-btn ${onBtnClass} w-24 h-24 rounded-[1.25rem] flex flex-col items-center justify-center gap-2" data-action="toggle-on">
+                            <i data-lucide="play" class="w-6 h-6 ${step.status === 'on' ? 'fill-current' : 'fill-slate-300'}"></i>
+                            <span class="text-[11px] font-extrabold uppercase tracking-widest">On</span>
+                        </button>
+                        
+                        <button class="vcr-btn ${doneBtnClass} w-24 h-24 rounded-[1.25rem] flex flex-col items-center justify-center gap-2" data-action="toggle-done">
+                            <i data-lucide="square" class="w-5 h-5 ${step.status === 'done' ? 'fill-current' : 'fill-slate-300'}"></i>
+                            <span class="text-[11px] font-extrabold uppercase tracking-widest">Done</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            cardElement.innerHTML = cardContent;
+            cardElement.classList.remove('animate-slide-in-right', 'animate-slide-in-left', 'animate-pop');
+            void cardElement.offsetWidth;
+            
+            if (direction === 'right') {
+                cardElement.classList.add('animate-slide-in-right');
+            } else if (direction === 'left') {
+                cardElement.classList.add('animate-slide-in-left');
+            } else {
+                cardElement.classList.add('animate-pop');
+            }
+
+            lucide.createIcons();
+            updateNavigationButtons();
+        }
+
+        cardElement.addEventListener('click', (e) => {
+            const btn = e.target.closest('.vcr-btn');
+            if (!btn) return;
+
+            const action = btn.dataset.action;
+            const currentStatus = stepsData[currentIndex].status;
+
+            if (action === 'toggle-on') {
+                stepsData[currentIndex].status = currentStatus === 'on' ? 'todo' : 'on';
+            } else if (action === 'toggle-done') {
+                stepsData[currentIndex].status = currentStatus === 'done' ? 'todo' : 'done';
+            }
+
+            requestAnimationFrame(() => {
+                renderCard();
+                if (action === 'toggle-done' && stepsData[currentIndex].status === 'done') {
+                    if (currentIndex < stepsData.length - 1) {
+                        setTimeout(goNext, 600);
+                    }
+                }
+            });
+        });
+
+        function updateNavigationButtons() {
+            btnPrev.disabled = currentIndex === 0;
+            btnNext.disabled = currentIndex === stepsData.length - 1;
+        }
+
+        function goNext() {
+            if (currentIndex < stepsData.length - 1) {
+                currentIndex++;
+                renderCard('right');
+            }
+        }
+
+        function goPrev() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderCard('left');
+            }
+        }
+
+        btnNext.addEventListener('click', goNext);
+        btnPrev.addEventListener('click', goPrev);
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        trackElement.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        trackElement.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50; 
+            const deltaX = touchEndX - touchStartX;
+
+            if (deltaX < -swipeThreshold) goNext();
+            if (deltaX > swipeThreshold) goPrev();
+        }
+
+        function renderConfigSteps() {
+            stepCountBadge.textContent = `${stepsData.length} items`;
+            configStepsList.innerHTML = stepsData.map((step, index) => `
+                <div class="flex items-center gap-4 p-4 bg-white rounded-2xl border border-slate-100 shadow-sm transition-all hover:border-slate-200">
+                    <div class="p-2.5 bg-slate-50 text-kyt-subtext rounded-xl shrink-0">
+                        <i data-lucide="${step.icon}" class="w-5 h-5"></i>
+                    </div>
+                    <div class="flex-1 overflow-hidden">
+                        <p class="text-[15px] font-bold text-kyt-text truncate">${step.title}</p>
+                        <div class="flex items-center gap-2 mt-0.5">
+                            <span class="text-[12px] font-semibold text-kyt-subtext">${formatTimeExact(step.targetTime)}</span>
+                            <span class="w-1 h-1 bg-slate-300 rounded-full"></span>
+                            <span class="text-[12px] text-slate-500 truncate">${step.where}</span>
+                        </div>
+                    </div>
+                    <button class="p-2 text-slate-300 hover:text-kyt-accent transition-colors" onclick="openStepForm(${step.id})">
+                        <i data-lucide="edit-2" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function openConfigView() {
+            inputTripName.value = tripName;
+            renderConfigSteps();
+            
+            mainView.classList.add('opacity-0');
+            setTimeout(() => {
+                mainView.classList.add('hidden');
+                configView.classList.remove('hidden');
+            }, 300);
+        }
+
+        function closeConfigView() {
+            if(inputTripName.value.trim() !== '') {
+                tripName = inputTripName.value.trim();
+            }
+
+            configView.classList.add('hidden');
+            mainView.classList.remove('hidden');
+            
+            void mainView.offsetWidth;
+            mainView.classList.remove('opacity-0');
+
+            renderCard();
+        }
+
+        function renderFormAttachments() {
+            attachmentCountBadge.textContent = `${tempAttachments.length}/${MAX_ATTACHMENTS}`;
+            
+            if (tempAttachments.length >= MAX_ATTACHMENTS) {
+                attachmentControls.classList.add('hidden');
+                linkInputContainer.classList.add('hidden');
+            } else {
+                attachmentControls.classList.remove('hidden');
+            }
+
+            formAttachmentsList.innerHTML = tempAttachments.map((att, index) => `
+                <div class="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-200 rounded-xl animate-fade-in shadow-sm">
+                    <div class="flex items-center gap-2 overflow-hidden">
+                        <i data-lucide="${att.type === 'file' ? 'file' : 'link'}" class="w-4 h-4 text-kyt-accent shrink-0"></i>
+                        <span class="text-[13px] font-semibold text-slate-700 truncate">${att.name}</span>
+                    </div>
+                    <button type="button" onclick="removeAttachment(${index})" class="p-1.5 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-colors shrink-0">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        window.removeAttachment = (index) => {
+            tempAttachments.splice(index, 1);
+            showAttachmentError("");
+            renderFormAttachments();
+        };
+
+        function showAttachmentError(msg) {
+            if (msg) {
+                attachmentErrorText.textContent = msg;
+                attachmentError.classList.remove('hidden');
+            } else {
+                attachmentError.classList.add('hidden');
+            }
+        }
+
+        formStepFile.addEventListener('change', (e) => {
+            showAttachmentError("");
+            const files = Array.from(e.target.files);
+            
+            if (tempAttachments.length + files.length > MAX_ATTACHMENTS) {
+                showAttachmentError(`You can only attach a maximum of ${MAX_ATTACHMENTS} items.`);
+                return;
+            }
+
+            files.forEach(file => {
+                if (file.size > MAX_FILE_SIZE) {
+                    showAttachmentError(`"${file.name}" is too large (Max 2MB). Please paste a Drive/Web link instead.`);
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    tempAttachments.push({
+                        type: 'file',
+                        name: file.name,
+                        data: event.target.result
+                    });
+                    renderFormAttachments();
+                };
+                reader.readAsDataURL(file);
+            });
+            
+            formStepFile.value = ''; 
+        });
+
+        btnShowLinkInput.addEventListener('click', () => {
+            linkInputContainer.classList.toggle('hidden');
+            if (!linkInputContainer.classList.contains('hidden')) {
+                formStepLinkUrl.focus();
+            }
+        });
+
+        btnAddLink.addEventListener('click', () => {
+            const url = formStepLinkUrl.value.trim();
+            if (!url) return;
+            
+            let name = "Web Link";
+            if (url.includes("drive.google.com")) name = "Drive Link";
+            else if (url.includes("dropbox.com")) name = "Dropbox Link";
+            
+            tempAttachments.push({
+                type: 'link',
+                name: name,
+                url: url
+            });
+            
+            formStepLinkUrl.value = '';
+            linkInputContainer.classList.add('hidden');
+            showAttachmentError("");
+            renderFormAttachments();
+        });
+
+        function openStepForm(id = null) {
+            formStepId.value = '';
+            formStepTitle.value = '';
+            formStepWhere.value = '';
+            formStepMapUrl.value = '';
+            formStepNotes.value = '';
+            document.querySelector('input[name="step-icon"][value="plane"]').checked = true;
+            showAttachmentError("");
+            linkInputContainer.classList.add('hidden');
+            
+            if (id) {
+                const step = stepsData.find(s => s.id === id);
+                if (step) {
+                    formViewTitle.textContent = "Edit Step";
+                    formStepId.value = step.id;
+                    formStepTitle.value = step.title;
+                    formStepTime.value = toDatetimeLocal(step.targetTime);
+                    formStepWhere.value = step.where;
+                    formStepMapUrl.value = step.mapUrl || '';
+                    formStepNotes.value = step.notes || '';
+                    tempAttachments = step.attachments ? [...step.attachments] : [];
+                    
+                    const iconRadio = document.querySelector(`input[name="step-icon"][value="${step.icon}"]`);
+                    if (iconRadio) iconRadio.checked = true;
+                }
+            } else {
+                formViewTitle.textContent = "Add Step";
+                let defaultTime = new Date();
+                if (stepsData.length > 0) {
+                    defaultTime = new Date(stepsData[stepsData.length - 1].targetTime.getTime() + (60 * 60 * 1000));
+                }
+                formStepTime.value = toDatetimeLocal(defaultTime);
+                tempAttachments = [];
+            }
+
+            renderFormAttachments();
+
+            stepFormView.classList.remove('hidden');
+            configView.classList.add('hidden');
+        }
+
+        function closeStepForm() {
+            stepFormView.classList.add('hidden');
+            configView.classList.remove('hidden');
+        }
+
+        function saveStep() {
+            const id = formStepId.value;
+            const title = formStepTitle.value.trim() || "Untitled Step";
+            const targetTime = new Date(formStepTime.value);
+            const where = formStepWhere.value.trim();
+            const mapUrl = formStepMapUrl.value.trim();
+            const notes = formStepNotes.value.trim();
+            const icon = document.querySelector('input[name="step-icon"]:checked').value;
+
+            const currentActiveId = stepsData[currentIndex]?.id;
+
+            if (id) {
+                const index = stepsData.findIndex(s => s.id == id);
+                if (index > -1) {
+                    stepsData[index] = {
+                        ...stepsData[index],
+                        title, targetTime, where, mapUrl, notes, icon,
+                        attachments: [...tempAttachments]
+                    };
+                }
+            } else {
+                stepsData.push({
+                    id: Date.now(),
+                    title,
+                    icon,
+                    where,
+                    mapUrl,
+                    targetTime,
+                    notes,
+                    attachments: [...tempAttachments], 
+                    status: "todo"
+                });
+            }
+
+            stepsData.sort((a, b) => a.targetTime - b.targetTime);
+
+            if (currentActiveId) {
+                const newIndex = stepsData.findIndex(s => s.id === currentActiveId);
+                if (newIndex > -1) {
+                    currentIndex = newIndex;
+                }
+            } else {
+                currentIndex = 0;
+            }
+
+            renderConfigSteps();
+            renderCard(); 
+            closeStepForm();
+        }
+
+        btnEditTrip.addEventListener('click', openConfigView);
+        btnCloseConfig.addEventListener('click', closeConfigView);
+        btnSaveConfig.addEventListener('click', closeConfigView);
+        
+        btnAddStep.addEventListener('click', () => openStepForm());
+        btnCloseForm.addEventListener('click', closeStepForm);
+        btnSaveStep.addEventListener('click', saveStep);
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderCard();
+        });
+    </script>
+</body>
+</html>
