@@ -1,0 +1,27 @@
+{
+  "name": "KYT — Know Your Travel",
+  "short_name": "KYT",
+  "description": "A calm, focused travel companion. Build your itinerary step by step.",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F8FAFC",
+  "theme_color": "#3B82F6",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["travel", "productivity", "lifestyle"],
+  "lang": "en"
+}
+

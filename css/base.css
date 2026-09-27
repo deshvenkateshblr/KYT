@@ -1,0 +1,80 @@
+/*
+ * base.css — Global body styles, utility classes, VCR button system
+ * Tailwind config is applied via the <script> in index.html <head>
+ */
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-y: none;
+}
+
+/* Scrollbar suppression */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Prevent accidental text selection on interactive areas */
+.prevent-select {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* ─── VCR Button System ─────────────────────────────────────────────────── */
+
+.vcr-btn {
+  position: relative;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vcr-inactive {
+  background-color: #f1f5f9;
+  color: #64748b;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 6px 0 0 #cbd5e1, 0 10px 10px -5px rgba(0,0,0,0.05);
+  transform: translateY(0);
+}
+
+.vcr-inactive:active {
+  box-shadow: 0 2px 0 0 #cbd5e1, 0 4px 4px -2px rgba(0,0,0,0.05);
+  transform: translateY(4px);
+}
+
+.vcr-on-active {
+  background-color: #3b82f6;
+  color: white;
+  border: 2px solid #2563eb;
+  box-shadow: 0 0 0 0 transparent, inset 0 3px 6px rgba(0,0,0,0.15);
+  transform: translateY(6px);
+}
+
+.vcr-done-active {
+  background-color: #10b981;
+  color: white;
+  border: 2px solid #059669;
+  box-shadow: 0 0 0 0 transparent, inset 0 3px 6px rgba(0,0,0,0.15);
+  transform: translateY(6px);
+}
+
+/* ─── Cover image background ────────────────────────────────────────────── */
+
+#main-cover-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(28px) saturate(0.6) brightness(0.9);
+  opacity: 0.25;
+  border-radius: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#main-view > *:not(#main-cover-bg) {
+  position: relative;
+  z-index: 1;
+}
+

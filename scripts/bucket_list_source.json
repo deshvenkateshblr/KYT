@@ -1,0 +1,47 @@
+[
+  {
+    "id": "varanasi-spiritual",
+    "destination": "Varanasi, India",
+    "category": "Spiritual",
+    "tagline": "The eternal city — Ganga Aarti at dawn is transformative.",
+    "coverImage": "",
+    "mapsUrl": "https://maps.google.com/?q=Varanasi,India",
+    "youtubeQuery": "Varanasi travel guide 2024",
+    "attractions": ["Dashashwamedh Ghat", "Kashi Vishwanath Temple", "Sarnath", "Manikarnika Ghat"],
+    "notes": "Best visited Oct–Mar. Book a sunrise boat ride in advance."
+  },
+  {
+    "id": "hampi-cultural",
+    "destination": "Hampi, Karnataka",
+    "category": "Cultural",
+    "tagline": "Ruins of the Vijayanagara Empire set against a lunar boulder landscape.",
+    "coverImage": "",
+    "mapsUrl": "https://maps.google.com/?q=Hampi,Karnataka",
+    "youtubeQuery": "Hampi Karnataka travel 2024",
+    "attractions": ["Virupaksha Temple", "Vittala Temple", "Elephant Stables", "Matanga Hill"],
+    "notes": "Rent a bicycle to explore the vast site. Stay on Hampi island for sunset views."
+  },
+  {
+    "id": "ladakh-adventure",
+    "destination": "Ladakh, India",
+    "category": "Adventure",
+    "tagline": "High-altitude desert passes, turquoise lakes, and Buddhist monasteries.",
+    "coverImage": "",
+    "mapsUrl": "https://maps.google.com/?q=Leh,Ladakh",
+    "youtubeQuery": "Ladakh road trip 2024",
+    "attractions": ["Pangong Lake", "Khardung La Pass", "Thiksey Monastery", "Nubra Valley"],
+    "notes": "Acclimatise for 2 days in Leh before heading to higher altitudes. Permits required for some areas."
+  },
+  {
+    "id": "kerala-backwaters-culinary",
+    "destination": "Kerala Backwaters, India",
+    "category": "Culinary",
+    "tagline": "Slow-boat through palm-fringed canals with legendary seafood.",
+    "coverImage": "",
+    "mapsUrl": "https://maps.google.com/?q=Alleppey,Kerala",
+    "youtubeQuery": "Kerala backwaters houseboat experience",
+    "attractions": ["Alleppey Houseboat", "Kumarakom Bird Sanctuary", "Fort Kochi", "Spice Markets of Kochi"],
+    "notes": "Overnight houseboat stays are the highlight. Book well in advance during peak season (Nov–Feb)."
+  }
+]
+

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Background -->
+  <rect width="512" height="512" rx="115" fill="#3B82F6"/>
+  <!-- Plane icon, white, centred -->
+  <g transform="translate(256,256)" fill="white">
+    <!-- Main fuselage -->
+    <path d="M-20,-120 L20,-120 L40,60 L0,80 L-40,60 Z" opacity="0.95"/>
+    <!-- Left wing -->
+    <path d="M-20,0 L-180,80 L-160,110 L-20,60 Z" opacity="0.95"/>
+    <!-- Right wing -->
+    <path d="M20,0 L180,80 L160,110 L20,60 Z" opacity="0.95"/>
+    <!-- Left tail -->
+    <path d="M-20,80 L-80,120 L-70,135 L-20,100 Z" opacity="0.95"/>
+    <!-- Right tail -->
+    <path d="M20,80 L80,120 L70,135 L20,100 Z" opacity="0.95"/>
+  </g>
+  <!-- "KYT" wordmark below plane -->
+  <text x="256" y="420" font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="72" font-weight="800" fill="white" text-anchor="middle"
+        letter-spacing="6">KYT</text>
+</svg>
+

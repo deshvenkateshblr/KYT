@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!--
+  ADMIN TOOL: KYT Icon Generator
+  Open this file in any browser (file:// is fine — no network needed).
+  Click "Download All Icons", then move the PNGs into the /icons/ folder.
+
+  To update the icon design, edit the SVG_SOURCE string below.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>KYT Icon Generator</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; background: #f8fafc; color: #0f172a; }
+    h1   { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.25rem; }
+    p    { color: #64748b; margin-bottom: 1.5rem; font-size: 0.9rem; }
+    .previews { display: flex; gap: 1.5rem; align-items: flex-end; flex-wrap: wrap; margin-bottom: 2rem; }
+    .preview  { text-align: center; }
+    .preview label { display: block; font-size: 0.75rem; font-weight: 700;
+                     color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;
+                     margin-bottom: 0.5rem; }
+    canvas { display: block; border-radius: 22%; box-shadow: 0 4px 20px rgba(59,130,246,0.25); }
+    button { padding: 0.85rem 2.5rem; background: #3B82F6; color: white;
+             border: none; border-radius: 12px; font-size: 1rem; font-weight: 700;
+             cursor: pointer; box-shadow: 0 4px 12px rgba(59,130,246,0.4); }
+    button:hover  { background: #2563eb; }
+    button:active { transform: scale(0.97); }
+    .note { margin-top: 1.5rem; font-size: 0.8rem; color: #94a3b8; }
+  </style>
+</head>
+<body>
+  <h1>KYT Icon Generator</h1>
+  <p>Generates <code>icon-192.png</code> and <code>icon-512.png</code> directly in the browser — no server needed.</p>
+
+  <div class="previews">
+    <div class="preview">
+      <label>192 × 192</label>
+      <canvas id="c192" width="192" height="192"></canvas>
+    </div>
+    <div class="preview">
+      <label>512 × 512</label>
+      <canvas id="c512" width="512" height="512"></canvas>
+    </div>
+  </div>
+
+  <button onclick="downloadAll()">⬇ Download icon-192.png &amp; icon-512.png</button>
+
+  <p class="note">Move the downloaded files into <code>KYT/icons/</code> to complete PWA setup.</p>
+
+  <script>
+    // ── SVG source embedded directly — avoids canvas taint from file:// CORS ──
+    const SVG_SOURCE = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Rounded blue background -->
+  <rect width="512" height="512" rx="115" fill="#3B82F6"/>
+
+  <!-- Paper plane icon, white, centred and scaled -->
+  <g transform="translate(256,230) scale(1.15)" fill="white" opacity="0.97">
+    <!-- Main body pointing up-right -->
+    <path d="M0,-110 L95,95 L0,60 L-95,95 Z"/>
+    <!-- Inner cut for depth -->
+    <path d="M0,60 L0,-60 L55,65 Z" fill="#2563EB" opacity="0.5"/>
+  </g>
+
+  <!-- KYT wordmark -->
+  <text x="256" y="435"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="68" font-weight="800" fill="white"
+        text-anchor="middle" letter-spacing="8">KYT</text>
+</svg>`;
+
+    // Convert SVG string → object URL (same-origin, no taint)
+    const svgBlob = new Blob([SVG_SOURCE], { type: 'image/svg+xml' });
+    const svgUrl  = URL.createObjectURL(svgBlob);
+
+    function drawToCanvas(canvas, size) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload  = () => {
+          const ctx = canvas.getContext('2d');
+          ctx.clearRect(0, 0, size, size);
+          ctx.drawImage(img, 0, 0, size, size);
+          resolve();
+        };
+        img.onerror = reject;
+        img.src = svgUrl;
+      });
+    }
+
+    function downloadCanvas(canvas, filename) {
+      canvas.toBlob(blob => {
+        const a    = document.createElement('a');
+        a.href     = URL.createObjectURL(blob);
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }, 'image/png');
+    }
+
+    async function downloadAll() {
+      await drawToCanvas(document.getElementById('c192'), 192);
+      await drawToCanvas(document.getElementById('c512'), 512);
+      downloadCanvas(document.getElementById('c192'), 'icon-192.png');
+      // Small delay so the browser doesn't block two simultaneous downloads
+      setTimeout(() => downloadCanvas(document.getElementById('c512'), 'icon-512.png'), 400);
+    }
+
+    // Render previews on load
+    drawToCanvas(document.getElementById('c192'), 192);
+    drawToCanvas(document.getElementById('c512'), 512);
+  </script>
+</body>
+</html>
+
