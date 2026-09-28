@@ -11,16 +11,17 @@ const APP_SHELL = [
   './',
   './index.html',
   './manifest.json',
-  './css/base.css',
-  './css/animations.css',
-  './js/app.js',
-  './js/store.js',
-  './js/clock.js',
-  './js/carousel.js',
-  './js/config.js',
-  './js/step-form.js',
-  './js/file-viewer.js',
-  './js/share.js',
+  './css/base.css?v=2',
+  './css/animations.css?v=2',
+  './js/app.js?v=2',
+  './js/store.js?v=2',
+  './js/clock.js?v=2',
+  './js/carousel.js?v=2',
+  './js/config.js?v=2',
+  './js/step-form.js?v=2',
+  './js/file-viewer.js?v=2',
+  './js/share.js?v=2',
+  './js/social.js?v=2',
   './icons/icon-192.png',
   './icons/icon-512.png'
 ];
@@ -76,15 +77,15 @@ self.addEventListener('fetch', event => {
         .catch(() => caches.match(event.request))
     );
   } else {
-    // Cache-first for everything else (app shell)
+    // Network-first for everything else (app shell), fallback to cache
     event.respondWith(
-      caches.match(event.request).then(cached => {
-        return cached || fetch(event.request).then(response => {
+      fetch(event.request)
+        .then(response => {
           const clone = response.clone();
           caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
           return response;
-        });
-      })
+        })
+        .catch(() => caches.match(event.request))
     );
   }
 });
