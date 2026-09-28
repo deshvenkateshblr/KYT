@@ -30,14 +30,68 @@ window.KYT.config = (() => {
     }
   }
 
-  coverImageInput.addEventListener('change', e => {
-    const file = e.target.files[0];
+  function compressCoverImage(file, maxWidth = 2000, quality = 0.95) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width, height = img.height;
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', quality));
+        };
+        img.onerror = reject;
+        img.src = e.target.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function handleCoverFile(file) {
     if (!file) return;
-    if (file.size > 4 * 1024 * 1024) { alert('Cover image must be under 4 MB.'); return; }
-    const reader = new FileReader();
-    reader.onload = ev => { KYT.store.setCoverImage(ev.target.result); updateCoverPreview(); };
-    reader.readAsDataURL(file);
+    try {
+      const base64 = await compressCoverImage(file);
+      KYT.store.setCoverImage(base64);
+      updateCoverPreview();
+    } catch (err) {
+      console.error("Failed to process cover image:", err);
+      alert("Failed to process image.");
+    }
+  }
+
+  coverImageInput.addEventListener('change', e => {
+    handleCoverFile(e.target.files[0]);
     e.target.value = '';
+  });
+
+  document.addEventListener('paste', e => {
+    // Only intercept if the config view is visible and we aren't typing in an input
+    if (configView.classList.contains('hidden')) return;
+    if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) return;
+    
+    const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+    let imageFile = null;
+    for (let index in items) {
+      const item = items[index];
+      if (item.kind === 'file' && item.type.startsWith('image/')) {
+        imageFile = item.getAsFile();
+        break; // just take the first image for the cover
+      }
+    }
+
+    if (imageFile) {
+      e.preventDefault();
+      handleCoverFile(imageFile);
+    }
   });
 
   btnClearCover.addEventListener('click', () => { KYT.store.setCoverImage(null); updateCoverPreview(); });

@@ -120,13 +120,41 @@ window.KYT.carousel = (() => {
       : '';
 
     const notesSection = step.notes
-      ? `<div class="mb-5">
-           <p class="text-[11px] font-bold text-kyt-subtext uppercase tracking-widest mb-2">Notes</p>
+      ? `<div class="mb-4">
+           <p class="text-[11px] font-bold text-kyt-subtext uppercase tracking-widest mb-1.5">Notes</p>
            <p class="text-[14px] text-slate-700 leading-relaxed font-medium">${step.notes}</p>
          </div>` : '';
 
     const attachmentsSection = step.attachments && step.attachments.length > 0
       ? `<div class="mb-4"><div class="flex flex-wrap gap-2">${buildAttachmentsHTML(step, stepIdx)}</div></div>` : '';
+
+    // NEW: Live Memories Section
+    const memoriesArr = step.memories || [];
+    const memoriesHtml = memoriesArr.length > 0 
+      ? `<div class="flex gap-2 overflow-x-auto no-scrollbar py-1">
+           ${memoriesArr.map((m, i) => `
+             <div class="relative group shrink-0 w-16 h-16">
+               <img src="${m}" class="w-16 h-16 rounded-xl object-cover border border-slate-200 shadow-sm">
+               <button data-action="delete-memory" data-index="${i}" class="absolute -top-1.5 -right-1.5 bg-white border border-slate-200 p-0.5 rounded-full text-red-500 shadow-sm hover:scale-110 active:scale-95 transition-all">
+                 <i data-lucide="x" class="w-3.5 h-3.5"></i>
+               </button>
+             </div>
+           `).join('')}
+         </div>` : '';
+         
+    const memoriesSection = `
+      <div class="mb-4">
+        <div class="flex items-center justify-between mb-2">
+          <p class="text-[11px] font-bold text-kyt-subtext uppercase tracking-widest">Live Memories</p>
+          <div class="flex flex-col items-end">
+            <button class="text-kyt-accent hover:text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg flex items-center gap-1.5 text-[11px] font-extrabold tracking-wide uppercase transition-colors" data-action="add-memory">
+              <i data-lucide="camera" class="w-3.5 h-3.5"></i> Add Photo
+            </button>
+            <p class="text-[9px] text-slate-400 font-medium mt-1 pr-1">or Ctrl+V to paste</p>
+          </div>
+        </div>
+        ${memoriesHtml}
+      </div>`;
 
     cardEl.innerHTML = `
       <div class="flex-1 flex flex-col">
@@ -168,6 +196,7 @@ window.KYT.carousel = (() => {
 
         ${notesSection}
         ${attachmentsSection}
+        ${memoriesSection}
         <div class="flex-grow"></div>
 
         <div class="mt-4 pt-6 border-t-2 border-slate-100/60 flex justify-center gap-6 px-1 pb-2">
@@ -198,6 +227,11 @@ window.KYT.carousel = (() => {
     const { stepsData, currentIndex } = KYT.store.get();
     btnPrev.disabled = currentIndex === 0;
     btnNext.disabled = currentIndex === stepsData.length - 1;
+    
+    const btnFirst = document.getElementById('btn-main-first');
+    const btnLast = document.getElementById('btn-main-last');
+    if (btnFirst) btnFirst.disabled = currentIndex === 0;
+    if (btnLast) btnLast.disabled = currentIndex === stepsData.length - 1;
   }
 
   function goNext() {
@@ -216,13 +250,101 @@ window.KYT.carousel = (() => {
     }
   }
 
+  function goFirst() {
+    const { currentIndex } = KYT.store.get();
+    if (currentIndex > 0) {
+      KYT.store.setCurrentIndex(0);
+      renderCard('left');
+    }
+  }
+
+  function goLast() {
+    const { stepsData, currentIndex } = KYT.store.get();
+    if (currentIndex < stepsData.length - 1) {
+      KYT.store.setCurrentIndex(stepsData.length - 1);
+      renderCard('right');
+    }
+  }
+
+  // ── Image Compression Helper ────────────────────────────────────────────────
+  function compressImage(file, maxWidth = 1600, quality = 0.95) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width, height = img.height;
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', quality));
+        };
+        img.onerror = reject;
+        img.src = e.target.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // ── Memory Upload Handler ─────────────────────────────────────────────────
+  const memoryInput = document.getElementById('memory-upload-input');
+  memoryInput.addEventListener('change', async e => {
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+    
+    const { stepsData, currentIndex } = KYT.store.get();
+    const step = stepsData[currentIndex];
+    const memories = step.memories || [];
+    
+    // Process all files
+    for (const file of files) {
+      try {
+        const base64 = await compressImage(file);
+        memories.push(base64);
+      } catch(err) {
+        console.error("Failed to compress image:", err);
+      }
+    }
+    
+    KYT.store.updateStep(currentIndex, { memories });
+    KYT.store.saveData();
+    renderCard();
+    memoryInput.value = ''; // reset
+  });
+
   // ── VCR button handler ────────────────────────────────────────────────────
   cardEl.addEventListener('click', e => {
-    const btn = e.target.closest('.vcr-btn');
-    if (!btn) return;
+    const btn = e.target.closest('button');
+    if (!btn || !btn.dataset.action) return;
+
+    const action = btn.dataset.action;
+    
+    if (action === 'add-memory') {
+      memoryInput.click();
+      return;
+    }
 
     const { stepsData, currentIndex } = KYT.store.get();
-    const action = btn.dataset.action;
+
+    if (action === 'delete-memory') {
+      const idx = parseInt(btn.dataset.index, 10);
+      const step = stepsData[currentIndex];
+      if (step.memories) {
+        step.memories.splice(idx, 1);
+        KYT.store.updateStep(currentIndex, { memories: step.memories });
+        KYT.store.saveData();
+        renderCard();
+      }
+      return;
+    }
+
     const status = stepsData[currentIndex].status;
 
     if      (action === 'toggle-on')   KYT.store.updateStep(currentIndex, { status: status === 'on'   ? 'todo' : 'on'   });
@@ -232,6 +354,12 @@ window.KYT.carousel = (() => {
 
     requestAnimationFrame(() => {
       renderCard();
+      
+      // Phase 2: Check if trip is fully complete
+      if (KYT.social && typeof KYT.social.checkCompletion === 'function') {
+        KYT.social.checkCompletion();
+      }
+
       if (action === 'toggle-done' && KYT.store.get().stepsData[currentIndex].status === 'done') {
         if (currentIndex < KYT.store.get().stepsData.length - 1) setTimeout(goNext, 600);
       }
@@ -240,6 +368,11 @@ window.KYT.carousel = (() => {
 
   btnNext.addEventListener('click', goNext);
   btnPrev.addEventListener('click', goPrev);
+
+  const btnFirst = document.getElementById('btn-main-first');
+  const btnLast = document.getElementById('btn-main-last');
+  if (btnFirst) btnFirst.addEventListener('click', goFirst);
+  if (btnLast) btnLast.addEventListener('click', goLast);
 
   // ── Touch swipe ───────────────────────────────────────────────────────────
   let touchStartX = 0;
@@ -252,6 +385,50 @@ window.KYT.carousel = (() => {
 
   // Refresh card on clock tick
   document.addEventListener('kyt:tick', () => renderCard());
+
+  // ── Clipboard Paste Support ───────────────────────────────────────────────
+  document.addEventListener('paste', async (e) => {
+    // Intercept only if an input/textarea is NOT actively focused
+    if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) {
+      return; 
+    }
+    
+    const { stepsData, currentIndex } = KYT.store.get();
+    if (!stepsData || stepsData.length === 0) return;
+
+    const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+    const imageFiles = [];
+    for (let index in items) {
+      const item = items[index];
+      if (item.kind === 'file' && item.type.startsWith('image/')) {
+        imageFiles.push(item.getAsFile());
+      }
+    }
+
+    if (imageFiles.length === 0) return;
+    e.preventDefault();
+
+    const step = stepsData[currentIndex];
+    const memories = step.memories || [];
+    
+    // Process all pasted images
+    let added = false;
+    for (const file of imageFiles) {
+      try {
+        const base64 = await compressImage(file);
+        memories.push(base64);
+        added = true;
+      } catch(err) {
+        console.error("Failed to process clipboard image:", err);
+      }
+    }
+    
+    if (added) {
+      KYT.store.updateStep(currentIndex, { memories });
+      KYT.store.saveData();
+      renderCard();
+    }
+  });
 
   return { renderCard };
 })();

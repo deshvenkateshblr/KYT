@@ -7,15 +7,21 @@
 
 window.KYT = window.KYT || {};
 
-(function () {
-  // Load persisted state
-  KYT.store.loadData();
+(async function () {
+  // Load persisted state (now Async via IndexedDB)
+  await KYT.store.loadData();
 
   // Boot clock and initial card render
-  document.addEventListener('DOMContentLoaded', () => {
+  function boot() {
     KYT.clock.start();
     KYT.carousel.renderCard();
-    lucide.createIcons();
-  });
+    if (window.lucide) lucide.createIcons();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
 })();
 
