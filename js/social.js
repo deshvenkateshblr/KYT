@@ -46,16 +46,21 @@ window.KYT.social = (() => {
   function buildPDFGrid(images) {
     if (!images || images.length === 0) return '';
     
-    let imgHtml = images.map(img => `
-      <div class="w-full" style="page-break-inside: avoid; break-inside: avoid;">
-        <img src="${img}" style="page-break-inside: avoid; break-inside: avoid;" class="rounded-2xl border border-slate-200 shadow-sm w-full h-auto max-h-[400px] object-contain object-left">
-      </div>
-    `).join('');
+    const wClass = images.length === 1 ? 'w-full block' : 'w-full md:w-[calc(50%-12px)] inline-block';
     
-    const colClass = images.length === 1 ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2';
+    let imgHtml = images.map((img, i) => {
+      const isRightCol = images.length > 1 && (i % 2 !== 0);
+      const mr = isRightCol ? 'md:mr-0' : (images.length > 1 ? 'md:mr-[24px]' : '');
+      
+      return `
+      <div class="${wClass} ${mr} mb-6" style="page-break-inside: avoid; break-inside: avoid; display: inline-block; vertical-align: top;">
+        <img src="${img}" style="page-break-inside: avoid; break-inside: avoid; display: block;" class="rounded-2xl border border-slate-200 shadow-sm w-full h-auto max-h-[400px] object-contain object-left">
+      </div>
+      `;
+    }).join('');
     
     return `
-      <div class="grid ${colClass} gap-6 mt-6 w-full">
+      <div class="mt-6 w-full" style="font-size: 0;">
         ${imgHtml}
       </div>
     `;
@@ -192,7 +197,11 @@ window.KYT.social = (() => {
 
   if (btnDownloadCard) {
     btnDownloadCard.addEventListener('click', () => {
-      window.print();
+      if (navigator.userAgent.match('CriOS')) {
+        alert("Google Chrome on iPhone does not support the print button directly. Please tap the Share icon in the Chrome address bar and select 'Print' or 'Save to Files' to save your PDF.");
+      } else {
+        window.print();
+      }
     });
   }
 
