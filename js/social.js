@@ -46,17 +46,22 @@ window.KYT.social = (() => {
   function buildPDFGrid(images) {
     if (!images || images.length === 0) return '';
     
-    const wClass = images.length === 1 ? 'w-full block' : 'w-full md:w-[calc(50%-12px)] inline-block';
-    
     let imgHtml = images.map((img, i) => {
-      const isRightCol = images.length > 1 && (i % 2 !== 0);
-      const mr = isRightCol ? 'md:mr-0' : (images.length > 1 ? 'md:mr-[24px]' : '');
-      
-      return `
-      <div class="${wClass} ${mr} mb-6" style="page-break-inside: avoid; break-inside: avoid; display: inline-block; vertical-align: top;">
-        <img src="${img}" style="page-break-inside: avoid; break-inside: avoid; display: block;" class="rounded-2xl border border-slate-200 shadow-sm w-full h-auto max-h-[400px] object-contain object-left">
-      </div>
-      `;
+      if (images.length === 1) {
+        return `
+        <div class="w-full mb-6" style="page-break-inside: avoid; break-inside: avoid; display: block;">
+          <img src="${img}" style="page-break-inside: avoid; break-inside: avoid; display: block;" class="rounded-2xl border border-slate-200 shadow-sm w-full h-auto max-h-[400px] object-contain object-left">
+        </div>
+        `;
+      } else {
+        const isRightCol = i % 2 !== 0;
+        const mr = isRightCol ? '0px' : '24px';
+        return `
+        <div class="mb-6" style="width: calc(50% - 12px); margin-right: ${mr}; page-break-inside: avoid; break-inside: avoid; display: inline-block; vertical-align: top;">
+          <img src="${img}" style="page-break-inside: avoid; break-inside: avoid; display: block;" class="rounded-2xl border border-slate-200 shadow-sm w-full h-auto max-h-[400px] object-contain object-left">
+        </div>
+        `;
+      }
     }).join('');
     
     return `
