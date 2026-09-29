@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KYT - PDFMake Test</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- pdfmake libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+  
+  <!-- Load existing store to fetch real data -->
+  <script src="./js/store.js"></script>
+</head>
+<body class="bg-slate-100 min-h-screen flex flex-col items-center p-8">
+
+  <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-2xl text-center">
+    <h1 class="text-3xl font-extrabold text-slate-800 mb-4">PDF Engine Tester</h1>
+    <p class="text-slate-500 mb-8">This page tests the <code class="bg-slate-100 px-1 rounded text-pink-500">pdfmake</code> engine for programmatic PDF generation using your actual trip data.</p>
+    
+    <div id="status-box" class="text-sm font-medium text-slate-600 mb-6 bg-blue-50 text-blue-800 p-4 rounded-lg hidden"></div>
+
+    <button id="btn-generate" class="px-8 py-4 bg-blue-600 text-white font-extrabold rounded-xl shadow-lg hover:bg-blue-700 active:scale-95 transition-all">
+      Generate Test PDF
+    </button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Wait for store to initialize from IndexedDB
+      await KYT.store.loadData();
+      
+      const btn = document.getElementById('btn-generate');
+      const statusBox = document.getElementById('status-box');
+
+      btn.addEventListener('click', async () => {
+        statusBox.classList.remove('hidden');
+        statusBox.innerText = 'Extracting data...';
+        
+        const data = KYT.store.get();
+        if (!data.stepsData || data.stepsData.length === 0) {
+          statusBox.innerText = 'No steps found in the itinerary!';
+          statusBox.classList.replace('bg-blue-50', 'bg-red-50');
+          statusBox.classList.replace('text-blue-800', 'text-red-800');
+          return;
+        }
+
+        statusBox.innerText = 'Building document definition...';
+        
+        // Build document definition
+        const docDefinition = {
+          pageSize: 'A4',
+          pageMargins: [40, 60, 40, 60],
+          info: { title: data.tripName + ' - Memory Journal' },
+          content: [],
+          styles: {
+            header: { fontSize: 32, bold: true, alignment: 'center', margin: [0, 20, 0, 5], color: '#0F172A' },
+            subheader: { fontSize: 14, alignment: 'center', margin: [0, 0, 0, 40], color: '#64748B' },
+            stepTitle: { fontSize: 18, bold: true, margin: [0, 20, 0, 5], color: '#1E293B' },
+            stepMeta: { fontSize: 10, italic: true, margin: [0, 0, 0, 10], color: '#64748B' },
+            stepNotes: { fontSize: 12, margin: [0, 0, 0, 15], color: '#334155' },
+            dayHeader: { fontSize: 24, bold: true, margin: [0, 30, 0, 15], color: '#2563EB', alignment: 'center' }
+          },
+          defaultStyle: { font: 'Roboto' }
+        };
+
+        // 1. Cover Page
+        if (data.tripCoverImage) {
+          docDefinition.content.push({
+            image: data.tripCoverImage,
+            fit: [515, 300],
+            alignment: 'center',
+            margin: [0, 0, 0, 40]
+          });
+        }
+        
+        docDefinition.content.push({ text: data.tripName, style: 'header' });
+        
+        let totalPhotos = 0;
+        data.stepsData.forEach(s => { if (s.memories) totalPhotos += s.memories.length; });
+        docDefinition.content.push({ text: `Memory Journal • ${totalPhotos} Photos`, style: 'subheader', margin: [0, 0, 0, 60] });
+
+        // 2. Sort and group steps by day
+        const sortedSteps = [...data.stepsData].sort((a, b) => a.targetTime - b.targetTime);
+        let currentDayStr = null;
+        let isFirstDay = true;
+
+        // 3. Process each step
+        sortedSteps.forEach(step => {
+          const dStr = step.targetTime.toDateString();
+          if (dStr !== currentDayStr) {
+            currentDayStr = dStr;
+            const longDate = step.targetTime.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+            
+            // Only force page break for days after the first day
+            if (!isFirstDay) {
+              docDefinition.content.push({ text: longDate, style: 'dayHeader', pageBreak: 'before' });
+            } else {
+              docDefinition.content.push({ text: longDate, style: 'dayHeader' });
+              isFirstDay = false;
+            }
+          }
+          
+          let headerStack = [];
+          
+          headerStack.push({ text: step.title, style: 'stepTitle' });
+          
+          let meta = [];
+          if (step.where) meta.push(step.where.split(',')[0]);
+          meta.push(step.targetTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }));
+          headerStack.push({ text: meta.join(' • '), style: 'stepMeta' });
+          
+          if (step.notes) {
+            headerStack.push({ text: step.notes, style: 'stepNotes' });
+          }
+
+          if (step.memories && step.memories.length > 0) {
+            if (step.memories.length === 1) {
+              // 1 image: bundle it with header
+              headerStack.push({
+                image: step.memories[0],
+                fit: [515, 400],
+                alignment: 'center',
+                margin: [0, 10, 0, 30]
+              });
+              docDefinition.content.push({ stack: headerStack, unbreakable: true });
+            } else {
+              // 2+ images: bundle header with ONLY the first row of images
+              let firstRow = {
+                columns: [
+                  { image: step.memories[0], fit: [250, 300], margin: [0, 0, 15, 15] }
+                ]
+              };
+              if (step.memories[1]) {
+                firstRow.columns.push({ image: step.memories[1], fit: [250, 300], margin: [0, 0, 0, 15] });
+              }
+              headerStack.push({ stack: [firstRow], margin: [0, 10, 0, 0] });
+              
+              docDefinition.content.push({ stack: headerStack, unbreakable: true });
+              
+              // Push the remaining image rows normally so they can flow across pages
+              let remainingRows = [];
+              for (let i = 2; i < step.memories.length; i += 2) {
+                let row = {
+                  columns: [
+                    { image: step.memories[i], fit: [250, 300], margin: [0, 0, 15, 15] }
+                  ]
+                };
+                if (step.memories[i+1]) {
+                  row.columns.push({ image: step.memories[i+1], fit: [250, 300], margin: [0, 0, 0, 15] });
+                }
+                remainingRows.push(row);
+              }
+              
+              if (remainingRows.length > 0) {
+                docDefinition.content.push({ stack: remainingRows, margin: [0, 0, 0, 20] });
+              } else {
+                docDefinition.content.push({ text: '', margin: [0, 0, 0, 20] });
+              }
+            }
+          } else {
+            // No images
+            headerStack.push({ text: '', margin: [0, 0, 0, 20] });
+            docDefinition.content.push({ stack: headerStack, unbreakable: true });
+          }
+        });
+
+        statusBox.innerText = 'Rendering PDF engine (this may take a moment for large images)...';
+
+        setTimeout(() => {
+          try {
+            const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+            pdfDocGenerator.open(); 
+            statusBox.innerText = 'PDF opened successfully! You can close this tab.';
+            statusBox.classList.replace('bg-blue-50', 'bg-green-50');
+            statusBox.classList.replace('text-blue-800', 'text-green-800');
+          } catch(err) {
+            console.error(err);
+            statusBox.innerText = 'Error generating PDF: ' + err.message;
+            statusBox.classList.replace('bg-blue-50', 'bg-red-50');
+            statusBox.classList.replace('text-blue-800', 'text-red-800');
+          }
+        }, 500);
+
+      });
+    });
+  </script>
+</body>
+</html>
+

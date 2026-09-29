@@ -127,7 +127,7 @@ window.KYT.social = (() => {
       <div class="flex flex-col items-center justify-center min-h-[85vh] text-center py-12 px-4">
         <div class="flex flex-col items-center mb-8 opacity-70">
           <img src="./icons/icon.svg" class="w-12 h-12 rounded-xl mb-3 shadow-md" alt="KYT Logo">
-          <p class="font-bold tracking-[0.15em] text-slate-400 text-xs uppercase">KYT — Know Your Travel</p>
+          <p class="font-bold tracking-[0.15em] text-slate-400 text-xs uppercase">KYT &mdash; Know Your Travel</p>
         </div>
         
         <div class="w-full h-64 md:h-[450px] rounded-3xl overflow-hidden mb-12 shadow-xl border border-slate-200">
@@ -201,12 +201,187 @@ window.KYT.social = (() => {
   });
 
   if (btnDownloadCard) {
-    btnDownloadCard.addEventListener('click', () => {
-      if (navigator.userAgent.match('CriOS')) {
-        alert("Google Chrome on iPhone does not support the print button directly. Please tap the Share icon in the Chrome address bar and select 'Print' or 'Save to Files' to save your PDF.");
-      } else {
-        window.print();
-      }
+    btnDownloadCard.addEventListener('click', async () => {
+      const originalText = btnDownloadCard.innerHTML;
+      btnDownloadCard.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Generating PDF...';
+      btnDownloadCard.disabled = true;
+      if (window.lucide) lucide.createIcons({ root: btnDownloadCard });
+
+      // Allow UI to update before heavy synchronous PDF generation
+      setTimeout(async () => {
+        try {
+          const data = KYT.store.get();
+          
+          let logoBase64 = null;
+          try {
+            const res = await fetch('./icons/icon-192.png');
+            const blob = await res.blob();
+            logoBase64 = await new Promise(resolve => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result);
+              reader.readAsDataURL(blob);
+            });
+          } catch(e) { console.warn('Could not load logo for PDF', e); }
+
+          const docDefinition = {
+            pageSize: 'A4',
+            pageMargins: [40, 60, 40, 60],
+            info: { title: data.tripName + ' - Memory Journal' },
+            footer: function(currentPage, pageCount) {
+              return {
+                text: 'KYT — Know Your Travel • vividnova.com/KYT/',
+                alignment: 'center',
+                fontSize: 9,
+                color: '#94a3b8',
+                margin: [0, 20, 0, 0],
+                bold: true
+              };
+            },
+            content: [],
+            styles: {
+              header: { fontSize: 32, bold: true, alignment: 'center', margin: [0, 20, 0, 5], color: '#0F172A' },
+              subheader: { fontSize: 14, alignment: 'center', margin: [0, 0, 0, 40], color: '#64748B' },
+              stepTitle: { fontSize: 18, bold: true, margin: [0, 20, 0, 5], color: '#1E293B' },
+              stepMeta: { fontSize: 10, italic: true, margin: [0, 0, 0, 10], color: '#64748B' },
+              stepNotes: { fontSize: 12, margin: [0, 0, 0, 15], color: '#334155' },
+              dayHeader: { fontSize: 24, bold: true, margin: [0, 30, 0, 15], color: '#2563EB', alignment: 'center' }
+            },
+            defaultStyle: { font: 'Roboto' }
+          };
+
+          if (logoBase64) {
+            docDefinition.content.push({
+              image: logoBase64,
+              width: 48,
+              alignment: 'center',
+              margin: [0, 0, 0, 10]
+            });
+          }
+          
+          docDefinition.content.push({
+            text: 'KYT — KNOW YOUR TRAVEL',
+            alignment: 'center',
+            fontSize: 10,
+            bold: true,
+            color: '#94a3b8',
+            margin: [0, 0, 0, 40]
+          });
+
+          if (data.tripCoverImage) {
+            docDefinition.content.push({
+              image: data.tripCoverImage,
+              fit: [515, 300],
+              alignment: 'center',
+              margin: [0, 0, 0, 40]
+            });
+          }
+          
+          docDefinition.content.push({ text: data.tripName, style: 'header' });
+          
+          let totalPhotos = 0;
+          data.stepsData.forEach(s => { if (s.memories) totalPhotos += s.memories.length; });
+          docDefinition.content.push({ text: `Memory Journal • ${totalPhotos} Photos`, style: 'subheader', margin: [0, 0, 0, 40] });
+
+          docDefinition.content.push({
+            text: [
+              { text: 'https://vividnova.com/KYT/\n', link: 'https://vividnova.com/KYT/', color: '#3B82F6', decoration: 'underline' },
+              { text: 'vividnova.com is home to browser based tools. Built through the collaboration of human insight and AI. No accounts, no tracking, no data leaves your browser. Your private personal apps.', color: '#94a3b8', fontSize: 10, italics: true }
+            ],
+            alignment: 'center',
+            margin: [40, 20, 40, 60]
+          });
+
+          const sortedSteps = [...data.stepsData].sort((a, b) => a.targetTime - b.targetTime);
+          let currentDayStr = null;
+          let isFirstDay = true;
+
+          sortedSteps.forEach(step => {
+            const dStr = step.targetTime.toDateString();
+            if (dStr !== currentDayStr) {
+              currentDayStr = dStr;
+              const longDate = step.targetTime.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+              if (!isFirstDay) {
+                docDefinition.content.push({ text: longDate, style: 'dayHeader', pageBreak: 'before' });
+              } else {
+                docDefinition.content.push({ text: longDate, style: 'dayHeader' });
+                isFirstDay = false;
+              }
+            }
+            
+            let headerStack = [];
+            headerStack.push({ text: step.title, style: 'stepTitle' });
+            
+            let meta = [];
+            if (step.where) meta.push(step.where.split(',')[0]);
+            meta.push(step.targetTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }));
+            headerStack.push({ text: meta.join(' • '), style: 'stepMeta' });
+            
+            if (step.notes) {
+              headerStack.push({ text: step.notes, style: 'stepNotes' });
+            }
+
+            if (step.memories && step.memories.length > 0) {
+              if (step.memories.length === 1) {
+                headerStack.push({
+                  image: step.memories[0],
+                  fit: [515, 400],
+                  alignment: 'center',
+                  margin: [0, 10, 0, 30]
+                });
+                docDefinition.content.push({ stack: headerStack, unbreakable: true });
+              } else {
+                let firstRow = { columns: [{ image: step.memories[0], fit: [250, 300], margin: [0, 0, 15, 15] }] };
+                if (step.memories[1]) {
+                  firstRow.columns.push({ image: step.memories[1], fit: [250, 300], margin: [0, 0, 0, 15] });
+                }
+                headerStack.push({ stack: [firstRow], margin: [0, 10, 0, 0] });
+                docDefinition.content.push({ stack: headerStack, unbreakable: true });
+                
+                let remainingRows = [];
+                for (let i = 2; i < step.memories.length; i += 2) {
+                  let row = { columns: [{ image: step.memories[i], fit: [250, 300], margin: [0, 0, 15, 15] }] };
+                  if (step.memories[i+1]) {
+                    row.columns.push({ image: step.memories[i+1], fit: [250, 300], margin: [0, 0, 0, 15] });
+                  }
+                  remainingRows.push(row);
+                }
+                
+                if (remainingRows.length > 0) {
+                  docDefinition.content.push({ stack: remainingRows, margin: [0, 0, 0, 20] });
+                } else {
+                  docDefinition.content.push({ text: '', margin: [0, 0, 0, 20] });
+                }
+              }
+            } else {
+              headerStack.push({ text: '', margin: [0, 0, 0, 20] });
+              docDefinition.content.push({ stack: headerStack, unbreakable: true });
+            }
+          });
+
+          // Generate and open PDF
+          const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+          
+          if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i) && navigator.share) {
+             pdfDocGenerator.getBlob((blob) => {
+               const file = new File([blob], data.tripName.replace(/[^a-z0-9]/gi, '_').toLowerCase() + '_journal.pdf', { type: 'application/pdf' });
+               navigator.share({
+                 files: [file],
+                 title: data.tripName + ' - Memory Journal'
+               }).catch(console.error);
+             });
+          } else {
+             pdfDocGenerator.download(data.tripName.replace(/[^a-z0-9]/gi, '_').toLowerCase() + '_journal.pdf');
+          }
+
+        } catch (err) {
+          console.error("PDF generation failed:", err);
+          alert("Failed to generate PDF: " + err.message);
+        } finally {
+          btnDownloadCard.innerHTML = originalText;
+          btnDownloadCard.disabled = false;
+          if (window.lucide) lucide.createIcons({ root: btnDownloadCard });
+        }
+      }, 100);
     });
   }
 
