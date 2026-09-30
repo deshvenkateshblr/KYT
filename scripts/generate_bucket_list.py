@@ -28,7 +28,7 @@ OUTPUT_FILE = os.path.join(ROOT_DIR, "data", "bucket-list.js")
 VALID_CATEGORIES = {"Spiritual", "Adventure", "Culinary", "Cultural"}
 
 REQUIRED_FIELDS  = {"id", "destination", "category", "mapsUrl", "youtubeQuery"}
-OPTIONAL_FIELDS  = {"tagline", "coverImage", "attractions", "notes"}
+OPTIONAL_FIELDS  = {"tagline", "coverImage", "attractions", "notes", "estimatedDays", "travelModes", "budgetTier", "bestSeason"}
 
 HEADER = """\
 /**
@@ -68,6 +68,10 @@ def build_entry(raw):
         "youtubeUrl":   f"https://www.youtube.com/results?search_query={raw['youtubeQuery'].replace(' ', '+')}",
         "attractions":  raw.get("attractions", []),
         "notes":        raw.get("notes", ""),
+        "estimatedDays":raw.get("estimatedDays", ""),
+        "travelModes":  raw.get("travelModes", []),
+        "budgetTier":   raw.get("budgetTier", ""),
+        "bestSeason":   raw.get("bestSeason", ""),
     }
 
 def main():
@@ -97,7 +101,7 @@ def main():
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(output)
 
-    print(f"✅ Generated {len(entries)} bucket list entries → {OUTPUT_FILE}")
+    print(f"Done: Generated {len(entries)} bucket list entries -> {OUTPUT_FILE}")
 
 if __name__ == "__main__":
     main()

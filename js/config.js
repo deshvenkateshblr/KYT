@@ -135,10 +135,16 @@ window.KYT.config = (() => {
           </button>
         </div>
 
-        <button class="p-2 text-slate-300 hover:text-kyt-accent transition-colors shrink-0"
-                onclick="KYT.stepForm.open(${step.id})" title="Edit step">
-          <i data-lucide="edit-2" class="w-5 h-5"></i>
-        </button>
+        <div class="flex flex-col gap-0.5 shrink-0 ml-1">
+          <button class="p-2 text-slate-300 hover:text-rose-500 transition-colors shrink-0"
+                  onclick="KYT.config.deleteStep(${index})" title="Delete step">
+            <i data-lucide="trash-2" class="w-5 h-5"></i>
+          </button>
+          <button class="p-2 text-slate-300 hover:text-kyt-accent transition-colors shrink-0"
+                  onclick="KYT.stepForm.open(${step.id})" title="Edit step">
+            <i data-lucide="edit-2" class="w-5 h-5"></i>
+          </button>
+        </div>
       </div>
     `).join('');
 
@@ -197,6 +203,25 @@ window.KYT.config = (() => {
     reorderSteps(index, dest);
   }
 
+  function deleteStep(index) {
+    if (!confirm("Are you sure you want to delete this step?")) return;
+    const { stepsData, currentIndex } = KYT.store.get();
+    stepsData.splice(index, 1);
+    
+    // adjust currentIndex if needed
+    let newIdx = currentIndex;
+    if (index < currentIndex) {
+      newIdx = Math.max(0, currentIndex - 1);
+    } else if (index === currentIndex) {
+      newIdx = Math.max(0, Math.min(currentIndex, stepsData.length - 1));
+    }
+    KYT.store.setCurrentIndex(newIdx);
+    
+    KYT.store.saveData();
+    renderConfigSteps();
+    KYT.carousel.renderCard();
+  }
+
   // ── Open / close ──────────────────────────────────────────────────────────
   function openConfigView() {
     const { tripName, tripNotes } = KYT.store.get();
@@ -231,6 +256,6 @@ window.KYT.config = (() => {
   document.getElementById('btn-close-config').addEventListener('click', closeConfigView);
   document.getElementById('btn-save-config').addEventListener('click',  closeConfigView);
 
-  return { openConfigView, closeConfigView, renderConfigSteps, moveStep };
+  return { openConfigView, closeConfigView, renderConfigSteps, moveStep, deleteStep };
 })();
 

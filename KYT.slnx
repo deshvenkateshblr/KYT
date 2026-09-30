@@ -2,4 +2,30 @@
   <Folder Name="/Solution Items/">
     <File Path="index.html" />
   </Folder>
+  <Folder Name="/Solution Items/css/">
+    <File Path="css/animations.css" />
+    <File Path="css/base.css" />
+  </Folder>
+  <Folder Name="/Solution Items/data/">
+    <File Path="data/bucket-list.js" />
+  </Folder>
+  <Folder Name="/Solution Items/icons/">
+    <File Path="icons/icon-192.png" />
+    <File Path="icons/icon-512.png" />
+  </Folder>
+  <Folder Name="/Solution Items/js/">
+    <File Path="js/app.js" />
+    <File Path="js/carousel.js" />
+    <File Path="js/clock.js" />
+    <File Path="js/config.js" />
+    <File Path="js/file-viewer.js" />
+    <File Path="js/share.js" />
+    <File Path="js/social.js" />
+    <File Path="js/step-form.js" />
+    <File Path="js/store.js" />
+  </Folder>
+  <Folder Name="/Solution Items/scripts/">
+    <File Path="scripts/bucket_list_source.json" />
+    <File Path="scripts/generate_bucket_list.py" />
+  </Folder>
 </Solution>

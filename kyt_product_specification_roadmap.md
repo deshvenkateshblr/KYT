@@ -30,20 +30,20 @@ To ensure a focused and iterative build process, KYT's feature set is organized 
 *   **Hybrid Attachments:** Support for lightweight file uploads (PDFs, Images) with an elegant in-app viewer, plus fallback support for external Drive/Web links.
 *   **Compact Sharing:** Export/Import functionality generating minified text files (excluding attachments) for easy sharing with co-travelers.
 
-#### Module 2: Social Celebration & Memories
+#### Module 2: Social Celebration & Memories (MVP Done)
 Bridging the gap between private planning and social sharing, allowing users to celebrate their journeys immediately upon completion.
 *   **Travel Memory Card:** Upon completing an itinerary, the app synthesizes the trip's highlights (destination, total miles, steps conquered).
-*   **Algorithmically Generated Assets:** The app automatically designs a beautiful, highly stylized image (like a digital luggage tag or boarding pass) based on the user's unique trip data.
-*   **Native Export:** Users can download this crisp visual snapshot directly to their camera roll to share on social media.
+*   **PDF Export (MVP):** The app generates a stylized PDF memory card based on the user's unique trip data to share.
+*   **Future Investigation:** Investigate ways to create an animated GIF of the trip summary for more dynamic social sharing.
 
-#### Module 3: Beautiful Accomplishment Dashboard
+#### Module 3: Inspiration & Bucket List (Next)
+A dedicated space for capturing future aspirations without the pressure of a committed timeline.
+*   **Digital Sandbox:** A place to save dream destinations, inspirational links, and loose ideas. Filtered by category, such as Spiritual, Adventure, Culinary, or Cultural.
+	* Each bucket list items expands to popular attractions, points to popular and latest youtube videos, and provides a direct link to Google Maps for location context.
+*   **Seamless Conversion:** A one-tap workflow to promote a saved "Bucket List" item directly into an active Trip, automatically porting over all saved notes and context into the main timeline view.
+
+#### Module 4: Beautiful Accomplishment Dashboard
 A highly visual, centralized hub that celebrates the user's travel history. 
 *   **Visual Milestones:** A unified, timeline of all past trips.
 *   **Travel Stats:** Dynamically computed and energetically displayed accomplishments, such as total travel miles (calculating point-to-point geodesic distances), total days traveled, and total experiences completed.
 *   **Category Insights:** Colorful breakdowns of travel styles (e.g., time spent at museums vs. beaches vs. transit).
-
-#### Module 4: Inspiration & Bucket List
-A dedicated space for capturing future aspirations without the pressure of a committed timeline.
-*   **Digital Sandbox:** A place to save dream destinations, inspirational links, and loose ideas. Filtered by category,such as Spiritual, Adventure, Culinary, or Cultural.
-	* Each bucket list items expands to popular attractions, points to popular and latest youtube videos, and provides a direct link to Google Maps for location context.
-*   **Seamless Conversion:** A one-tap workflow to promote a saved "Bucket List" item directly into an active Trip, automatically porting over all saved notes and context into the main timeline view.
