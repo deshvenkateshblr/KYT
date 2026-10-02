@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (isReturningUser) {
     html = `
       <a href="view_trip.html" class="btn btn-primary text-lg flex gap-2"><i data-lucide="map"></i> View Current Trip</a>
-      <a href="configure_trip.html" class="btn btn-secondary flex gap-2"><i data-lucide="settings"></i> Configure Upcoming Trip</a>
+      <a href="configure_trip.html" class="btn btn-secondary flex gap-2"><i data-lucide="settings"></i> Configure Current Trip</a>
       <a href="virtual_trip.html" class="btn btn-secondary flex gap-2"><i data-lucide="compass"></i> Start a New Virtual Trip</a>
     `;
   } else {
