@@ -126,7 +126,7 @@ window.KYT.social = (() => {
     html += `
       <div class="flex flex-col items-center justify-center min-h-[85vh] text-center py-12 px-4">
         <div class="flex flex-col items-center mb-8 opacity-70">
-          <img src="./icons/icon.svg" class="w-12 h-12 rounded-xl mb-3 shadow-md" alt="KYT Logo">
+          <img src="./icons/KYT.jpg" class="w-12 h-12 rounded-xl mb-3 shadow-md object-contain" alt="KYT Logo">
           <p class="font-bold tracking-[0.15em] text-slate-400 text-xs uppercase">KYT &mdash; Know Your Travel</p>
         </div>
         
@@ -214,7 +214,7 @@ window.KYT.social = (() => {
           
           let logoBase64 = null;
           try {
-            const res = await fetch('./icons/icon-192.png');
+            const res = await fetch('./icons/KYT.jpg');
             const blob = await res.blob();
             logoBase64 = await new Promise(resolve => {
               const reader = new FileReader();

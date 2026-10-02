@@ -31,6 +31,7 @@ const APP_SHELL = [
   './js/explore.js',
   './js/virtual-trips.js',
   './data/cities.js',
+  './icons/KYT.jpg',
   './icons/icon-192.png',
   './icons/icon-512.png'
 ];

@@ -11,7 +11,7 @@
 
   <title>KYT &mdash; Know Your Travel</title>
 
-  <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
+  <link rel="icon" type="image/jpeg" href="./icons/KYT.jpg">
   <script>
     if (location.protocol !== 'file:') {
       const m = document.createElement('link');
@@ -19,7 +19,7 @@
       document.head.appendChild(m);
     }
   </script>
-  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <link rel="apple-touch-icon" href="./icons/KYT.jpg">
 
   <!-- Tailwind CSS (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -67,9 +67,9 @@
   <!-- Top Toolbar -->
   <header id="main-toolbar" class="w-full max-w-md mx-auto flex justify-between items-center z-[60] bg-white/40 backdrop-blur-md rounded-2xl p-2 border border-white/50 shadow-sm mt-10 px-4 mb-2 relative">
     <div class="flex items-center gap-2">
-      <a href="index.html" class="p-3 bg-blue-50 rounded-xl shadow-sm text-blue-600 hover:bg-blue-100 transition-all border border-blue-100" title="Home">
-        <i data-lucide="home" class="w-5 h-5"></i>
-      </a>
+      <a href="index.html" class="p-1 shrink-0 bg-white rounded-xl shadow-sm hover:scale-105 active:scale-95 transition-transform border border-slate-100 overflow-hidden" title="Home">
+          <img src="icons/KYT.jpg" alt="KYT" class="w-9 h-9 object-contain rounded-md">
+        </a>
       <button id="btn-open-virtual-trips" class="p-3 bg-white rounded-xl shadow-sm text-kyt-accent hover:text-blue-600 active:scale-90 transition-all border border-slate-100" title="Virtual Trips">
         <i data-lucide="compass" class="w-5 h-5"></i>
       </button>
