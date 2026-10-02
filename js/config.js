@@ -223,19 +223,7 @@ window.KYT.config = (() => {
   }
 
   // ── Open / close ──────────────────────────────────────────────────────────
-  function openConfigView() {
-    const { tripName, tripNotes } = KYT.store.get();
-    inputTripName.value  = tripName;
-    inputTripNotes.value = tripNotes;
-    updateCoverPreview();
-    renderConfigSteps();
-
-    mainView.classList.add('opacity-0');
-    setTimeout(() => {
-      mainView.classList.add('hidden');
-      configView.classList.remove('hidden');
-    }, 300);
-  }
+  function openConfigView() { window.location.href = "configure_trip.html"; }
 
   function closeConfigView() {
     const newName  = inputTripName.value.trim();
@@ -244,10 +232,7 @@ window.KYT.config = (() => {
     KYT.store.setTripNotes(newNotes);
     KYT.store.saveData();
 
-    configView.classList.add('hidden');
-    mainView.classList.remove('hidden');
-    void mainView.offsetWidth;
-    mainView.classList.remove('opacity-0');
+    window.location.href = "index.html";
     KYT.carousel.renderCard();
   }
 
