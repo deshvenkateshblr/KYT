@@ -65,6 +65,7 @@ KYT.virtualTrips = (function() {
     itineraryListRoot: document.getElementById('vt-itinerary-list')
   };
 
+  
   function init() {
     vtrips = loadVTrips();
     
@@ -79,6 +80,11 @@ KYT.virtualTrips = (function() {
         if (e.key === 'Enter') createNewTrip();
       });
     }
+
+    if (window.location.pathname.includes('virtual_trip.html')) {
+        openHub();
+    }
+
 
     if (DOM.listRoot) {
       DOM.listRoot.addEventListener('click', e => {

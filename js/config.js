@@ -236,10 +236,26 @@ window.KYT.config = (() => {
     KYT.carousel.renderCard();
   }
 
+  
+  function endTrip() {
+    if (confirm('Are you sure you want to end and delete the current trip?')) {
+      KYT.store.setTripName('New Trip');
+      KYT.store.setTripNotes('');
+      KYT.store.setCoverImage(null);
+      KYT.store.setStepsData([]);
+      KYT.store.setCurrentIndex(0);
+      KYT.store.saveData();
+      localStorage.removeItem('kyt_stepsData');
+      window.location.href = 'index.html';
+    }
+  }
+
   // Wire static buttons
   document.getElementById('btn-edit-trip').addEventListener('click',    openConfigView);
   document.getElementById('btn-close-config').addEventListener('click', closeConfigView);
   document.getElementById('btn-save-config').addEventListener('click',  closeConfigView);
+  const btnEndTrip = document.getElementById('btn-end-trip');
+  if (btnEndTrip) btnEndTrip.addEventListener('click', endTrip);
 
   return { openConfigView, closeConfigView, renderConfigSteps, moveStep, deleteStep };
 })();

@@ -12,11 +12,25 @@ window.KYT = window.KYT || {};
   await KYT.store.loadData();
 
   // Boot clock and initial card render
+  
   function boot() {
     KYT.clock.start();
     KYT.carousel.renderCard();
     if (window.lucide) lucide.createIcons();
+
+    // Multi-page routing initialization
+    const path = window.location.pathname;
+    if (path.includes('configure_trip.html')) {
+        const inputTripName = document.getElementById('input-trip-name');
+        const inputTripNotes = document.getElementById('input-trip-notes');
+        if (inputTripName) inputTripName.value = KYT.store.get().tripName || '';
+        if (inputTripNotes) inputTripNotes.value = KYT.store.get().tripNotes || '';
+        if (KYT.config && KYT.config.renderConfigSteps) {
+            KYT.config.renderConfigSteps();
+        }
+    }
   }
+
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);
