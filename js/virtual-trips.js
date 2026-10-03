@@ -65,118 +65,9 @@ KYT.virtualTrips = (function() {
     itineraryListRoot: document.getElementById('vt-itinerary-list')
   };
 
-  
-  function init() {
-    vtrips = loadVTrips();
-    
-    if (DOM.btnClose) DOM.btnClose.addEventListener('click', closeView);
-    const btnOpen = document.getElementById('btn-open-virtual-trips');
-    if (btnOpen) btnOpen.addEventListener('click', openView);
-
-    // Hub events
-    if (DOM.btnCreate) DOM.btnCreate.addEventListener('click', createNewTrip);
-    if (DOM.newNameInput) {
-      DOM.newNameInput.addEventListener('keypress', e => {
-        if (e.key === 'Enter') createNewTrip();
-      });
-    }
-
-    if (window.location.pathname.includes('virtual_trip.html')) {
-        openHub();
-    }
 
 
-    if (DOM.listRoot) {
-      DOM.listRoot.addEventListener('click', e => {
-        const delBtn = e.target.closest('.btn-del-vt');
-        if (delBtn) {
-           e.stopPropagation();
-           deleteTrip(delBtn.dataset.id);
-           return;
-        }
-        const card = e.target.closest('.vt-card');
-        if (card) {
-          const trip = vtrips.find(t => t.id === card.dataset.id);
-          if (trip && trip.steps && trip.steps.length > 0) {
-             currentTripId = trip.id;
-             openBuilder();
-          } else {
-             openCanvas(card.dataset.id);
-          }
-        }
-      });
-    }
 
-    // Canvas events
-    if (DOM.editNameInput) {
-      DOM.editNameInput.addEventListener('change', e => {
-        const trip = getActiveTrip();
-        if (trip) {
-          trip.name = e.target.value.trim() || 'Untitled Trip';
-          saveVTrips();
-        }
-      });
-    }
-
-    if (DOM.tasteRoot) {
-      DOM.tasteRoot.addEventListener('click', e => {
-        const chip = e.target.closest('.vt-chip');
-        if (!chip) return;
-        const trip = getActiveTrip();
-        if (trip) {
-          trip.taste[chip.dataset.field] = chip.dataset.id;
-          trip.steps = null; // Reset built steps if taste changes
-          saveVTrips();
-          renderCanvas();
-        }
-      });
-    }
-
-    if (DOM.selectedCitiesRoot) {
-      DOM.selectedCitiesRoot.addEventListener('click', e => {
-        const delBtn = e.target.closest('.btn-del-city');
-        if (!delBtn) return;
-        const trip = getActiveTrip();
-        if (trip) {
-          trip.cities = trip.cities.filter(c => c !== delBtn.dataset.id);
-          trip.steps = null; // Reset built steps if cities change
-          saveVTrips();
-          renderCanvas();
-        }
-      });
-    }
-
-    if (DOM.citySearchInput) {
-      DOM.citySearchInput.addEventListener('input', () => renderCityLibrary());
-    }
-
-    if (DOM.cityListRoot) {
-      DOM.cityListRoot.addEventListener('click', e => {
-        const addBtn = e.target.closest('.btn-add-city');
-        if (!addBtn) return;
-        const trip = getActiveTrip();
-        if (trip) {
-          if (!trip.cities.includes(addBtn.dataset.id)) {
-            trip.cities.push(addBtn.dataset.id);
-            trip.steps = null;
-            saveVTrips();
-            renderCanvas();
-          }
-        }
-      });
-    }
-
-    if (DOM.btnBuild) {
-      DOM.btnBuild.addEventListener('click', () => {
-        const trip = getActiveTrip();
-        if (trip) {
-            trip.steps = generateSteps(trip);
-            saveVTrips();
-            openBuilder();
-        }
-      });
-    }
-  }
 
   // --- Storage ---
   function loadVTrips() {
@@ -487,22 +378,119 @@ KYT.virtualTrips = (function() {
     openCanvas(currentTripId);
   }
 
-  function openView() {
-    const mainView = document.getElementById('main-view');
-    if (mainView) {
-      mainView.classList.add('opacity-0');
-      setTimeout(() => {
-        mainView.classList.add('hidden');
-        if (DOM.view) DOM.view.classList.remove('hidden');
-        openHub();
-      }, 200);
-    } else {
-      if (DOM.view) DOM.view.classList.remove('hidden');
+  // ─── Navigation ───────────────────────────────────────────────────────────────
+  // Simple page-level navigation. All toolbar buttons use window.location so they
+  // work correctly regardless of which HTML page is currently loaded.
+  function openView()  { window.location.href = 'virtual_trip.html'; }
+  function closeView() { window.location.href = 'index.html'; }
+
+  // ─── Init ─────────────────────────────────────────────────────────────────────
+  function init() {
+    vtrips = loadVTrips();
+
+    // Wire the Close button inside virtual_trip.html
+    if (DOM.btnClose) DOM.btnClose.addEventListener('click', closeView);
+
+    // Wire the toolbar compass icon from *any* page.
+    // cloneNode trick removes any stale listeners from prior JS loads.
+    const btnOpen = document.getElementById('btn-open-virtual-trips');
+    if (btnOpen) {
+      const fresh = btnOpen.cloneNode(true);
+      btnOpen.replaceWith(fresh);
+      fresh.addEventListener('click', openView);
+    }
+
+    // ── Hub ──────────────────────────────────────────────────────────────────────
+    if (DOM.btnCreate) DOM.btnCreate.addEventListener('click', createNewTrip);
+    if (DOM.newNameInput) {
+      DOM.newNameInput.addEventListener('keypress', e => {
+        if (e.key === 'Enter') createNewTrip();
+      });
+    }
+
+    if (DOM.listRoot) {
+      DOM.listRoot.addEventListener('click', e => {
+        const delBtn = e.target.closest('.btn-del-vt');
+        if (delBtn) { e.stopPropagation(); deleteTrip(delBtn.dataset.id); return; }
+        const card = e.target.closest('.vt-card');
+        if (card) {
+          const trip = vtrips.find(t => t.id === card.dataset.id);
+          if (trip && trip.steps && trip.steps.length > 0) {
+            currentTripId = trip.id;
+            openBuilder();
+          } else {
+            openCanvas(card.dataset.id);
+          }
+        }
+      });
+    }
+
+    // ── Canvas ───────────────────────────────────────────────────────────────────
+    if (DOM.editNameInput) {
+      DOM.editNameInput.addEventListener('change', e => {
+        const trip = getActiveTrip();
+        if (trip) { trip.name = e.target.value.trim() || 'Untitled Trip'; saveVTrips(); }
+      });
+    }
+
+    if (DOM.tasteRoot) {
+      DOM.tasteRoot.addEventListener('click', e => {
+        const chip = e.target.closest('.vt-chip');
+        if (!chip) return;
+        const trip = getActiveTrip();
+        if (trip) {
+          trip.taste[chip.dataset.field] = chip.dataset.id;
+          trip.steps = null;
+          saveVTrips();
+          renderCanvas();
+        }
+      });
+    }
+
+    if (DOM.selectedCitiesRoot) {
+      DOM.selectedCitiesRoot.addEventListener('click', e => {
+        const delBtn = e.target.closest('.btn-del-city');
+        if (!delBtn) return;
+        const trip = getActiveTrip();
+        if (trip) {
+          trip.cities = trip.cities.filter(c => c !== delBtn.dataset.id);
+          trip.steps = null;
+          saveVTrips();
+          renderCanvas();
+        }
+      });
+    }
+
+    if (DOM.citySearchInput) {
+      DOM.citySearchInput.addEventListener('input', () => renderCityLibrary());
+    }
+
+    if (DOM.cityListRoot) {
+      DOM.cityListRoot.addEventListener('click', e => {
+        const addBtn = e.target.closest('.btn-add-city');
+        if (!addBtn) return;
+        const trip = getActiveTrip();
+        if (trip && !trip.cities.includes(addBtn.dataset.id)) {
+          trip.cities.push(addBtn.dataset.id);
+          trip.steps = null;
+          saveVTrips();
+          renderCanvas();
+        }
+      });
+    }
+
+    if (DOM.btnBuild) {
+      DOM.btnBuild.addEventListener('click', () => {
+        const trip = getActiveTrip();
+        if (trip) { trip.steps = generateSteps(trip); saveVTrips(); openBuilder(); }
+      });
+    }
+
+    // If we ARE on virtual_trip.html, auto-launch the hub
+    if (window.location.pathname.includes('virtual_trip.html')) {
       openHub();
     }
   }
-
-  function closeView() { window.location.href = "index.html"; }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);

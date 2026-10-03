@@ -10,14 +10,77 @@ window.KYT_CITIES = [
       {
         "title": "Taj Mahal",
         "icon": "landmark",
-        "where": "Taj Mahal, Agra",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Taj%20Mahal%20Agra",
-        "notes": "Must-visit spot in Agra",
+        "where": "Taj Ganj, Agra",
+        "hour": 7,
+        "intent": [
+          "cultural",
+          "spiritual"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Taj%20Ganj%2C%20Agra",
+        "notes": "Visit Taj Mahal in Agra."
+      },
+      {
+        "title": "Agra Fort",
+        "icon": "landmark",
+        "where": "Rakabganj, Agra",
         "hour": 10,
         "intent": [
-          "spiritual",
-          "cultural",
-          "adventure",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Rakabganj%2C%20Agra",
+        "notes": "Visit Agra Fort in Agra."
+      },
+      {
+        "title": "Mehtab Bagh sunset",
+        "icon": "camera",
+        "where": "Mehtab Bagh, Agra",
+        "hour": 17,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mehtab%20Bagh%2C%20Agra",
+        "notes": "Visit Mehtab Bagh sunset in Agra."
+      },
+      {
+        "title": "Petha & chaat at Kinari Bazaar",
+        "icon": "utensils",
+        "where": "Kinari Bazaar, Agra",
+        "hour": 13,
+        "intent": [
           "culinary"
         ],
         "faith": [
@@ -27,9 +90,41 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
-          "standard"
+          "standard",
+          "deep"
         ],
-        "mobility": "easy"
+        "mobility": "easy",
+        "diet": [
+          "veg",
+          "satvik",
+          "jain",
+          "any"
+        ],
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kinari%20Bazaar%2C%20Agra",
+        "notes": "Visit Petha & chaat at Kinari Bazaar in Agra."
+      },
+      {
+        "title": "Fatehpur Sikri",
+        "icon": "landmark",
+        "where": "Fatehpur Sikri, Agra",
+        "hour": 14,
+        "intent": [
+          "cultural",
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Fatehpur%20Sikri%2C%20Agra",
+        "notes": "Visit Fatehpur Sikri in Agra."
       }
     ]
   },
@@ -44,15 +139,79 @@ window.KYT_CITIES = [
       {
         "title": "Amber Fort",
         "icon": "landmark",
-        "where": "Amber Fort, Jaipur",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Amber%20Fort%20Jaipur",
-        "notes": "Must-visit spot in Jaipur",
+        "where": "Devisinghpura, Jaipur",
+        "hour": 9,
+        "intent": [
+          "cultural",
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Devisinghpura%2C%20Jaipur",
+        "notes": "Visit Amber Fort in Jaipur."
+      },
+      {
+        "title": "City Palace",
+        "icon": "landmark",
+        "where": "Tulsi Marg, Jaipur",
+        "hour": 11,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Tulsi%20Marg%2C%20Jaipur",
+        "notes": "Visit City Palace in Jaipur."
+      },
+      {
+        "title": "Hawa Mahal",
+        "icon": "camera",
+        "where": "Badi Choupad, Jaipur",
+        "hour": 8,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Badi%20Choupad%2C%20Jaipur",
+        "notes": "Visit Hawa Mahal in Jaipur."
+      },
+      {
+        "title": "Jantar Mantar observatory",
+        "icon": "landmark",
+        "where": "Connaught Place, Jaipur",
         "hour": 10,
         "intent": [
-          "spiritual",
           "cultural",
-          "adventure",
-          "culinary"
+          "adventure"
         ],
         "faith": [
           "any"
@@ -63,7 +222,60 @@ window.KYT_CITIES = [
         "pace": [
           "standard"
         ],
-        "mobility": "easy"
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Connaught%20Place%2C%20Jaipur",
+        "notes": "Visit Jantar Mantar observatory in Jaipur."
+      },
+      {
+        "title": "Dal baati churma dinner",
+        "icon": "utensils",
+        "where": "MI Road, Jaipur",
+        "hour": 19,
+        "intent": [
+          "culinary"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "diet": [
+          "veg",
+          "satvik",
+          "jain",
+          "any"
+        ],
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=MI%20Road%2C%20Jaipur",
+        "notes": "Visit Dal baati churma dinner in Jaipur."
+      },
+      {
+        "title": "Nahargarh Fort at sunset",
+        "icon": "camera",
+        "where": "Nahargarh, Jaipur",
+        "hour": 17,
+        "intent": [
+          "cultural",
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Nahargarh%2C%20Jaipur",
+        "notes": "Visit Nahargarh Fort at sunset in Jaipur."
       }
     ]
   },
@@ -76,16 +288,101 @@ window.KYT_CITIES = [
     "notes": "A tropical paradise known for its pristine beaches, vibrant nightlife, and Portuguese heritage.",
     "beats": [
       {
-        "title": "Baga Beach",
+        "title": "Baga Beach morning",
         "icon": "waves",
-        "where": "Baga Beach, Goa",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Baga%20Beach%20Goa",
-        "notes": "Must-visit spot in Goa",
+        "where": "Baga, North Goa",
+        "hour": 8,
+        "intent": [
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Baga%2C%20North%20Goa",
+        "notes": "Visit Baga Beach morning in Goa."
+      },
+      {
+        "title": "Basilica of Bom Jesus",
+        "icon": "landmark",
+        "where": "Old Goa",
         "hour": 10,
         "intent": [
-          "spiritual",
           "cultural",
-          "adventure",
+          "spiritual"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Old%20Goa",
+        "notes": "Visit Basilica of Bom Jesus in Goa."
+      },
+      {
+        "title": "Dudhsagar Falls trek",
+        "icon": "tree-pine",
+        "where": "Dudhsagar, South Goa",
+        "hour": 9,
+        "intent": [
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "trek",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Dudhsagar%2C%20South%20Goa",
+        "notes": "Visit Dudhsagar Falls trek in Goa."
+      },
+      {
+        "title": "Anjuna Flea Market",
+        "icon": "shopping-bag",
+        "where": "Anjuna, North Goa",
+        "hour": 11,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Anjuna%2C%20North%20Goa",
+        "notes": "Visit Anjuna Flea Market in Goa."
+      },
+      {
+        "title": "Seafood thali at a beach shack",
+        "icon": "utensils",
+        "where": "Calangute, Goa",
+        "hour": 13,
+        "intent": [
           "culinary"
         ],
         "faith": [
@@ -95,9 +392,16 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
-          "standard"
+          "short",
+          "standard",
+          "deep"
         ],
-        "mobility": "easy"
+        "mobility": "easy",
+        "diet": [
+          "any"
+        ],
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Calangute%2C%20Goa",
+        "notes": "Visit Seafood thali at a beach shack in Goa."
       }
     ]
   },
@@ -110,16 +414,102 @@ window.KYT_CITIES = [
     "notes": "A serene hill station surrounded by rolling tea gardens and misty peaks.",
     "beats": [
       {
-        "title": "Tea Museum",
-        "icon": "coffee",
-        "where": "Tea Museum, Munnar",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Tea%20Museum%20Munnar",
-        "notes": "Must-visit spot in Munnar",
-        "hour": 10,
+        "title": "Eravikulam National Park",
+        "icon": "tree-pine",
+        "where": "Eravikulam, Munnar",
+        "hour": 8,
         "intent": [
-          "spiritual",
-          "cultural",
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Eravikulam%2C%20Munnar",
+        "notes": "Visit Eravikulam National Park in Munnar."
+      },
+      {
+        "title": "Tea Garden walk",
+        "icon": "tree-pine",
+        "where": "Rajamala, Munnar",
+        "hour": 9,
+        "intent": [
           "adventure",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Rajamala%2C%20Munnar",
+        "notes": "Visit Tea Garden walk in Munnar."
+      },
+      {
+        "title": "Tea Museum",
+        "icon": "camera",
+        "where": "Nallathanni, Munnar",
+        "hour": 11,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Nallathanni%2C%20Munnar",
+        "notes": "Visit Tea Museum in Munnar."
+      },
+      {
+        "title": "Mattupetty Dam & boat",
+        "icon": "waves",
+        "where": "Mattupetty, Munnar",
+        "hour": 14,
+        "intent": [
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mattupetty%2C%20Munnar",
+        "notes": "Visit Mattupetty Dam & boat in Munnar."
+      },
+      {
+        "title": "Kerala sadya lunch",
+        "icon": "utensils",
+        "where": "Munnar town",
+        "hour": 13,
+        "intent": [
           "culinary"
         ],
         "faith": [
@@ -129,9 +519,18 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
-          "standard"
+          "short",
+          "standard",
+          "deep"
         ],
-        "mobility": "easy"
+        "mobility": "easy",
+        "diet": [
+          "veg",
+          "satvik",
+          "any"
+        ],
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Munnar%20town",
+        "notes": "Visit Kerala sadya lunch in Munnar."
       }
     ]
   },
@@ -146,14 +545,102 @@ window.KYT_CITIES = [
       {
         "title": "City Palace",
         "icon": "landmark",
-        "where": "City Palace, Udaipur",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=City%20Palace%20Udaipur",
-        "notes": "Must-visit spot in Udaipur",
-        "hour": 10,
+        "where": "City Palace Rd, Udaipur",
+        "hour": 9,
         "intent": [
-          "spiritual",
-          "cultural",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=City%20Palace%20Rd%2C%20Udaipur",
+        "notes": "Visit City Palace in Udaipur."
+      },
+      {
+        "title": "Lake Pichola boat ride",
+        "icon": "waves",
+        "where": "Bansi Ghat, Udaipur",
+        "hour": 17,
+        "intent": [
           "adventure",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Bansi%20Ghat%2C%20Udaipur",
+        "notes": "Visit Lake Pichola boat ride in Udaipur."
+      },
+      {
+        "title": "Jagdish Temple",
+        "icon": "landmark",
+        "where": "Temple Rd, Udaipur",
+        "hour": 8,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Temple%20Rd%2C%20Udaipur",
+        "notes": "Visit Jagdish Temple in Udaipur."
+      },
+      {
+        "title": "Sajjangarh Monsoon Palace",
+        "icon": "camera",
+        "where": "Sajjangarh, Udaipur",
+        "hour": 16,
+        "intent": [
+          "cultural",
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sajjangarh%2C%20Udaipur",
+        "notes": "Visit Sajjangarh Monsoon Palace in Udaipur."
+      },
+      {
+        "title": "Dal baati churma dinner",
+        "icon": "utensils",
+        "where": "Old City, Udaipur",
+        "hour": 19,
+        "intent": [
           "culinary"
         ],
         "faith": [
@@ -163,9 +650,18 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
-          "standard"
+          "standard",
+          "deep"
         ],
-        "mobility": "easy"
+        "mobility": "easy",
+        "diet": [
+          "veg",
+          "satvik",
+          "jain",
+          "any"
+        ],
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Old%20City%2C%20Udaipur",
+        "notes": "Visit Dal baati churma dinner in Udaipur."
       }
     ]
   },
@@ -178,16 +674,105 @@ window.KYT_CITIES = [
     "notes": "The spiritual heart of India, famous for its ancient temples and sacred ghats.",
     "beats": [
       {
-        "title": "Kashi Vishwanath Temple",
+        "title": "Dashashwamedh Ghat morning aarti",
         "icon": "landmark",
-        "where": "Kashi Vishwanath Temple, Varanasi",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kashi%20Vishwanath%20Temple%20Varanasi",
-        "notes": "Must-visit spot in Varanasi",
-        "hour": 10,
+        "where": "Dashashwamedh Ghat, Varanasi",
+        "hour": 5,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Dashashwamedh%20Ghat%2C%20Varanasi",
+        "notes": "Visit Dashashwamedh Ghat morning aarti in Varanasi."
+      },
+      {
+        "title": "Sunrise boat ride on the Ganges",
+        "icon": "waves",
+        "where": "Assi Ghat, Varanasi",
+        "hour": 6,
         "intent": [
           "spiritual",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Assi%20Ghat%2C%20Varanasi",
+        "notes": "Visit Sunrise boat ride on the Ganges in Varanasi."
+      },
+      {
+        "title": "Kashi Vishwanath Temple",
+        "icon": "landmark",
+        "where": "Vishwanath Gali, Varanasi",
+        "hour": 8,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Vishwanath%20Gali%2C%20Varanasi",
+        "notes": "Visit Kashi Vishwanath Temple in Varanasi."
+      },
+      {
+        "title": "Sarnath Buddhist ruins",
+        "icon": "landmark",
+        "where": "Sarnath, Varanasi",
+        "hour": 11,
+        "intent": [
           "cultural",
-          "adventure",
+          "spiritual"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sarnath%2C%20Varanasi",
+        "notes": "Visit Sarnath Buddhist ruins in Varanasi."
+      },
+      {
+        "title": "Banarasi thandai & chaat",
+        "icon": "utensils",
+        "where": "Godowlia, Varanasi",
+        "hour": 14,
+        "intent": [
           "culinary"
         ],
         "faith": [
@@ -197,9 +782,42 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
-          "standard"
+          "short",
+          "standard",
+          "deep"
         ],
-        "mobility": "easy"
+        "mobility": "easy",
+        "diet": [
+          "veg",
+          "satvik",
+          "any"
+        ],
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Godowlia%2C%20Varanasi",
+        "notes": "Visit Banarasi thandai & chaat in Varanasi."
+      },
+      {
+        "title": "Ganga Aarti at dusk",
+        "icon": "camera",
+        "where": "Dashashwamedh Ghat, Varanasi",
+        "hour": 19,
+        "intent": [
+          "spiritual",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Dashashwamedh%20Ghat%2C%20Varanasi",
+        "notes": "Visit Ganga Aarti at dusk in Varanasi."
       }
     ]
   },
@@ -214,14 +832,99 @@ window.KYT_CITIES = [
       {
         "title": "Red Fort",
         "icon": "landmark",
-        "where": "Red Fort, Delhi",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Red%20Fort%20Delhi",
-        "notes": "Must-visit spot in Delhi",
+        "where": "Lal Qila, Delhi",
+        "hour": 9,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Lal%20Qila%2C%20Delhi",
+        "notes": "Visit Red Fort in Delhi."
+      },
+      {
+        "title": "Qutub Minar complex",
+        "icon": "landmark",
+        "where": "Mehrauli, Delhi",
+        "hour": 11,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mehrauli%2C%20Delhi",
+        "notes": "Visit Qutub Minar complex in Delhi."
+      },
+      {
+        "title": "Humayun's Tomb gardens",
+        "icon": "tree-pine",
+        "where": "Nizamuddin East, Delhi",
         "hour": 10,
         "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Nizamuddin%20East%2C%20Delhi",
+        "notes": "Visit Humayun's Tomb gardens in Delhi."
+      },
+      {
+        "title": "Jama Masjid sunrise",
+        "icon": "landmark",
+        "where": "Chandni Chowk, Delhi",
+        "hour": 7,
+        "intent": [
           "spiritual",
-          "cultural",
-          "adventure",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chandni%20Chowk%2C%20Delhi",
+        "notes": "Visit Jama Masjid sunrise in Delhi."
+      },
+      {
+        "title": "Chandni Chowk street food walk",
+        "icon": "utensils",
+        "where": "Chandni Chowk, Delhi",
+        "hour": 8,
+        "intent": [
           "culinary"
         ],
         "faith": [
@@ -231,9 +934,61 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "diet": [
+          "veg",
+          "any"
+        ],
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chandni%20Chowk%2C%20Delhi",
+        "notes": "Visit Chandni Chowk street food walk in Delhi."
+      },
+      {
+        "title": "India Gate & Rajpath",
+        "icon": "camera",
+        "where": "Rajpath, Delhi",
+        "hour": 17,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
           "standard"
         ],
-        "mobility": "easy"
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Rajpath%2C%20Delhi",
+        "notes": "Visit India Gate & Rajpath in Delhi."
+      },
+      {
+        "title": "Lodhi Garden walk",
+        "icon": "tree-pine",
+        "where": "Lodhi Road, Delhi",
+        "hour": 7,
+        "intent": [
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Lodhi%20Road%2C%20Delhi",
+        "notes": "Visit Lodhi Garden walk in Delhi."
       }
     ]
   },
@@ -248,14 +1003,99 @@ window.KYT_CITIES = [
       {
         "title": "Gateway of India",
         "icon": "landmark",
-        "where": "Gateway of India, Mumbai",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Gateway%20of%20India%20Mumbai",
-        "notes": "Must-visit spot in Mumbai",
+        "where": "Apollo Bunder, Mumbai",
+        "hour": 8,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Apollo%20Bunder%2C%20Mumbai",
+        "notes": "Visit Gateway of India in Mumbai."
+      },
+      {
+        "title": "Marine Drive sunset walk",
+        "icon": "waves",
+        "where": "Marine Drive, Mumbai",
+        "hour": 18,
+        "intent": [
+          "adventure",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Marine%20Drive%2C%20Mumbai",
+        "notes": "Visit Marine Drive sunset walk in Mumbai."
+      },
+      {
+        "title": "Elephanta Caves ferry",
+        "icon": "landmark",
+        "where": "Elephanta Island, Mumbai",
+        "hour": 9,
+        "intent": [
+          "cultural",
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Elephanta%20Island%2C%20Mumbai",
+        "notes": "Visit Elephanta Caves ferry in Mumbai."
+      },
+      {
+        "title": "Dharavi neighbourhood walk",
+        "icon": "camera",
+        "where": "Dharavi, Mumbai",
         "hour": 10,
         "intent": [
-          "spiritual",
-          "cultural",
-          "adventure",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Dharavi%2C%20Mumbai",
+        "notes": "Visit Dharavi neighbourhood walk in Mumbai."
+      },
+      {
+        "title": "Vada pav at Dadar market",
+        "icon": "utensils",
+        "where": "Dadar, Mumbai",
+        "hour": 8,
+        "intent": [
           "culinary"
         ],
         "faith": [
@@ -265,9 +1105,39 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
-          "standard"
+          "short",
+          "standard",
+          "deep"
         ],
-        "mobility": "easy"
+        "mobility": "easy",
+        "diet": [
+          "veg",
+          "any"
+        ],
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Dadar%2C%20Mumbai",
+        "notes": "Visit Vada pav at Dadar market in Mumbai."
+      },
+      {
+        "title": "Haji Ali Dargah",
+        "icon": "landmark",
+        "where": "Worli, Mumbai",
+        "hour": 9,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Worli%2C%20Mumbai",
+        "notes": "Visit Haji Ali Dargah in Mumbai."
       }
     ]
   },
@@ -280,16 +1150,101 @@ window.KYT_CITIES = [
     "notes": "A coastal city famous for its Chinese fishing nets and historic spice markets.",
     "beats": [
       {
-        "title": "Fort Kochi",
-        "icon": "landmark",
+        "title": "Chinese Fishing Nets at dawn",
+        "icon": "camera",
         "where": "Fort Kochi, Kochi",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Fort%20Kochi%20Kochi",
-        "notes": "Must-visit spot in Kochi",
+        "hour": 6,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Fort%20Kochi%2C%20Kochi",
+        "notes": "Visit Chinese Fishing Nets at dawn in Kochi."
+      },
+      {
+        "title": "Mattancherry Palace Museum",
+        "icon": "landmark",
+        "where": "Mattancherry, Kochi",
+        "hour": 9,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mattancherry%2C%20Kochi",
+        "notes": "Visit Mattancherry Palace Museum in Kochi."
+      },
+      {
+        "title": "Paradesi Synagogue",
+        "icon": "landmark",
+        "where": "Jew Town, Kochi",
         "hour": 10,
         "intent": [
-          "spiritual",
           "cultural",
-          "adventure",
+          "spiritual"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Jew%20Town%2C%20Kochi",
+        "notes": "Visit Paradesi Synagogue in Kochi."
+      },
+      {
+        "title": "Kerala backwater boat cruise",
+        "icon": "waves",
+        "where": "Vypeen, Kochi",
+        "hour": 14,
+        "intent": [
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Vypeen%2C%20Kochi",
+        "notes": "Visit Kerala backwater boat cruise in Kochi."
+      },
+      {
+        "title": "Kerala seafood thali",
+        "icon": "utensils",
+        "where": "Fort Kochi",
+        "hour": 13,
+        "intent": [
           "culinary"
         ],
         "faith": [
@@ -299,9 +1254,16 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
-          "standard"
+          "short",
+          "standard",
+          "deep"
         ],
-        "mobility": "easy"
+        "mobility": "easy",
+        "diet": [
+          "any"
+        ],
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Fort%20Kochi",
+        "notes": "Visit Kerala seafood thali in Kochi."
       }
     ]
   },
@@ -314,17 +1276,37 @@ window.KYT_CITIES = [
     "notes": "The Yoga Capital of the World, offering spiritual retreats and river rafting.",
     "beats": [
       {
-        "title": "Lakshman Jhula",
+        "title": "Triveni Ghat aarti",
         "icon": "landmark",
+        "where": "Triveni Ghat, Rishikesh",
+        "hour": 6,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Triveni%20Ghat%2C%20Rishikesh",
+        "notes": "Visit Triveni Ghat aarti in Rishikesh."
+      },
+      {
+        "title": "Lakshman Jhula walk",
+        "icon": "waves",
         "where": "Lakshman Jhula, Rishikesh",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Lakshman%20Jhula%20Rishikesh",
-        "notes": "Must-visit spot in Rishikesh",
-        "hour": 10,
+        "hour": 8,
         "intent": [
           "spiritual",
-          "cultural",
-          "adventure",
-          "culinary"
+          "cultural"
         ],
         "faith": [
           "any"
@@ -333,9 +1315,80 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
-          "standard"
+          "short",
+          "standard",
+          "deep"
         ],
-        "mobility": "easy"
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Lakshman%20Jhula%2C%20Rishikesh",
+        "notes": "Visit Lakshman Jhula walk in Rishikesh."
+      },
+      {
+        "title": "White water rafting",
+        "icon": "waves",
+        "where": "Shivpuri, Rishikesh",
+        "hour": 10,
+        "intent": [
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Shivpuri%2C%20Rishikesh",
+        "notes": "Visit White water rafting in Rishikesh."
+      },
+      {
+        "title": "Yoga/meditation session",
+        "icon": "coffee",
+        "where": "Rishikesh ashrams",
+        "hour": 7,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Rishikesh%20ashrams",
+        "notes": "Visit Yoga/meditation session in Rishikesh."
+      },
+      {
+        "title": "Beatles Ashram",
+        "icon": "landmark",
+        "where": "Rajaji National Park, Rishikesh",
+        "hour": 11,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Rajaji%20National%20Park%2C%20Rishikesh",
+        "notes": "Visit Beatles Ashram in Rishikesh."
       }
     ]
   },
@@ -348,16 +1401,126 @@ window.KYT_CITIES = [
     "notes": "A breathtaking hill station known for adventure sports and snow-capped peaks.",
     "beats": [
       {
-        "title": "Solang Valley",
+        "title": "Solang Valley snow/ski",
         "icon": "tree-pine",
         "where": "Solang Valley, Manali",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Solang%20Valley%20Manali",
-        "notes": "Must-visit spot in Manali",
+        "hour": 9,
+        "intent": [
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Solang%20Valley%2C%20Manali",
+        "notes": "Visit Solang Valley snow/ski in Manali."
+      },
+      {
+        "title": "Hadimba Devi Temple",
+        "icon": "landmark",
+        "where": "Dungri, Manali",
+        "hour": 8,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Dungri%2C%20Manali",
+        "notes": "Visit Hadimba Devi Temple in Manali."
+      },
+      {
+        "title": "Rohtang Pass excursion",
+        "icon": "tree-pine",
+        "where": "Rohtang Pass, Manali",
+        "hour": 7,
+        "intent": [
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Rohtang%20Pass%2C%20Manali",
+        "notes": "Visit Rohtang Pass excursion in Manali."
+      },
+      {
+        "title": "Vashisht hot spring temple",
+        "icon": "landmark",
+        "where": "Vashisht, Manali",
         "hour": 10,
         "intent": [
           "spiritual",
-          "cultural",
-          "adventure",
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Vashisht%2C%20Manali",
+        "notes": "Visit Vashisht hot spring temple in Manali."
+      },
+      {
+        "title": "Tibetan monastery visit",
+        "icon": "landmark",
+        "where": "The Mall, Manali",
+        "hour": 11,
+        "intent": [
+          "spiritual",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=The%20Mall%2C%20Manali",
+        "notes": "Visit Tibetan monastery visit in Manali."
+      },
+      {
+        "title": "Rajma chawal at a dhaba",
+        "icon": "utensils",
+        "where": "Old Manali",
+        "hour": 13,
+        "intent": [
           "culinary"
         ],
         "faith": [
@@ -367,9 +1530,17 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
-          "standard"
+          "short",
+          "standard",
+          "deep"
         ],
-        "mobility": "easy"
+        "mobility": "easy",
+        "diet": [
+          "veg",
+          "any"
+        ],
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Old%20Manali",
+        "notes": "Visit Rajma chawal at a dhaba in Manali."
       }
     ]
   },
@@ -484,16 +1655,102 @@ window.KYT_CITIES = [
     "notes": "A royal city known for its magnificent palace and rich cultural heritage.",
     "beats": [
       {
-        "title": "Mysore Palace",
+        "title": "Mysore Palace light show",
         "icon": "landmark",
         "where": "Mysore Palace, Mysore",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mysore%20Palace%20Mysore",
-        "notes": "Must-visit spot in Mysore",
+        "hour": 19,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mysore%20Palace%2C%20Mysore",
+        "notes": "Visit Mysore Palace light show in Mysore."
+      },
+      {
+        "title": "Chamundeshwari Temple",
+        "icon": "landmark",
+        "where": "Chamundi Hill, Mysore",
+        "hour": 7,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chamundi%20Hill%2C%20Mysore",
+        "notes": "Visit Chamundeshwari Temple in Mysore."
+      },
+      {
+        "title": "Brindavan Gardens",
+        "icon": "tree-pine",
+        "where": "Brindavan, Mysore",
+        "hour": 18,
+        "intent": [
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Brindavan%2C%20Mysore",
+        "notes": "Visit Brindavan Gardens in Mysore."
+      },
+      {
+        "title": "Devaraja Market walk",
+        "icon": "shopping-bag",
+        "where": "Sayyaji Rao Rd, Mysore",
         "hour": 10,
         "intent": [
-          "spiritual",
-          "cultural",
-          "adventure",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sayyaji%20Rao%20Rd%2C%20Mysore",
+        "notes": "Visit Devaraja Market walk in Mysore."
+      },
+      {
+        "title": "Mysore pak & filter coffee",
+        "icon": "utensils",
+        "where": "Mysore town",
+        "hour": 9,
+        "intent": [
           "culinary"
         ],
         "faith": [
@@ -503,9 +1760,18 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
-          "standard"
+          "short",
+          "standard",
+          "deep"
         ],
-        "mobility": "easy"
+        "mobility": "easy",
+        "diet": [
+          "veg",
+          "satvik",
+          "any"
+        ],
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mysore%20town",
+        "notes": "Visit Mysore pak & filter coffee in Mysore."
       }
     ]
   },
@@ -521,13 +1787,76 @@ window.KYT_CITIES = [
         "title": "Charminar",
         "icon": "landmark",
         "where": "Charminar, Hyderabad",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Charminar%20Hyderabad",
-        "notes": "Must-visit spot in Hyderabad",
+        "hour": 9,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Charminar%2C%20Hyderabad",
+        "notes": "Visit Charminar in Hyderabad."
+      },
+      {
+        "title": "Golconda Fort",
+        "icon": "landmark",
+        "where": "Ibrahim Bagh, Hyderabad",
         "hour": 10,
         "intent": [
-          "spiritual",
           "cultural",
-          "adventure",
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Ibrahim%20Bagh%2C%20Hyderabad",
+        "notes": "Visit Golconda Fort in Hyderabad."
+      },
+      {
+        "title": "Ramoji Film City",
+        "icon": "camera",
+        "where": "Ramoji Film City, Hyderabad",
+        "hour": 9,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Ramoji%20Film%20City%2C%20Hyderabad",
+        "notes": "Visit Ramoji Film City in Hyderabad."
+      },
+      {
+        "title": "Hyderabadi dum biryani lunch",
+        "icon": "utensils",
+        "where": "Paradise, Hyderabad",
+        "hour": 13,
+        "intent": [
           "culinary"
         ],
         "faith": [
@@ -537,9 +1866,38 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
-          "standard"
+          "short",
+          "standard",
+          "deep"
         ],
-        "mobility": "easy"
+        "mobility": "easy",
+        "diet": [
+          "any"
+        ],
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Paradise%2C%20Hyderabad",
+        "notes": "Visit Hyderabadi dum biryani lunch in Hyderabad."
+      },
+      {
+        "title": "Laad Bazaar pearl shopping",
+        "icon": "shopping-bag",
+        "where": "Laad Bazaar, Hyderabad",
+        "hour": 11,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Laad%20Bazaar%2C%20Hyderabad",
+        "notes": "Visit Laad Bazaar pearl shopping in Hyderabad."
       }
     ]
   },
@@ -554,14 +1912,102 @@ window.KYT_CITIES = [
       {
         "title": "Victoria Memorial",
         "icon": "landmark",
-        "where": "Victoria Memorial, Kolkata",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Victoria%20Memorial%20Kolkata",
-        "notes": "Must-visit spot in Kolkata",
+        "where": "Queens Way, Kolkata",
         "hour": 10,
         "intent": [
-          "spiritual",
-          "cultural",
-          "adventure",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Queens%20Way%2C%20Kolkata",
+        "notes": "Visit Victoria Memorial in Kolkata."
+      },
+      {
+        "title": "Howrah Bridge walk",
+        "icon": "camera",
+        "where": "Howrah Bridge, Kolkata",
+        "hour": 7,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Howrah%20Bridge%2C%20Kolkata",
+        "notes": "Visit Howrah Bridge walk in Kolkata."
+      },
+      {
+        "title": "Dakshineswar Kali Temple",
+        "icon": "landmark",
+        "where": "Dakshineswar, Kolkata",
+        "hour": 8,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Dakshineswar%2C%20Kolkata",
+        "notes": "Visit Dakshineswar Kali Temple in Kolkata."
+      },
+      {
+        "title": "Kalighat Temple",
+        "icon": "landmark",
+        "where": "Kalighat, Kolkata",
+        "hour": 9,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kalighat%2C%20Kolkata",
+        "notes": "Visit Kalighat Temple in Kolkata."
+      },
+      {
+        "title": "Kati roll & mishti doi",
+        "icon": "utensils",
+        "where": "College Street, Kolkata",
+        "hour": 13,
+        "intent": [
           "culinary"
         ],
         "faith": [
@@ -571,9 +2017,16 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
-          "standard"
+          "short",
+          "standard",
+          "deep"
         ],
-        "mobility": "easy"
+        "mobility": "easy",
+        "diet": [
+          "any"
+        ],
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=College%20Street%2C%20Kolkata",
+        "notes": "Visit Kati roll & mishti doi in Kolkata."
       }
     ]
   },
@@ -656,15 +2109,34 @@ window.KYT_CITIES = [
       {
         "title": "Virupaksha Temple",
         "icon": "landmark",
-        "where": "Virupaksha Temple, Hampi",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Virupaksha%20Temple%20Hampi",
-        "notes": "Must-visit spot in Hampi",
-        "hour": 10,
+        "where": "Hampi Bazaar, Hampi",
+        "hour": 8,
         "intent": [
           "spiritual",
-          "cultural",
-          "adventure",
-          "culinary"
+          "cultural"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Hampi%20Bazaar%2C%20Hampi",
+        "notes": "Visit Virupaksha Temple in Hampi."
+      },
+      {
+        "title": "Vittala Temple with stone chariot",
+        "icon": "landmark",
+        "where": "Vittala Temple, Hampi",
+        "hour": 9,
+        "intent": [
+          "cultural"
         ],
         "faith": [
           "any"
@@ -673,9 +2145,80 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
-          "standard"
+          "standard",
+          "deep"
         ],
-        "mobility": "easy"
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Vittala%20Temple%2C%20Hampi",
+        "notes": "Visit Vittala Temple with stone chariot in Hampi."
+      },
+      {
+        "title": "Matanga Hill sunrise",
+        "icon": "tree-pine",
+        "where": "Matanga Hill, Hampi",
+        "hour": 6,
+        "intent": [
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "trek",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Matanga%20Hill%2C%20Hampi",
+        "notes": "Visit Matanga Hill sunrise in Hampi."
+      },
+      {
+        "title": "Hemakuta Hill temples",
+        "icon": "camera",
+        "where": "Hemakuta Hill, Hampi",
+        "hour": 17,
+        "intent": [
+          "cultural",
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Hemakuta%20Hill%2C%20Hampi",
+        "notes": "Visit Hemakuta Hill temples in Hampi."
+      },
+      {
+        "title": "Coracle ride on Tungabhadra",
+        "icon": "waves",
+        "where": "Hampi ghat",
+        "hour": 7,
+        "intent": [
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Hampi%20ghat",
+        "notes": "Visit Coracle ride on Tungabhadra in Hampi."
       }
     ]
   },
@@ -722,16 +2265,104 @@ window.KYT_CITIES = [
     "notes": "A paradise on earth, famous for its houseboats and stunning Mughal gardens.",
     "beats": [
       {
-        "title": "Dal Lake",
+        "title": "Dal Lake shikara ride",
         "icon": "waves",
         "where": "Dal Lake, Srinagar",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Dal%20Lake%20Srinagar",
-        "notes": "Must-visit spot in Srinagar",
+        "hour": 7,
+        "intent": [
+          "adventure",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Dal%20Lake%2C%20Srinagar",
+        "notes": "Visit Dal Lake shikara ride in Srinagar."
+      },
+      {
+        "title": "Shalimar Bagh",
+        "icon": "tree-pine",
+        "where": "Shalimar, Srinagar",
+        "hour": 9,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Shalimar%2C%20Srinagar",
+        "notes": "Visit Shalimar Bagh in Srinagar."
+      },
+      {
+        "title": "Nishat Bagh",
+        "icon": "tree-pine",
+        "where": "Nishat, Srinagar",
         "hour": 10,
         "intent": [
-          "spiritual",
-          "cultural",
-          "adventure",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Nishat%2C%20Srinagar",
+        "notes": "Visit Nishat Bagh in Srinagar."
+      },
+      {
+        "title": "Hazratbal Shrine",
+        "icon": "landmark",
+        "where": "Hazratbal, Srinagar",
+        "hour": 8,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Hazratbal%2C%20Srinagar",
+        "notes": "Visit Hazratbal Shrine in Srinagar."
+      },
+      {
+        "title": "Wazwan feast",
+        "icon": "utensils",
+        "where": "Srinagar old city",
+        "hour": 13,
+        "intent": [
           "culinary"
         ],
         "faith": [
@@ -741,9 +2372,16 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
-          "standard"
+          "short",
+          "standard",
+          "deep"
         ],
-        "mobility": "easy"
+        "mobility": "easy",
+        "diet": [
+          "any"
+        ],
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Srinagar%20old%20city",
+        "notes": "Visit Wazwan feast in Srinagar."
       }
     ]
   },
@@ -758,15 +2396,10 @@ window.KYT_CITIES = [
       {
         "title": "Pangong Lake",
         "icon": "waves",
-        "where": "Pangong Lake, Leh",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Pangong%20Lake%20Leh",
-        "notes": "Must-visit spot in Leh",
-        "hour": 10,
+        "where": "Pangong, Leh",
+        "hour": 9,
         "intent": [
-          "spiritual",
-          "cultural",
-          "adventure",
-          "culinary"
+          "adventure"
         ],
         "faith": [
           "any"
@@ -775,9 +2408,101 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Pangong%2C%20Leh",
+        "notes": "Visit Pangong Lake in Leh."
+      },
+      {
+        "title": "Thiksey Monastery",
+        "icon": "landmark",
+        "where": "Thiksey, Leh",
+        "hour": 8,
+        "intent": [
+          "spiritual",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Thiksey%2C%20Leh",
+        "notes": "Visit Thiksey Monastery in Leh."
+      },
+      {
+        "title": "Magnetic Hill",
+        "icon": "camera",
+        "where": "Leh-Kargil Hwy, Leh",
+        "hour": 10,
+        "intent": [
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
           "standard"
         ],
-        "mobility": "easy"
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Leh-Kargil%20Hwy%2C%20Leh",
+        "notes": "Visit Magnetic Hill in Leh."
+      },
+      {
+        "title": "Leh Palace",
+        "icon": "landmark",
+        "where": "Leh Old Town",
+        "hour": 9,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Leh%20Old%20Town",
+        "notes": "Visit Leh Palace in Leh."
+      },
+      {
+        "title": "Nubra Valley camel safari",
+        "icon": "tree-pine",
+        "where": "Hunder, Nubra Valley",
+        "hour": 14,
+        "intent": [
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Hunder%2C%20Nubra%20Valley",
+        "notes": "Visit Nubra Valley camel safari in Leh."
       }
     ]
   },
@@ -793,13 +2518,77 @@ window.KYT_CITIES = [
         "title": "Golden Temple",
         "icon": "landmark",
         "where": "Golden Temple, Amritsar",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Golden%20Temple%20Amritsar",
-        "notes": "Must-visit spot in Amritsar",
+        "hour": 5,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "sikh",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Golden%20Temple%2C%20Amritsar",
+        "notes": "Visit Golden Temple in Amritsar."
+      },
+      {
+        "title": "Wagah Border ceremony",
+        "icon": "camera",
+        "where": "Wagah, Amritsar",
+        "hour": 17,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Wagah%2C%20Amritsar",
+        "notes": "Visit Wagah Border ceremony in Amritsar."
+      },
+      {
+        "title": "Jallianwala Bagh",
+        "icon": "landmark",
+        "where": "Jallianwala Bagh, Amritsar",
         "hour": 10,
         "intent": [
-          "spiritual",
-          "cultural",
-          "adventure",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Jallianwala%20Bagh%2C%20Amritsar",
+        "notes": "Visit Jallianwala Bagh in Amritsar."
+      },
+      {
+        "title": "Amritsari kulcha breakfast",
+        "icon": "utensils",
+        "where": "Lawrence Road, Amritsar",
+        "hour": 8,
+        "intent": [
           "culinary"
         ],
         "faith": [
@@ -809,9 +2598,47 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
-          "standard"
+          "short",
+          "standard",
+          "deep"
         ],
-        "mobility": "easy"
+        "mobility": "easy",
+        "diet": [
+          "veg",
+          "any"
+        ],
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Lawrence%20Road%2C%20Amritsar",
+        "notes": "Visit Amritsari kulcha breakfast in Amritsar."
+      },
+      {
+        "title": "Langar at Golden Temple",
+        "icon": "utensils",
+        "where": "Golden Temple, Amritsar",
+        "hour": 12,
+        "intent": [
+          "spiritual",
+          "culinary"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "diet": [
+          "veg",
+          "satvik",
+          "jain",
+          "any"
+        ],
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Golden%20Temple%2C%20Amritsar",
+        "notes": "Visit Langar at Golden Temple in Amritsar."
       }
     ]
   },
@@ -826,15 +2653,10 @@ window.KYT_CITIES = [
       {
         "title": "Jaisalmer Fort",
         "icon": "landmark",
-        "where": "Jaisalmer Fort, Jaisalmer",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Jaisalmer%20Fort%20Jaisalmer",
-        "notes": "Must-visit spot in Jaisalmer",
-        "hour": 10,
+        "where": "Jaisalmer Fort",
+        "hour": 9,
         "intent": [
-          "spiritual",
-          "cultural",
-          "adventure",
-          "culinary"
+          "cultural"
         ],
         "faith": [
           "any"
@@ -843,9 +2665,107 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
-          "standard"
+          "short",
+          "standard",
+          "deep"
         ],
-        "mobility": "easy"
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Jaisalmer%20Fort",
+        "notes": "Visit Jaisalmer Fort in Jaisalmer."
+      },
+      {
+        "title": "Sam Sand Dunes camel safari",
+        "icon": "tree-pine",
+        "where": "Sam, Jaisalmer",
+        "hour": 16,
+        "intent": [
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sam%2C%20Jaisalmer",
+        "notes": "Visit Sam Sand Dunes camel safari in Jaisalmer."
+      },
+      {
+        "title": "Patwon ki Haveli",
+        "icon": "camera",
+        "where": "Patwa Para, Jaisalmer",
+        "hour": 10,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Patwa%20Para%2C%20Jaisalmer",
+        "notes": "Visit Patwon ki Haveli in Jaisalmer."
+      },
+      {
+        "title": "Gadisar Lake sunrise",
+        "icon": "waves",
+        "where": "Gadisar, Jaisalmer",
+        "hour": 7,
+        "intent": [
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Gadisar%2C%20Jaisalmer",
+        "notes": "Visit Gadisar Lake sunrise in Jaisalmer."
+      },
+      {
+        "title": "Dal baati & folk music dinner",
+        "icon": "utensils",
+        "where": "Desert Camp, Jaisalmer",
+        "hour": 19,
+        "intent": [
+          "culinary",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "diet": [
+          "veg",
+          "any"
+        ],
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Desert%20Camp%2C%20Jaisalmer",
+        "notes": "Visit Dal baati & folk music dinner in Jaisalmer."
       }
     ]
   },
@@ -2490,16 +4410,107 @@ window.KYT_CITIES = [
     "notes": "A deeply spiritual city renowned as the birthplace of Lord Rama.",
     "beats": [
       {
-        "title": "Ram Janmabhoomi",
+        "title": "Ram Janmabhoomi Temple",
         "icon": "landmark",
         "where": "Ram Janmabhoomi, Ayodhya",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Ram%20Janmabhoomi%20Ayodhya",
-        "notes": "Must-visit spot in Ayodhya",
+        "hour": 8,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Ram%20Janmabhoomi%2C%20Ayodhya",
+        "notes": "Visit Ram Janmabhoomi Temple in Ayodhya."
+      },
+      {
+        "title": "Hanuman Garhi",
+        "icon": "landmark",
+        "where": "Hanuman Garhi, Ayodhya",
         "hour": 10,
         "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Hanuman%20Garhi%2C%20Ayodhya",
+        "notes": "Visit Hanuman Garhi in Ayodhya."
+      },
+      {
+        "title": "Saryu Ghat evening aarti",
+        "icon": "waves",
+        "where": "Saryu Ghat, Ayodhya",
+        "hour": 18,
+        "intent": [
           "spiritual",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Saryu%20Ghat%2C%20Ayodhya",
+        "notes": "Visit Saryu Ghat evening aarti in Ayodhya."
+      },
+      {
+        "title": "Kanak Bhawan palace-temple",
+        "icon": "landmark",
+        "where": "Kanak Bhawan, Ayodhya",
+        "hour": 11,
+        "intent": [
           "cultural",
-          "adventure",
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kanak%20Bhawan%2C%20Ayodhya",
+        "notes": "Visit Kanak Bhawan palace-temple in Ayodhya."
+      },
+      {
+        "title": "Sattvic thali near temple",
+        "icon": "utensils",
+        "where": "Ayodhya",
+        "hour": 13,
+        "intent": [
           "culinary"
         ],
         "faith": [
@@ -2509,9 +4520,19 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
-          "standard"
+          "short",
+          "standard",
+          "deep"
         ],
-        "mobility": "easy"
+        "mobility": "easy",
+        "diet": [
+          "veg",
+          "satvik",
+          "jain",
+          "any"
+        ],
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Ayodhya",
+        "notes": "Visit Sattvic thali near temple in Ayodhya."
       }
     ]
   },
@@ -2526,14 +4547,77 @@ window.KYT_CITIES = [
       {
         "title": "Triveni Sangam",
         "icon": "waves",
-        "where": "Triveni Sangam, Prayagraj",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Triveni%20Sangam%20Prayagraj",
-        "notes": "Must-visit spot in Prayagraj",
+        "where": "Sangam, Prayagraj",
+        "hour": 6,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sangam%2C%20Prayagraj",
+        "notes": "Visit Triveni Sangam in Prayagraj."
+      },
+      {
+        "title": "Anand Bhavan museum",
+        "icon": "landmark",
+        "where": "Anand Bhavan, Prayagraj",
         "hour": 10,
         "intent": [
-          "spiritual",
-          "cultural",
-          "adventure",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Anand%20Bhavan%2C%20Prayagraj",
+        "notes": "Visit Anand Bhavan museum in Prayagraj."
+      },
+      {
+        "title": "Allahabad Fort",
+        "icon": "landmark",
+        "where": "Allahabad Fort, Prayagraj",
+        "hour": 12,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Allahabad%20Fort%2C%20Prayagraj",
+        "notes": "Visit Allahabad Fort in Prayagraj."
+      },
+      {
+        "title": "Chaat at Civil Lines",
+        "icon": "utensils",
+        "where": "Civil Lines, Prayagraj",
+        "hour": 16,
+        "intent": [
           "culinary"
         ],
         "faith": [
@@ -2543,9 +4627,17 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
-          "standard"
+          "short",
+          "standard",
+          "deep"
         ],
-        "mobility": "easy"
+        "mobility": "easy",
+        "diet": [
+          "veg",
+          "any"
+        ],
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Civil%20Lines%2C%20Prayagraj",
+        "notes": "Visit Chaat at Civil Lines in Prayagraj."
       }
     ]
   },
@@ -3952,17 +6044,37 @@ window.KYT_CITIES = [
     "notes": "The Yoga Capital of the World, offering spiritual retreats and river rafting.",
     "beats": [
       {
-        "title": "Triveni Ghat",
-        "icon": "waves",
+        "title": "Triveni Ghat aarti",
+        "icon": "landmark",
         "where": "Triveni Ghat, Rishikesh",
-        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Triveni%20Ghat%20Rishikesh",
-        "notes": "Must-visit spot in Rishikesh",
-        "hour": 10,
+        "hour": 6,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Triveni%20Ghat%2C%20Rishikesh",
+        "notes": "Visit Triveni Ghat aarti in Rishikesh."
+      },
+      {
+        "title": "Lakshman Jhula walk",
+        "icon": "waves",
+        "where": "Lakshman Jhula, Rishikesh",
+        "hour": 8,
         "intent": [
           "spiritual",
-          "cultural",
-          "adventure",
-          "culinary"
+          "cultural"
         ],
         "faith": [
           "any"
@@ -3971,9 +6083,80 @@ window.KYT_CITIES = [
           "any"
         ],
         "pace": [
-          "standard"
+          "short",
+          "standard",
+          "deep"
         ],
-        "mobility": "easy"
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Lakshman%20Jhula%2C%20Rishikesh",
+        "notes": "Visit Lakshman Jhula walk in Rishikesh."
+      },
+      {
+        "title": "White water rafting",
+        "icon": "waves",
+        "where": "Shivpuri, Rishikesh",
+        "hour": 10,
+        "intent": [
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Shivpuri%2C%20Rishikesh",
+        "notes": "Visit White water rafting in Rishikesh."
+      },
+      {
+        "title": "Yoga/meditation session",
+        "icon": "coffee",
+        "where": "Rishikesh ashrams",
+        "hour": 7,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Rishikesh%20ashrams",
+        "notes": "Visit Yoga/meditation session in Rishikesh."
+      },
+      {
+        "title": "Beatles Ashram",
+        "icon": "landmark",
+        "where": "Rajaji National Park, Rishikesh",
+        "hour": 11,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Rajaji%20National%20Park%2C%20Rishikesh",
+        "notes": "Visit Beatles Ashram in Rishikesh."
       }
     ]
   },
