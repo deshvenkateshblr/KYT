@@ -40,13 +40,18 @@ for (let i = 0; i < cities.length; i++) {
         const isPopular = views > 20000;
         const isRecent = year >= 2018;
         
-        if (isReputable && isPopular && isRecent) {
+        // TODO: User language preference feature (currently hardcoded to English filter)
+        // If language is explicitly not 'en' (e.g. 'hi' for Hindi), skip it.
+        const isEnglish = !data.language || data.language.startsWith('en');
+        
+        if (isReputable && isPopular && isRecent && isEnglish) {
           validVideos.push({
             id: data.id,
             title: data.title,
             channel: data.channel,
             views: views,
-            subs: subs
+            subs: subs,
+            language: data.language || 'unknown'
           });
         }
       } catch (e) {}

@@ -866,12 +866,12 @@ KYT.virtualTrips = (function() {
       if (videos.length > 1) {
         const controls = document.createElement('div');
         controls.id = 'cd-yt-controls';
-        controls.className = 'absolute top-4 left-4 z-10 flex gap-2';
+        controls.className = 'absolute inset-0 pointer-events-none flex justify-between items-center px-2 z-10';
         controls.innerHTML = `
-          <button class="bg-black/40 hover:bg-black/60 backdrop-blur-md text-white p-1.5 rounded-full transition-colors" id="btn-yt-prev">
+          <button class="pointer-events-auto bg-black/40 hover:bg-black/60 backdrop-blur-md text-white p-2 rounded-full transition-colors" id="btn-yt-prev">
             <i data-lucide="chevron-left" class="w-4 h-4"></i>
           </button>
-          <button class="bg-black/40 hover:bg-black/60 backdrop-blur-md text-white p-1.5 rounded-full transition-colors" id="btn-yt-next">
+          <button class="pointer-events-auto bg-black/40 hover:bg-black/60 backdrop-blur-md text-white p-2 rounded-full transition-colors" id="btn-yt-next">
             <i data-lucide="chevron-right" class="w-4 h-4"></i>
           </button>
         `;
@@ -1017,4 +1017,5 @@ KYT.virtualTrips = (function() {
 
   return { open: openView, close: closeView, editCanvas, expandAttractionDetail, openCityDetail, addNearby };
 })();
+
 

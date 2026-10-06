@@ -686,38 +686,45 @@
   </aside>
 
   <!--  RICH CITY DETAIL SLIDE-OVER  -->
-  <div id="city-detail-overlay" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden transition-opacity opacity-0 flex flex-col justify-end">
+  <div id="city-detail-overlay" class="fixed inset-0 z-[100] bg-slate-900/40 backdrop-blur-sm hidden transition-opacity opacity-0 flex flex-col justify-end">
     <!-- Slide-up sheet on mobile, side-panel on desktop -->
     <div id="city-detail-panel" class="bg-white w-full h-[90vh] md:w-full md:max-w-md md:h-full md:ml-auto rounded-t-3xl md:rounded-none shadow-2xl flex flex-col transform translate-y-full md:translate-y-0 md:translate-x-full transition-transform duration-300">
       
-      <!-- Header Image / Banner -->
-      <div class="relative h-48 sm:h-64 bg-slate-800 shrink-0 overflow-hidden flex items-center justify-center">
-        <!-- Placeholder Pattern -->
-        <i data-lucide="image" id="cd-hero-placeholder" class="w-16 h-16 text-slate-600 opacity-50"></i>
-        <img id="cd-hero-img" src="" alt="City" class="absolute inset-0 w-full h-full object-cover hidden">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent pointer-events-none z-0"></div>
-        <button type="button" id="btn-share-city" class="absolute top-4 right-14 p-2 bg-black/20 hover:bg-black/40 backdrop-blur-md rounded-full text-white transition-colors z-10" title="Share City">
-          <i data-lucide="share-2" class="w-5 h-5"></i>
-        </button>
-        <button type="button" id="btn-close-city-detail" class="absolute top-4 right-4 p-2 bg-black/20 hover:bg-black/40 backdrop-blur-md rounded-full text-white transition-colors z-10" title="Close">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-        <div class="absolute bottom-4 left-5 right-5">
-          <p id="cd-state-tag" class="text-[10px] font-black tracking-widest text-white/80 uppercase mb-1">State</p>
-          <h2 id="cd-title" class="text-3xl font-black text-white tracking-tight">City Name</h2>
-        </div>
+      <!-- Sticky Header -->
+      <div class="flex items-center justify-between p-4 bg-white border-b border-slate-100 shrink-0 rounded-t-3xl md:rounded-none z-20">
+         <div class="flex-1 min-w-0 pr-4">
+            <p id="cd-state-tag" class="text-[10px] font-black tracking-widest text-slate-400 uppercase mb-0.5 line-clamp-1">State</p>
+            <h2 id="cd-title" class="text-xl font-black text-slate-800 tracking-tight line-clamp-1">City Name</h2>
+         </div>
+         <div class="flex items-center gap-2 shrink-0">
+            <button type="button" id="btn-share-city" class="p-2 text-slate-400 hover:text-blue-600 bg-slate-50 hover:bg-blue-50 rounded-full transition-colors" title="Share City">
+              <i data-lucide="share-2" class="w-5 h-5"></i>
+            </button>
+            <button type="button" id="btn-close-city-detail" class="p-2 text-slate-400 hover:text-rose-600 bg-slate-50 hover:bg-rose-50 rounded-full transition-colors" title="Close">
+              <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+         </div>
       </div>
       
-      <div class="flex-1 overflow-y-auto bg-slate-50 relative">
-        <!-- Add to trip CTA floating -->
-        <div class="absolute top-0 right-5 -translate-y-1/2">
-          <button id="cd-btn-add-main" class="bg-blue-600 text-white shadow-lg shadow-blue-600/30 font-bold px-6 py-3 rounded-full text-sm hover:bg-blue-700 active:scale-95 transition-all flex items-center gap-2">
-            <i data-lucide="plus" class="w-4 h-4"></i> Add to Trip
-          </button>
+      <div class="flex-1 overflow-y-auto bg-slate-50 relative flex flex-col pb-6">
+        
+        <!-- Video / Hero Container -->
+        <div class="relative w-full aspect-video bg-slate-900 shrink-0 overflow-hidden flex items-center justify-center">
+          <!-- Placeholder Pattern -->
+          <i data-lucide="image" id="cd-hero-placeholder" class="w-12 h-12 text-slate-700 opacity-50"></i>
         </div>
 
-        <div class="p-5 pt-8 space-y-6">
-          <p id="cd-description" class="text-sm text-slate-600 leading-relaxed font-medium">Description goes here...</p>
+        <div class="p-5 space-y-6">
+          
+          <!-- Actions & Description -->
+          <div class="flex flex-col gap-4">
+            <div class="flex justify-between items-start gap-4">
+               <p id="cd-description" class="text-sm text-slate-600 leading-relaxed font-medium flex-1">Description goes here...</p>
+               <button id="cd-btn-add-main" class="shrink-0 bg-blue-600 text-white shadow-lg shadow-blue-600/30 font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-blue-700 active:scale-95 transition-all flex items-center gap-1.5">
+                 <i data-lucide="plus" class="w-4 h-4"></i> Add
+               </button>
+            </div>
+          </div>
           
           <!-- Attractions -->
           <div>

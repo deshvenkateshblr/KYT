@@ -6,8 +6,8 @@ This document outlines the roadmap and features to be implemented for the "Rich 
 **Goal:** Replace the static image header placeholder with an embedded, interactive YouTube video player to give users a virtual preview of the city.
 **Details:**
 *   Create a new data file `data/city_videos_data.js` via a curation script (using `yt-dlp` to fetch metadata).
-*   **Language Filter:** During generation, append "in English" to queries to prioritize English content. 
-*   **TODO:** In a future iteration, allow users to set a language preference (e.g., Hindi, Tamil, Telugu) in the app settings, and dynamically source/filter videos based on that preference.
+*   **Language Filter:** The script currently enforces English explicitly by parsing `data.language` to reject non-English vlogs, as the query search alone is insufficient.
+*   **TODO:** Build an interactive UI settings toggle for users to set their preferred language (e.g., English, Hindi). The fetch script and `city_videos_data.js` structure will need to be updated to map multiple languages per city so that the UI can pick the relevant localized video array.
 *   Implement a carousel UI in the header (with previous/next buttons) allowing users to swipe through or click through multiple videos of the city right inside the slide-over.
 
 ## 2. Expanded Attraction Details

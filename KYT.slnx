@@ -1,6 +1,9 @@
 <Solution>
   <Folder Name="/Solution Items/">
+    <File Path="configure_trip.html" />
     <File Path="index.html" />
+    <File Path="view_trip.html" />
+    <File Path="virtual_trip.html" />
   </Folder>
   <Folder Name="/Solution Items/css/">
     <File Path="css/animations.css" />
