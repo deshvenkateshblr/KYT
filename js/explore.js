@@ -126,7 +126,7 @@ KYT.explore = (function() {
              <i data-lucide="heart" class="w-5 h-5"></i>
           </button>
         </div>
-        <h3 class="text-xl font-extrabold text-slate-800 leading-tight">${item.name}</h3>
+        <h3 class="text-xl font-extrabold text-slate-800 leading-tight">${item.name}${item.aliases && item.aliases.length ? ` <span class="text-sm font-semibold text-slate-400">(${item.aliases.join(', ')})</span>` : ''}</h3>
         <p class="text-sm font-medium text-slate-500 mt-1 leading-snug">${item.notes || 'Explore this destination.'}</p>
         
         <div class="flex flex-wrap gap-3 mt-3 text-xs font-bold text-slate-600">

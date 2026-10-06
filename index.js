@@ -14,14 +14,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (isReturningUser) {
     html = `
       <a href="view_trip.html" class="btn btn-primary text-lg flex gap-2"><i data-lucide="map"></i> View Current Trip</a>
-      <a href="configure_trip.html" class="btn btn-secondary flex gap-2"><i data-lucide="settings"></i> Configure Current Trip</a>
-      <a href="virtual_trip.html" class="btn btn-secondary flex gap-2"><i data-lucide="compass"></i> Start a New Virtual Trip</a>
+      <a href="configure_trip.html" class="btn btn-secondary flex gap-2"><i data-lucide="settings"></i> Edit Itinerary</a>
+      <a href="virtual_trip.html" class="btn btn-secondary flex gap-2"><i data-lucide="compass"></i> My Virtual Trips</a>
     `;
   } else {
     html = `
-      <h2 class="text-xl font-bold mb-4 text-slate-800">Welcome to KYT!</h2>
+      <h2 class="text-xl font-bold mb-1 text-slate-800">Welcome to KYT!</h2>
+      <p class="text-sm text-slate-400 mb-5 leading-relaxed">Plan, track &amp; remember your real trips — or explore destinations virtually.</p>
       <a href="virtual_trip.html" class="btn btn-primary text-lg mb-2 flex gap-2"><i data-lucide="compass"></i> Start a New Virtual Trip</a>
-      <a href="configure_trip.html" class="btn btn-secondary flex gap-2"><i data-lucide="settings"></i> Configure Upcoming Trip</a>
+      <a href="configure_trip.html" class="btn btn-secondary flex gap-2"><i data-lucide="pencil"></i> Build Trip Manually</a>
     `;
   }
 
