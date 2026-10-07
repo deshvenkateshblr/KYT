@@ -18,6 +18,7 @@
     <File Path="icons/icon-512.png" />
   </Folder>
   <Folder Name="/Solution Items/js/">
+    <File Path="data/city_videos_data.js" />
     <File Path="js/app.js" />
     <File Path="js/carousel.js" />
     <File Path="js/clock.js" />

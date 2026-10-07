@@ -1,1 +1,2 @@
 4. Create an admin page where an admin user can add a new city along with all attractions, videos, and nearby destinations. This should automatically save/write to the corresponding data js files (cities.js, city_videos_data.js, distance_matrix.js).
+5. Add meaningful food filter options when searching/filtering cities (e.g. popular local cuisines, dietary availability, etc.), and ensure each city object contains appropriate food metadata.

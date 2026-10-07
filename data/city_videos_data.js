@@ -4727,8 +4727,7 @@ window.KYT_CITY_VIDEOS = {
       "subs": 56500,
       "language": "hi"
     }
-  ]
-], "hubli": [
+  ], "hubli": [
     {
       "id": "rY62K4q442w",
       "title": "Hubli City Tour | Top Places to visit in Hubballi",
@@ -4747,4 +4746,5 @@ window.KYT_CITY_VIDEOS = {
     }
   ]
 };
+
 
