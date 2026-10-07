@@ -4729,16 +4729,16 @@ window.KYT_CITY_VIDEOS = {
     }
   ], "hubli": [
     {
-      "id": "jU7ZyViNu2U",
-      "title": "Hubli City Tour | Top Places to visit in Hubballi",
+      "id": "n2CjxMyIFi4",
+        "title": "Hubli City Tour | Top Places to visit in Hubballi",
       "channel": "Travel Vlogs",
       "views": 150000,
       "subs": 10000,
       "language": "en"
     },
     {
-      "id": "jU7ZyViNu2U",
-      "title": "Hubballi Dharwad Street Food | Famous food in Hubli",
+      "id": "-iSMIBwAPBA",
+        "title": "Hubballi Dharwad Street Food | Famous food in Hubli",
       "channel": "Food Explorer",
       "views": 250000,
       "subs": 50000,
