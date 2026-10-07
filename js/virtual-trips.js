@@ -720,14 +720,9 @@ KYT.virtualTrips = (function() {
         const delBtn = e.target.closest('.btn-del-vt');
         if (delBtn) { e.stopPropagation(); deleteTrip(delBtn.dataset.id); return; }
         const card = e.target.closest('.vt-card');
-        if (card) {
+                if (card) {
           const trip = vtrips.find(t => t.id === card.dataset.id);
-          if (trip && trip.steps && trip.steps.length > 0) {
-            currentTripId = trip.id;
-            openBuilder();
-          } else {
-            openCanvas(card.dataset.id);
-          }
+          window.location.href = 'trip_detail.html?id=' + card.dataset.id;
         }
       });
     }
@@ -838,7 +833,7 @@ KYT.virtualTrips = (function() {
         if (!trip || !trip.cities.length) return alert('Add some cities to share this trip!');
         
         const url = new URL(window.location.href);
-        url.pathname = url.pathname.replace(/\/[^\/]*$/, '/virtual_trip.html');
+        url.pathname = url.pathname.replace(/\/[^\/]*$/, '/trip_detail.html');
         url.search = '';
         url.searchParams.set('trip', trip.name || 'Shared Trip');
         url.searchParams.set('cities', trip.cities.join(','));
@@ -1236,6 +1231,7 @@ KYT.virtualTrips = (function() {
 
   return { open: openView, close: closeView, editCanvas, expandAttractionDetail, openCityDetail, addNearby };
 })();
+
 
 
 

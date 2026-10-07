@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#3B82F6">
+  <title>Trip Detail - KYT</title>
+  <link rel="icon" type="image/jpeg" href="./icons/KYT.jpg">
+  <script src="./lib/tailwindcss.js?v=1791377680"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="./lib/lucide.js?v=1791377680"></script>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="text-slate-800 antialiased h-screen flex flex-col overflow-hidden">
+  
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 px-4 py-3 shrink-0 flex items-center justify-between sticky top-0 z-10 shadow-sm">
+    <div class="flex items-center gap-2">
+      <a href="index.html" title="Back to Home" class="shrink-0 hover:scale-105 transition-transform"><img src="./icons/KYT.jpg" alt="KYT Logo" class="h-8 w-auto rounded-lg shadow-sm object-contain"></a>
+      <h1 class="text-lg font-black text-slate-800">Virtual Trip</h1>
+    </div>
+    <button id="btn-edit-plan" class="bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow hover:bg-blue-700 transition-colors flex items-center gap-1.5">
+      <i data-lucide="edit-3" class="w-3.5 h-3.5"></i> Customize
+    </button>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 overflow-y-auto hide-scrollbar">
+    <!-- Hero Banner -->
+    <div class="bg-blue-50 py-8 px-4 text-center border-b border-blue-100">
+      <h2 class="text-3xl font-black text-blue-900 mb-2" id="trip-title">Explore your curated journey</h2>
+      <p class="text-sm text-blue-700 max-w-md mx-auto" id="trip-desc">Check out this curated journey featuring amazing cities and rich cultural experiences.</p>
+    </div>
+
+    <div class="p-4 max-w-5xl mx-auto space-y-8">
+      <!-- Cities Section -->
+      <div>
+        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Destinations & Attractions</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="cities-grid">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+
+      <!-- Video Gallery Section -->
+      <div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3 border-t border-slate-200 pt-6">
+            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">Video Gallery</h3>
+            <div id="video-filters" class="flex flex-wrap gap-2">
+                <!-- Filters populated via JS -->
+            </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="video-gallery">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 p-4 shrink-0 text-center text-xs text-slate-400 font-medium mt-auto">
+    Built with KYT &mdash; Know Your Travel
+  </footer>
+
+  <!-- Data Dependencies -->
+  <script src="data/cities.js?v=1791377680"></script>
+  <script src="data/city_videos_data.js?v=1791377680"></script>
+
+  <!-- Logic -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+
+      const params = new URLSearchParams(window.location.search);
+      let tripName = params.get('trip') || 'My Trip';
+      let citiesParam = params.get('cities');
+      let tasteParam = params.get('taste') || '';
+      
+      const tripId = params.get('id');
+      if (tripId) {
+        try {
+          const vtrips = JSON.parse(localStorage.getItem('kyt_virtual_trips') || '[]');
+          const trip = vtrips.find(t => t.id === tripId);
+          if (trip) {
+            tripName = trip.name || 'My Trip';
+            citiesParam = trip.cities.join(',');
+            tasteParam = [trip.taste.intent, trip.taste.diet, trip.taste.pace].join('|');
+            // update URL for the edit button to work seamlessly
+            window.history.replaceState({}, '', `?trip=${encodeURIComponent(tripName)}&cities=${citiesParam}&taste=${tasteParam}`);
+          }
+        } catch(e) {}
+      }
+      
+      document.getElementById('trip-title').textContent = tripName;
+
+      document.getElementById('btn-edit-plan').addEventListener('click', () => {
+        if (tripId) {
+          window.location.href = `virtual_trip.html?id=${tripId}`;
+        } else {
+          window.location.href = `virtual_trip.html${window.location.search}`;
+        }
+      });
+
+      if (!citiesParam) {
+        document.getElementById('cities-grid').innerHTML = '<p class="text-sm text-slate-500">No cities selected in this trip.</p>';
+        return;
+      }
+
+      const cityIds = citiesParam.split(',');
+      const citiesGrid = document.getElementById('cities-grid');
+      const videoGallery = document.getElementById('video-gallery');
+      const videoFilters = document.getElementById('video-filters');
+
+      let citiesHtml = '';
+      
+      // Collect all videos
+      const allVideos = [];
+      const filterCities = [];
+
+      cityIds.forEach(cId => {
+        const city = window.KYT_CITIES ? window.KYT_CITIES.find(c => c.id === cId) : null;
+        if (!city) return;
+
+        filterCities.push({ id: city.id, name: city.name });
+
+        // City Card with Attractions (Beats)
+        let beatsHtml = '';
+        if (city.beats && city.beats.length > 0) {
+          beatsHtml = '<div class="mt-4 space-y-2">';
+          city.beats.forEach(beat => {
+            beatsHtml += `
+              <div class="flex items-start gap-2 bg-slate-50 p-2 rounded-lg border border-slate-100">
+                <i data-lucide="${beat.icon || 'map-pin'}" class="w-4 h-4 text-slate-400 shrink-0 mt-0.5"></i>
+                <div>
+                  <h5 class="text-xs font-bold text-slate-700">${beat.title}</h5>
+                  ${beat.where ? `<p class="text-[10px] text-slate-500">${beat.where}</p>` : ''}
+                </div>
+              </div>
+            `;
+          });
+          beatsHtml += '</div>';
+        }
+
+        citiesHtml += `
+          <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex flex-col h-full">
+            <div class="flex items-start gap-3">
+              <div class="p-2 bg-blue-50 text-blue-500 rounded-lg shrink-0">
+                <i data-lucide="${city.icon || 'map-pin'}" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <h4 class="text-lg font-bold text-slate-800">${city.name}</h4>
+                <p class="text-xs text-slate-500 mt-1 line-clamp-3">${city.notes || 'A beautiful destination to explore.'}</p>
+              </div>
+            </div>
+            <div class="flex-1">
+                ${beatsHtml}
+            </div>
+          </div>
+        `;
+
+        // Videos
+        const cityVideos = window.KYT_CITY_VIDEOS ? (window.KYT_CITY_VIDEOS[city.id] || []) : [];
+        cityVideos.forEach(vid => {
+            allVideos.push({ ...vid, cityName: city.name, cityId: city.id });
+        });
+      });
+
+      citiesGrid.innerHTML = citiesHtml || '<p class="text-sm text-slate-500">Could not load city details.</p>';
+
+      // Video Rendering
+      let currentFilter = 'all';
+
+      function renderVideos() {
+        const filtered = currentFilter === 'all' ? allVideos : allVideos.filter(v => v.cityId === currentFilter);
+        
+        if (filtered.length === 0) {
+            videoGallery.innerHTML = '<p class="text-sm text-slate-500 p-4 border border-dashed border-slate-200 rounded-xl text-center w-full col-span-full">No videos available.</p>';
+            return;
+        }
+
+        let videosHtml = '';
+        filtered.forEach(vid => {
+          videosHtml += `
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+              <div class="relative w-full aspect-video bg-slate-100">
+                <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/${vid.id}?rel=0" frameborder="0" allowfullscreen></iframe>
+              </div>
+              <div class="p-3 flex-1 flex flex-col justify-between">
+                <p class="text-sm font-bold text-slate-800 line-clamp-2 mb-2">${vid.title}</p>
+                <div class="flex justify-between items-center mt-auto">
+                  <span class="text-[10px] font-bold text-blue-500 uppercase">${vid.cityName}</span>
+                  <span class="text-[10px] text-slate-400 font-bold">${vid.channel}</span>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+        videoGallery.innerHTML = videosHtml;
+      }
+
+      function renderFilters() {
+        if (allVideos.length === 0) return;
+
+        let filtersHtml = `
+            <button class="filter-btn px-3 py-1 rounded-full text-xs font-bold transition-colors ${currentFilter === 'all' ? 'bg-slate-800 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}" data-id="all">
+                All
+            </button>
+        `;
+
+        filterCities.forEach(city => {
+            // Only show filter if city has videos
+            if (allVideos.some(v => v.cityId === city.id)) {
+                const isActive = currentFilter === city.id;
+                filtersHtml += `
+                    <button class="filter-btn px-3 py-1 rounded-full text-xs font-bold transition-colors ${isActive ? 'bg-slate-800 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}" data-id="${city.id}">
+                        ${city.name}
+                    </button>
+                `;
+            }
+        });
+        
+        videoFilters.innerHTML = filtersHtml;
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                currentFilter = e.target.dataset.id;
+                renderFilters();
+                renderVideos();
+            });
+        });
+      }
+
+      renderFilters();
+      renderVideos();
+      
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
+
