@@ -16663,4 +16663,8 @@ window.KYT_CITIES = [
     "state": "Madhya Pradesh",
     "district": "Khargone"
   }
+, 
+  { "id": "hubli", "name": "Hubballi (Hubli)", "icon": "plane", "dayOffset": 0, "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Hubli", "notes": "Major transport hub and commercial center of North Karnataka, known for its rich heritage and twin city Dharwad.", "beats": [ { "title": "Siddharoodha Math", "icon": "heart", "where": "Karwar Rd, Hubli", "hour": 9, "intent": ["spiritual"], "faith": ["hindu"], "pace": ["standard"], "mobility": "easy", "notes": "A prominent religious institution and ashram dedicated to Swami Siddharoodha." }, { "title": "Unkal Lake", "icon": "map-pin", "where": "Unkal, Hubli", "hour": 17, "intent": ["mixed", "cultural"], "faith": ["any"], "pace": ["short", "standard"], "mobility": "walk", "notes": "A picturesque lake with a statue of Swami Vivekananda in the center, perfect for evening walks and boating." }, { "title": "Chandramouleshwara Temple", "icon": "heart", "where": "Unkal, Hubli", "hour": 10, "intent": ["spiritual", "cultural"], "faith": ["hindu"], "pace": ["standard"], "mobility": "easy", "notes": "A 900-year-old temple built during the Chalukya era, known for its intricate stone carvings." }, { "title": "Nrupatunga Hill", "icon": "mountain", "where": "Unkal, Hubli", "hour": 16, "intent": ["adventure", "mixed"], "faith": ["any"], "pace": ["standard"], "mobility": "walk", "notes": "Offers a panoramic view of the twin cities Hubballi-Dharwad. Great spot for a serene escape." } ], "lat": 15.3647, "lng": 75.1240, "district": "Dharwad", "state": "Karnataka" }
 ];
+
+

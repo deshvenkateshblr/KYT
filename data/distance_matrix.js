@@ -4251,4 +4251,13 @@ window.KYT_DISTANCE_MATRIX = {
     "pandharpur": 501,
     "nathdwara": 355
   }
+, "hubli": {
+    "goa": 160,
+    "hampi": 163,
+    "gokarna": 142,
+    "bangalore": 412,
+    "mangalore": 358,
+    "pune": 430
+  }
 };
+

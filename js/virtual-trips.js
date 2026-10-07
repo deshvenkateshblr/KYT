@@ -979,9 +979,10 @@ KYT.virtualTrips = (function() {
     if (oldControls) oldControls.remove();
 
     const allVideos = window.KYT_CITY_VIDEOS ? (window.KYT_CITY_VIDEOS[city.id] || []) : [];
-    // Currently hardcoded to English preference, fallback to all if no English videos found
-    let videos = allVideos.filter(v => !v.language || v.language.startsWith('en'));
-    if (videos.length === 0) videos = allVideos;
+    
+    // Use all available videos (ignoring strict language constraints) to increase relevance
+    // and fallback to Hindi/local language videos if they are more appropriate.
+    let videos = allVideos;
 
     if (videos.length > 0) {
       heroPlaceholder.classList.add('hidden');

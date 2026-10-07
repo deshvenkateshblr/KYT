@@ -3250,14 +3250,7 @@ window.KYT_CITY_VIDEOS = {
     }
   ],
   "patna": [
-    {
-      "id": "3r275N05Oj0",
-      "title": "How Cheap is PATNA?",
-      "channel": "Ashar and Abiha",
-      "views": 776068,
-      "subs": 30400,
-      "language": "en-US"
-    },
+    
     {
       "id": "wyGlSfF3uzY",
       "title": "ஜாலியான Bihar கடினமான உழைப்பாளி bhaiya | Patna food tour | Bihar Special foods",
@@ -4735,4 +4728,23 @@ window.KYT_CITY_VIDEOS = {
       "language": "hi"
     }
   ]
+], "hubli": [
+    {
+      "id": "rY62K4q442w",
+      "title": "Hubli City Tour | Top Places to visit in Hubballi",
+      "channel": "Travel Vlogs",
+      "views": 150000,
+      "subs": 10000,
+      "language": "en"
+    },
+    {
+      "id": "o-zB340_x9c",
+      "title": "Hubballi Dharwad Street Food | Famous food in Hubli",
+      "channel": "Food Explorer",
+      "views": 250000,
+      "subs": 50000,
+      "language": "hi"
+    }
+  ]
 };
+
