@@ -77,6 +77,22 @@ KYT.virtualTrips = (function() {
   }
   function saveVTrips() { localStorage.setItem(STORAGE_KEY_VTRIPS, JSON.stringify(vtrips)); }
   function getActiveTrip() { return vtrips.find(t => t.id === currentTripId); }
+  function ensureActiveTrip() {
+    let trip = getActiveTrip();
+    if (!trip) {
+      trip = {
+        id: Date.now().toString(),
+        name: 'My Trip',
+        cities: [],
+        taste: { ...DEFAULT_TASTE },
+        steps: null
+      };
+      vtrips.push(trip);
+      currentTripId = trip.id;
+      saveVTrips();
+    }
+    return trip;
+  }
 
   // --- Actions ---
   function createNewTrip() {
@@ -223,6 +239,9 @@ KYT.virtualTrips = (function() {
     DOM.screenCanvas.classList.add('hidden');
     DOM.screenBuilder.classList.add('hidden');
 
+    const btnShare = document.getElementById('btn-share-trip');
+    if (btnShare) btnShare.classList.add('hidden');
+
     if (screen === 'hub') {
       DOM.title.innerHTML = '<i data-lucide="compass" class="w-5 h-5 text-blue-600"></i> My Trips';
       DOM.screenHub.classList.remove('hidden');
@@ -231,10 +250,12 @@ KYT.virtualTrips = (function() {
       document.getElementById('btn-back-hub').addEventListener('click', openHub);
       DOM.screenCanvas.classList.remove('hidden');
       DOM.screenCanvas.classList.add('flex');
+      if (btnShare) btnShare.classList.remove('hidden');
     } else if (screen === 'builder') {
       DOM.title.innerHTML = `<button id="btn-back-hub" class="flex items-center gap-1.5 text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors"><i data-lucide="chevron-left" class="w-4 h-4"></i> Edit Plan</button>`;
       document.getElementById('btn-back-hub').addEventListener('click', openCanvas.bind(null, currentTripId));
       DOM.screenBuilder.classList.remove('hidden');
+      if (btnShare) btnShare.classList.remove('hidden');
     }
 
     if (window.lucide) lucide.createIcons();
@@ -326,9 +347,9 @@ KYT.virtualTrips = (function() {
         const city = window.KYT_CITIES.find(c => c.id === cId);
         const name = city ? city.name : cId;
         return `
-          <div class="flex items-center gap-1 bg-blue-50 text-blue-800 border border-blue-200 px-3 py-1.5 rounded-full text-sm font-bold shadow-sm animate-pop">
+          <div class="vt-selected-city-chip flex items-center gap-1 bg-blue-50 text-blue-800 border border-blue-200 px-3 py-1.5 rounded-full text-sm font-bold shadow-sm animate-pop cursor-pointer hover:bg-blue-100 transition-colors" data-city-id="${cId}">
             ${name}
-            <button class="btn-del-city hover:bg-blue-200 p-0.5 rounded-full transition-colors ml-1" data-id="${cId}">
+            <button class="btn-del-city hover:bg-blue-300 p-0.5 rounded-full transition-colors ml-1" data-id="${cId}">
               <i data-lucide="x" class="w-3 h-3"></i>
             </button>
           </div>
@@ -346,13 +367,29 @@ KYT.virtualTrips = (function() {
     const query = (DOM.citySearchInput.value || '').toLowerCase().trim();
     
     const available = window.KYT_CITIES.filter(c => {
-      if (trip.cities.includes(c.id)) return false;
       if (!query) return true;
       if (c.name.toLowerCase().includes(query)) return true;
       if ((c.notes || '').toLowerCase().includes(query)) return true;
       if (c.aliases && c.aliases.some(a => a.toLowerCase().includes(query))) return true;
       return false;
     });
+
+    if (query) {
+      available.sort((a, b) => {
+        const aName = a.name.toLowerCase();
+        const bName = b.name.toLowerCase();
+        
+        if (aName === query && bName !== query) return -1;
+        if (aName !== query && bName === query) return 1;
+        
+        const aStarts = aName.startsWith(query);
+        const bStarts = bName.startsWith(query);
+        if (aStarts && !bStarts) return -1;
+        if (!aStarts && bStarts) return 1;
+        
+        return 0;
+      });
+    }
 
     if (available.length === 0) {
       DOM.cityListRoot.innerHTML = `<div class="text-center text-slate-400 text-sm py-4">No cities found.</div>`;
@@ -393,9 +430,14 @@ KYT.virtualTrips = (function() {
                 ${city.lat && city.lng ? `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(city.name + ', India')}" target="_blank" rel="noopener noreferrer" class="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="View on Google Maps" onclick="event.stopPropagation()">
                   <i data-lucide="map" class="w-4 h-4"></i>
                 </a>` : ''}
-                <button class="btn-add-city bg-blue-600 text-white font-bold px-4 py-2 rounded-xl text-xs hover:bg-blue-700 active:scale-95 transition-all shadow-sm" data-id="${city.id}">
-                  Add +
-                </button>
+                ${trip.cities.includes(city.id) ? 
+                  `<button class="bg-emerald-100 text-emerald-700 font-bold px-4 py-2 rounded-xl text-xs shadow-sm flex items-center gap-1" disabled>
+                    <i data-lucide="check" class="w-3 h-3"></i> Added
+                  </button>` : 
+                  `<button class="btn-add-city bg-blue-600 text-white font-bold px-4 py-2 rounded-xl text-xs hover:bg-blue-700 active:scale-95 transition-all shadow-sm" data-id="${city.id}">
+                    Add +
+                  </button>`
+                }
               </div>
             </div>
             ${beatCount > 0 ? `<div class="mt-3 flex flex-wrap gap-1.5 vt-attraction-list">${attractionPills}${moreCount}</div>` : ''}
@@ -715,13 +757,21 @@ KYT.virtualTrips = (function() {
     if (DOM.selectedCitiesRoot) {
       DOM.selectedCitiesRoot.addEventListener('click', e => {
         const delBtn = e.target.closest('.btn-del-city');
-        if (!delBtn) return;
-        const trip = getActiveTrip();
-        if (trip) {
-          trip.cities = trip.cities.filter(c => c !== delBtn.dataset.id);
-          trip.steps = null;
-          saveVTrips();
-          renderCanvas();
+        if (delBtn) {
+          e.stopPropagation();
+          const trip = getActiveTrip();
+          if (trip) {
+            trip.cities = trip.cities.filter(c => c !== delBtn.dataset.id);
+            trip.steps = null;
+            saveVTrips();
+            renderCanvas();
+          }
+          return;
+        }
+
+        const cityChip = e.target.closest('.vt-selected-city-chip');
+        if (cityChip) {
+          openCityDetail(cityChip.dataset.cityId);
         }
       });
     }
@@ -760,6 +810,12 @@ KYT.virtualTrips = (function() {
       btnCloseCD.addEventListener('click', closeCityDetail);
     }
     
+    // Bind back button for city detail overlay
+    const btnBackCD = document.getElementById('btn-back-city-detail');
+    if (btnBackCD) {
+      btnBackCD.addEventListener('click', () => window.history.back());
+    }
+    
     // Bind click outside panel to close
     const cdOverlay = document.getElementById('city-detail-overlay');
     if (cdOverlay) {
@@ -772,6 +828,39 @@ KYT.virtualTrips = (function() {
       DOM.btnBuild.addEventListener('click', () => {
         const trip = getActiveTrip();
         if (trip) { trip.steps = generateSteps(trip); saveVTrips(); openBuilder(); }
+      });
+    }
+
+    const btnShareTrip = document.getElementById('btn-share-trip');
+    if (btnShareTrip) {
+      btnShareTrip.addEventListener('click', () => {
+        const trip = getActiveTrip();
+        if (!trip || !trip.cities.length) return alert('Add some cities to share this trip!');
+        
+        const payload = btoa(JSON.stringify({
+          name: trip.name,
+          cities: trip.cities,
+          taste: trip.taste
+        }));
+        
+        const url = new URL(window.location.href);
+        url.pathname = url.pathname.replace(/\/[^\/]*$/, '/virtual_trip.html');
+        url.search = '';
+        url.searchParams.set('t', payload);
+        
+        const shareData = {
+          title: `Check out my ${trip.name} on KYT`,
+          text: `I planned a trip on KYT! Check out my itinerary for ${trip.cities.length} cities.`,
+          url: url.toString()
+        };
+
+        if (navigator.share) {
+          navigator.share(shareData).catch(err => console.log('Error sharing:', err));
+        } else {
+          navigator.clipboard.writeText(url.toString())
+            .then(() => alert('Trip link copied to clipboard!'))
+            .catch(err => console.error('Error copying link:', err));
+        }
       });
     }
 
@@ -804,29 +893,68 @@ KYT.virtualTrips = (function() {
       });
     }
 
-    // Routing Logic for Deep Links
+    // Routing Logic for Deep Links & History
+    window.addEventListener('popstate', (e) => {
+      const p = new URLSearchParams(window.location.search);
+      const cId = p.get('city');
+      if (cId) {
+        openCityDetail(cId, false);
+      } else {
+        closeCityDetail(false);
+      }
+    });
+
     const params = new URLSearchParams(window.location.search);
     const sharedCity = params.get('city');
+    const sharedTrip = params.get('t');
+    
+    // Always launch hub first in virtual_trip.html
+    if (window.location.pathname.includes('virtual_trip.html')) {
+      openHub();
+      
+      if (sharedTrip) {
+        try {
+          const payload = JSON.parse(atob(sharedTrip));
+          if (payload && payload.cities) {
+            const newTrip = {
+              id: Date.now().toString(),
+              name: payload.name || 'Shared Trip',
+              cities: payload.cities,
+              taste: payload.taste || { intent: 'mixed', diet: 'any', pace: 'standard' },
+              steps: null
+            };
+            vtrips.push(newTrip);
+            saveVTrips();
+            
+            // Clean URL so refresh doesn't duplicate
+            const url = new URL(window.location.href);
+            url.searchParams.delete('t');
+            window.history.replaceState({}, '', url.toString());
+            
+            openCanvas(newTrip.id);
+          }
+        } catch (e) {
+          console.error("Failed to parse shared trip", e);
+        }
+      }
+    }
+    
     if (sharedCity) {
-      // Clean up URL without reloading
-      const newUrl = new URL(window.location.href);
-      newUrl.searchParams.delete('city');
-      window.history.replaceState({}, document.title, newUrl.toString());
-
-      openHub();
-      // Small delay to ensure hub is rendered before opening overlay
       setTimeout(() => {
-        openCityDetail(sharedCity);
+        openCityDetail(sharedCity, false);
       }, 100);
-    } else if (window.location.pathname.includes('virtual_trip.html')) {
-      // If we ARE on virtual_trip.html with no city, auto-launch the hub
-      openHub();
     }
   }
 
-  function openCityDetail(cityId) {
+  function openCityDetail(cityId, pushHistory = true) {
     const city = window.KYT_CITIES.find(c => c.id === cityId);
     if (!city) return;
+
+    if (pushHistory) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('city', cityId);
+      window.history.pushState({ cityId }, '', url.toString());
+    }
 
     const overlay = document.getElementById('city-detail-overlay');
     const panel = document.getElementById('city-detail-panel');
@@ -848,10 +976,14 @@ KYT.virtualTrips = (function() {
     const oldControls = document.getElementById('cd-yt-controls');
     if (oldControls) oldControls.remove();
 
-    if (window.KYT_CITY_VIDEOS && window.KYT_CITY_VIDEOS[city.id] && window.KYT_CITY_VIDEOS[city.id].length > 0) {
+    const allVideos = window.KYT_CITY_VIDEOS ? (window.KYT_CITY_VIDEOS[city.id] || []) : [];
+    // Currently hardcoded to English preference, fallback to all if no English videos found
+    let videos = allVideos.filter(v => !v.language || v.language.startsWith('en'));
+    if (videos.length === 0) videos = allVideos;
+
+    if (videos.length > 0) {
       heroPlaceholder.classList.add('hidden');
       
-      const videos = window.KYT_CITY_VIDEOS[city.id];
       let currentVidIdx = 0;
       
       const iframe = document.createElement('iframe');
@@ -895,17 +1027,89 @@ KYT.virtualTrips = (function() {
     // Populate Attractions
     const attrList = document.getElementById('cd-attractions-list');
     if (city.beats && city.beats.length > 0) {
-      attrList.innerHTML = city.beats.map(b => `
-        <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm flex items-start gap-3">
-          <div class="bg-blue-50 p-2 rounded-lg text-blue-600 shrink-0">
-            <i data-lucide="${b.icon || 'map-pin'}" class="w-5 h-5"></i>
+      attrList.innerHTML = city.beats.map(b => {
+        const intentMap = {
+          spiritual: { icon: "om", color: "purple" },
+          cultural: { icon: "compass", color: "blue" },
+          heritage: { icon: "landmark", color: "amber" },
+          nature: { icon: "tree-pine", color: "emerald" },
+          leisure: { icon: "coffee", color: "orange" },
+          adventure: { icon: "mountain", color: "red" }
+        };
+        const intents = (b.intent || []).map(intent => {
+          const map = intentMap[intent] || { icon: "star", color: "slate" };
+          return `<span class="inline-flex items-center gap-1 bg-${map.color}-50 border border-${map.color}-200 text-${map.color}-700 text-[10px] font-semibold px-2.5 py-1 rounded-lg">
+                    <i data-lucide="${map.icon}" class="w-3 h-3"></i> ${intent.charAt(0).toUpperCase() + intent.slice(1)}
+                  </span>`;
+        }).join('');
+
+        const paceLabels = { short: '⚡ Short (< 1 hour)', standard: '🚶 Standard (1-2 hours)', deep: '🔍 Deep Dive (2+ hours)' };
+        const paces = (b.pace || ['standard']).map(pace => {
+          return `<span class="inline-flex items-center gap-1 bg-slate-100 border border-slate-200 text-slate-700 text-[10px] font-semibold px-2.5 py-1 rounded-lg">
+                    ${paceLabels[pace] || pace}
+                  </span>`;
+        }).join('');
+
+        const mobilityLabels = { easy: '♿ Easy Access', walk: '🚶 Walking Required', trek: '🧗 Trek/Strenuous' };
+        const mobility = mobilityLabels[b.mobility] || (b.mobility || 'Easy');
+        const formattedHour = b.hour ? (b.hour.toString().padStart(2, '0') + ':00') : 'N/A';
+
+        return `
+        <details class="group bg-white rounded-xl border border-slate-100 shadow-sm mb-3">
+          <summary class="flex items-center justify-between p-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+            <div class="flex items-center gap-3">
+              <div class="bg-blue-50 p-2 rounded-lg text-blue-600 shrink-0">
+                <i data-lucide="${b.icon || 'map-pin'}" class="w-5 h-5"></i>
+              </div>
+              <h4 class="font-bold text-slate-800 text-base m-0">${b.title}</h4>
+            </div>
+            <div class="text-slate-400 group-open:rotate-180 transition-transform">
+              <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            </div>
+          </summary>
+          
+          <div class="p-4 pt-0 border-t border-slate-50">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+              <div>
+                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-1">Location</p>
+                <div class="flex items-center gap-1.5 text-sm font-medium text-slate-700">
+                  <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 shrink-0"></i> <span class="truncate">${b.where || 'Various'}</span>
+                </div>
+              </div>
+              <div>
+                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-1">Suggested Time</p>
+                <div class="flex items-center gap-1.5 text-sm font-medium text-slate-700">
+                  <i data-lucide="clock" class="w-4 h-4 text-slate-400 shrink-0"></i> ${formattedHour}
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 space-y-3">
+              ${intents ? `<div>
+                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-1.5">Travel Style</p>
+                <div class="flex flex-wrap gap-1.5">${intents}</div>
+              </div>` : ''}
+              
+              ${paces ? `<div>
+                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-1.5">Travel Pace</p>
+                <div class="flex flex-wrap gap-1.5">${paces}</div>
+              </div>` : ''}
+            </div>
+
+            <div class="mt-4">
+              <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-1">Accessibility</p>
+              <p class="text-sm font-medium text-slate-700 flex items-center gap-1.5"><i data-lucide="footprints" class="w-4 h-4 text-slate-400 shrink-0"></i> ${mobility}</p>
+            </div>
+
+            ${b.notes ? `
+            <div class="mt-4 pt-3 border-t border-slate-50">
+              <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-1.5">About this attraction</p>
+              <p class="text-sm text-slate-600 leading-relaxed">${b.notes}</p>
+            </div>` : ''}
           </div>
-          <div>
-            <h4 class="font-bold text-slate-800 text-sm mb-0.5">${b.title}</h4>
-            <p class="text-[11px] text-slate-500 leading-snug">${b.notes || b.where}</p>
-          </div>
-        </div>
-      `).join('');
+        </details>
+        `;
+      }).join('');
     } else {
       attrList.innerHTML = `<p class="text-xs text-slate-400 italic">No top attractions listed yet.</p>`;
     }
@@ -922,13 +1126,18 @@ KYT.virtualTrips = (function() {
       mainAdd.classList.replace('bg-emerald-600', 'bg-blue-600');
       mainAdd.disabled = false;
       mainAdd.onclick = () => {
-        if (!trip.cities.includes(city.id)) {
-          trip.cities.push(city.id);
-          trip.steps = null;
+        const tripToUse = ensureActiveTrip();
+        if (!tripToUse.cities.includes(city.id)) {
+          tripToUse.cities.push(city.id);
+          tripToUse.steps = null;
           saveVTrips();
           if (DOM.citySearchInput) DOM.citySearchInput.value = '';
           renderCanvas();
-          closeCityDetail();
+          // Update button state immediately without closing the panel
+          mainAdd.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> Added`;
+          mainAdd.classList.replace('bg-blue-600', 'bg-emerald-600');
+          mainAdd.disabled = true;
+          lucide.createIcons();
         }
       };
     }
@@ -951,13 +1160,13 @@ KYT.virtualTrips = (function() {
             : `<button class="w-full mt-2 py-1.5 bg-slate-100 text-slate-700 hover:bg-blue-600 hover:text-white rounded-lg text-[10px] font-bold transition-colors" onclick="KYT.virtualTrips.addNearby('${nId}')">Add +</button>`;
           
           return `
-            <div class="shrink-0 w-32 bg-white rounded-xl border border-slate-200 shadow-sm p-3 snap-start cursor-pointer hover:border-blue-300 transition-colors" onclick="KYT.virtualTrips.openCityDetail('${nId}')">
-              <div class="h-16 bg-slate-100 rounded-lg mb-2 flex items-center justify-center">
-                <i data-lucide="image" class="w-6 h-6 text-slate-300"></i>
-              </div>
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3 cursor-pointer hover:border-blue-300 transition-colors flex flex-col h-full" onclick="KYT.virtualTrips.openCityDetail('${nId}')">
               <h4 class="font-black text-slate-800 text-xs truncate">${nCity.name}</h4>
-              <p class="text-[10px] text-slate-500 font-medium">${dist} km away</p>
-              ${btnHtml}
+              <p class="text-[10px] text-slate-500 font-medium mb-1.5">${dist} km away</p>
+              <p class="text-[10px] text-slate-500 leading-tight line-clamp-3 mb-2 flex-1">${nCity.notes || 'Explore this nearby destination.'}</p>
+              <div class="mt-auto">
+                ${btnHtml}
+              </div>
             </div>
           `;
         }).join('');
@@ -979,10 +1188,18 @@ KYT.virtualTrips = (function() {
     }, 10);
   }
 
-  function closeCityDetail() {
+  function closeCityDetail(pushHistory = true) {
     const overlay = document.getElementById('city-detail-overlay');
     const panel = document.getElementById('city-detail-panel');
     if (!overlay || !panel) return;
+
+    if (pushHistory) {
+      const url = new URL(window.location.href);
+      if (url.searchParams.has('city')) {
+        url.searchParams.delete('city');
+        window.history.pushState({ cityId: null }, '', url.toString());
+      }
+    }
 
     overlay.classList.add('opacity-0');
     panel.classList.add('translate-y-full', 'md:translate-x-full');
@@ -993,19 +1210,18 @@ KYT.virtualTrips = (function() {
   }
   
   function addNearby(cityId) {
-    const trip = getActiveTrip();
-    if (trip && !trip.cities.includes(cityId)) {
+    const trip = ensureActiveTrip();
+    if (!trip.cities.includes(cityId)) {
       trip.cities.push(cityId);
       trip.steps = null;
       saveVTrips();
       renderCanvas();
-      // Keep it open, just re-render to update the button states
-      const currentCityId = document.getElementById('cd-btn-add-main').onclick ? null : 'placeholder'; // slightly hacky to find current city, better to re-open
-      // Actually we can just close it for now, or the user can keep browsing.
-      // Re-triggering openCityDetail for the current city would refresh UI.
-      // We don't have currentCityId stored explicitly, but it's ok to just let it update visually or close.
-      // Let's close and let them see the canvas.
-      closeCityDetail();
+      
+      // Refresh the currently open city detail to update the nearby buttons
+      const currentCityId = document.getElementById('cd-title').dataset.cityId;
+      if (currentCityId) {
+        openCityDetail(currentCityId, false);
+      }
     }
   }
 
@@ -1017,5 +1233,6 @@ KYT.virtualTrips = (function() {
 
   return { open: openView, close: closeView, editCanvas, expandAttractionDetail, openCityDetail, addNearby };
 })();
+
 
 

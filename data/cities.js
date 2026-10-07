@@ -15706,5 +15706,961 @@ window.KYT_CITIES = [
         "notes": "The oldest bathing ghat in connection with the Kumbh Mela, mesmerizing during the evening aarti."
       }
     ]
+  },
+  {
+    "id": "srisailam",
+    "name": "Srisailam",
+    "state": "Andhra Pradesh",
+    "description": "Home to the Mallikarjuna Jyotirlinga and Bhramaramba Shakti Peeth, a sacred town on the banks of River Krishna.",
+    "lat": 16.0735,
+    "lng": 78.8687,
+    "tags": [
+      "Spiritual",
+      "Nature",
+      "Forest"
+    ],
+    "beats": [
+      {
+        "title": "Mallikarjuna Jyotirlinga",
+        "icon": "landmark",
+        "where": "Srisailam Temple Road",
+        "hour": 7,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "notes": "One of the 12 Jyotirlingas, dedicated to Lord Shiva."
+      },
+      {
+        "title": "Bhramaramba Devi Temple",
+        "icon": "landmark",
+        "where": "Inside Mallikarjuna Temple Complex",
+        "hour": 9,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short"
+        ],
+        "mobility": "walk",
+        "notes": "One of the 18 Maha Shakti Peethas."
+      },
+      {
+        "title": "Srisailam Dam",
+        "icon": "mountain",
+        "where": "Krishna River",
+        "hour": 16,
+        "intent": [
+          "nature",
+          "leisure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard"
+        ],
+        "mobility": "easy",
+        "notes": "One of the largest dams in India, offering scenic views."
+      }
+    ]
+  },
+  {
+    "id": "omkareshwar",
+    "name": "Omkareshwar",
+    "state": "Madhya Pradesh",
+    "description": "A sacred island on the Narmada river, shaped like the holy 'Om', housing one of the 12 revered Jyotirlingas.",
+    "lat": 22.2472,
+    "lng": 76.1517,
+    "tags": [
+      "Spiritual",
+      "River",
+      "Heritage"
+    ],
+    "beats": [
+      {
+        "title": "Omkareshwar Jyotirlinga",
+        "icon": "landmark",
+        "where": "Mandhata Island",
+        "hour": 6,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "notes": "A revered Jyotirlinga temple situated on an island shaped like 'Om'."
+      },
+      {
+        "title": "Mamleshwar Temple",
+        "icon": "landmark",
+        "where": "South Bank of Narmada",
+        "hour": 10,
+        "intent": [
+          "spiritual",
+          "cultural"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard"
+        ],
+        "mobility": "walk",
+        "notes": "The sister temple to Omkareshwar, also considered part of the Jyotirlinga."
+      },
+      {
+        "title": "Narmada Ghat",
+        "icon": "water",
+        "where": "Banks of Narmada River",
+        "hour": 18,
+        "intent": [
+          "spiritual",
+          "leisure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short"
+        ],
+        "mobility": "easy",
+        "notes": "Peaceful ghats for evening aarti and holy dips."
+      }
+    ]
+  },
+  {
+    "id": "bhimashankar",
+    "name": "Bhimashankar",
+    "state": "Maharashtra",
+    "description": "An ancient shrine in the Sahyadri mountains, famous for its Jyotirlinga and the lush Bhimashankar Wildlife Sanctuary.",
+    "lat": 19.0718,
+    "lng": 73.535,
+    "tags": [
+      "Spiritual",
+      "Nature",
+      "Trekking"
+    ],
+    "beats": [
+      {
+        "title": "Bhimashankar Jyotirlinga",
+        "icon": "landmark",
+        "where": "Sahyadri Hills",
+        "hour": 6,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard"
+        ],
+        "mobility": "walk",
+        "notes": "Ancient Shiva temple built in the Nagara style of architecture."
+      },
+      {
+        "title": "Bhimashankar Wildlife Sanctuary",
+        "icon": "tree",
+        "where": "Surrounding Forest",
+        "hour": 11,
+        "intent": [
+          "nature",
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "deep"
+        ],
+        "mobility": "walk",
+        "notes": "Lush green forest known for the Indian Giant Squirrel and rich flora."
+      },
+      {
+        "title": "Gupt Bhimashankar",
+        "icon": "map-pin",
+        "where": "Near the main temple",
+        "hour": 15,
+        "intent": [
+          "spiritual",
+          "nature"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard"
+        ],
+        "mobility": "trek",
+        "notes": "The spot where the river Bhima originates."
+      }
+    ]
+  },
+  {
+    "id": "nashik",
+    "name": "Nashik",
+    "state": "Maharashtra",
+    "description": "An ancient holy city on the Godavari river, famous for the Kumbh Mela, Trimbakeshwar Jyotirlinga, and vineyards.",
+    "lat": 20.0033,
+    "lng": 73.7667,
+    "tags": [
+      "Spiritual",
+      "Heritage",
+      "Vineyards"
+    ],
+    "beats": [
+      {
+        "title": "Trimbakeshwar Temple",
+        "icon": "landmark",
+        "where": "Trimbak",
+        "hour": 6,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "notes": "An ancient Jyotirlinga temple known for its three-faced Linga representing Brahma, Vishnu, and Shiva."
+      },
+      {
+        "title": "Panchavati",
+        "icon": "map-pin",
+        "where": "Northern Nashik",
+        "hour": 10,
+        "intent": [
+          "spiritual",
+          "cultural"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard"
+        ],
+        "mobility": "walk",
+        "notes": "Sacred area associated with the Ramayana, featuring the Kalaram Temple and Sita Gufa."
+      },
+      {
+        "title": "Sula Vineyards",
+        "icon": "wine",
+        "where": "Gangapur-Savargaon Road",
+        "hour": 16,
+        "intent": [
+          "leisure",
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "adults"
+        ],
+        "pace": [
+          "deep"
+        ],
+        "mobility": "easy",
+        "notes": "Famous vineyard offering wine tasting tours and beautiful sunset views."
+      }
+    ]
+  },
+  {
+    "id": "deoghar",
+    "name": "Deoghar",
+    "state": "Jharkhand",
+    "description": "A major Hindu pilgrimage site renowned for the Baidyanath Jyotirlinga temple, attracting millions during Shravan.",
+    "lat": 24.482,
+    "lng": 86.6946,
+    "tags": [
+      "Spiritual",
+      "Culture"
+    ],
+    "beats": [
+      {
+        "title": "Baidyanath Jyotirlinga",
+        "icon": "landmark",
+        "where": "Deoghar Center",
+        "hour": 5,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "notes": "A highly revered Jyotirlinga where Ravana is said to have worshipped Shiva."
+      },
+      {
+        "title": "Naulakha Mandir",
+        "icon": "landmark",
+        "where": "1.5 km from Baidyanath",
+        "hour": 10,
+        "intent": [
+          "spiritual",
+          "architecture"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short"
+        ],
+        "mobility": "easy",
+        "notes": "Beautiful temple dedicated to Radha-Krishna, built with a donation of 9 lakh rupees."
+      },
+      {
+        "title": "Tapovan",
+        "icon": "mountain",
+        "where": "10 km from Deoghar",
+        "hour": 15,
+        "intent": [
+          "nature",
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard"
+        ],
+        "mobility": "trek",
+        "notes": "A hill featuring caves where Sage Valmiki reportedly meditated."
+      }
+    ]
+  },
+  {
+    "id": "tiruchirappalli",
+    "name": "Tiruchirappalli",
+    "state": "Tamil Nadu",
+    "description": "An ancient city centered around the Rock Fort, and home to the massive Sri Ranganathaswamy Temple in Srirangam.",
+    "lat": 10.7905,
+    "lng": 78.7047,
+    "tags": [
+      "Heritage",
+      "Spiritual",
+      "Architecture"
+    ],
+    "beats": [
+      {
+        "title": "Sri Ranganathaswamy Temple",
+        "icon": "landmark",
+        "where": "Srirangam",
+        "hour": 7,
+        "intent": [
+          "spiritual",
+          "heritage"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "deep"
+        ],
+        "mobility": "walk",
+        "notes": "One of the most illustrious Vaishnava temples, boasting the tallest temple tower in Asia."
+      },
+      {
+        "title": "Rockfort Temple",
+        "icon": "mountain",
+        "where": "Heart of Trichy",
+        "hour": 16,
+        "intent": [
+          "spiritual",
+          "adventure"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard"
+        ],
+        "mobility": "stairs",
+        "notes": "An ancient fort and temple complex built on a 83m high rock, offering panoramic city views."
+      },
+      {
+        "title": "Jambukeshwarar Temple",
+        "icon": "landmark",
+        "where": "Thiruvanaikaval",
+        "hour": 11,
+        "intent": [
+          "spiritual",
+          "heritage"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard"
+        ],
+        "mobility": "walk",
+        "notes": "A Pancha Bhoota Stalam representing the element of Water (Appu)."
+      }
+    ]
+  },
+  {
+    "id": "thiruvananthapuram",
+    "name": "Thiruvananthapuram",
+    "state": "Kerala",
+    "description": "The capital of Kerala, distinguished by its British colonial architecture, art galleries, and the magnificent Padmanabhaswamy Temple.",
+    "lat": 8.5241,
+    "lng": 76.9366,
+    "tags": [
+      "Heritage",
+      "Coastal",
+      "Spiritual"
+    ],
+    "beats": [
+      {
+        "title": "Padmanabhaswamy Temple",
+        "icon": "landmark",
+        "where": "Fort Pazhavangadi",
+        "hour": 6,
+        "intent": [
+          "spiritual",
+          "heritage"
+        ],
+        "faith": [
+          "hindu"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "notes": "Iconic Vishnu temple known for its immense wealth and strict dress code."
+      },
+      {
+        "title": "Napier Museum",
+        "icon": "museum",
+        "where": "Museum Compound",
+        "hour": 11,
+        "intent": [
+          "cultural",
+          "heritage"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard"
+        ],
+        "mobility": "easy",
+        "notes": "An art and natural history museum housed in a beautiful Indo-Saracenic structure."
+      },
+      {
+        "title": "Kovalam Beach",
+        "icon": "sun",
+        "where": "16 km from City",
+        "hour": 16,
+        "intent": [
+          "leisure",
+          "nature"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "deep"
+        ],
+        "mobility": "easy",
+        "notes": "Internationally renowned beach with three crescent-shaped beaches."
+      }
+    ]
+  },
+  {
+    "id": "guruvayur",
+    "name": "Guruvayur",
+    "state": "Kerala",
+    "description": "A bustling temple town in Kerala, home to the revered Guruvayur Sri Krishna Temple, often called the 'Dwarka of the South'.",
+    "lat": 10.596,
+    "lng": 76.0392,
+    "tags": [
+      "Spiritual",
+      "Culture"
+    ],
+    "beats": [
+      {
+        "title": "Guruvayur Temple",
+        "icon": "landmark",
+        "where": "Guruvayur Town",
+        "hour": 5,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "deep"
+        ],
+        "mobility": "walk",
+        "notes": "One of the most important pilgrimage centers in Kerala, dedicated to Lord Krishna."
+      },
+      {
+        "title": "Elephant Camp (Punnathur Kotta)",
+        "icon": "tree",
+        "where": "3 km from Temple",
+        "hour": 10,
+        "intent": [
+          "leisure",
+          "nature"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "family"
+        ],
+        "pace": [
+          "standard"
+        ],
+        "mobility": "walk",
+        "notes": "A sanctuary housing over 50 captive elephants belonging to the temple."
+      },
+      {
+        "title": "Mammiyoor Temple",
+        "icon": "landmark",
+        "where": "Near Guruvayur Temple",
+        "hour": 15,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short"
+        ],
+        "mobility": "walk",
+        "notes": "A prominent Shiva temple; a visit to Guruvayur is considered incomplete without visiting here."
+      }
+    ]
+  },
+  {
+    "id": "pandharpur",
+    "name": "Pandharpur",
+    "state": "Maharashtra",
+    "description": "A major pilgrimage city on the banks of the Chandrabhaga River, dedicated to Lord Vitthal and Rukmini.",
+    "lat": 17.6775,
+    "lng": 75.3283,
+    "tags": [
+      "Spiritual",
+      "Culture",
+      "River"
+    ],
+    "beats": [
+      {
+        "title": "Vitthal Rukmini Temple",
+        "icon": "landmark",
+        "where": "Chandrabhaga River Bank",
+        "hour": 6,
+        "intent": [
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "deep"
+        ],
+        "mobility": "walk",
+        "notes": "The most visited temple in Maharashtra, dedicated to Lord Vitthal (a form of Krishna)."
+      },
+      {
+        "title": "Chandrabhaga River Ghats",
+        "icon": "water",
+        "where": "Pandharpur",
+        "hour": 17,
+        "intent": [
+          "spiritual",
+          "leisure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard"
+        ],
+        "mobility": "easy",
+        "notes": "Holy river banks where pilgrims take a dip before visiting the temple."
+      },
+      {
+        "title": "Kaivalya Math",
+        "icon": "map-pin",
+        "where": "Pandharpur City",
+        "hour": 11,
+        "intent": [
+          "spiritual",
+          "cultural"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short"
+        ],
+        "mobility": "walk",
+        "notes": "A serene ashram associated with the Warkari sect's traditions."
+      }
+    ]
+  },
+  {
+    "id": "nathdwara",
+    "name": "Nathdwara",
+    "state": "Rajasthan",
+    "description": "A picturesque town in the Aravalli hills, famous for its Shrinathji Temple, dedicated to Lord Krishna.",
+    "lat": 24.9304,
+    "lng": 73.8211,
+    "tags": [
+      "Spiritual",
+      "Art",
+      "Heritage"
+    ],
+    "beats": [
+      {
+        "title": "Shrinathji Temple",
+        "icon": "landmark",
+        "where": "Nathdwara Town",
+        "hour": 7,
+        "intent": [
+          "spiritual",
+          "culture"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard"
+        ],
+        "mobility": "walk",
+        "notes": "Famous temple dedicated to a 7-year-old incarnation of Lord Krishna, renowned for its daily 'darshans'."
+      },
+      {
+        "title": "Statue of Belief (Vishwas Swaroopam)",
+        "icon": "monument",
+        "where": "Ganesh Tekri",
+        "hour": 11,
+        "intent": [
+          "cultural",
+          "architecture"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard"
+        ],
+        "mobility": "easy",
+        "notes": "The tallest statue of Lord Shiva in the world, standing at 369 feet."
+      },
+      {
+        "title": "Haldighati",
+        "icon": "mountain",
+        "where": "18 km from Nathdwara",
+        "hour": 15,
+        "intent": [
+          "heritage",
+          "nature"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard"
+        ],
+        "mobility": "walk",
+        "notes": "Historic mountain pass famous for the Battle of Haldighati in 1576."
+      }
+    ]
+  },
+  {
+    "id": "udupi",
+    "name": "Udupi",
+    "state": "Karnataka",
+    "description": "A coastal city renowned for its Hindu temples, particularly the 13th-century Sri Krishna Matha, and its unique local cuisine.",
+    "lat": 13.3409,
+    "lng": 74.7421,
+    "tags": [
+      "Spiritual",
+      "Coastal",
+      "Culinary"
+    ],
+    "beats": [
+      {
+        "title": "Sri Krishna Matha",
+        "icon": "landmark",
+        "where": "Car Street, Udupi",
+        "hour": 7,
+        "intent": [
+          "spiritual",
+          "culture"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard"
+        ],
+        "mobility": "walk",
+        "notes": "A famous Hindu temple dedicated to Lord Krishna, known for the 'Kanakana Kindi' window."
+      },
+      {
+        "title": "Malpe Beach",
+        "icon": "sun",
+        "where": "6 km from Udupi",
+        "hour": 16,
+        "intent": [
+          "leisure",
+          "nature"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "easy",
+        "notes": "A pristine beach offering water sports and ferries to St. Mary's Island."
+      },
+      {
+        "title": "St. Mary's Island",
+        "icon": "island",
+        "where": "Off Malpe Coast",
+        "hour": 10,
+        "intent": [
+          "nature",
+          "adventure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "deep"
+        ],
+        "mobility": "boat",
+        "notes": "Known for its distinctive hexagonal basalt rock formations."
+      }
+    ]
+  },
+  {
+    "id": "maheshwar",
+    "name": "Maheshwar",
+    "icon": "landmark",
+    "dayOffset": 0,
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Maheshwar%20India",
+    "notes": "A historic and spiritually significant town on the banks of the Narmada River, famous for Ahilya Fort, serene ghats, and exquisite Maheshwari handloom sarees.",
+    "beats": [
+      {
+        "title": "Ahilya Fort & Narmada Ghats",
+        "icon": "landmark",
+        "where": "Maheshwar",
+        "hour": 8,
+        "intent": [
+          "cultural",
+          "spiritual"
+        ],
+        "faith": [
+          "hindu",
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard",
+          "deep"
+        ],
+        "mobility": "walk",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Ahilya%20Fort%2C%20Maheshwar",
+        "notes": "Explore the majestic 18th-century fort built by Queen Ahilyabai Holkar and stroll along the serene, architecturally stunning ghats of the Narmada."
+      },
+      {
+        "title": "Maheshwari Handloom Weaving Tour",
+        "icon": "shopping-bag",
+        "where": "Rehwa Society, Maheshwar",
+        "hour": 14,
+        "intent": [
+          "cultural"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "standard"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Rehwa%20Society%2C%20Maheshwar",
+        "notes": "Witness the traditional weaving of beautiful Maheshwari sarees and fabrics, a craft championed by Queen Ahilyabai to empower local weavers."
+      },
+      {
+        "title": "Sunset Boat Ride on the Narmada",
+        "icon": "waves",
+        "where": "Maheshwar Ghats",
+        "hour": 17,
+        "intent": [
+          "nature",
+          "leisure"
+        ],
+        "faith": [
+          "any"
+        ],
+        "party": [
+          "any"
+        ],
+        "pace": [
+          "short",
+          "standard"
+        ],
+        "mobility": "easy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Maheshwar%20Ghats",
+        "notes": "Take a tranquil boat ride at sunset for the best view of the fort and ghats, culminating in the evening Narmada Aarti."
+      }
+    ],
+    "aliases": [
+      "Mahishmati"
+    ],
+    "lat": 22.1764,
+    "lng": 75.5861,
+    "state": "Madhya Pradesh",
+    "district": "Khargone"
   }
 ];

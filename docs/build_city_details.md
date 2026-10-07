@@ -31,3 +31,17 @@ This document outlines the roadmap and features to be implemented for the "Rich 
 *   **Constraint/Filter:** Only show establishments with a minimum of 5,000 reviews to ensure high quality and relevance.
 *   *Implementation Strategy:* Since KYT is zero-server, this may involve constructing highly specific Google Maps Search URLs (e.g., `https://www.google.com/maps/search/Hotels+in+Agra/`), or pre-curating a lightweight dataset of top-tier hotels/restaurants per city.
 
+
+## 5. Spiritual & Religious Coverage Validation
+**Goal:** Ensure comprehensive coverage of highly significant religious sites and circuits across India.
+**Details:**
+*   **TODO:** Audit the `cities.js` database to guarantee all 12 Jyotirlinga temple locations are documented and appropriately tagged.
+*   **TODO:** Ensure major Vishnu shrines and prominent Yatra circuit destinations (e.g., Char Dham) are fully represented as cities or major attractions within their respective regions.
+
+## 6. Official Websites for Attractions
+**Goal:** Protect users from fake booking sites and misinformation by providing authoritative sources.
+**Details:**
+*   **TODO:** Expand the attraction (`beats`) data schema to include a new `officialWebsite` field.
+*   **TODO:** For major monuments and temples, source and populate the verified official domain (e.g., official temple trust sites, ASI ticket portals).
+*   Surface this link prominently in the "Expanded Attraction Details" UI within the slide-over.
+

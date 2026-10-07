@@ -38,7 +38,9 @@ window.KYT_DISTANCE_MATRIX = {
     "patiala": 375,
     "dehradun": 350,
     "lucknow": 292,
-    "ujjain": 498
+    "ujjain": 498,
+    "omkareshwar": 579,
+    "nathdwara": 487
   },
   "jaipur": {
     "agra": 219,
@@ -79,7 +81,10 @@ window.KYT_DISTANCE_MATRIX = {
     "patiala": 370,
     "dehradun": 437,
     "lucknow": 507,
-    "ujjain": 416
+    "ujjain": 416,
+    "omkareshwar": 520,
+    "nathdwara": 298,
+    "maheshwar": 527
   },
   "goa": {
     "mumbai": 437,
@@ -102,7 +107,13 @@ window.KYT_DISTANCE_MATRIX = {
     "badami": 184,
     "pattadakal": 199,
     "bengaluru": 458,
-    "shirdi": 498
+    "shirdi": 498,
+    "srisailam": 519,
+    "bhimashankar": 423,
+    "nashik": 524,
+    "guruvayur": 564,
+    "pandharpur": 296,
+    "udupi": 229
   },
   "munnar": {
     "kochi": 90,
@@ -129,7 +140,11 @@ window.KYT_DISTANCE_MATRIX = {
     "halebidu": 281,
     "tirupati": 471,
     "bengaluru": 326,
-    "kancheepuram": 424
+    "kancheepuram": 424,
+    "tiruchirappalli": 196,
+    "thiruvananthapuram": 174,
+    "guruvayur": 125,
+    "udupi": 441
   },
   "udaipur": {
     "agra": 520,
@@ -158,7 +173,11 @@ window.KYT_DISTANCE_MATRIX = {
     "rajkot": 388,
     "gandhinagar": 184,
     "shirdi": 541,
-    "ujjain": 265
+    "ujjain": 265,
+    "omkareshwar": 361,
+    "nashik": 509,
+    "nathdwara": 41,
+    "maheshwar": 330
   },
   "varanasi": {
     "agra": 539,
@@ -186,7 +205,8 @@ window.KYT_DISTANCE_MATRIX = {
     "siliguri": 563,
     "kalimpong": 578,
     "mirik": 545,
-    "lucknow": 266
+    "lucknow": 266,
+    "deoghar": 384
   },
   "delhi": {
     "agra": 183,
@@ -226,7 +246,8 @@ window.KYT_DISTANCE_MATRIX = {
     "dehradun": 201,
     "jammu": 504,
     "kargil": 575,
-    "lucknow": 418
+    "lucknow": 418,
+    "nathdwara": 535
   },
   "mumbai": {
     "goa": 437,
@@ -249,7 +270,12 @@ window.KYT_DISTANCE_MATRIX = {
     "rajkot": 420,
     "gandhinagar": 464,
     "shirdi": 186,
-    "ujjain": 549
+    "ujjain": 549,
+    "omkareshwar": 493,
+    "bhimashankar": 70,
+    "nashik": 141,
+    "pandharpur": 301,
+    "maheshwar": 448
   },
   "kochi": {
     "munnar": 90,
@@ -276,7 +302,11 @@ window.KYT_DISTANCE_MATRIX = {
     "halebidu": 296,
     "tirupati": 534,
     "bengaluru": 365,
-    "kancheepuram": 497
+    "kancheepuram": 497,
+    "tiruchirappalli": 284,
+    "thiruvananthapuram": 178,
+    "guruvayur": 73,
+    "udupi": 409
   },
   "rishikesh": {
     "agra": 327,
@@ -411,7 +441,8 @@ window.KYT_DISTANCE_MATRIX = {
     "kalimpong": 21,
     "mirik": 18,
     "mandarmoni": 599,
-    "sundarbans": 558
+    "sundarbans": 558,
+    "deoghar": 325
   },
   "ooty": {
     "goa": 517,
@@ -441,7 +472,12 @@ window.KYT_DISTANCE_MATRIX = {
     "pattadakal": 513,
     "tirupati": 385,
     "bengaluru": 199,
-    "kancheepuram": 365
+    "kancheepuram": 365,
+    "srisailam": 569,
+    "tiruchirappalli": 229,
+    "thiruvananthapuram": 322,
+    "guruvayur": 116,
+    "udupi": 302
   },
   "mysore": {
     "goa": 433,
@@ -472,7 +508,12 @@ window.KYT_DISTANCE_MATRIX = {
     "pattadakal": 415,
     "tirupati": 334,
     "bengaluru": 126,
-    "kancheepuram": 337
+    "kancheepuram": 337,
+    "srisailam": 482,
+    "tiruchirappalli": 280,
+    "thiruvananthapuram": 422,
+    "guruvayur": 202,
+    "udupi": 237
   },
   "hyderabad": {
     "goa": 521,
@@ -496,7 +537,13 @@ window.KYT_DISTANCE_MATRIX = {
     "bhilai": 525,
     "bengaluru": 497,
     "shirdi": 499,
-    "kancheepuram": 515
+    "kancheepuram": 515,
+    "srisailam": 149,
+    "omkareshwar": 595,
+    "bhimashankar": 555,
+    "nashik": 576,
+    "pandharpur": 335,
+    "udupi": 600
   },
   "kolkata": {
     "darjeeling": 497,
@@ -522,7 +569,8 @@ window.KYT_DISTANCE_MATRIX = {
     "mirik": 480,
     "digha": 138,
     "mandarmoni": 121,
-    "sundarbans": 69
+    "sundarbans": 69,
+    "deoghar": 272
   },
   "chennai": {
     "munnar": 484,
@@ -548,7 +596,11 @@ window.KYT_DISTANCE_MATRIX = {
     "vijayawada": 383,
     "tirupati": 111,
     "bengaluru": 292,
-    "kancheepuram": 66
+    "kancheepuram": 66,
+    "srisailam": 366,
+    "tiruchirappalli": 307,
+    "guruvayur": 538,
+    "udupi": 600
   },
   "pondicherry": {
     "munnar": 314,
@@ -572,7 +624,11 @@ window.KYT_DISTANCE_MATRIX = {
     "halebidu": 387,
     "tirupati": 305,
     "bengaluru": 333,
-    "kancheepuram": 219
+    "kancheepuram": 219,
+    "srisailam": 582,
+    "tiruchirappalli": 121,
+    "thiruvananthapuram": 412,
+    "guruvayur": 413
   },
   "hampi": {
     "goa": 255,
@@ -602,7 +658,14 @@ window.KYT_DISTANCE_MATRIX = {
     "tirupati": 371,
     "bengaluru": 289,
     "shirdi": 536,
-    "kancheepuram": 444
+    "kancheepuram": 444,
+    "srisailam": 270,
+    "bhimashankar": 519,
+    "nashik": 592,
+    "tiruchirappalli": 561,
+    "guruvayur": 529,
+    "pandharpur": 287,
+    "udupi": 289
   },
   "andaman-islands": {
     "havelock-island": 74,
@@ -708,7 +771,8 @@ window.KYT_DISTANCE_MATRIX = {
     "chittorgarh": 450,
     "vadodara": 580,
     "rajkot": 525,
-    "gandhinagar": 463
+    "gandhinagar": 463,
+    "nathdwara": 383
   },
   "jodhpur": {
     "agra": 504,
@@ -735,7 +799,10 @@ window.KYT_DISTANCE_MATRIX = {
     "gandhinagar": 344,
     "ludhiana": 582,
     "patiala": 542,
-    "ujjain": 445
+    "ujjain": 445,
+    "omkareshwar": 550,
+    "nathdwara": 171,
+    "maheshwar": 526
   },
   "pushkar": {
     "agra": 351,
@@ -771,7 +838,10 @@ window.KYT_DISTANCE_MATRIX = {
     "jalandhar": 543,
     "patiala": 449,
     "dehradun": 546,
-    "ujjain": 389
+    "ujjain": 389,
+    "omkareshwar": 498,
+    "nathdwara": 188,
+    "maheshwar": 491
   },
   "khajuraho": {
     "agra": 322,
@@ -803,7 +873,9 @@ window.KYT_DISTANCE_MATRIX = {
     "raipur": 438,
     "bhilai": 431,
     "lucknow": 243,
-    "ujjain": 460
+    "ujjain": 460,
+    "omkareshwar": 481,
+    "maheshwar": 533
   },
   "alleppey": {
     "munnar": 104,
@@ -828,7 +900,11 @@ window.KYT_DISTANCE_MATRIX = {
     "halebidu": 347,
     "tirupati": 571,
     "bengaluru": 411,
-    "kancheepuram": 527
+    "kancheepuram": 527,
+    "tiruchirappalli": 298,
+    "thiruvananthapuram": 127,
+    "guruvayur": 126,
+    "udupi": 461
   },
   "gokarna": {
     "goa": 88,
@@ -855,7 +931,12 @@ window.KYT_DISTANCE_MATRIX = {
     "pattadakal": 224,
     "tirupati": 560,
     "bengaluru": 394,
-    "shirdi": 581
+    "shirdi": 581,
+    "srisailam": 517,
+    "bhimashankar": 510,
+    "guruvayur": 477,
+    "pandharpur": 365,
+    "udupi": 141
   },
   "madurai": {
     "munnar": 117,
@@ -880,7 +961,11 @@ window.KYT_DISTANCE_MATRIX = {
     "halebidu": 335,
     "tirupati": 436,
     "bengaluru": 344,
-    "kancheepuram": 371
+    "kancheepuram": 371,
+    "tiruchirappalli": 116,
+    "thiruvananthapuram": 202,
+    "guruvayur": 239,
+    "udupi": 528
   },
   "kanyakumari": {
     "munnar": 230,
@@ -903,7 +988,10 @@ window.KYT_DISTANCE_MATRIX = {
     "belur": 595,
     "halebidu": 511,
     "bengaluru": 545,
-    "kancheepuram": 583
+    "kancheepuram": 583,
+    "tiruchirappalli": 327,
+    "thiruvananthapuram": 84,
+    "guruvayur": 325
   },
   "ranthambore": {
     "agra": 201,
@@ -943,7 +1031,10 @@ window.KYT_DISTANCE_MATRIX = {
     "patiala": 466,
     "dehradun": 504,
     "lucknow": 455,
-    "ujjain": 323
+    "ujjain": 323,
+    "omkareshwar": 420,
+    "nathdwara": 291,
+    "maheshwar": 436
   },
   "jim-corbett": {
     "agra": 277,
@@ -1088,7 +1179,13 @@ window.KYT_DISTANCE_MATRIX = {
     "pattadakal": 397,
     "tirupati": 430,
     "bengaluru": 219,
-    "kancheepuram": 442
+    "kancheepuram": 442,
+    "srisailam": 536,
+    "tiruchirappalli": 376,
+    "thiruvananthapuram": 451,
+    "guruvayur": 203,
+    "pandharpur": 590,
+    "udupi": 146
   },
   "wayanad": {
     "goa": 456,
@@ -1118,7 +1215,12 @@ window.KYT_DISTANCE_MATRIX = {
     "pattadakal": 472,
     "tirupati": 416,
     "bengaluru": 212,
-    "kancheepuram": 410
+    "kancheepuram": 410,
+    "srisailam": 568,
+    "tiruchirappalli": 299,
+    "thiruvananthapuram": 366,
+    "guruvayur": 125,
+    "udupi": 235
   },
   "mahabaleshwar": {
     "goa": 295,
@@ -1140,7 +1242,14 @@ window.KYT_DISTANCE_MATRIX = {
     "vadodara": 489,
     "rajkot": 571,
     "gandhinagar": 598,
-    "shirdi": 222
+    "shirdi": 222,
+    "srisailam": 591,
+    "omkareshwar": 547,
+    "bhimashankar": 128,
+    "nashik": 231,
+    "pandharpur": 179,
+    "udupi": 523,
+    "maheshwar": 514
   },
   "lonavala": {
     "goa": 390,
@@ -1162,7 +1271,12 @@ window.KYT_DISTANCE_MATRIX = {
     "rajkot": 479,
     "gandhinagar": 504,
     "shirdi": 159,
-    "ujjain": 551
+    "ujjain": 551,
+    "omkareshwar": 483,
+    "bhimashankar": 38,
+    "nashik": 144,
+    "pandharpur": 235,
+    "maheshwar": 443
   },
   "pune": {
     "goa": 359,
@@ -1184,7 +1298,14 @@ window.KYT_DISTANCE_MATRIX = {
     "rajkot": 527,
     "gandhinagar": 538,
     "shirdi": 153,
-    "ujjain": 555
+    "ujjain": 555,
+    "srisailam": 598,
+    "omkareshwar": 478,
+    "bhimashankar": 70,
+    "nashik": 165,
+    "pandharpur": 182,
+    "udupi": 584,
+    "maheshwar": 445
   },
   "aurangabad": {
     "goa": 526,
@@ -1209,7 +1330,14 @@ window.KYT_DISTANCE_MATRIX = {
     "rajkot": 542,
     "gandhinagar": 465,
     "shirdi": 91,
-    "ujjain": 370
+    "ujjain": 370,
+    "srisailam": 564,
+    "omkareshwar": 277,
+    "bhimashankar": 209,
+    "nashik": 165,
+    "pandharpur": 245,
+    "nathdwara": 583,
+    "maheshwar": 257
   },
   "ahmedabad": {
     "jaipur": 542,
@@ -1237,7 +1365,12 @@ window.KYT_DISTANCE_MATRIX = {
     "rajkot": 199,
     "gandhinagar": 24,
     "shirdi": 412,
-    "ujjain": 329
+    "ujjain": 329,
+    "omkareshwar": 377,
+    "bhimashankar": 450,
+    "nashik": 357,
+    "nathdwara": 247,
+    "maheshwar": 323
   },
   "kutch": {
     "udaipur": 390,
@@ -1255,7 +1388,10 @@ window.KYT_DISTANCE_MATRIX = {
     "vadodara": 357,
     "rajkot": 164,
     "gandhinagar": 273,
-    "ujjain": 592
+    "ujjain": 592,
+    "nashik": 556,
+    "nathdwara": 415,
+    "maheshwar": 593
   },
   "dwarka": {
     "udaipur": 547,
@@ -1269,7 +1405,10 @@ window.KYT_DISTANCE_MATRIX = {
     "surat": 415,
     "vadodara": 435,
     "rajkot": 189,
-    "gandhinagar": 393
+    "gandhinagar": 393,
+    "bhimashankar": 592,
+    "nashik": 557,
+    "nathdwara": 578
   },
   "somnath": {
     "udaipur": 530,
@@ -1289,7 +1428,11 @@ window.KYT_DISTANCE_MATRIX = {
     "vadodara": 328,
     "rajkot": 162,
     "gandhinagar": 347,
-    "shirdi": 442
+    "shirdi": 442,
+    "bhimashankar": 385,
+    "nashik": 364,
+    "nathdwara": 569,
+    "maheshwar": 554
   },
   "gwalior": {
     "agra": 109,
@@ -1327,7 +1470,10 @@ window.KYT_DISTANCE_MATRIX = {
     "patiala": 480,
     "dehradun": 458,
     "lucknow": 285,
-    "ujjain": 413
+    "ujjain": 413,
+    "omkareshwar": 485,
+    "nathdwara": 457,
+    "maheshwar": 518
   },
   "orchha": {
     "agra": 212,
@@ -1361,7 +1507,10 @@ window.KYT_DISTANCE_MATRIX = {
     "bhilai": 538,
     "dehradun": 556,
     "lucknow": 282,
-    "ujjain": 377
+    "ujjain": 377,
+    "omkareshwar": 428,
+    "nathdwara": 487,
+    "maheshwar": 470
   },
   "bhopal": {
     "agra": 440,
@@ -1388,7 +1537,11 @@ window.KYT_DISTANCE_MATRIX = {
     "bhilai": 468,
     "lucknow": 534,
     "shirdi": 492,
-    "ujjain": 165
+    "ujjain": 165,
+    "omkareshwar": 171,
+    "nashik": 522,
+    "nathdwara": 408,
+    "maheshwar": 222
   },
   "indore": {
     "agra": 540,
@@ -1419,7 +1572,13 @@ window.KYT_DISTANCE_MATRIX = {
     "gandhinagar": 334,
     "bhilai": 592,
     "shirdi": 359,
-    "ujjain": 51
+    "ujjain": 51,
+    "omkareshwar": 60,
+    "bhimashankar": 473,
+    "nashik": 372,
+    "pandharpur": 564,
+    "nathdwara": 322,
+    "maheshwar": 67
   },
   "puri": {
     "kolkata": 405,
@@ -1437,7 +1596,8 @@ window.KYT_DISTANCE_MATRIX = {
     "dhanbad": 448,
     "digha": 267,
     "mandarmoni": 285,
-    "sundarbans": 387
+    "sundarbans": 387,
+    "deoghar": 527
   },
   "bhubaneswar": {
     "kolkata": 367,
@@ -1456,7 +1616,8 @@ window.KYT_DISTANCE_MATRIX = {
     "dhanbad": 398,
     "digha": 230,
     "mandarmoni": 249,
-    "sundarbans": 355
+    "sundarbans": 355,
+    "deoghar": 478
   },
   "konark": {
     "kolkata": 375,
@@ -1474,7 +1635,8 @@ window.KYT_DISTANCE_MATRIX = {
     "dhanbad": 433,
     "digha": 238,
     "mandarmoni": 255,
-    "sundarbans": 354
+    "sundarbans": 354,
+    "deoghar": 512
   },
   "guwahati": {
     "darjeeling": 360,
@@ -1492,7 +1654,8 @@ window.KYT_DISTANCE_MATRIX = {
     "siliguri": 336,
     "kalimpong": 341,
     "mirik": 363,
-    "sundarbans": 556
+    "sundarbans": 556,
+    "deoghar": 542
   },
   "shillong": {
     "darjeeling": 396,
@@ -1510,7 +1673,8 @@ window.KYT_DISTANCE_MATRIX = {
     "siliguri": 367,
     "kalimpong": 378,
     "mirik": 396,
-    "sundarbans": 511
+    "sundarbans": 511,
+    "deoghar": 537
   },
   "cherrapunji": {
     "darjeeling": 397,
@@ -1530,7 +1694,8 @@ window.KYT_DISTANCE_MATRIX = {
     "mirik": 396,
     "digha": 592,
     "mandarmoni": 574,
-    "sundarbans": 476
+    "sundarbans": 476,
+    "deoghar": 515
   },
   "tawang": {
     "darjeeling": 361,
@@ -1571,7 +1736,8 @@ window.KYT_DISTANCE_MATRIX = {
     "siliguri": 70,
     "kalimpong": 32,
     "mirik": 64,
-    "sundarbans": 589
+    "sundarbans": 589,
+    "deoghar": 370
   },
   "pelling": {
     "varanasi": 565,
@@ -1598,7 +1764,8 @@ window.KYT_DISTANCE_MATRIX = {
     "siliguri": 68,
     "kalimpong": 35,
     "mirik": 46,
-    "sundarbans": 588
+    "sundarbans": 588,
+    "deoghar": 349
   },
   "kaziranga": {
     "darjeeling": 513,
@@ -1701,7 +1868,10 @@ window.KYT_DISTANCE_MATRIX = {
     "halebidu": 466,
     "tirupati": 484,
     "bengaluru": 452,
-    "kancheepuram": 402
+    "kancheepuram": 402,
+    "tiruchirappalli": 180,
+    "thiruvananthapuram": 274,
+    "guruvayur": 387
   },
   "thanjavur": {
     "munnar": 243,
@@ -1726,7 +1896,11 @@ window.KYT_DISTANCE_MATRIX = {
     "halebidu": 348,
     "tirupati": 331,
     "bengaluru": 312,
-    "kancheepuram": 253
+    "kancheepuram": 253,
+    "tiruchirappalli": 56,
+    "thiruvananthapuram": 344,
+    "guruvayur": 346,
+    "udupi": 569
   },
   "kodaikanal": {
     "munnar": 50,
@@ -1753,7 +1927,11 @@ window.KYT_DISTANCE_MATRIX = {
     "halebidu": 276,
     "tirupati": 432,
     "bengaluru": 305,
-    "kancheepuram": 380
+    "kancheepuram": 380,
+    "tiruchirappalli": 146,
+    "thiruvananthapuram": 200,
+    "guruvayur": 164,
+    "udupi": 457
   },
   "matheran": {
     "goa": 419,
@@ -1776,7 +1954,12 @@ window.KYT_DISTANCE_MATRIX = {
     "rajkot": 449,
     "gandhinagar": 475,
     "shirdi": 153,
-    "ujjain": 534
+    "ujjain": 534,
+    "omkareshwar": 470,
+    "bhimashankar": 29,
+    "nashik": 124,
+    "pandharpur": 262,
+    "maheshwar": 429
   },
   "auli": {
     "agra": 403,
@@ -1966,7 +2149,8 @@ window.KYT_DISTANCE_MATRIX = {
     "patiala": 329,
     "dehradun": 317,
     "lucknow": 330,
-    "ujjain": 517
+    "ujjain": 517,
+    "nathdwara": 480
   },
   "vrindavan": {
     "agra": 54,
@@ -2009,7 +2193,8 @@ window.KYT_DISTANCE_MATRIX = {
     "patiala": 321,
     "dehradun": 308,
     "lucknow": 331,
-    "ujjain": 525
+    "ujjain": 525,
+    "nathdwara": 485
   },
   "ayodhya": {
     "agra": 418,
@@ -2043,7 +2228,8 @@ window.KYT_DISTANCE_MATRIX = {
     "dhanbad": 540,
     "dehradun": 565,
     "mirik": 594,
-    "lucknow": 126
+    "lucknow": 126,
+    "deoghar": 519
   },
   "prayagraj": {
     "agra": 427,
@@ -2071,7 +2257,8 @@ window.KYT_DISTANCE_MATRIX = {
     "bhilai": 472,
     "jamshedpur": 532,
     "dhanbad": 499,
-    "lucknow": 180
+    "lucknow": 180,
+    "deoghar": 501
   },
   "gaya": {
     "varanasi": 210,
@@ -2101,7 +2288,8 @@ window.KYT_DISTANCE_MATRIX = {
     "digha": 436,
     "mandarmoni": 443,
     "sundarbans": 485,
-    "lucknow": 467
+    "lucknow": 467,
+    "deoghar": 174
   },
   "nalanda": {
     "varanasi": 246,
@@ -2130,7 +2318,8 @@ window.KYT_DISTANCE_MATRIX = {
     "digha": 444,
     "mandarmoni": 448,
     "sundarbans": 478,
-    "lucknow": 489
+    "lucknow": 489,
+    "deoghar": 146
   },
   "rajgir": {
     "varanasi": 245,
@@ -2160,7 +2349,8 @@ window.KYT_DISTANCE_MATRIX = {
     "digha": 435,
     "mandarmoni": 439,
     "sundarbans": 471,
-    "lucknow": 492
+    "lucknow": 492,
+    "deoghar": 142
   },
   "sarnath": {
     "agra": 539,
@@ -2189,7 +2379,8 @@ window.KYT_DISTANCE_MATRIX = {
     "siliguri": 560,
     "kalimpong": 575,
     "mirik": 542,
-    "lucknow": 265
+    "lucknow": 265,
+    "deoghar": 383
   },
   "mawlynnong": {
     "darjeeling": 418,
@@ -2209,7 +2400,8 @@ window.KYT_DISTANCE_MATRIX = {
     "mirik": 417,
     "digha": 600,
     "mandarmoni": 582,
-    "sundarbans": 482
+    "sundarbans": 482,
+    "deoghar": 533
   },
   "ziro": {
     "darjeeling": 551,
@@ -2265,7 +2457,10 @@ window.KYT_DISTANCE_MATRIX = {
     "thrissur": 361,
     "belur": 449,
     "halebidu": 482,
-    "bengaluru": 587
+    "bengaluru": 587,
+    "thiruvananthapuram": 484,
+    "guruvayur": 342,
+    "udupi": 389
   },
   "chopta": {
     "agra": 359,
@@ -2328,7 +2523,11 @@ window.KYT_DISTANCE_MATRIX = {
     "rajkot": 320,
     "gandhinagar": 152,
     "shirdi": 567,
-    "ujjain": 351
+    "ujjain": 351,
+    "omkareshwar": 438,
+    "nashik": 522,
+    "nathdwara": 118,
+    "maheshwar": 398
   },
   "bikaner": {
     "agra": 472,
@@ -2362,7 +2561,8 @@ window.KYT_DISTANCE_MATRIX = {
     "patiala": 382,
     "dehradun": 526,
     "jammu": 543,
-    "ujjain": 592
+    "ujjain": 592,
+    "nathdwara": 347
   },
   "chittorgarh": {
     "agra": 447,
@@ -2391,7 +2591,11 @@ window.KYT_DISTANCE_MATRIX = {
     "rajkot": 460,
     "gandhinagar": 249,
     "shirdi": 550,
-    "ujjain": 217
+    "ujjain": 217,
+    "omkareshwar": 324,
+    "nashik": 529,
+    "nathdwara": 70,
+    "maheshwar": 305
   },
   "kumarakom": {
     "munnar": 88,
@@ -2417,7 +2621,11 @@ window.KYT_DISTANCE_MATRIX = {
     "halebidu": 334,
     "tirupati": 555,
     "bengaluru": 397,
-    "kancheepuram": 511
+    "kancheepuram": 511,
+    "tiruchirappalli": 282,
+    "thiruvananthapuram": 132,
+    "guruvayur": 119,
+    "udupi": 455
   },
   "kovalam": {
     "munnar": 189,
@@ -2440,7 +2648,10 @@ window.KYT_DISTANCE_MATRIX = {
     "belur": 545,
     "halebidu": 468,
     "bengaluru": 514,
-    "kancheepuram": 581
+    "kancheepuram": 581,
+    "tiruchirappalli": 327,
+    "thiruvananthapuram": 16,
+    "guruvayur": 266
   },
   "varkala": {
     "munnar": 155,
@@ -2463,7 +2674,11 @@ window.KYT_DISTANCE_MATRIX = {
     "belur": 502,
     "halebidu": 429,
     "bengaluru": 481,
-    "kancheepuram": 564
+    "kancheepuram": 564,
+    "tiruchirappalli": 315,
+    "thiruvananthapuram": 33,
+    "guruvayur": 220,
+    "udupi": 556
   },
   "thrissur": {
     "goa": 579,
@@ -2491,7 +2706,11 @@ window.KYT_DISTANCE_MATRIX = {
     "halebidu": 235,
     "tirupati": 491,
     "bengaluru": 311,
-    "kancheepuram": 461
+    "kancheepuram": 461,
+    "tiruchirappalli": 274,
+    "thiruvananthapuram": 236,
+    "guruvayur": 21,
+    "udupi": 352
   },
   "belur": {
     "goa": 305,
@@ -2523,7 +2742,13 @@ window.KYT_DISTANCE_MATRIX = {
     "pattadakal": 310,
     "tirupati": 389,
     "bengaluru": 188,
-    "kancheepuram": 417
+    "kancheepuram": 417,
+    "srisailam": 457,
+    "tiruchirappalli": 406,
+    "thiruvananthapuram": 529,
+    "guruvayur": 286,
+    "pandharpur": 505,
+    "udupi": 123
   },
   "halebidu": {
     "goa": 412,
@@ -2554,7 +2779,13 @@ window.KYT_DISTANCE_MATRIX = {
     "pattadakal": 385,
     "tirupati": 318,
     "bengaluru": 106,
-    "kancheepuram": 328
+    "kancheepuram": 328,
+    "srisailam": 453,
+    "tiruchirappalli": 297,
+    "thiruvananthapuram": 453,
+    "guruvayur": 233,
+    "pandharpur": 584,
+    "udupi": 227
   },
   "badami": {
     "goa": 184,
@@ -2579,7 +2810,13 @@ window.KYT_DISTANCE_MATRIX = {
     "tirupati": 476,
     "bengaluru": 387,
     "shirdi": 446,
-    "kancheepuram": 550
+    "kancheepuram": 550,
+    "srisailam": 341,
+    "bhimashankar": 418,
+    "nashik": 497,
+    "guruvayur": 593,
+    "pandharpur": 199,
+    "udupi": 304
   },
   "pattadakal": {
     "goa": 199,
@@ -2604,7 +2841,13 @@ window.KYT_DISTANCE_MATRIX = {
     "tirupati": 466,
     "bengaluru": 382,
     "shirdi": 448,
-    "kancheepuram": 540
+    "kancheepuram": 540,
+    "srisailam": 327,
+    "bhimashankar": 423,
+    "nashik": 500,
+    "guruvayur": 596,
+    "pandharpur": 199,
+    "udupi": 312
   },
   "vijayawada": {
     "hyderabad": 247,
@@ -2617,7 +2860,9 @@ window.KYT_DISTANCE_MATRIX = {
     "raipur": 536,
     "bhilai": 529,
     "bengaluru": 510,
-    "kancheepuram": 416
+    "kancheepuram": 416,
+    "srisailam": 193,
+    "pandharpur": 577
   },
   "tirupati": {
     "munnar": 471,
@@ -2644,7 +2889,11 @@ window.KYT_DISTANCE_MATRIX = {
     "pattadakal": 466,
     "vijayawada": 345,
     "bengaluru": 211,
-    "kancheepuram": 89
+    "kancheepuram": 89,
+    "srisailam": 278,
+    "tiruchirappalli": 325,
+    "guruvayur": 499,
+    "udupi": 507
   },
   "visakhapatnam": {
     "hyderabad": 512,
@@ -2653,7 +2902,8 @@ window.KYT_DISTANCE_MATRIX = {
     "konark": 388,
     "vijayawada": 313,
     "raipur": 431,
-    "bhilai": 440
+    "bhilai": 440,
+    "srisailam": 504
   },
   "ranchi": {
     "varanasi": 321,
@@ -2683,7 +2933,8 @@ window.KYT_DISTANCE_MATRIX = {
     "digha": 297,
     "mandarmoni": 308,
     "sundarbans": 376,
-    "lucknow": 587
+    "lucknow": 587,
+    "deoghar": 186
   },
   "patna": {
     "varanasi": 215,
@@ -2709,7 +2960,8 @@ window.KYT_DISTANCE_MATRIX = {
     "digha": 505,
     "mandarmoni": 510,
     "sundarbans": 538,
-    "lucknow": 440
+    "lucknow": 440,
+    "deoghar": 202
   },
   "bodh-gaya": {
     "varanasi": 211,
@@ -2739,7 +2991,8 @@ window.KYT_DISTANCE_MATRIX = {
     "digha": 428,
     "mandarmoni": 435,
     "sundarbans": 481,
-    "lucknow": 470
+    "lucknow": 470,
+    "deoghar": 176
   },
   "surat": {
     "udaipur": 385,
@@ -2762,7 +3015,13 @@ window.KYT_DISTANCE_MATRIX = {
     "rajkot": 242,
     "gandhinagar": 225,
     "shirdi": 235,
-    "ujjain": 375
+    "ujjain": 375,
+    "omkareshwar": 362,
+    "bhimashankar": 249,
+    "nashik": 166,
+    "pandharpur": 472,
+    "nathdwara": 426,
+    "maheshwar": 304
   },
   "vadodara": {
     "jaipur": 578,
@@ -2789,7 +3048,13 @@ window.KYT_DISTANCE_MATRIX = {
     "rajkot": 246,
     "gandhinagar": 117,
     "shirdi": 311,
-    "ujjain": 283
+    "ujjain": 283,
+    "omkareshwar": 304,
+    "bhimashankar": 360,
+    "nashik": 262,
+    "pandharpur": 560,
+    "nathdwara": 300,
+    "maheshwar": 247
   },
   "rajkot": {
     "udaipur": 388,
@@ -2812,7 +3077,12 @@ window.KYT_DISTANCE_MATRIX = {
     "vadodara": 246,
     "gandhinagar": 215,
     "shirdi": 474,
-    "ujjain": 520
+    "ujjain": 520,
+    "omkareshwar": 550,
+    "bhimashankar": 458,
+    "nashik": 400,
+    "nathdwara": 424,
+    "maheshwar": 492
   },
   "gandhinagar": {
     "jaipur": 520,
@@ -2840,7 +3110,12 @@ window.KYT_DISTANCE_MATRIX = {
     "vadodara": 117,
     "rajkot": 215,
     "shirdi": 428,
-    "ujjain": 321
+    "ujjain": 321,
+    "omkareshwar": 375,
+    "bhimashankar": 471,
+    "nashik": 376,
+    "nathdwara": 224,
+    "maheshwar": 323
   },
   "chandigarh": {
     "agra": 413,
@@ -3010,7 +3285,8 @@ window.KYT_DISTANCE_MATRIX = {
     "bodh-gaya": 513,
     "bhilai": 27,
     "jamshedpur": 502,
-    "dhanbad": 569
+    "dhanbad": 569,
+    "omkareshwar": 577
   },
   "bhilai": {
     "varanasi": 488,
@@ -3032,7 +3308,8 @@ window.KYT_DISTANCE_MATRIX = {
     "bodh-gaya": 533,
     "raipur": 27,
     "jamshedpur": 528,
-    "dhanbad": 594
+    "dhanbad": 594,
+    "omkareshwar": 551
   },
   "jamshedpur": {
     "varanasi": 430,
@@ -3060,7 +3337,8 @@ window.KYT_DISTANCE_MATRIX = {
     "mirik": 497,
     "digha": 188,
     "mandarmoni": 198,
-    "sundarbans": 269
+    "sundarbans": 269,
+    "deoghar": 193
   },
   "dhanbad": {
     "varanasi": 386,
@@ -3092,7 +3370,8 @@ window.KYT_DISTANCE_MATRIX = {
     "mirik": 387,
     "digha": 266,
     "mandarmoni": 269,
-    "sundarbans": 303
+    "sundarbans": 303,
+    "deoghar": 81
   },
   "dehradun": {
     "agra": 350,
@@ -3290,7 +3569,8 @@ window.KYT_DISTANCE_MATRIX = {
     "mirik": 31,
     "digha": 574,
     "mandarmoni": 565,
-    "sundarbans": 522
+    "sundarbans": 522,
+    "deoghar": 303
   },
   "kalimpong": {
     "varanasi": 578,
@@ -3317,7 +3597,8 @@ window.KYT_DISTANCE_MATRIX = {
     "dhanbad": 418,
     "siliguri": 40,
     "mirik": 35,
-    "sundarbans": 561
+    "sundarbans": 561,
+    "deoghar": 338
   },
   "mirik": {
     "varanasi": 545,
@@ -3346,7 +3627,8 @@ window.KYT_DISTANCE_MATRIX = {
     "kalimpong": 35,
     "digha": 590,
     "mandarmoni": 582,
-    "sundarbans": 542
+    "sundarbans": 542,
+    "deoghar": 307
   },
   "digha": {
     "kolkata": 138,
@@ -3366,7 +3648,8 @@ window.KYT_DISTANCE_MATRIX = {
     "siliguri": 574,
     "mirik": 590,
     "mandarmoni": 21,
-    "sundarbans": 130
+    "sundarbans": 130,
+    "deoghar": 329
   },
   "mandarmoni": {
     "darjeeling": 599,
@@ -3387,7 +3670,8 @@ window.KYT_DISTANCE_MATRIX = {
     "siliguri": 565,
     "mirik": 582,
     "digha": 21,
-    "sundarbans": 109
+    "sundarbans": 109,
+    "deoghar": 328
   },
   "sundarbans": {
     "darjeeling": 558,
@@ -3413,7 +3697,8 @@ window.KYT_DISTANCE_MATRIX = {
     "kalimpong": 561,
     "mirik": 542,
     "digha": 130,
-    "mandarmoni": 109
+    "mandarmoni": 109,
+    "deoghar": 340
   },
   "bengaluru": {
     "goa": 458,
@@ -3445,7 +3730,13 @@ window.KYT_DISTANCE_MATRIX = {
     "pattadakal": 382,
     "vijayawada": 510,
     "tirupati": 211,
-    "kancheepuram": 229
+    "kancheepuram": 229,
+    "srisailam": 371,
+    "tiruchirappalli": 272,
+    "thiruvananthapuram": 500,
+    "guruvayur": 314,
+    "pandharpur": 576,
+    "udupi": 311
   },
   "lucknow": {
     "agra": 292,
@@ -3506,7 +3797,13 @@ window.KYT_DISTANCE_MATRIX = {
     "vadodara": 311,
     "rajkot": 474,
     "gandhinagar": 428,
-    "ujjain": 403
+    "ujjain": 403,
+    "omkareshwar": 326,
+    "bhimashankar": 125,
+    "nashik": 79,
+    "pandharpur": 249,
+    "nathdwara": 578,
+    "maheshwar": 292
   },
   "kancheepuram": {
     "munnar": 424,
@@ -3535,7 +3832,12 @@ window.KYT_DISTANCE_MATRIX = {
     "pattadakal": 540,
     "vijayawada": 416,
     "tirupati": 89,
-    "bengaluru": 229
+    "bengaluru": 229,
+    "srisailam": 366,
+    "tiruchirappalli": 257,
+    "thiruvananthapuram": 571,
+    "guruvayur": 473,
+    "udupi": 540
   },
   "ujjain": {
     "agra": 498,
@@ -3565,6 +3867,388 @@ window.KYT_DISTANCE_MATRIX = {
     "vadodara": 283,
     "rajkot": 520,
     "gandhinagar": 321,
-    "shirdi": 403
+    "shirdi": 403,
+    "omkareshwar": 110,
+    "bhimashankar": 513,
+    "nashik": 410,
+    "nathdwara": 279,
+    "maheshwar": 113
+  },
+  "srisailam": {
+    "goa": 519,
+    "ooty": 569,
+    "mysore": 482,
+    "hyderabad": 149,
+    "chennai": 366,
+    "pondicherry": 582,
+    "hampi": 270,
+    "gokarna": 517,
+    "coorg": 536,
+    "wayanad": 568,
+    "mahabaleshwar": 591,
+    "pune": 598,
+    "aurangabad": 564,
+    "belur": 457,
+    "halebidu": 453,
+    "badami": 341,
+    "pattadakal": 327,
+    "vijayawada": 193,
+    "tirupati": 278,
+    "visakhapatnam": 504,
+    "bengaluru": 371,
+    "kancheepuram": 366,
+    "tiruchirappalli": 588,
+    "pandharpur": 417,
+    "udupi": 538
+  },
+  "omkareshwar": {
+    "agra": 579,
+    "jaipur": 520,
+    "udaipur": 361,
+    "mumbai": 493,
+    "hyderabad": 595,
+    "jodhpur": 550,
+    "pushkar": 498,
+    "khajuraho": 481,
+    "ranthambore": 420,
+    "mahabaleshwar": 547,
+    "lonavala": 483,
+    "pune": 478,
+    "aurangabad": 277,
+    "ahmedabad": 377,
+    "gwalior": 485,
+    "orchha": 428,
+    "bhopal": 171,
+    "indore": 60,
+    "matheran": 470,
+    "mount-abu": 438,
+    "chittorgarh": 324,
+    "surat": 362,
+    "vadodara": 304,
+    "rajkot": 550,
+    "gandhinagar": 375,
+    "raipur": 577,
+    "bhilai": 551,
+    "shirdi": 326,
+    "ujjain": 110,
+    "bhimashankar": 446,
+    "nashik": 351,
+    "pandharpur": 515,
+    "nathdwara": 381,
+    "maheshwar": 59
+  },
+  "bhimashankar": {
+    "goa": 423,
+    "mumbai": 70,
+    "hyderabad": 555,
+    "hampi": 519,
+    "gokarna": 510,
+    "mahabaleshwar": 128,
+    "lonavala": 38,
+    "pune": 70,
+    "aurangabad": 209,
+    "ahmedabad": 450,
+    "dwarka": 592,
+    "somnath": 385,
+    "indore": 473,
+    "matheran": 29,
+    "badami": 418,
+    "pattadakal": 423,
+    "surat": 249,
+    "vadodara": 360,
+    "rajkot": 458,
+    "gandhinagar": 471,
+    "shirdi": 125,
+    "ujjain": 513,
+    "omkareshwar": 446,
+    "nashik": 106,
+    "pandharpur": 245,
+    "maheshwar": 406
+  },
+  "nashik": {
+    "goa": 524,
+    "udaipur": 509,
+    "mumbai": 141,
+    "hyderabad": 576,
+    "hampi": 592,
+    "mahabaleshwar": 231,
+    "lonavala": 144,
+    "pune": 165,
+    "aurangabad": 165,
+    "ahmedabad": 357,
+    "kutch": 556,
+    "dwarka": 557,
+    "somnath": 364,
+    "bhopal": 522,
+    "indore": 372,
+    "matheran": 124,
+    "mount-abu": 522,
+    "chittorgarh": 529,
+    "badami": 497,
+    "pattadakal": 500,
+    "surat": 166,
+    "vadodara": 262,
+    "rajkot": 400,
+    "gandhinagar": 376,
+    "shirdi": 79,
+    "ujjain": 410,
+    "omkareshwar": 351,
+    "bhimashankar": 106,
+    "pandharpur": 306,
+    "nathdwara": 548,
+    "maheshwar": 307
+  },
+  "deoghar": {
+    "varanasi": 384,
+    "darjeeling": 325,
+    "kolkata": 272,
+    "puri": 527,
+    "bhubaneswar": 478,
+    "konark": 512,
+    "guwahati": 542,
+    "shillong": 537,
+    "cherrapunji": 515,
+    "gangtok": 370,
+    "pelling": 349,
+    "ayodhya": 519,
+    "prayagraj": 501,
+    "gaya": 174,
+    "nalanda": 146,
+    "rajgir": 142,
+    "sarnath": 383,
+    "mawlynnong": 533,
+    "ranchi": 186,
+    "patna": 202,
+    "bodh-gaya": 176,
+    "jamshedpur": 193,
+    "dhanbad": 81,
+    "siliguri": 303,
+    "kalimpong": 338,
+    "mirik": 307,
+    "digha": 329,
+    "mandarmoni": 328,
+    "sundarbans": 340
+  },
+  "tiruchirappalli": {
+    "munnar": 196,
+    "kochi": 284,
+    "ooty": 229,
+    "mysore": 280,
+    "chennai": 307,
+    "pondicherry": 121,
+    "hampi": 561,
+    "alleppey": 298,
+    "madurai": 116,
+    "kanyakumari": 327,
+    "coorg": 376,
+    "wayanad": 299,
+    "rameswaram": 180,
+    "thanjavur": 56,
+    "kodaikanal": 146,
+    "kumarakom": 282,
+    "kovalam": 327,
+    "varkala": 315,
+    "thrissur": 274,
+    "belur": 406,
+    "halebidu": 297,
+    "tirupati": 325,
+    "bengaluru": 272,
+    "kancheepuram": 257,
+    "srisailam": 588,
+    "thiruvananthapuram": 318,
+    "guruvayur": 292,
+    "udupi": 516
+  },
+  "thiruvananthapuram": {
+    "munnar": 174,
+    "kochi": 178,
+    "ooty": 322,
+    "mysore": 422,
+    "pondicherry": 412,
+    "alleppey": 127,
+    "madurai": 202,
+    "kanyakumari": 84,
+    "coorg": 451,
+    "wayanad": 366,
+    "rameswaram": 274,
+    "thanjavur": 344,
+    "kodaikanal": 200,
+    "lakshadweep": 484,
+    "kumarakom": 132,
+    "kovalam": 16,
+    "varkala": 33,
+    "thrissur": 236,
+    "belur": 529,
+    "halebidu": 453,
+    "bengaluru": 500,
+    "kancheepuram": 571,
+    "tiruchirappalli": 318,
+    "guruvayur": 251,
+    "udupi": 587
+  },
+  "guruvayur": {
+    "goa": 564,
+    "munnar": 125,
+    "kochi": 73,
+    "ooty": 116,
+    "mysore": 202,
+    "chennai": 538,
+    "pondicherry": 413,
+    "hampi": 529,
+    "alleppey": 126,
+    "gokarna": 477,
+    "madurai": 239,
+    "kanyakumari": 325,
+    "coorg": 203,
+    "wayanad": 125,
+    "rameswaram": 387,
+    "thanjavur": 346,
+    "kodaikanal": 164,
+    "lakshadweep": 342,
+    "kumarakom": 119,
+    "kovalam": 266,
+    "varkala": 220,
+    "thrissur": 21,
+    "belur": 286,
+    "halebidu": 233,
+    "badami": 593,
+    "pattadakal": 596,
+    "tirupati": 499,
+    "bengaluru": 314,
+    "kancheepuram": 473,
+    "tiruchirappalli": 292,
+    "thiruvananthapuram": 251,
+    "udupi": 336
+  },
+  "pandharpur": {
+    "goa": 296,
+    "mumbai": 301,
+    "hyderabad": 335,
+    "hampi": 287,
+    "gokarna": 365,
+    "coorg": 590,
+    "mahabaleshwar": 179,
+    "lonavala": 235,
+    "pune": 182,
+    "aurangabad": 245,
+    "indore": 564,
+    "matheran": 262,
+    "belur": 505,
+    "halebidu": 584,
+    "badami": 199,
+    "pattadakal": 199,
+    "vijayawada": 577,
+    "surat": 472,
+    "vadodara": 560,
+    "bengaluru": 576,
+    "shirdi": 249,
+    "srisailam": 417,
+    "omkareshwar": 515,
+    "bhimashankar": 245,
+    "nashik": 306,
+    "udupi": 486,
+    "maheshwar": 501
+  },
+  "nathdwara": {
+    "agra": 487,
+    "jaipur": 298,
+    "udaipur": 41,
+    "delhi": 535,
+    "jaisalmer": 383,
+    "jodhpur": 171,
+    "pushkar": 188,
+    "ranthambore": 291,
+    "aurangabad": 583,
+    "ahmedabad": 247,
+    "kutch": 415,
+    "dwarka": 578,
+    "somnath": 569,
+    "gwalior": 457,
+    "orchha": 487,
+    "bhopal": 408,
+    "indore": 322,
+    "mathura": 480,
+    "vrindavan": 485,
+    "mount-abu": 118,
+    "bikaner": 347,
+    "chittorgarh": 70,
+    "surat": 426,
+    "vadodara": 300,
+    "rajkot": 424,
+    "gandhinagar": 224,
+    "shirdi": 578,
+    "ujjain": 279,
+    "omkareshwar": 381,
+    "nashik": 548,
+    "maheshwar": 355
+  },
+  "udupi": {
+    "goa": 229,
+    "munnar": 441,
+    "kochi": 409,
+    "ooty": 302,
+    "mysore": 237,
+    "hyderabad": 600,
+    "chennai": 600,
+    "hampi": 289,
+    "alleppey": 461,
+    "gokarna": 141,
+    "madurai": 528,
+    "coorg": 146,
+    "wayanad": 235,
+    "mahabaleshwar": 523,
+    "pune": 584,
+    "thanjavur": 569,
+    "kodaikanal": 457,
+    "lakshadweep": 389,
+    "kumarakom": 455,
+    "varkala": 556,
+    "thrissur": 352,
+    "belur": 123,
+    "halebidu": 227,
+    "badami": 304,
+    "pattadakal": 312,
+    "tirupati": 507,
+    "bengaluru": 311,
+    "kancheepuram": 540,
+    "srisailam": 538,
+    "tiruchirappalli": 516,
+    "thiruvananthapuram": 587,
+    "guruvayur": 336,
+    "pandharpur": 486
+  },
+  "maheshwar": {
+    "jaipur": 527,
+    "udaipur": 330,
+    "mumbai": 448,
+    "jodhpur": 526,
+    "pushkar": 491,
+    "khajuraho": 533,
+    "ranthambore": 436,
+    "mahabaleshwar": 514,
+    "lonavala": 443,
+    "pune": 445,
+    "aurangabad": 257,
+    "ahmedabad": 323,
+    "kutch": 593,
+    "somnath": 554,
+    "gwalior": 518,
+    "orchha": 470,
+    "bhopal": 222,
+    "indore": 67,
+    "matheran": 429,
+    "mount-abu": 398,
+    "chittorgarh": 305,
+    "surat": 304,
+    "vadodara": 247,
+    "rajkot": 492,
+    "gandhinagar": 323,
+    "shirdi": 292,
+    "ujjain": 113,
+    "omkareshwar": 59,
+    "bhimashankar": 406,
+    "nashik": 307,
+    "pandharpur": 501,
+    "nathdwara": 355
   }
 };

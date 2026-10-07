@@ -40,11 +40,8 @@ for (let i = 0; i < cities.length; i++) {
         const isPopular = views > 20000;
         const isRecent = year >= 2018;
         
-        // TODO: User language preference feature (currently hardcoded to English filter)
-        // If language is explicitly not 'en' (e.g. 'hi' for Hindi), skip it.
-        const isEnglish = !data.language || data.language.startsWith('en');
-        
-        if (isReputable && isPopular && isRecent && isEnglish) {
+        // We keep all languages in the data file so the UI can filter them later
+        if (isReputable && isPopular && isRecent) {
           validVideos.push({
             id: data.id,
             title: data.title,
