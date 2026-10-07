@@ -22,11 +22,14 @@
     <File Path="js/carousel.js" />
     <File Path="js/clock.js" />
     <File Path="js/config.js" />
+    <File Path="js/explore.js" />
     <File Path="js/file-viewer.js" />
+    <File Path="js/index.js" />
     <File Path="js/share.js" />
     <File Path="js/social.js" />
     <File Path="js/step-form.js" />
     <File Path="js/store.js" />
+    <File Path="js/virtual-trips.js" />
   </Folder>
   <Folder Name="/Solution Items/scripts/">
     <File Path="scripts/bucket_list_source.json" />

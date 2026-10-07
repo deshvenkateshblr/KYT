@@ -837,16 +837,12 @@ KYT.virtualTrips = (function() {
         const trip = getActiveTrip();
         if (!trip || !trip.cities.length) return alert('Add some cities to share this trip!');
         
-        const payload = btoa(JSON.stringify({
-          name: trip.name,
-          cities: trip.cities,
-          taste: trip.taste
-        }));
-        
         const url = new URL(window.location.href);
         url.pathname = url.pathname.replace(/\/[^\/]*$/, '/virtual_trip.html');
         url.search = '';
-        url.searchParams.set('t', payload);
+        url.searchParams.set('trip', trip.name || 'Shared Trip');
+        url.searchParams.set('cities', trip.cities.join(','));
+        url.searchParams.set('taste', [trip.taste.intent, trip.taste.diet, trip.taste.pace].join('|'));
         
         const shareData = {
           title: `Check out my ${trip.name} on KYT`,
@@ -906,33 +902,39 @@ KYT.virtualTrips = (function() {
 
     const params = new URLSearchParams(window.location.search);
     const sharedCity = params.get('city');
-    const sharedTrip = params.get('t');
+    const sharedCities = params.get('cities');
+    const sharedTripName = params.get('trip');
+    const sharedTaste = params.get('taste');
     
     // Always launch hub first in virtual_trip.html
     if (window.location.pathname.includes('virtual_trip.html')) {
       openHub();
       
-      if (sharedTrip) {
+      if (sharedCities) {
         try {
-          const payload = JSON.parse(atob(sharedTrip));
-          if (payload && payload.cities) {
-            const newTrip = {
-              id: Date.now().toString(),
-              name: payload.name || 'Shared Trip',
-              cities: payload.cities,
-              taste: payload.taste || { intent: 'mixed', diet: 'any', pace: 'standard' },
-              steps: null
-            };
-            vtrips.push(newTrip);
-            saveVTrips();
-            
-            // Clean URL so refresh doesn't duplicate
-            const url = new URL(window.location.href);
-            url.searchParams.delete('t');
-            window.history.replaceState({}, '', url.toString());
-            
-            openCanvas(newTrip.id);
-          }
+          const tasteParts = sharedTaste ? sharedTaste.split('|') : ['mixed', 'any', 'standard'];
+          const newTrip = {
+            id: Date.now().toString(),
+            name: sharedTripName || 'Shared Trip',
+            cities: sharedCities.split(','),
+            taste: {
+              intent: tasteParts[0] || 'mixed',
+              diet: tasteParts[1] || 'any',
+              pace: tasteParts[2] || 'standard'
+            },
+            steps: null
+          };
+          vtrips.push(newTrip);
+          saveVTrips();
+          
+          // Clean URL so refresh doesn't duplicate
+          const url = new URL(window.location.href);
+          url.searchParams.delete('trip');
+          url.searchParams.delete('cities');
+          url.searchParams.delete('taste');
+          window.history.replaceState({}, '', url.toString());
+          
+          openCanvas(newTrip.id);
         } catch (e) {
           console.error("Failed to parse shared trip", e);
         }
