@@ -92,8 +92,14 @@
           const trip = vtrips.find(t => t.id === tripId);
           if (trip) {
             tripName = trip.name || 'My Trip';
-            citiesParam = trip.cities.join(',');
-            tasteParam = [trip.taste.intent, trip.taste.diet, trip.taste.pace].join('|');
+            
+            const shortC = trip.cities.map(id => {
+              const c = window.KYT_CITIES.find(x => x.id === id);
+              return c && c.code ? c.code : id;
+            });
+            citiesParam = shortC.join(',');
+
+            tasteParam = (trip.taste.intent.charAt(0)) + (trip.taste.diet.charAt(0)) + (trip.taste.pace.charAt(0));
             // update URL for the edit button to work seamlessly
             window.history.replaceState({}, '', `?trip=${encodeURIComponent(tripName)}&cities=${citiesParam}&taste=${tasteParam}`);
           }
@@ -139,7 +145,10 @@
         return;
       }
 
-      const cityIds = citiesParam.split(',');
+      const cityIds = citiesParam.split(',').map(code => {
+        const c = window.KYT_CITIES ? window.KYT_CITIES.find(x => x.code === code || x.id === code) : null;
+        return c ? c.id : code;
+      });
       const citiesGrid = document.getElementById('cities-grid');
       const videoGallery = document.getElementById('video-gallery');
       const videoFilters = document.getElementById('video-filters');
@@ -216,7 +225,7 @@
           videosHtml += `
             <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
               <div class="relative w-full aspect-video bg-slate-100">
-                <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/${vid.id}?rel=0" frameborder="0" allowfullscreen></iframe>
+                <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/${vid.id}?rel=0" frameborder="0" allowfullscreen></iframe>
               </div>
               <div class="p-3 flex-1 flex flex-col justify-between">
                 <p class="text-sm font-bold text-slate-800 line-clamp-2 mb-2">${vid.title}</p>

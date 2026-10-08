@@ -895,23 +895,65 @@ KYT.virtualTrips = (function() {
       }
     });
 
+    
+    const tasteCodeMap = {
+      intent: { mixed: 'm', spiritual: 's', nature: 'n', cultural: 'c', adventure: 'a' },
+      diet: { any: 'a', veg: 'v' },
+      pace: { standard: 's', relaxed: 'r', fast: 'f' }
+    };
+    const reverseTasteCodeMap = {
+      intent: { m: 'mixed', s: 'spiritual', n: 'nature', c: 'cultural', a: 'adventure' },
+      diet: { a: 'any', v: 'veg' },
+      pace: { s: 'standard', r: 'relaxed', f: 'fast' }
+    };
+
+    function encodeTaste(taste) {
+      return (tasteCodeMap.intent[taste.intent] || 'm') +
+             (tasteCodeMap.diet[taste.diet] || 'a') +
+             (tasteCodeMap.pace[taste.pace] || 's');
+    }
+    
+    function decodeTaste(code) {
+      if (!code || code.length !== 3) return ['mixed', 'any', 'standard'];
+      return [
+        reverseTasteCodeMap.intent[code[0]] || 'mixed',
+        reverseTasteCodeMap.diet[code[1]] || 'any',
+        reverseTasteCodeMap.pace[code[2]] || 'standard'
+      ];
+    }
+
     const params = new URLSearchParams(window.location.search);
     const sharedCity = params.get('city');
     const sharedCities = params.get('cities');
     const sharedTripName = params.get('trip');
     const sharedTaste = params.get('taste');
+    const localTripId = params.get('id');
     
     // Always launch hub first in virtual_trip.html
     if (window.location.pathname.includes('virtual_trip.html')) {
       openHub();
       
-      if (sharedCities) {
+      if (localTripId && vtrips.some(t => t.id === localTripId)) {
+        // Clean URL
+        const url = new URL(window.location.href);
+        url.searchParams.delete('id');
+        window.history.replaceState({}, '', url.toString());
+        
+        // Slight delay to ensure DOM is ready
+        setTimeout(() => {
+            openCanvas(localTripId);
+        }, 50);
+      } else if (sharedCities) {
         try {
-          const tasteParts = sharedTaste ? sharedTaste.split('|') : ['mixed', 'any', 'standard'];
+          const tasteParts = sharedTaste && sharedTaste.length === 3 ? decodeTaste(sharedTaste) : (sharedTaste ? sharedTaste.split('|') : ['mixed', 'any', 'standard']);
+          const fullCities = sharedCities.split(',').map(code => {
+            const c = window.KYT_CITIES.find(x => x.code === code || x.id === code);
+            return c ? c.id : code;
+          });
           const newTrip = {
             id: Date.now().toString(),
             name: sharedTripName || 'Shared Trip',
-            cities: sharedCities.split(','),
+            cities: fullCities,
             taste: {
               intent: tasteParts[0] || 'mixed',
               diet: tasteParts[1] || 'any',
@@ -987,7 +1029,7 @@ KYT.virtualTrips = (function() {
       const iframe = document.createElement('iframe');
       iframe.id = 'cd-hero-yt';
       iframe.className = 'absolute inset-0 w-full h-full object-cover z-0';
-      iframe.src = `https://www.youtube.com/embed/${videos[currentVidIdx].id}?rel=0&modestbranding=1`;
+      iframe.src = `https://www.youtube-nocookie.com/embed/${videos[currentVidIdx].id}?rel=0&modestbranding=1`;
       iframe.allowFullscreen = true;
       iframe.style.border = 'none';
       
@@ -1010,12 +1052,12 @@ KYT.virtualTrips = (function() {
         document.getElementById('btn-yt-prev').onclick = (e) => {
           e.stopPropagation();
           currentVidIdx = (currentVidIdx - 1 + videos.length) % videos.length;
-          iframe.src = `https://www.youtube.com/embed/${videos[currentVidIdx].id}?rel=0&modestbranding=1`;
+          iframe.src = `https://www.youtube-nocookie.com/embed/${videos[currentVidIdx].id}?rel=0&modestbranding=1`;
         };
         document.getElementById('btn-yt-next').onclick = (e) => {
           e.stopPropagation();
           currentVidIdx = (currentVidIdx + 1) % videos.length;
-          iframe.src = `https://www.youtube.com/embed/${videos[currentVidIdx].id}?rel=0&modestbranding=1`;
+          iframe.src = `https://www.youtube-nocookie.com/embed/${videos[currentVidIdx].id}?rel=0&modestbranding=1`;
         };
       }
     } else {
