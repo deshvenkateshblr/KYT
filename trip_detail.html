@@ -99,7 +99,12 @@
             });
             citiesParam = shortC.join(',');
 
-            tasteParam = (trip.taste.intent.charAt(0)) + (trip.taste.diet.charAt(0)) + (trip.taste.pace.charAt(0));
+            const codeMap = {
+              intent: { mixed: 'm', spiritual: 's', cultural: 'c', adventure: 'a', culinary: 'u' },
+              diet: { any: 'a', veg: 'v', jain: 'j', satvik: 'k' },
+              pace: { short: 'h', standard: 's', deep: 'd' }
+            };
+            tasteParam = (codeMap.intent[trip.taste.intent] || 'm') + (codeMap.diet[trip.taste.diet] || 'a') + (codeMap.pace[trip.taste.pace] || 's');
             // update URL for the edit button to work seamlessly
             window.history.replaceState({}, '', `?trip=${encodeURIComponent(tripName)}&cities=${citiesParam}&taste=${tasteParam}`);
           }

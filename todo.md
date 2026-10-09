@@ -1,5 +1,5 @@
 4. Create an admin page where an admin user can add a new city along with all attractions, videos, and nearby destinations. This should automatically save/write to the corresponding data js files (cities.js, city_videos_data.js, distance_matrix.js).
 5. Add meaningful food filter options when searching/filtering cities (e.g. popular local cuisines, dietary availability, etc.), and ensure each city object contains appropriate food metadata.
-6. Create a short 3-letter acronym for all cities (and a short combination code for taste profiles) to shorten the share URL even further.
+~~6. Create a short 3-letter acronym for all cities (and a short combination code for taste profiles) to shorten the share URL even further.~~
 7. Create a dedicated 'Shared Trip View' home page (e.g., \shared_trip.html\) that displays a rich, mobile-friendly overview of the shared trip. It should feature detailed city cards, a video gallery for the destinations to make it visually engaging, and an 'Edit Plan' button that transitions the user into the main \irtual_trip.html\ canvas.
 8. Gather food-specific videos separately to enhance the culinary aspect of the trip.

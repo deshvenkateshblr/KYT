@@ -837,7 +837,7 @@ KYT.virtualTrips = (function() {
         url.search = '';
         url.searchParams.set('trip', trip.name || 'Shared Trip');
         url.searchParams.set('cities', trip.cities.join(','));
-        url.searchParams.set('taste', [trip.taste.intent, trip.taste.diet, trip.taste.pace].join('|'));
+        url.searchParams.set('taste', encodeTaste(trip.taste));
         
         const shareData = {
           title: `Check out my ${trip.name} on KYT`,
@@ -897,14 +897,14 @@ KYT.virtualTrips = (function() {
 
     
     const tasteCodeMap = {
-      intent: { mixed: 'm', spiritual: 's', nature: 'n', cultural: 'c', adventure: 'a' },
-      diet: { any: 'a', veg: 'v' },
-      pace: { standard: 's', relaxed: 'r', fast: 'f' }
+      intent: { mixed: 'm', spiritual: 's', nature: 'n', cultural: 'c', adventure: 'a', culinary: 'u' },
+      diet: { any: 'a', veg: 'v', jain: 'j', satvik: 'k' },
+      pace: { short: 'h', standard: 's', deep: 'd', relaxed: 'r', fast: 'f' }
     };
     const reverseTasteCodeMap = {
-      intent: { m: 'mixed', s: 'spiritual', n: 'nature', c: 'cultural', a: 'adventure' },
-      diet: { a: 'any', v: 'veg' },
-      pace: { s: 'standard', r: 'relaxed', f: 'fast' }
+      intent: { m: 'mixed', s: 'spiritual', n: 'nature', c: 'cultural', a: 'adventure', u: 'culinary' },
+      diet: { a: 'any', v: 'veg', j: 'jain', k: 'satvik' },
+      pace: { h: 'short', s: 'standard', d: 'deep', r: 'relaxed', f: 'fast' }
     };
 
     function encodeTaste(taste) {
