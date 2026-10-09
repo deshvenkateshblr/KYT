@@ -29,8 +29,9 @@ const updatedShell = `const APP_SHELL = [
 ];`;
 
 content = content.replace(/const APP_SHELL = \[[^\]]*\];/, updatedShell);
-content = content.replace(/const CACHE_NAME = 'kyt-v2';/, "const CACHE_NAME = 'kyt-v3';"); 
+content = content.replace(/const CACHE_NAME = 'kyt-v3';/, "const CACHE_NAME = 'kyt-v4';"); 
 
 fs.writeFileSync('sw.js', content);
 console.log('sw.js updated');
+
 

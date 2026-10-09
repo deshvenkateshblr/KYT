@@ -4,7 +4,7 @@
  * On install, pre-caches the app shell so KYT works fully offline after the first load.
  */
 
-const CACHE_NAME = 'kyt-v3';
+const CACHE_NAME = 'kyt-v4';
 
 // Files that make up the offline-capable app shell
 const APP_SHELL = [
@@ -97,4 +97,5 @@ self.addEventListener('fetch', event => {
     );
   }
 });
+
 
