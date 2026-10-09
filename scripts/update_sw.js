@@ -22,7 +22,6 @@ const updatedShell = `const APP_SHELL = [
   './js/file-viewer.js',
   './js/share.js',
   './js/social.js',
-  './js/explore.js',
   './js/virtual-trips.js',
   './data/cities.js',
   './icons/icon-192.png',
