@@ -36,11 +36,8 @@ Bridging the gap between private planning and social sharing, allowing users to 
 *   **PDF Export (MVP):** The app generates a stylized PDF memory card based on the user's unique trip data to share.
 *   **Future Investigation:** Investigate ways to create an animated GIF of the trip summary for more dynamic social sharing.
 
-#### Module 3: Inspiration & Bucket List (Next)
-A dedicated space for capturing future aspirations without the pressure of a committed timeline.
-*   **Digital Sandbox:** A place to save dream destinations, inspirational links, and loose ideas. Filtered by category, such as Spiritual, Adventure, Culinary, or Cultural.
-	* Each bucket list items expands to popular attractions, points to popular and latest youtube videos, and provides a direct link to Google Maps for location context.
-*   **Seamless Conversion:** A one-tap workflow to promote a saved "Bucket List" item directly into an active Trip, automatically porting over all saved notes and context into the main timeline view.
+#### Module 3: Virtual Trips (Live)
+Replaced the Bucket List with a dynamic Virtual Trips feature. Allows users to explore curated destination data, interactively filter by taste, and 'park a spark' for future travel without the structural limitations of a static bucket list.
 
 #### Module 4: Beautiful Accomplishment Dashboard
 A highly visual, centralized hub that celebrates the user's travel history. 

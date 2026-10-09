@@ -62,3 +62,7 @@ plus a small taste chip set on the bucket screen that includes/excludes beats at
 Do not add AI, YouTube, or live search yet; take one real circuit (e.g. Ayodhya–Varanasi–Prayag–Lucknow), 
 tag a handful of beats per city, and implement a single action — Use as trip — that writes matching destinations
 and beats into stepsData so you can judge whether the template-plus-taste idea is right before generating more packs.
+
+### Update: Move to Virtual Trips
+
+The Bucket List and Explore modules were removed and replaced entirely by the 'Virtual Trips' feature. The decision was made because the bucket list paradigm felt too static and brochure-like. Virtual Trips allows users to 'park a spark' and explore destinations in a more engaging, trip-oriented format without the overhead of maintaining a separate bucket list feature.
