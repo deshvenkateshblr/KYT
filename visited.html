@@ -72,6 +72,10 @@
     const filterSelect = document.getElementById('filter-select');
     const sortSelect = document.getElementById('sort-select');
 
+    window.unmarkVisited = function(cityId) {
+      if (window.PassportStore.lockCity(cityId)) { renderCities(); }
+    };
+
     window.markVisited = function(cityId) {
       if (window.PassportStore.unlockCity(cityId)) {
         renderCities();
@@ -131,8 +135,8 @@
         `;
 
         const footerActionHTML = city.visited ? `
-          <button class="text-[11px] font-bold ${city.actionColor} flex items-center gap-1 group-hover:translate-x-1 transition-transform relative z-10">
-            Review <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          <button onclick="unmarkVisited('${city.id}')" class="text-[11px] font-bold ${city.actionColor} hover:text-slate-500 flex items-center gap-1 transition-colors relative z-10">
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Undo Visit
           </button>
         ` : `
           <button onclick="markVisited('${city.id}')" class="text-[11px] font-bold text-blue-600 flex items-center gap-1 group-hover:translate-x-1 transition-transform bg-blue-50 px-2 py-1 rounded border border-blue-100 relative z-10">
@@ -186,4 +190,6 @@
   </script>
 </body>
 </html>
+
+
 

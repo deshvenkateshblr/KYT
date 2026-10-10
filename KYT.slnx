@@ -32,6 +32,7 @@
     <File Path="js/explore.js" />
     <File Path="js/file-viewer.js" />
     <File Path="js/index.js" />
+    <File Path="js/passport-store.js" />
     <File Path="js/share.js" />
     <File Path="js/social.js" />
     <File Path="js/step-form.js" />

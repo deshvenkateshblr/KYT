@@ -107,6 +107,16 @@ window.PassportStore = (function() {
     });
   }
 
+  function lockCity(cityId) {
+    const store = getStore();
+    if (store[cityId]) {
+      delete store[cityId];
+      saveStore(store);
+      return true;
+    }
+    return false;
+  }
+
   function unlockCity(cityId) {
     const store = getStore();
     if (!store[cityId]) {
@@ -134,8 +144,10 @@ window.PassportStore = (function() {
   return {
     getPassportCities,
     unlockCity,
+    lockCity,
     updateDate
   };
 })();
+
 
 
