@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>KYT - My Passport</title>
+  <link rel="stylesheet" href="./css/index.css">
+  <script src="./lib/tailwindcss.js"></script>
+  <script src="./lib/lucide.js"></script>
+  <style>
+    body { 
+      background-color: #f1f5f9; 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .glass-header {
+      background: rgba(241, 245, 249, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+  </style>
+</head>
+<body class="pb-24">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 px-4 py-3 shrink-0 flex items-center justify-between sticky top-0 z-50 shadow-sm">
+    <div class="flex items-center gap-2">
+      <a href="index.html" title="Back to Home" class="shrink-0 hover:scale-105 transition-transform"><img src="./icons/KYT.jpg" alt="KYT Logo" class="h-8 w-auto rounded-lg shadow-sm object-contain"></a>
+      <h1 class="text-lg font-black text-slate-800">Been There Done That</h1>
+    </div>
+    <div class="text-[11px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-md border border-blue-100" id="verified-count">0 Visited</div>
+  </header>
+
+  <main class="p-4 flex flex-col gap-6">
+
+    <div class="text-center mt-2 mb-2">
+      <h2 class="text-2xl font-black tracking-tight text-slate-800">Been There, Done That!</h2>
+      <p class="text-sm text-slate-500 mt-2 max-w-xs mx-auto">Your epic travel hit list. Keep exploring, keep collecting!</p>
+      
+      <!-- Filter and Sort Controls -->
+      <div class="flex items-center justify-center gap-3 mt-5">
+        <div class="relative">
+          <select id="filter-select" class="appearance-none bg-white border border-slate-200 text-slate-700 py-2 pl-3 pr-8 rounded-[12px] text-sm font-bold shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="all">All Cities</option>
+            <option value="visited">Visited</option>
+            <option value="unvisited">Unvisited</option>
+          </select>
+          <i data-lucide="filter" class="w-4 h-4 text-slate-400 absolute right-3 top-2.5 pointer-events-none"></i>
+        </div>
+        <div class="relative">
+          <select id="sort-select" class="appearance-none bg-white border border-slate-200 text-slate-700 py-2 pl-3 pr-8 rounded-[12px] text-sm font-bold shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="default">Default Sort</option>
+            <option value="recent">Recent First</option>
+            <option value="alpha">A-Z</option>
+          </select>
+          <i data-lucide="arrow-up-down" class="w-4 h-4 text-slate-400 absolute right-3 top-2.5 pointer-events-none"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- The Visual Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="cards-container">
+      <!-- Cards injected by JS -->
+    </div>
+
+  </main>
+
+  <script src="./data/cities.js"></script>
+  <script src="./js/passport-store.js"></script>
+  <script>
+    const container = document.getElementById('cards-container');
+    const filterSelect = document.getElementById('filter-select');
+    const sortSelect = document.getElementById('sort-select');
+
+    window.markVisited = function(cityId) {
+      if (window.PassportStore.unlockCity(cityId)) {
+        renderCities();
+      }
+    };
+
+    window.updateDate = function(cityId, newDate) {
+      window.PassportStore.updateDate(cityId, newDate);
+    };
+
+    function renderCities() {
+      container.innerHTML = '';
+      let cities = window.PassportStore.getPassportCities();
+      
+      const visitedCount = cities.filter(c => c.visited).length;
+      document.getElementById('verified-count').textContent = `${visitedCount} Visited`;
+
+      const filterVal = filterSelect ? filterSelect.value : 'all';
+      const sortVal = sortSelect ? sortSelect.value : 'default';
+
+      if (filterVal === 'visited') {
+        cities = cities.filter(c => c.visited);
+      } else if (filterVal === 'unvisited') {
+        cities = cities.filter(c => !c.visited);
+      }
+
+      if (sortVal === 'alpha') {
+        cities.sort((a, b) => a.name.localeCompare(b.name));
+      } else if (sortVal === 'recent') {
+        cities.sort((a, b) => {
+          const tA = a.visited ? new Date(a.date).getTime() || 1 : 0;
+          const tB = b.visited ? new Date(b.date).getTime() || 1 : 0;
+          return tB - tA;
+        });
+      }
+
+      cities.forEach(city => {
+        const bgStampHTML = city.visited ? `
+          <!-- Huge Background BTDT Stamp (Centered, Bold) -->
+          <div class="absolute inset-0 m-auto w-40 h-40 ${city.color} opacity-30 rotate-[-15deg] group-hover:rotate-[-5deg] group-hover:scale-110 transition-transform duration-700 origin-center pointer-events-none z-0">
+            <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
+              <path id="curve-${city.id}" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="transparent" />
+              <text font-size="10.5" font-weight="900" fill="currentColor" letter-spacing="3.5">
+                <textPath href="#curve-${city.id}" startOffset="0%">BEEN THERE DONE THAT • </textPath>
+              </text>
+              <circle cx="50" cy="50" r="24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.4"/>
+              <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="4 2" opacity="0.8"/>
+            </svg>
+          </div>
+        ` : '';
+
+        const topRightHTML = city.visited ? '' : `
+          <!-- Empty Placeholder for Unvisited -->
+          <div class="w-10 h-10 flex items-center justify-center opacity-30 relative z-10">
+            <i data-lucide="lock" class="w-5 h-5 text-slate-400"></i>
+          </div>
+        `;
+
+        const footerActionHTML = city.visited ? `
+          <button class="text-[11px] font-bold ${city.actionColor} flex items-center gap-1 group-hover:translate-x-1 transition-transform relative z-10">
+            Review <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        ` : `
+          <button onclick="markVisited('${city.id}')" class="text-[11px] font-bold text-blue-600 flex items-center gap-1 group-hover:translate-x-1 transition-transform bg-blue-50 px-2 py-1 rounded border border-blue-100 relative z-10">
+            Mark Visited <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+          </button>
+        `;
+
+        const dateDisplay = city.visited ? 
+          `<input type="date" value="${city.date}" onchange="updateDate('${city.id}', this.value)" class="bg-transparent text-[10px] font-semibold text-slate-700 p-0 border-none focus:ring-0 cursor-pointer w-auto mt-0.5">` : 
+          `<span class="text-[10px] font-semibold text-slate-400 mt-0.5">${city.date}</span>`;
+
+        const cardHTML = `
+          <div class="bg-white/90 backdrop-blur-sm rounded-[16px] p-5 shadow-sm border border-slate-200 hover:border-slate-300 transition-all flex flex-col relative group overflow-hidden ${city.visited ? '' : 'grayscale-[0.5]'}">
+            
+            ${bgStampHTML}
+
+            <div class="flex justify-between items-start mb-4 relative z-10">
+              <!-- Left: City Logo -->
+              <div class="w-12 h-12 rounded-[12px] ${city.bg} flex items-center justify-center ${city.color} border ${city.border} shadow-sm bg-white">
+                <i data-lucide="${city.icon}" class="w-6 h-6"></i>
+              </div>
+              
+              ${topRightHTML}
+            </div>
+            
+            <!-- Content -->
+            <h3 class="text-base font-bold text-slate-800 tracking-tight relative z-10 drop-shadow-sm">${city.name}</h3>
+            <p class="text-xs text-slate-600 font-medium mt-1 mb-5 flex-1 leading-relaxed relative z-10">${city.desc}</p>
+            
+            <!-- Footer -->
+            <div class="flex items-center justify-between mt-auto relative z-10 pt-2 border-t border-slate-100/50">
+              <div class="flex flex-col">
+                <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">${city.visited ? 'Unlocked' : 'Status'}</span>
+                ${dateDisplay}
+              </div>
+              ${footerActionHTML}
+            </div>
+          </div>
+        `;
+        
+        container.insertAdjacentHTML('beforeend', cardHTML);
+      });
+      lucide.createIcons();
+    }
+
+    if (filterSelect) filterSelect.addEventListener('change', renderCities);
+    if (sortSelect) sortSelect.addEventListener('change', renderCities);
+
+    // Initial render
+    renderCities();
+  </script>
+</body>
+</html>
+

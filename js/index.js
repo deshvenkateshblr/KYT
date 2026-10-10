@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       <a href="view_trip.html" class="btn btn-primary text-lg flex gap-2"><i data-lucide="map"></i> View Current Trip</a>
       <a href="configure_trip.html" class="btn btn-secondary flex gap-2"><i data-lucide="settings"></i> Edit Itinerary</a>
       <a href="virtual_trip.html" class="btn btn-secondary flex gap-2"><i data-lucide="compass"></i> My Virtual Trips</a>
+      <a href="visited.html" class="btn btn-secondary flex gap-2 mt-4 text-blue-600 bg-blue-50 border-blue-200"><i data-lucide="book-open"></i> My Digital Passport</a>
     `;
   } else {
     html = `
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       <p class="text-sm text-slate-400 mb-5 leading-relaxed">Plan, track &amp; remember your real trips — or explore destinations virtually.</p>
       <a href="virtual_trip.html" class="btn btn-primary text-lg mb-2 flex gap-2"><i data-lucide="compass"></i> Start a New Virtual Trip</a>
       <a href="configure_trip.html" class="btn btn-secondary flex gap-2"><i data-lucide="pencil"></i> Build Trip Manually</a>
+      <a href="visited.html" class="btn btn-secondary flex gap-2 mt-4 text-blue-600 bg-blue-50 border-blue-200"><i data-lucide="book-open"></i> My Digital Passport</a>
     `;
   }
 
@@ -81,4 +83,8 @@ function checkExistingTrip() {
     }
   });
 }
+
+
+
+
 

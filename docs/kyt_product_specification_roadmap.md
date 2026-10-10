@@ -39,8 +39,9 @@ Bridging the gap between private planning and social sharing, allowing users to 
 #### Module 3: Virtual Trips (Live)
 Replaced the Bucket List with a dynamic Virtual Trips feature. Allows users to explore curated destination data, interactively filter by taste, and 'park a spark' for future travel without the structural limitations of a static bucket list.
 
-#### Module 4: Beautiful Accomplishment Dashboard
-A highly visual, centralized hub that celebrates the user's travel history. 
-*   **Visual Milestones:** A unified, timeline of all past trips.
+#### Module 4: Passport / Accomplishment Dashboard (Phase 1)
+A highly visual, centralized hub that celebrates the user's travel history using a "Been There Done That" grid of destinations.
+*   **Trust-Based Verification (Phase 1 Decision):** To remove friction and complex geolocation requirements (especially under local file:/// limitations), we are trusting the user's input for Phase 1. Users can manually mark a destination as "Visited" and edit the date to apply the "Been There Done That" stamp as their personal log.
+*   **Visual Milestones:** A unified timeline and grid of all past trips and destinations.
 *   **Travel Stats:** Dynamically computed and energetically displayed accomplishments, such as total travel miles (calculating point-to-point geodesic distances), total days traveled, and total experiences completed.
 *   **Category Insights:** Colorful breakdowns of travel styles (e.g., time spent at museums vs. beaches vs. transit).
