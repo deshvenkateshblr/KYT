@@ -553,6 +553,7 @@ KYT.virtualTrips = (function() {
   function generateSteps(trip) {
     let steps = [];
     let dayCounter = 1;
+    let stepCounter = 0;
 
     trip.cities.forEach(cityId => {
       const city = window.KYT_CITIES.find(c => c.id === cityId);
@@ -566,7 +567,7 @@ KYT.virtualTrips = (function() {
         const matched = city.beats.filter(b => beatMatches(b, trip.taste)).sort((a,b)=>(a.hour||0)-(b.hour||0));
         matched.forEach(beat => {
             daySteps.push({
-                id: Date.now().toString() + Math.floor(Math.random()*1000),
+                id: Date.now().toString() + '_' + (++stepCounter),
                 dayId: dayCounter,
                 cityName: city.name,
                 title: beat.title,
