@@ -4,7 +4,7 @@
  * On install, pre-caches the app shell so KYT works fully offline after the first load.
  */
 
-const CACHE_NAME = 'kyt-v5';
+const CACHE_NAME = 'kyt-v6';
 
 // Files that make up the offline-capable app shell
 const APP_SHELL = [
@@ -28,9 +28,11 @@ const APP_SHELL = [
   './js/share.js',
   './js/social.js',
   './js/virtual-trips.js',
-  './passport.html',
-  './js/passport.js',
+  './visited.html',
+  './js/passport-store.js',
   './data/cities.js',
+  './lib/tailwindcss.js',
+  './lib/lucide.js',
   './icons/KYT.jpg',
   './icons/icon-192.png',
   './icons/icon-512.png'
@@ -99,6 +101,7 @@ self.addEventListener('fetch', event => {
     );
   }
 });
+
 
 
 
