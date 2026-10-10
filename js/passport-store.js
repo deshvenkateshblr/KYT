@@ -5,11 +5,7 @@ window.PassportStore = (function() {
   const STORE_KEY = 'kyt_passport';
   
   // Default mock data to seed the store if it's empty for the first time
-  const INITIAL_MOCK = {
-    "udaipur": { date: "Oct 09, 2026" },
-    "goa": { date: "Oct 05, 2026" },
-    "varanasi": { date: "Sep 12, 2026" }
-  };
+  const INITIAL_MOCK = {};
 
   function getStore() {
     try {
@@ -85,7 +81,10 @@ window.PassportStore = (function() {
         const d = store[city.id].date;
         // Attempt to convert "Oct 09, 2026" or similar to YYYY-MM-DD for the input
         if (d.includes(',')) {
-          isoDate = new Date(d).toISOString().split('T')[0];
+          
+        const dateObj = new Date(d);
+        isoDate = dateObj.getFullYear() + "-" + String(dateObj.getMonth() + 1).padStart(2, "0") + "-" + String(dateObj.getDate()).padStart(2, "0");
+
         } else {
           isoDate = d; // Assume it's already YYYY-MM-DD
         }
@@ -111,7 +110,10 @@ window.PassportStore = (function() {
   function unlockCity(cityId) {
     const store = getStore();
     if (!store[cityId]) {
-      const today = new Date().toISOString().split('T')[0];
+      
+      const now = new Date();
+      const today = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0") + "-" + String(now.getDate()).padStart(2, "0");
+
       store[cityId] = { date: today };
       saveStore(store);
       return true; // Newly unlocked
@@ -135,4 +137,5 @@ window.PassportStore = (function() {
     updateDate
   };
 })();
+
 

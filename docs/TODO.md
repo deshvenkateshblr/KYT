@@ -11,4 +11,5 @@
 | ✅ **DONE** | **12 Jyotirlinga & Vishnu Shrines Audit:** Ensure all 12 Jyotirlingas and top 11 Vishnu shrines are fully represented in `cities.js` with attractions. | Content | `build_city_details.md` |
 | ⏳ **TODO** | **Official Website Links:** Expand the `beats` schema to include an `officialWebsite` field for major monuments/temples to prevent booking scams. | Content | `build_city_details.md` |
 | ⏳ **TODO** | **Dynamic Attraction Images:** Rather than hardcoding, use Wikimedia Commons or Unsplash APIs to programmatically fetch attraction images. | Media | `build_virtual_trip.md` |
+| ⏳ **TODO** | **My Trips / Completed Trips:** Save ended trips into a completed trips archive in IndexedDB, and create a `my_trips.html` page to view and reload them. Need to evaluate IndexedDB storage quota limits. | Persistence/UI | User Request |
 

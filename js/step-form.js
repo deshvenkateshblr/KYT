@@ -157,11 +157,11 @@ window.KYT.stepForm = (() => {
   // ── Save ──────────────────────────────────────────────────────────────────
   function save() {
     const id         = formStepId.value;
-    const title      = formStepTitle.value.trim() || 'Untitled Step';
+    const title      = KYT.utils.escapeHTML(formStepTitle.value.trim()) || 'Untitled Step';
     const targetTime = new Date(formStepTime.value);
-    const where      = formStepWhere.value.trim();
-    const mapUrl     = formStepMapUrl.value.trim();
-    const notes      = formStepNotes.value.trim();
+    const where      = KYT.utils.escapeHTML(formStepWhere.value.trim());
+    const mapUrl     = KYT.utils.escapeHTML(formStepMapUrl.value.trim());
+    const notes      = KYT.utils.escapeHTML(formStepNotes.value.trim());
     const icon       = document.querySelector('input[name="step-icon"]:checked').value;
 
     const { stepsData, currentIndex } = KYT.store.get();

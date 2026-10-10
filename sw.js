@@ -1,10 +1,10 @@
 /**
- * sw.js — KYT Service Worker
- * Strategy: Cache-first for app shell; network-first for CDN resources.
+ * sw.js � KYT Service Worker
+ * Strategy: Network-first with a 3-second timeout, falling back to cache.
  * On install, pre-caches the app shell so KYT works fully offline after the first load.
  */
 
-const CACHE_NAME = 'kyt-v6';
+const CACHE_NAME = 'kyt-v7';
 
 // Files that make up the offline-capable app shell
 const APP_SHELL = [
@@ -15,6 +15,7 @@ const APP_SHELL = [
   './view_trip.html',
   './configure_trip.html',
   './virtual_trip.html',
+  './trip_detail.html',
   './manifest.json',
   './css/base.css',
   './css/animations.css',
@@ -38,15 +39,7 @@ const APP_SHELL = [
   './icons/icon-512.png'
 ];
 
-// CDN assets — cache on first use (network-first with cache fallback)
-const CDN_HOSTS = [
-  'cdn.tailwindcss.com',
-  'unpkg.com',
-  'fonts.googleapis.com',
-  'fonts.gstatic.com'
-];
-
-// ── Install: pre-cache the app shell ──────────────────────────────────────
+// -- Install: pre-cache the app shell --------------------------------------
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
@@ -58,7 +51,7 @@ self.addEventListener('install', event => {
   self.skipWaiting();
 });
 
-// ── Activate: remove stale caches ─────────────────────────────────────────
+// -- Activate: remove stale caches -----------------------------------------
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
@@ -68,40 +61,37 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
-// ── Fetch: serve from cache, fall back to network ─────────────────────────
+// -- Fetch: network-first with timeout, fall back to cache -----------------
 self.addEventListener('fetch', event => {
-  const url = new URL(event.request.url);
-
   // Non-GET requests bypass the cache
   if (event.request.method !== 'GET') return;
 
-  const isCDN = CDN_HOSTS.some(host => url.hostname.includes(host));
+  const fetchWithTimeout = (request, timeoutMs = 2000) => {
+    return new Promise((resolve, reject) => {
+      const timeoutId = setTimeout(() => {
+        reject(new Error('Network timeout'));
+      }, timeoutMs);
 
-  if (isCDN) {
-    // Network-first for CDN (fonts, Tailwind, Lucide) — cache as fallback
-    event.respondWith(
-      fetch(event.request)
-        .then(response => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-          return response;
-        })
-        .catch(() => caches.match(event.request))
-    );
-  } else {
-    // Network-first for everything else (app shell), fallback to cache
-    event.respondWith(
-      fetch(event.request)
-        .then(response => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-          return response;
-        })
-        .catch(() => caches.match(event.request))
-    );
-  }
+      fetch(request).then(response => {
+        clearTimeout(timeoutId);
+        resolve(response);
+      }).catch(err => {
+        clearTimeout(timeoutId);
+        reject(err);
+      });
+    });
+  };
+
+  event.respondWith(
+    fetchWithTimeout(event.request, 2000)
+      .then(response => {
+        const clone = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+        return response;
+      })
+      .catch(() => {
+        // Fall back to cache on timeout or network failure
+        return caches.match(event.request);
+      })
+  );
 });
-
-
-
-

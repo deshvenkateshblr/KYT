@@ -24,7 +24,7 @@
   <link rel="apple-touch-icon" href="./icons/KYT.jpg">
 
   <!-- Tailwind CSS (CDN) -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./lib/tailwindcss.js?v=1791377680"></script>
 
   <!-- Tailwind theme config -->
   <script>
@@ -53,18 +53,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="./lib/lucide.js?v=1791377680"></script>
 
   <!-- App styles -->
   <link rel="stylesheet" href="./css/base.css?v=4">
   <link rel="stylesheet" href="./css/animations.css?v=4">
-  <link rel="stylesheet" href="./css/circuits.css?v=5">
 </head>
 
 <body class="bg-kyt-bg text-kyt-text font-sans min-h-screen flex flex-col items-center overflow-x-hidden relative">
 
   <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       MAIN VIEW â€” Active trip / carousel
+       MAIN VIEW - Active trip / carousel
   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <!-- Top Toolbar -->
   <header id="main-toolbar" class="w-full max-w-md mx-auto flex justify-between items-center z-[60] bg-white/40 backdrop-blur-md rounded-2xl p-2 border border-white/50 shadow-sm mt-10 px-4 mb-2 relative">
@@ -98,7 +97,7 @@
           style="font-feature-settings: 'tnum';">--:--</h1>
       <p id="live-date"
          class="text-sm font-semibold text-kyt-subtext uppercase tracking-widest bg-white/50 px-4 py-1.5 rounded-full shadow-sm backdrop-blur-sm">
-        Loadingâ€¦
+        Loading...
       </p>
     </div>
 
@@ -171,7 +170,7 @@
 
 
   <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       CONFIG VIEW â€” Trip settings panel
+       CONFIG VIEW - Trip settings panel
   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <aside id="config-view"
          class="flex flex-col w-full max-w-md mx-auto animate-fade-in overflow-hidden flex-1 h-full">
@@ -200,7 +199,7 @@
                class="block text-[11px] font-bold text-kyt-subtext uppercase tracking-widest mb-2">Trip Notes (optional)</label>
         <textarea id="input-trip-notes" rows="3"
                   class="w-full text-base font-medium text-slate-700 bg-white border-2 border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-kyt-accent shadow-sm resize-none"
-                  placeholder="Visa notes, packing reminders, emergency contactsâ€¦"></textarea>
+                  placeholder="Visa notes, packing reminders, emergency contacts..."></textarea>
       </section>
 
       <!-- Cover image -->
@@ -279,7 +278,7 @@
 
 
   <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       STEP FORM VIEW â€” Add / Edit a step
+       STEP FORM VIEW - Add / Edit a step
   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <aside id="step-form-view"
          class="fixed inset-0 bg-kyt-bg z-[60] flex flex-col w-full max-w-md mx-auto hidden animate-fade-in overflow-hidden">
@@ -424,7 +423,7 @@
           </div>
           <input type="url" id="form-step-map-url"
                  class="w-full text-base font-medium text-slate-700 bg-white border-2 border-slate-200 rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:border-kyt-accent shadow-sm"
-                 placeholder="https://maps.app.goo.gl/â€¦">
+                 placeholder="https://maps.app.goo.gl/...">
         </div>
       </section>
 
@@ -434,7 +433,7 @@
                class="block text-[11px] font-bold text-kyt-subtext uppercase tracking-widest mb-2">Notes &amp; Details</label>
         <textarea id="form-step-notes" rows="3"
                   class="w-full text-base font-medium text-slate-700 bg-white border-2 border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-kyt-accent shadow-sm resize-none"
-                  placeholder="Booking references, remindersâ€¦"></textarea>
+                  placeholder="Booking references, reminders..."></textarea>
       </section>
 
       <!-- Attachments -->
@@ -467,7 +466,7 @@
         <div id="link-input-container" class="hidden mt-3 flex gap-2 animate-fade-in">
           <input type="url" id="form-step-link-url"
                  class="flex-1 text-sm font-medium text-slate-700 bg-white border-2 border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-kyt-accent shadow-sm"
-                 placeholder="Paste Drive/Web linkâ€¦">
+                 placeholder="Paste Drive/Web link...">
           <button type="button" id="btn-add-link"
                   class="px-4 bg-kyt-text text-white font-bold rounded-xl shadow-sm hover:bg-slate-800 transition-all text-sm">Add</button>
         </div>
@@ -557,7 +556,7 @@
   </div>
 
   <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       FILE VIEWER VIEW â€” In-app attachment preview
+       FILE VIEWER VIEW - In-app attachment preview
   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <aside id="file-viewer-view"
          class="fixed inset-0 bg-kyt-bg z-[70] flex flex-col w-full max-w-md mx-auto hidden animate-fade-in overflow-hidden">
@@ -584,7 +583,7 @@
 
 
   <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       SCRIPTS â€” Classic script tags (load order = dependency order)
+       SCRIPTS - Classic script tags (load order = dependency order)
        Works over file:// without a server. No ES modules needed.
   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   
@@ -653,6 +652,7 @@
   
   <!-- New Arch -->
   <script src="./data/cities.js?v=1"></script>
+  <script src="./js/passport-store.js"></script>
 <script src="./js/virtual-trips.js?v=2"></script>
   
   <script src="./js/app.js?v=4"></script>
@@ -683,6 +683,8 @@
     </script>
     </body>
     </html>
+
+
 
 
 

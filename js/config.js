@@ -235,6 +235,16 @@ window.KYT.config = (() => {
   
   function endTrip() {
     if (confirm('Are you sure you want to end and delete the current trip?')) {
+      // Stamp visits for cities present in this trip before deleting
+      if (window.PassportStore && window.KYT_CITIES) {
+        const { stepsData } = KYT.store.get();
+        const locations = stepsData.map(s => (s.where || "").toLowerCase());
+        window.KYT_CITIES.forEach(city => {
+          if (locations.some(loc => loc.includes(city.name.toLowerCase()))) {
+            window.PassportStore.unlockCity(city.id);
+          }
+        });
+      }
       KYT.store.setTripName('New Trip');
       KYT.store.setTripNotes('');
       KYT.store.setCoverImage(null);
@@ -247,12 +257,19 @@ window.KYT.config = (() => {
   }
 
   // Wire static buttons
-  document.getElementById('btn-edit-trip').addEventListener('click',    openConfigView);
-  document.getElementById('btn-close-config').addEventListener('click', closeConfigView);
-  document.getElementById('btn-save-config').addEventListener('click',  closeConfigView);
+  const btnEditTrip = document.getElementById('btn-edit-trip');
+  if (btnEditTrip) btnEditTrip.addEventListener('click', openConfigView);
+  
+  const btnCloseConfig = document.getElementById('btn-close-config');
+  if (btnCloseConfig) btnCloseConfig.addEventListener('click', closeConfigView);
+  
+  const btnSaveConfig = document.getElementById('btn-save-config');
+  if (btnSaveConfig) btnSaveConfig.addEventListener('click', closeConfigView);
+  
   const btnEndTrip = document.getElementById('btn-end-trip');
   if (btnEndTrip) btnEndTrip.addEventListener('click', endTrip);
 
   return { openConfigView, closeConfigView, renderConfigSteps, moveStep, deleteStep };
 })();
+
 

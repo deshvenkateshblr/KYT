@@ -10,12 +10,12 @@ window.KYT.share = (() => {
 
   // ── Export ────────────────────────────────────────────────────────────────
   btnExportTrip.addEventListener('click', () => {
-    const { tripName, stepsData } = KYT.store.get();
+    const { tripName, tripNotes, tripCoverImage, stepsData } = KYT.store.get();
     if (stepsData.length === 0) { alert('Add some steps before exporting!'); return; }
 
     const exportData = {
       kytVersion: 1,
-      tripName,
+      tripName, tripNotes, tripCoverImage,
       exportedAt: new Date().toISOString(),
       steps: stepsData.map(s => ({
         id: s.id, title: s.title, icon: s.icon, where: s.where,
@@ -45,9 +45,11 @@ window.KYT.share = (() => {
         const imported = JSON.parse(event.target.result);
         if (!imported.tripName || !Array.isArray(imported.steps)) { alert('Invalid trip file format.'); return; }
 
-        KYT.store.setTripName(imported.tripName);
+        KYT.store.setTripName(KYT.utils.escapeHTML(imported.tripName));
+        if (imported.tripNotes) KYT.store.setTripNotes(KYT.utils.escapeHTML(imported.tripNotes));
+        if (imported.tripCoverImage) KYT.store.setCoverImage(imported.tripCoverImage);
         KYT.store.setStepsData(imported.steps.map(s => ({
-          ...s, targetTime: new Date(s.targetTime), attachments: []
+          ...s, title: KYT.utils.escapeHTML(s.title), where: KYT.utils.escapeHTML(s.where), notes: KYT.utils.escapeHTML(s.notes), targetTime: new Date(s.targetTime), attachments: []
         })));
 
         const { stepsData } = KYT.store.get();
@@ -67,4 +69,6 @@ window.KYT.share = (() => {
 
   return {};
 })();
+
+
 

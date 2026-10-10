@@ -570,7 +570,10 @@ KYT.virtualTrips = (function() {
                 dayId: dayCounter,
                 cityName: city.name,
                 title: beat.title,
-                notes: beat.notes || beat.where,
+                notes: beat.notes || '',
+                where: beat.where || city.name,
+                mapsUrl: beat.mapsUrl || '',
+                hour: beat.hour || 9,
                 icon: beat.icon || 'map-pin'
             });
         });
@@ -668,11 +671,16 @@ KYT.virtualTrips = (function() {
             <i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 shrink-0"></i>
             <span><strong class="text-slate-800">${totalSteps} activities</strong> across <strong class="text-slate-800">${totalDays} day${totalDays > 1 ? 's' : ''}</strong> planned for <strong class="text-slate-800">${trip.name}</strong></span>
           </div>
-          <a href="configure_trip.html"
+          <div class="flex items-center gap-2 text-sm text-slate-500 mb-1">
+            <i data-lucide="calendar" class="w-4 h-4 shrink-0"></i>
+            <label class="font-bold text-slate-700" for="vt-start-date">Start Date:</label>
+            <input type="date" id="vt-start-date" class="ml-auto bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-sm font-medium text-slate-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+          </div>
+          <button onclick="KYT.virtualTrips.useAsMyTrip('${trip.id}')"
              class="w-full py-3 bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white font-extrabold rounded-xl text-sm flex items-center justify-center gap-2 transition-all shadow-sm shadow-blue-200">
             <i data-lucide="map" class="w-4 h-4"></i>
-            Start Building This Trip
-          </a>
+            Use as my trip
+          </button>
         </div>
       </div>
     `;
@@ -945,14 +953,22 @@ KYT.virtualTrips = (function() {
         }, 50);
       } else if (sharedCities) {
         try {
-          const tasteParts = sharedTaste && sharedTaste.length === 3 ? decodeTaste(sharedTaste) : (sharedTaste ? sharedTaste.split('|') : ['mixed', 'any', 'standard']);
+          if (!confirm(`Do you want to import the shared trip: "${KYT.utils.escapeHTML(sharedTripName) || 'Shared Trip'}"?`)) {
+          const url = new URL(window.location.href);
+          url.searchParams.delete('trip');
+          url.searchParams.delete('cities');
+          url.searchParams.delete('taste');
+          window.history.replaceState({}, '', url.toString());
+          return;
+        }
+        const tasteParts = sharedTaste && sharedTaste.length === 3 ? decodeTaste(sharedTaste) : (sharedTaste ? sharedTaste.split('|') : ['mixed', 'any', 'standard']);
           const fullCities = sharedCities.split(',').map(code => {
             const c = window.KYT_CITIES.find(x => x.code === code || x.id === code);
             return c ? c.id : code;
           });
           const newTrip = {
             id: Date.now().toString(),
-            name: sharedTripName || 'Shared Trip',
+            name: KYT.utils.escapeHTML(sharedTripName) || 'Shared Trip',
             cities: fullCities,
             taste: {
               intent: tasteParts[0] || 'mixed',
@@ -1271,7 +1287,54 @@ KYT.virtualTrips = (function() {
     init();
   }
 
-  return { open: openView, close: closeView, editCanvas, expandAttractionDetail, openCityDetail, addNearby };
+    function useAsMyTrip(tripId) {
+    const trip = vtrips.find(t => t.id === tripId);
+    if (!trip || !trip.steps) return;
+    
+    const currentStore = KYT.store.get();
+    if (currentStore && currentStore.stepsData && currentStore.stepsData.length > 0) {
+      if (!confirm(`This will overwrite your current active trip ("${currentStore.tripName}"). Do you want to proceed?`)) {
+        return;
+      }
+    }
+    const dateInput = document.getElementById('vt-start-date');
+    let startDate = new Date(); // default today
+    if (dateInput && dateInput.value) {
+      startDate = new Date(dateInput.value);
+    }
+    
+    // Set time to start of day for base calculation
+    startDate.setHours(0, 0, 0, 0);
+
+    const storeSteps = trip.steps.map((s, idx) => {
+      // Calculate target time: startDate + (dayId - 1) days + hour
+      const targetTime = new Date(startDate);
+      targetTime.setDate(targetTime.getDate() + (s.dayId - 1));
+      targetTime.setHours(s.hour || 9, 0, 0, 0);
+      
+      return {
+        id: Date.now() + idx,
+        title: s.title,
+        icon: s.icon || 'map-pin',
+        where: s.where || s.cityName,
+        mapUrl: s.mapsUrl || '',
+        notes: s.notes || '',
+        targetTime: targetTime,
+        status: 'todo',
+        attachments: []
+      };
+    });
+
+    KYT.store.setTripName(trip.name);
+    KYT.store.setStepsData(storeSteps);
+    KYT.store.setCurrentIndex(0);
+    KYT.store.saveData();
+
+    // Redirect to view_trip.html (Now cards)
+    window.location.href = 'view_trip.html';
+  }
+
+return { open: openView, close: closeView, editCanvas, expandAttractionDetail, openCityDetail, addNearby, useAsMyTrip };
 })();
 
 
