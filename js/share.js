@@ -45,11 +45,11 @@ window.KYT.share = (() => {
         const imported = JSON.parse(event.target.result);
         if (!imported.tripName || !Array.isArray(imported.steps)) { alert('Invalid trip file format.'); return; }
 
-        KYT.store.setTripName(KYT.utils.escapeHTML(imported.tripName));
-        if (imported.tripNotes) KYT.store.setTripNotes(KYT.utils.escapeHTML(imported.tripNotes));
+        KYT.store.setTripName(imported.tripName);
+        if (imported.tripNotes) KYT.store.setTripNotes(imported.tripNotes);
         if (imported.tripCoverImage) KYT.store.setCoverImage(imported.tripCoverImage);
         KYT.store.setStepsData(imported.steps.map(s => ({
-          ...s, title: KYT.utils.escapeHTML(s.title), where: KYT.utils.escapeHTML(s.where), notes: KYT.utils.escapeHTML(s.notes), targetTime: new Date(s.targetTime), attachments: []
+          ...s, title: s.title, where: s.where, notes: s.notes, targetTime: new Date(s.targetTime), attachments: []
         })));
 
         const { stepsData } = KYT.store.get();

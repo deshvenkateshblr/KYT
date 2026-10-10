@@ -305,7 +305,7 @@ KYT.virtualTrips = (function() {
       return `
         <article class="vt-card cursor-pointer bg-white rounded-2xl p-5 shadow-sm border border-slate-200 hover:border-blue-300 transition-colors" data-id="${vt.id}">
           <div class="flex justify-between items-start mb-1">
-            <h3 class="font-black text-slate-800 text-lg flex items-center">${vt.name} ${badge}</h3>
+            <h3 class="font-black text-slate-800 text-lg flex items-center">${KYT.utils.escapeHTML(vt.name)} ${badge}</h3>
             <button class="btn-del-vt p-1 -m-1 text-slate-300 hover:text-rose-500 transition-colors" data-id="${vt.id}" title="Delete Trip">
               <i data-lucide="trash-2" class="w-4 h-4"></i>
             </button>
@@ -954,7 +954,7 @@ KYT.virtualTrips = (function() {
         }, 50);
       } else if (sharedCities) {
         try {
-          if (!confirm(`Do you want to import the shared trip: "${KYT.utils.escapeHTML(sharedTripName) || 'Shared Trip'}"?`)) {
+          if (!confirm(`Do you want to import the shared trip: "${sharedTripName || 'Shared Trip'}"?`)) {
           const url = new URL(window.location.href);
           url.searchParams.delete('trip');
           url.searchParams.delete('cities');
@@ -969,7 +969,7 @@ KYT.virtualTrips = (function() {
           });
           const newTrip = {
             id: Date.now().toString(),
-            name: KYT.utils.escapeHTML(sharedTripName) || 'Shared Trip',
+            name: sharedTripName || 'Shared Trip',
             cities: fullCities,
             taste: {
               intent: tasteParts[0] || 'mixed',
@@ -1288,7 +1288,7 @@ KYT.virtualTrips = (function() {
     init();
   }
 
-    function useAsMyTrip(tripId) {
+    async function useAsMyTrip(tripId) {
     const trip = vtrips.find(t => t.id === tripId);
     if (!trip || !trip.steps) return;
     
@@ -1329,7 +1329,7 @@ KYT.virtualTrips = (function() {
     KYT.store.setTripName(trip.name);
     KYT.store.setStepsData(storeSteps);
     KYT.store.setCurrentIndex(0);
-    KYT.store.saveData();
+    await KYT.store.saveData();
 
     // Redirect to view_trip.html (Now cards)
     window.location.href = 'view_trip.html';

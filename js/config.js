@@ -233,7 +233,7 @@ window.KYT.config = (() => {
   }
 
   
-  function endTrip() {
+  async function endTrip() {
     if (confirm('Are you sure you want to end and delete the current trip?')) {
       // Stamp visits for cities present in this trip before deleting
       if (window.PassportStore && window.KYT_CITIES) {
@@ -250,7 +250,7 @@ window.KYT.config = (() => {
       KYT.store.setCoverImage(null);
       KYT.store.setStepsData([]);
       KYT.store.setCurrentIndex(0);
-      KYT.store.saveData();
+      await KYT.store.saveData();
       localStorage.removeItem('kyt_stepsData');
       window.location.href = 'index.html';
     }

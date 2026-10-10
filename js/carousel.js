@@ -122,7 +122,7 @@ window.KYT.carousel = (() => {
     const notesSection = step.notes
       ? `<div class="mb-4">
            <p class="text-[11px] font-bold text-kyt-subtext uppercase tracking-widest mb-1.5">Notes</p>
-           <p class="text-[14px] text-slate-700 leading-relaxed font-medium">${step.notes}</p>
+           <p class="text-[14px] text-slate-700 leading-relaxed font-medium">${KYT.utils.escapeHTML(step.notes)}</p>
          </div>` : '';
 
     const attachmentsSection = step.attachments && step.attachments.length > 0
@@ -164,7 +164,7 @@ window.KYT.carousel = (() => {
           <div class="p-3 bg-blue-50 text-kyt-accent rounded-2xl shrink-0">
             <i data-lucide="${step.icon}" class="w-8 h-8"></i>
           </div>
-          <h3 class="text-2xl font-extrabold text-kyt-text leading-tight">${step.title}</h3>
+          <h3 class="text-2xl font-extrabold text-kyt-text leading-tight">${KYT.utils.escapeHTML(step.title)}</h3>
         </div>
 
         <div class="space-y-4 mb-6 bg-slate-50 p-4 rounded-2xl border border-slate-100">
