@@ -37,3 +37,10 @@ This document serves as a master checklist of critical user journeys. It should 
 - [ ] **Album Rendering:** Access the Album view and ensure it correctly pulls memories (photos, notes) attached to timeline steps.
 - [ ] **Social Sharing Logic:** Verify that users can generate the trip report/PDF and that the layout elegantly displays the completed journey without overlapping or breaking CSS boundaries.
 
+
+## 8. Passport / Accomplishment Dashboard (`visited.html`)
+- [ ] **Grid Rendering:** Open `visited.html` and verify the UI correctly displays the destination grid populated from `data/cities.js`. Unvisited cities should appear in grayscale, while visited cities should have a prominent "Been There Done That" background watermark.
+- [ ] **Sort & Filter Controls:** Test the Filter (All, Visited, Unvisited) and Sort (Default, Recent First, A-Z) dropdowns to ensure the grid dynamically refreshes and organizes the city cards accurately.
+- [ ] **Manual Check-In (Phase 1 Trust Model):** Click "Mark Visited" on an unvisited city card. Verify it instantly converts to a "Visited" state and applies the stamp without strict geolocation checks. 
+- [ ] **Editable Dates:** Modify the date in the native date picker field on a visited city card, refresh the page, and ensure the newly selected date correctly persists in LocalStorage (`kyt_passport`).
+

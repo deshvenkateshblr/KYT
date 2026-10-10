@@ -16,6 +16,9 @@
     <File Path="data/bucket-list.js" />
     <File Path="data/cities.js" />
   </Folder>
+  <Folder Name="/Solution Items/docs/">
+    <File Path="docs/criticalusecases.md" />
+  </Folder>
   <Folder Name="/Solution Items/icons/">
     <File Path="icons/icon-192.png" />
     <File Path="icons/icon-512.png" />
