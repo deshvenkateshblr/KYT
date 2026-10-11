@@ -1,10 +1,10 @@
 /**
- * sw.js — KYT Service Worker
+ * sw.js - KYT Service Worker
  * Strategy: Network-first with a 3-second timeout, falling back to cache.
  * On install, pre-caches the app shell so KYT works fully offline after the first load.
  */
 
-const CACHE_NAME = 'kyt-v7';
+const CACHE_NAME = 'kyt-v12';
 
 // Files that make up the offline-capable app shell
 const APP_SHELL = [
@@ -16,6 +16,8 @@ const APP_SHELL = [
   './configure_trip.html',
   './virtual_trip.html',
   './trip_detail.html',
+  './curated_trips.html',
+  './data/curated_trips.js',
   './manifest.json',
   './css/base.css',
   './css/animations.css',
@@ -95,3 +97,4 @@ self.addEventListener('fetch', event => {
       })
   );
 });
+

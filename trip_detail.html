@@ -74,6 +74,7 @@
   <!-- Data Dependencies -->
   <script src="data/cities.js?v=1791377680"></script>
   <script src="data/city_videos_data.js?v=1791377680"></script>
+  <script src="data/curated_trips.js?v=1791377680"></script>
 
   <!-- Logic -->
   <script>
@@ -84,6 +85,7 @@
       let tripName = params.get('trip') || 'My Trip';
       let citiesParam = params.get('cities');
       let tasteParam = params.get('taste') || '';
+      let curatedParam = params.get('curated') || '';
       
       const tripId = params.get('id');
       if (tripId) {
@@ -92,9 +94,10 @@
           const trip = vtrips.find(t => t.id === tripId);
           if (trip) {
             tripName = trip.name || 'My Trip';
+            if (trip.curatedId) curatedParam = trip.curatedId;
             
             const shortC = trip.cities.map(id => {
-              const c = window.KYT_CITIES.find(x => x.id === id);
+              const c = window.KYT_CITIES ? window.KYT_CITIES.find(x => x.id === id) : null;
               return c && c.code ? c.code : id;
             });
             citiesParam = shortC.join(',');
@@ -106,16 +109,24 @@
             };
             tasteParam = (codeMap.intent[trip.taste.intent] || 'm') + (codeMap.diet[trip.taste.diet] || 'a') + (codeMap.pace[trip.taste.pace] || 's');
             // update URL for the edit button to work seamlessly
-            window.history.replaceState({}, '', `?trip=${encodeURIComponent(tripName)}&cities=${citiesParam}&taste=${tasteParam}`);
+            const curQ = curatedParam ? `&curated=${encodeURIComponent(curatedParam)}` : '';
+            window.history.replaceState({}, '', `?trip=${encodeURIComponent(tripName)}&cities=${citiesParam}&taste=${tasteParam}${curQ}`);
           }
         } catch(e) {}
       }
-      
       
       try {
           tripName = decodeURIComponent(tripName.replace(/\+/g, ' '));
       } catch(e) {}
       document.getElementById('trip-title').textContent = tripName;
+
+      if (curatedParam && window.KYT_CURATED_TRIPS) {
+        const cTrip = window.KYT_CURATED_TRIPS.find(t => t.id === curatedParam);
+        if (cTrip && cTrip.tagline) {
+          const descEl = document.getElementById('trip-desc');
+          if (descEl) descEl.textContent = cTrip.tagline;
+        }
+      }
 
 
       const btnShare = document.getElementById('btn-share-trip');

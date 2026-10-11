@@ -8,6 +8,14 @@
     <File Path="view_trip.html" />
     <File Path="virtual_trip.html" />
   </Folder>
+  <Folder Name="/Solution Items/admin/">
+    <File Path="admin/admin.css" />
+    <File Path="admin/app.js" />
+    <File Path="admin/core.js" />
+    <File Path="admin/curated_trips.js" />
+    <File Path="admin/index.html" />
+    <File Path="admin/README.md" />
+  </Folder>
   <Folder Name="/Solution Items/css/">
     <File Path="css/animations.css" />
     <File Path="css/base.css" />
