@@ -3,6 +3,7 @@
     <File Path="configure_trip.html" />
     <File Path="index.html" />
     <File Path="manifest.json" />
+    <File Path="package.json" />
     <File Path="sw.js" />
     <File Path="trip_detail.html" />
     <File Path="view_trip.html" />
@@ -50,5 +51,15 @@
   <Folder Name="/Solution Items/scripts/">
     <File Path="scripts/bucket_list_source.json" />
     <File Path="scripts/generate_bucket_list.py" />
+  </Folder>
+  <Folder Name="/Solution Items/tests/">
+    <File Path="tests/README.md" />
+  </Folder>
+  <Folder Name="/Solution Items/tests/e2e/">
+    <File Path="tests/e2e/01-trip-engine.test.js" />
+    <File Path="tests/e2e/02-share-and-memories.test.js" />
+    <File Path="tests/e2e/03-virtual-trips.test.js" />
+    <File Path="tests/e2e/04-passport-curated-pwa.test.js" />
+    <File Path="tests/e2e/helpers.js" />
   </Folder>
 </Solution>

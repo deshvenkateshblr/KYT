@@ -37,9 +37,30 @@ window.KYT.store = (() => {
     dbPromise = new Promise((resolve, reject) => {
       const request = indexedDB.open(DB_NAME, 1);
       request.onerror = () => reject(request.error);
-      request.onsuccess = () => resolve(request.result);
       request.onupgradeneeded = (e) => {
-        e.target.result.createObjectStore(STORE_NAME);
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains(STORE_NAME)) {
+          db.createObjectStore(STORE_NAME);
+        }
+      };
+      request.onsuccess = () => {
+        const db = request.result;
+        if (!db.objectStoreNames.contains(STORE_NAME)) {
+          // If database was opened at version 1 without the store, upgrade version to create it
+          const nextVer = (db.version || 1) + 1;
+          db.close();
+          const fixReq = indexedDB.open(DB_NAME, nextVer);
+          fixReq.onerror = () => reject(fixReq.error);
+          fixReq.onupgradeneeded = (ev) => {
+            const fixDb = ev.target.result;
+            if (!fixDb.objectStoreNames.contains(STORE_NAME)) {
+              fixDb.createObjectStore(STORE_NAME);
+            }
+          };
+          fixReq.onsuccess = () => resolve(fixReq.result);
+          return;
+        }
+        resolve(db);
       };
     });
     return dbPromise;

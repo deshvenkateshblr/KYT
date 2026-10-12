@@ -1338,16 +1338,18 @@ KYT.virtualTrips = (function() {
         .slice(0, 8); // top 8 closest
       
       if (nearby.length > 0) {
+        const CITY_ALIASES = { bangalore: 'bengaluru', mangalore: 'udupi', mangaluru: 'udupi', hubballi: 'hubli' };
         nearbyList.innerHTML = nearby.map(([nId, dist]) => {
-          const nCity = window.KYT_CITIES.find(c => c.id === nId);
+          const targetId = CITY_ALIASES[nId] || nId;
+          const nCity = window.KYT_CITIES.find(c => c.id === targetId);
           if (!nCity) return '';
-          const isAdded = trip && trip.cities.includes(nId);
+          const isAdded = trip && trip.cities.includes(targetId);
           const btnHtml = isAdded 
             ? `<button class="w-full mt-2 py-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-[10px] font-bold" disabled>Added</button>`
-            : `<button class="w-full mt-2 py-1.5 bg-slate-100 text-slate-700 hover:bg-blue-600 hover:text-white rounded-lg text-[10px] font-bold transition-colors" onclick="KYT.virtualTrips.addNearby('${nId}')">Add +</button>`;
+            : `<button class="w-full mt-2 py-1.5 bg-slate-100 text-slate-700 hover:bg-blue-600 hover:text-white rounded-lg text-[10px] font-bold transition-colors" onclick="KYT.virtualTrips.addNearby('${targetId}')">Add +</button>`;
           
           return `
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3 cursor-pointer hover:border-blue-300 transition-colors flex flex-col h-full" onclick="KYT.virtualTrips.openCityDetail('${nId}')">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3 cursor-pointer hover:border-blue-300 transition-colors flex flex-col h-full" onclick="KYT.virtualTrips.openCityDetail('${targetId}')">
               <h4 class="font-black text-slate-800 text-xs truncate">${nCity.name}</h4>
               <p class="text-[10px] text-slate-500 font-medium mb-1.5">${dist} km away</p>
               <p class="text-[10px] text-slate-500 leading-tight line-clamp-3 mb-2 flex-1">${nCity.notes || 'Explore this nearby destination.'}</p>

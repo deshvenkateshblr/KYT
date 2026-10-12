@@ -1,0 +1,245 @@
+'use strict';
+/** Passport, curated trips, offline/PWA behaviour and the catalog data the app depends on. */
+const { test, before, after } = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const { launch, newPhone, seedTrip, iso, ROOT } = require('./helpers');
+
+let env;
+before(async () => { env = await launch(); });
+after(async () => { await env.browser.close(); env.server.close(); });
+
+const passport = page => page.evaluate(() => JSON.parse(localStorage.getItem('kyt_passport') || '{}'));
+
+// ── Passport ────────────────────────────────────────────────────────────────
+test('passport starts at 0 visited; Mark Visited stamps a city and updates the count', async () => {
+  const { context, page } = await newPhone(env.browser);
+  await page.goto(env.base + '/visited.html');
+  await page.waitForSelector('#verified-count');
+  assert.match(await page.locator('#verified-count').innerText(), /^0 Visited/);
+  await page.getByRole('button', { name: /Mark Visited/ }).first().click();
+  assert.match(await page.locator('#verified-count').innerText(), /^1 Visited/);
+  assert.equal(Object.keys(await passport(page)).length, 1);
+  assert.match(await page.locator('body').innerText(), /BEEN THERE DONE THAT|Undo Visit/);
+  await context.close();
+});
+
+test('passport filter (Visited / Unvisited) and sort (A-Z) change the grid', async () => {
+  const { context, page } = await newPhone(env.browser);
+  await page.goto(env.base + '/visited.html');
+  await page.waitForSelector('#verified-count');
+  const total = await page.getByRole('button', { name: /Mark Visited/ }).count();
+  assert.ok(total >= 100, `expected the full city grid, got ${total}`);
+  await page.getByRole('button', { name: /Mark Visited/ }).nth(0).click();
+  await page.getByRole('button', { name: /Mark Visited/ }).nth(0).click();
+
+  await page.selectOption('#filter-select', 'visited');
+  assert.equal(await page.getByRole('button', { name: /Undo Visit/ }).count(), 2);
+  assert.equal(await page.getByRole('button', { name: /Mark Visited/ }).count(), 0);
+
+  await page.selectOption('#filter-select', 'unvisited');
+  assert.equal(await page.getByRole('button', { name: /Undo Visit/ }).count(), 0);
+  assert.equal(await page.getByRole('button', { name: /Mark Visited/ }).count(), total - 2);
+
+  await page.selectOption('#filter-select', 'all');
+  await page.selectOption('#sort-select', 'alpha');
+  const names = await page.$$eval('h3', hs => hs.map(h => h.textContent.trim()).filter(Boolean));
+  const sorted = [...names].sort((a, b) => a.localeCompare(b));
+  assert.deepEqual(names.slice(0, 20), sorted.slice(0, 20));
+  await context.close();
+});
+
+test('passport: the visit date can be edited and persists; Undo Visit removes the stamp', async () => {
+  const { context, page } = await newPhone(env.browser);
+  await page.goto(env.base + '/visited.html');
+  await page.waitForSelector('#verified-count');
+  await page.getByRole('button', { name: /Mark Visited/ }).first().click();
+  const dateInput = page.locator('input[type="date"]').first();
+  await dateInput.fill('2025-12-31');
+  await dateInput.dispatchEvent('change');
+  const rec = Object.values(await passport(page))[0];
+  assert.equal(rec.date, '2025-12-31');
+
+  await page.reload();
+  await page.waitForSelector('#verified-count');
+  assert.equal(await page.locator('input[type="date"]').first().inputValue(), '2025-12-31');
+
+  await page.getByRole('button', { name: /Undo Visit/ }).first().click();
+  assert.match(await page.locator('#verified-count').innerText(), /^0 Visited/);
+  assert.deepEqual(await passport(page), {});
+  await context.close();
+});
+
+// ── Curated trips ───────────────────────────────────────────────────────────
+test('curated trips list shows the approved trips and the filter narrows by travel style', async () => {
+  const { context, page } = await newPhone(env.browser);
+  await page.goto(env.base + '/curated_trips.html');
+  await page.waitForSelector('#filter-pills');
+  assert.match(await page.locator('body').innerText(), /Tirupati: Divine Calling/);
+  assert.match(await page.locator('body').innerText(), /Showing 1 trip\b/);
+
+  await page.click('.filter-pill[data-filter="culinary"]');
+  assert.doesNotMatch(await page.locator('body').innerText(), /Tirupati: Divine Calling/);
+  await page.click('.filter-pill[data-filter="all"]');
+  assert.match(await page.locator('body').innerText(), /Tirupati: Divine Calling/);
+  await context.close();
+});
+
+test('opening a curated trip card previews its highlights and day-by-day plan', async () => {
+  const { context, page } = await newPhone(env.browser);
+  await page.goto(env.base + '/curated_trips.html');
+  await page.waitForSelector('[role="button"][title^="Click to preview"]');
+  await page.click('[role="button"][title^="Click to preview"]');
+  await page.waitForFunction(() => /Tirupati: Divine Calling/.test(document.getElementById('modal-title').textContent));
+  assert.match(await page.locator('#modal-days').innerText(), /Journey from Bengaluru to Tirupati/);
+  assert.ok((await page.locator('#modal-highlights li').count()) > 0);
+  await context.close();
+});
+
+test('"Open in Virtual Trips" on a curated trip saves it with its steps and opens it', async () => {
+  const { context, page } = await newPhone(env.browser);
+  await page.goto(env.base + '/curated_trips.html');
+  await page.waitForSelector('[role="button"][title^="Click to preview"]');
+  await page.click('[role="button"][title^="Click to preview"]');
+  await page.waitForSelector('#modal-title:not(:empty)');
+  await page.click('#btn-open-virtual-trips');
+  await page.waitForURL('**/virtual_trip.html**');
+  const t = await page.evaluate(() => JSON.parse(localStorage.getItem('kyt_virtual_trips'))[0]);
+  assert.ok(t.curatedId, 'imported trip remembers which curated trip it came from');
+  assert.ok(t.steps && t.steps.length > 3);
+  await page.waitForSelector('#vt-screen-builder:not(.hidden)');
+  assert.match(await page.locator('#vt-itinerary-list').innerText(), /Journey from Bengaluru to Tirupati/);
+  await context.close();
+});
+
+test('sharing a curated trip produces a link to the detail page with its cities and taste', async () => {
+  const { context, page } = await newPhone(env.browser);
+  await context.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: env.base });
+  await page.goto(env.base + '/curated_trips.html');
+  await page.waitForSelector('[role="button"][title^="Click to preview"]');
+  await page.click('[role="button"][title^="Click to preview"]');
+  await page.waitForSelector('#btn-share-curated-idea');
+  await page.evaluate(() => { navigator.share = undefined; });
+  await page.click('#btn-share-curated-idea');
+  await page.waitForFunction(() => true);
+  await page.waitForTimeout(300);
+  const link = await page.evaluate(() => navigator.clipboard.readText());
+  assert.match(link, /trip_detail\.html\?/);
+  assert.match(link, /curated=/);
+  assert.match(link, /cities=tirupati/);
+  await context.close();
+});
+
+// ── Offline / PWA ───────────────────────────────────────────────────────────
+test('after one online visit the app shell loads with the network off', async () => {
+  const { context, page } = await newPhone(env.browser);
+  await page.goto(env.base + '/index.html');
+  await page.evaluate(async () => { await navigator.serviceWorker.ready; });
+  await page.waitForFunction(async () => (await caches.keys()).length > 0 && (await (await caches.open((await caches.keys())[0])).keys()).length > 10, null, { timeout: 15000 });
+  // visit the pages we will need offline so they are surely cached
+  for (const p of ['view_trip.html', 'configure_trip.html', 'visited.html']) { await page.goto(env.base + '/' + p); }
+  await context.setOffline(true);
+  await page.goto(env.base + '/view_trip.html');
+  await page.waitForSelector('#hero-card');
+  assert.match(await page.locator('#hero-card').innerText(), /No steps yet/i);
+  await page.goto(env.base + '/visited.html');
+  await page.waitForSelector('#verified-count');
+  await context.close();
+});
+
+test('a trip can be created and edited with the network off (offline-first)', async () => {
+  const { context, page } = await newPhone(env.browser);
+  await page.goto(env.base + '/configure_trip.html');
+  await page.evaluate(async () => { await navigator.serviceWorker.ready; });
+  await page.waitForTimeout(500);
+  await context.setOffline(true);
+  await page.reload();
+  await page.waitForSelector('#btn-add-step');
+  await page.click('#btn-add-step');
+  await page.fill('#form-step-title', 'In-flight note');
+  await page.click('#btn-save-step');
+  assert.match(await page.locator('#step-count-badge').innerText(), /^1 item$/);
+  await context.close();
+});
+
+test('manifest makes the app installable (name, standalone, icons exist)', async () => {
+  const m = JSON.parse(fs.readFileSync(path.join(ROOT, 'manifest.json'), 'utf8'));
+  assert.equal(m.display, 'standalone');
+  assert.ok(m.name && m.short_name && m.start_url);
+  for (const i of m.icons) assert.ok(fs.existsSync(path.join(ROOT, i.src)), `missing icon ${i.src}`);
+});
+
+test('no page throws an uncaught error on load', async () => {
+  const { context, page } = await newPhone(env.browser);
+  for (const p of ['index.html', 'view_trip.html', 'configure_trip.html', 'virtual_trip.html', 'curated_trips.html', 'visited.html', 'trip_detail.html?id=x']) {
+    await page.goto(env.base + '/' + p);
+    await page.waitForTimeout(300);
+  }
+  // pdfmake CDN is blocked in the harness on purpose, so ignore its ReferenceError.
+  const real = page.errors.filter(e => !/pdfMake/i.test(e));
+  assert.deepEqual(real, []);
+  await context.close();
+});
+
+// ── Catalog data the planner depends on (pure Node, no browser) ─────────────
+function load(file, key) {
+  const sandbox = { window: {} };
+  new Function('window', fs.readFileSync(path.join(ROOT, file), 'utf8'))(sandbox.window);
+  return sandbox.window[key];
+}
+
+test('catalog: every city has a unique id and code, a name, and at least one attraction', () => {
+  const cities = load('data/cities.js', 'KYT_CITIES');
+  assert.equal(new Set(cities.map(c => c.id)).size, cities.length);
+  assert.equal(new Set(cities.map(c => c.code)).size, cities.length);
+  const bad = cities.filter(c => !c.name || !Array.isArray(c.beats) || c.beats.length === 0).map(c => c.id);
+  assert.deepEqual(bad, []);
+});
+
+test('catalog: every attraction has a title, a place and an hour between 0 and 23', () => {
+  const cities = load('data/cities.js', 'KYT_CITIES');
+  const bad = [];
+  cities.forEach(c => c.beats.forEach(b => {
+    if (!b.title || !b.where || !(b.hour >= 0 && b.hour <= 23)) bad.push(`${c.id}: ${b.title}`);
+  }));
+  assert.deepEqual(bad, []);
+});
+
+test('catalog: any Maps link an attraction has is an https Google Maps URL', () => {
+  const cities = load('data/cities.js', 'KYT_CITIES');
+  const bad = [];
+  cities.forEach(c => c.beats.forEach(b => {
+    if (b.mapsUrl && !/^https:\/\/www\.google\.com\/maps\//.test(b.mapsUrl)) bad.push(`${c.id}: ${b.title}`);
+  }));
+  assert.deepEqual(bad, []);
+});
+
+// Known gap, not a crash: the Now card falls back to a Maps search on the place name when mapsUrl is empty.
+test('catalog: every attraction ships a direct Maps link', { todo: 'about 40 attractions in 13 newer cities have none' }, () => {
+  const cities = load('data/cities.js', 'KYT_CITIES');
+  const missing = [];
+  cities.forEach(c => c.beats.forEach(b => { if (!b.mapsUrl) missing.push(`${c.id}: ${b.title}`); }));
+  assert.deepEqual(missing, []);
+});
+
+test('catalog: the distance table only refers to cities that exist', () => {
+  const ids = new Set(load('data/cities.js', 'KYT_CITIES').map(c => c.id));
+  const dm = load('data/distance_matrix.js', 'KYT_DISTANCE_MATRIX');
+  const unknown = [];
+  Object.entries(dm).forEach(([a, row]) => {
+    if (!ids.has(a)) unknown.push(a);
+    Object.keys(row).forEach(b => { if (!ids.has(b)) unknown.push(`${a}->${b}`); });
+  });
+  assert.deepEqual(unknown, []);
+});
+
+test('catalog: curated trips reference real cities and have steps on every day', () => {
+  const ids = new Set(load('data/cities.js', 'KYT_CITIES').map(c => c.id));
+  const trips = load('data/curated_trips.js', 'KYT_CURATED_TRIPS');
+  trips.forEach(t => {
+    assert.ok(t.title && t.days && t.days.length > 0, `${t.id} needs a title and days`);
+    (t.cities || []).forEach(c => assert.ok(ids.has(c), `${t.id}: unknown city ${c}`));
+    t.days.forEach(d => assert.ok(d.steps && d.steps.length > 0, `${t.id} day ${d.day} has no steps`));
+  });
+});

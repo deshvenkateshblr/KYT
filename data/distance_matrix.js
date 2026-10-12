@@ -4252,11 +4252,13 @@ window.KYT_DISTANCE_MATRIX = {
     "nathdwara": 355
   }
 , "hubli": {
+    "badami": 105,
+    "pattadakal": 128,
+    "gokarna": 142,
     "goa": 160,
     "hampi": 163,
-    "gokarna": 142,
-    "bangalore": 412,
-    "mangalore": 358,
+    "udupi": 295,
+    "bengaluru": 412,
     "pune": 430
   }
 };

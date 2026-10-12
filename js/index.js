@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function checkExistingTrip() {
   return new Promise((resolve) => {
+    let isUpgrade = false;
     // Try to open IndexedDB
     const request = indexedDB.open('kyt_db', 1);
 
@@ -44,11 +45,37 @@ function checkExistingTrip() {
       resolve(false); // Default to new user on error
     };
 
+    request.onupgradeneeded = (e) => {
+      isUpgrade = true;
+      const db = e.target.result;
+      // Create the kyt_store table so subsequent trip saves succeed
+      if (!db.objectStoreNames.contains('kyt_store')) {
+        db.createObjectStore('kyt_store');
+      }
+    };
+
     request.onsuccess = (e) => {
       const db = e.target.result;
       
-      // If store doesn't exist, it's a new user
+      // If store doesn't exist (e.g. database previously created without store),
+      // self-heal by bumping version to create kyt_store
       if (!db.objectStoreNames.contains('kyt_store')) {
+        const nextVer = (db.version || 1) + 1;
+        db.close();
+        const fixReq = indexedDB.open('kyt_db', nextVer);
+        fixReq.onupgradeneeded = (ev) => {
+          const fixDb = ev.target.result;
+          if (!fixDb.objectStoreNames.contains('kyt_store')) {
+            fixDb.createObjectStore('kyt_store');
+          }
+        };
+        fixReq.onsuccess = () => resolve(false);
+        fixReq.onerror = () => resolve(false);
+        return;
+      }
+
+      if (isUpgrade) {
+        // Brand new database with empty store -> new user
         resolve(false);
         return;
       }
@@ -67,34 +94,30 @@ function checkExistingTrip() {
       stepsReq.onerror = () => legacyCheck();
 
       function legacyCheck() {
-      const getReq = store.get('kyt_state');
-      getReq.onsuccess = (event) => {
-        const state = event.target.result;
-        // If state exists and has steps, consider them a returning user
-        if (state && state.stepsData && state.stepsData.length > 0) {
-          resolve(true);
-        } else {
-          // Alternatively check localStorage as fallback (since migration logic exists)
-          const localSteps = localStorage.getItem('kyt_stepsData');
-          if (localSteps && JSON.parse(localSteps).length > 0) {
+        const getReq = store.get('kyt_state');
+        getReq.onsuccess = (event) => {
+          const state = event.target.result;
+          // If state exists and has steps, consider them a returning user
+          if (state && state.stepsData && state.stepsData.length > 0) {
             resolve(true);
           } else {
+            // Alternatively check localStorage as fallback (since migration logic exists)
+            try {
+              const localSteps = localStorage.getItem('kyt_stepsData');
+              if (localSteps && JSON.parse(localSteps).length > 0) {
+                resolve(true);
+                return;
+              }
+            } catch (err) {}
             resolve(false);
           }
-        }
-      };
-      
-      getReq.onerror = () => {
-        resolve(false);
-      };
+        };
+        
+        getReq.onerror = () => {
+          resolve(false);
+        };
       }
     };
-    
-    request.onupgradeneeded = (e) => {
-      // If upgrade needed, it means DB didn't exist or version was lower.
-      // We don't need to create the store here since we're just checking.
-      resolve(false);
-    }
   });
 }
 

@@ -32,6 +32,11 @@ window.KYT.stepForm = (() => {
 
   // ── Utilities ─────────────────────────────────────────────────────────────
   function toDatetimeLocal(date) {
+    if (!date) date = new Date();
+    if (!(date instanceof Date) || isNaN(date.getTime())) {
+      date = new Date(date);
+    }
+    if (isNaN(date.getTime())) date = new Date();
     const pad = n => n.toString().padStart(2, '0');
     return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
   }
@@ -116,19 +121,25 @@ window.KYT.stepForm = (() => {
     formStepWhere.value = '';
     formStepMapUrl.value = '';
     formStepNotes.value  = '';
-    document.querySelector('input[name="step-icon"][value="plane"]').checked = true;
+    const defaultRadio = document.querySelector('input[name="step-icon"][value="plane"]');
+    if (defaultRadio) defaultRadio.checked = true;
     showAttachmentError('');
     linkInputContainer.classList.add('hidden');
 
-    if (id) {
+    if (id != null) {
       const { stepsData } = KYT.store.get();
-      const step = stepsData.find(s => s.id === id);
+      // Look up by id (use == for string/number tolerance), or if id is array index
+      let step = stepsData.find(s => s.id == id);
+      if (!step && typeof id === 'number' && id >= 0 && id < stepsData.length) {
+        step = stepsData[id];
+      }
       if (step) {
+        if (step.id == null) step.id = Date.now();
         formViewTitle.textContent = 'Edit Step';
         formStepId.value    = step.id;
-        formStepTitle.value = step.title;
+        formStepTitle.value = step.title || '';
         formStepTime.value  = toDatetimeLocal(step.targetTime);
-        formStepWhere.value = step.where;
+        formStepWhere.value = step.where || '';
         formStepMapUrl.value = step.mapUrl || '';
         formStepNotes.value  = step.notes  || '';
         tempAttachments = step.attachments ? [...step.attachments] : [];
@@ -139,7 +150,11 @@ window.KYT.stepForm = (() => {
       formViewTitle.textContent = 'Add Step';
       const { stepsData } = KYT.store.get();
       let defaultTime = new Date();
-      if (stepsData.length > 0) defaultTime = new Date(stepsData[stepsData.length - 1].targetTime.getTime() + 3_600_000);
+      if (stepsData.length > 0) {
+        const lastTarget = stepsData[stepsData.length - 1].targetTime;
+        const lastTime = lastTarget instanceof Date ? lastTarget.getTime() : new Date(lastTarget).getTime();
+        if (!isNaN(lastTime)) defaultTime = new Date(lastTime + 3_600_000);
+      }
       formStepTime.value = toDatetimeLocal(defaultTime);
       tempAttachments = [];
     }
@@ -147,6 +162,31 @@ window.KYT.stepForm = (() => {
     renderFormAttachments();
     stepFormView.classList.remove('hidden');
     configView.classList.add('hidden');
+  }
+
+  function openEdit(indexOrId) {
+    const { stepsData } = KYT.store.get();
+    let step = null;
+
+    // Check if passed as an array index first (config.js passes ${index})
+    if (typeof indexOrId === 'number' && indexOrId >= 0 && indexOrId < stepsData.length) {
+      step = stepsData[indexOrId];
+    }
+    // If not found by index, look up by step id
+    if (!step && indexOrId != null) {
+      step = stepsData.find(s => s.id == indexOrId);
+    }
+
+    if (!step) {
+      console.warn('KYT.stepForm.openEdit: Step not found for identifier', indexOrId);
+      return;
+    }
+
+    if (step.id == null) {
+      step.id = Date.now();
+    }
+
+    open(step.id);
   }
 
   function close() {
@@ -162,7 +202,8 @@ window.KYT.stepForm = (() => {
     const where      = formStepWhere.value.trim();
     const mapUrl     = formStepMapUrl.value.trim();
     const notes      = formStepNotes.value.trim();
-    const icon       = document.querySelector('input[name="step-icon"]:checked').value;
+    const iconRadio  = document.querySelector('input[name="step-icon"]:checked');
+    const icon       = iconRadio ? iconRadio.value : 'map-pin';
 
     const { stepsData, currentIndex } = KYT.store.get();
     const currentActiveId = stepsData[currentIndex]?.id;
@@ -184,8 +225,12 @@ window.KYT.stepForm = (() => {
     }
 
     KYT.store.saveData();
-    KYT.config.renderConfigSteps();
-    KYT.carousel.renderCard();
+    if (KYT.config && typeof KYT.config.renderConfigSteps === 'function') {
+      KYT.config.renderConfigSteps();
+    }
+    if (KYT.carousel && typeof KYT.carousel.renderCard === 'function') {
+      KYT.carousel.renderCard();
+    }
     close();
   }
 
@@ -194,6 +239,6 @@ window.KYT.stepForm = (() => {
   document.getElementById('btn-close-form').addEventListener('click',  close);
   document.getElementById('btn-save-step').addEventListener('click',   save);
 
-  return { open, close, removeAttachment };
+  return { open, openEdit, close, removeAttachment };
 })();
 

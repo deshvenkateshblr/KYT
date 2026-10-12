@@ -15790,7 +15790,8 @@ window.KYT_CITIES = [
           "deep"
         ],
         "mobility": "walk",
-        "notes": "One of the twelve Jyotirlingas, dedicated to Lord Shiva. Famous for the Bhasma Aarti."
+        "notes": "One of the twelve Jyotirlingas, dedicated to Lord Shiva. Famous for the Bhasma Aarti.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mahakaleshwar%20Jyotirlinga%2C%20Ujjain"
       },
       {
         "title": "Kal Bhairav Temple",
@@ -15812,7 +15813,8 @@ window.KYT_CITIES = [
           "deep"
         ],
         "mobility": "easy",
-        "notes": "Ancient temple dedicated to Kal Bhairav, the guardian deity of Ujjain, known for unique offerings."
+        "notes": "Ancient temple dedicated to Kal Bhairav, the guardian deity of Ujjain, known for unique offerings.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kal%20Bhairav%20Temple%2C%20Ujjain"
       },
       {
         "title": "Ram Ghat",
@@ -15834,7 +15836,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "easy",
-        "notes": "The oldest bathing ghat in connection with the Kumbh Mela, mesmerizing during the evening aarti."
+        "notes": "The oldest bathing ghat in connection with the Kumbh Mela, mesmerizing during the evening aarti.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Ram%20Ghat%2C%20Ujjain"
       }
     ],
     "code": "ujj"
@@ -15872,7 +15875,8 @@ window.KYT_CITIES = [
           "deep"
         ],
         "mobility": "walk",
-        "notes": "One of the 12 Jyotirlingas, dedicated to Lord Shiva."
+        "notes": "One of the 12 Jyotirlingas, dedicated to Lord Shiva.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mallikarjuna%20Jyotirlinga%2C%20Srisailam"
       },
       {
         "title": "Bhramaramba Devi Temple",
@@ -15893,7 +15897,8 @@ window.KYT_CITIES = [
           "short"
         ],
         "mobility": "walk",
-        "notes": "One of the 18 Maha Shakti Peethas."
+        "notes": "One of the 18 Maha Shakti Peethas.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Bhramaramba%20Devi%20Temple%2C%20Srisailam"
       },
       {
         "title": "Srisailam Dam",
@@ -15914,7 +15919,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "easy",
-        "notes": "One of the largest dams in India, offering scenic views."
+        "notes": "One of the largest dams in India, offering scenic views.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Srisailam%20Dam%2C%20Andhra%20Pradesh"
       }
     ],
     "code": "sr1"
@@ -15952,7 +15958,8 @@ window.KYT_CITIES = [
           "deep"
         ],
         "mobility": "walk",
-        "notes": "A revered Jyotirlinga temple situated on an island shaped like 'Om'."
+        "notes": "A revered Jyotirlinga temple situated on an island shaped like 'Om'.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Omkareshwar%20Jyotirlinga%2C%20Mandhata"
       },
       {
         "title": "Mamleshwar Temple",
@@ -15974,7 +15981,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "walk",
-        "notes": "The sister temple to Omkareshwar, also considered part of the Jyotirlinga."
+        "notes": "The sister temple to Omkareshwar, also considered part of the Jyotirlinga.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mamleshwar%20Temple%2C%20Omkareshwar"
       },
       {
         "title": "Narmada Ghat",
@@ -15995,7 +16003,8 @@ window.KYT_CITIES = [
           "short"
         ],
         "mobility": "easy",
-        "notes": "Peaceful ghats for evening aarti and holy dips."
+        "notes": "Peaceful ghats for evening aarti and holy dips.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Narmada%20Ghat%2C%20Omkareshwar"
       }
     ],
     "code": "omk"
@@ -16032,7 +16041,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "walk",
-        "notes": "Ancient Shiva temple built in the Nagara style of architecture."
+        "notes": "Ancient Shiva temple built in the Nagara style of architecture.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Bhimashankar%20Jyotirlinga%2C%20Maharashtra"
       },
       {
         "title": "Bhimashankar Wildlife Sanctuary",
@@ -16053,7 +16063,8 @@ window.KYT_CITIES = [
           "deep"
         ],
         "mobility": "walk",
-        "notes": "Lush green forest known for the Indian Giant Squirrel and rich flora."
+        "notes": "Lush green forest known for the Indian Giant Squirrel and rich flora.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Bhimashankar%20Wildlife%20Sanctuary%2C%20Maharashtra"
       },
       {
         "title": "Gupt Bhimashankar",
@@ -16075,7 +16086,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "trek",
-        "notes": "The spot where the river Bhima originates."
+        "notes": "The spot where the river Bhima originates.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Gupt%20Bhimashankar%2C%20Maharashtra"
       }
     ],
     "code": "bh1"
@@ -16113,7 +16125,8 @@ window.KYT_CITIES = [
           "deep"
         ],
         "mobility": "walk",
-        "notes": "An ancient Jyotirlinga temple known for its three-faced Linga representing Brahma, Vishnu, and Shiva."
+        "notes": "An ancient Jyotirlinga temple known for its three-faced Linga representing Brahma, Vishnu, and Shiva.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Trimbakeshwar%20Shiva%20Temple%2C%20Nashik"
       },
       {
         "title": "Panchavati",
@@ -16135,7 +16148,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "walk",
-        "notes": "Sacred area associated with the Ramayana, featuring the Kalaram Temple and Sita Gufa."
+        "notes": "Sacred area associated with the Ramayana, featuring the Kalaram Temple and Sita Gufa.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Panchavati%2C%20Nashik"
       },
       {
         "title": "Sula Vineyards",
@@ -16156,7 +16170,8 @@ window.KYT_CITIES = [
           "deep"
         ],
         "mobility": "easy",
-        "notes": "Famous vineyard offering wine tasting tours and beautiful sunset views."
+        "notes": "Famous vineyard offering wine tasting tours and beautiful sunset views.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sula%20Vineyards%2C%20Nashik"
       }
     ],
     "code": "nas"
@@ -16193,7 +16208,8 @@ window.KYT_CITIES = [
           "deep"
         ],
         "mobility": "walk",
-        "notes": "A highly revered Jyotirlinga where Ravana is said to have worshipped Shiva."
+        "notes": "A highly revered Jyotirlinga where Ravana is said to have worshipped Shiva.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Baba%20Baidyanath%20Dham%2C%20Deoghar"
       },
       {
         "title": "Naulakha Mandir",
@@ -16215,7 +16231,8 @@ window.KYT_CITIES = [
           "short"
         ],
         "mobility": "easy",
-        "notes": "Beautiful temple dedicated to Radha-Krishna, built with a donation of 9 lakh rupees."
+        "notes": "Beautiful temple dedicated to Radha-Krishna, built with a donation of 9 lakh rupees.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Naulakha%20Mandir%2C%20Deoghar"
       },
       {
         "title": "Tapovan",
@@ -16237,7 +16254,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "trek",
-        "notes": "A hill featuring caves where Sage Valmiki reportedly meditated."
+        "notes": "A hill featuring caves where Sage Valmiki reportedly meditated.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Tapovan%20Caves%2C%20Deoghar"
       }
     ],
     "code": "deo"
@@ -16275,7 +16293,8 @@ window.KYT_CITIES = [
           "deep"
         ],
         "mobility": "walk",
-        "notes": "One of the most illustrious Vaishnava temples, boasting the tallest temple tower in Asia."
+        "notes": "One of the most illustrious Vaishnava temples, boasting the tallest temple tower in Asia.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sri%20Ranganathaswamy%20Temple%2C%20Srirangam%2C%20Tiruchirappalli"
       },
       {
         "title": "Rockfort Temple",
@@ -16297,7 +16316,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "stairs",
-        "notes": "An ancient fort and temple complex built on a 83m high rock, offering panoramic city views."
+        "notes": "An ancient fort and temple complex built on a 83m high rock, offering panoramic city views.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Tiruchirappalli%20Rock%20Fort%2C%20Tiruchirappalli"
       },
       {
         "title": "Jambukeshwarar Temple",
@@ -16319,7 +16339,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "walk",
-        "notes": "A Pancha Bhoota Stalam representing the element of Water (Appu)."
+        "notes": "A Pancha Bhoota Stalam representing the element of Water (Appu).",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Jambukeswarar%20Temple%2C%20Thiruvanaikaval%2C%20Tiruchirappalli"
       }
     ],
     "code": "ti1"
@@ -16357,7 +16378,8 @@ window.KYT_CITIES = [
           "deep"
         ],
         "mobility": "walk",
-        "notes": "Iconic Vishnu temple known for its immense wealth and strict dress code."
+        "notes": "Iconic Vishnu temple known for its immense wealth and strict dress code.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Padmanabhaswamy%20Temple%2C%20Thiruvananthapuram"
       },
       {
         "title": "Napier Museum",
@@ -16378,7 +16400,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "easy",
-        "notes": "An art and natural history museum housed in a beautiful Indo-Saracenic structure."
+        "notes": "An art and natural history museum housed in a beautiful Indo-Saracenic structure.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Napier%20Museum%2C%20Thiruvananthapuram"
       },
       {
         "title": "Kovalam Beach",
@@ -16399,7 +16422,8 @@ window.KYT_CITIES = [
           "deep"
         ],
         "mobility": "easy",
-        "notes": "Internationally renowned beach with three crescent-shaped beaches."
+        "notes": "Internationally renowned beach with three crescent-shaped beaches.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kovalam%20Beach%2C%20Kerala"
       }
     ],
     "code": "thi"
@@ -16434,7 +16458,8 @@ window.KYT_CITIES = [
           "deep"
         ],
         "mobility": "walk",
-        "notes": "One of the most important pilgrimage centers in Kerala, dedicated to Lord Krishna."
+        "notes": "One of the most important pilgrimage centers in Kerala, dedicated to Lord Krishna.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Guruvayur%20Temple%2C%20Guruvayur"
       },
       {
         "title": "Elephant Camp (Punnathur Kotta)",
@@ -16455,7 +16480,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "walk",
-        "notes": "A sanctuary housing over 50 captive elephants belonging to the temple."
+        "notes": "A sanctuary housing over 50 captive elephants belonging to the temple.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Punnathur%20Kotta%20Elephant%20Camp%2C%20Guruvayur"
       },
       {
         "title": "Mammiyoor Temple",
@@ -16475,7 +16501,8 @@ window.KYT_CITIES = [
           "short"
         ],
         "mobility": "walk",
-        "notes": "A prominent Shiva temple; a visit to Guruvayur is considered incomplete without visiting here."
+        "notes": "A prominent Shiva temple; a visit to Guruvayur is considered incomplete without visiting here.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mammiyoor%20Temple%2C%20Guruvayur"
       }
     ],
     "code": "gur"
@@ -16512,7 +16539,8 @@ window.KYT_CITIES = [
           "deep"
         ],
         "mobility": "walk",
-        "notes": "The most visited temple in Maharashtra, dedicated to Lord Vitthal (a form of Krishna)."
+        "notes": "The most visited temple in Maharashtra, dedicated to Lord Vitthal (a form of Krishna).",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Shree%20Vitthal%20Rukmini%20Mandir%2C%20Pandharpur"
       },
       {
         "title": "Chandrabhaga River Ghats",
@@ -16533,7 +16561,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "easy",
-        "notes": "Holy river banks where pilgrims take a dip before visiting the temple."
+        "notes": "Holy river banks where pilgrims take a dip before visiting the temple.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chandrabhaga%20Ghat%2C%20Pandharpur"
       },
       {
         "title": "Kaivalya Math",
@@ -16555,7 +16584,8 @@ window.KYT_CITIES = [
           "short"
         ],
         "mobility": "walk",
-        "notes": "A serene ashram associated with the Warkari sect's traditions."
+        "notes": "A serene ashram associated with the Warkari sect's traditions.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kaivalya%20Dham%2C%20Pandharpur"
       }
     ],
     "code": "pan"
@@ -16593,7 +16623,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "walk",
-        "notes": "Famous temple dedicated to a 7-year-old incarnation of Lord Krishna, renowned for its daily 'darshans'."
+        "notes": "Famous temple dedicated to a 7-year-old incarnation of Lord Krishna, renowned for its daily 'darshans'.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Shrinathji%20Temple%2C%20Nathdwara"
       },
       {
         "title": "Statue of Belief (Vishwas Swaroopam)",
@@ -16614,7 +16645,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "easy",
-        "notes": "The tallest statue of Lord Shiva in the world, standing at 369 feet."
+        "notes": "The tallest statue of Lord Shiva in the world, standing at 369 feet.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Statue%20of%20Belief%2C%20Nathdwara"
       },
       {
         "title": "Haldighati",
@@ -16635,7 +16667,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "walk",
-        "notes": "Historic mountain pass famous for the Battle of Haldighati in 1576."
+        "notes": "Historic mountain pass famous for the Battle of Haldighati in 1576.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Haldighati%2C%20Rajasthan"
       }
     ],
     "code": "nat"
@@ -16674,7 +16707,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "walk",
-        "notes": "A famous Hindu temple dedicated to Lord Krishna, known for the 'Kanakana Kindi' window."
+        "notes": "A famous Hindu temple dedicated to Lord Krishna, known for the 'Kanakana Kindi' window.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sri%20Krishna%20Matha%2C%20Udupi"
       },
       {
         "title": "Malpe Beach",
@@ -16696,7 +16730,8 @@ window.KYT_CITIES = [
           "deep"
         ],
         "mobility": "easy",
-        "notes": "A pristine beach offering water sports and ferries to St. Mary's Island."
+        "notes": "A pristine beach offering water sports and ferries to St. Mary's Island.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Malpe%20Beach%2C%20Udupi"
       },
       {
         "title": "St. Mary's Island",
@@ -16717,7 +16752,8 @@ window.KYT_CITIES = [
           "deep"
         ],
         "mobility": "boat",
-        "notes": "Known for its distinctive hexagonal basalt rock formations."
+        "notes": "Known for its distinctive hexagonal basalt rock formations.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=St.%20Mary%27s%20Island%2C%20Malpe%2C%20Udupi"
       }
     ]
   },
@@ -16831,7 +16867,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "easy",
-        "notes": "A prominent religious institution and ashram dedicated to Swami Siddharoodha."
+        "notes": "A prominent religious institution and ashram dedicated to Swami Siddharoodha.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Shree%20Siddharoodha%20Swamy%20Math%2C%20Hubballi"
       },
       {
         "title": "Unkal Lake",
@@ -16850,7 +16887,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "walk",
-        "notes": "A picturesque lake with a statue of Swami Vivekananda in the center, perfect for evening walks and boating."
+        "notes": "A picturesque lake with a statue of Swami Vivekananda in the center, perfect for evening walks and boating.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Unkal%20Lake%2C%20Hubballi"
       },
       {
         "title": "Chandramouleshwara Temple",
@@ -16868,7 +16906,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "easy",
-        "notes": "A 900-year-old temple built during the Chalukya era, known for its intricate stone carvings."
+        "notes": "A 900-year-old temple built during the Chalukya era, known for its intricate stone carvings.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chandramouleshwara%20Temple%2C%20Hubballi"
       },
       {
         "title": "Nrupatunga Hill",
@@ -16886,7 +16925,8 @@ window.KYT_CITIES = [
           "standard"
         ],
         "mobility": "walk",
-        "notes": "Offers a panoramic view of the twin cities Hubballi-Dharwad. Great spot for a serene escape."
+        "notes": "Offers a panoramic view of the twin cities Hubballi-Dharwad. Great spot for a serene escape.",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Nrupatunga%20Betta%2C%20Hubballi"
       }
     ],
     "lat": 15.3647,
