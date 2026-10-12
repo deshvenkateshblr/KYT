@@ -2,7 +2,7 @@
 /** Core itinerary engine: launcher state, step CRUD, reorder, persistence, Now view. */
 const { test, before, after } = require('node:test');
 const assert = require('node:assert/strict');
-const { launch, newPhone, seedTrip, iso } = require('./helpers');
+const { launch, newPhone, seedTrip, waitForSaved, iso } = require('./helpers');
 
 let env;
 before(async () => { env = await launch(); });
@@ -50,6 +50,7 @@ test('first-time user who opens the home page FIRST can still build and keep a t
   await page.waitForURL('**/configure_trip.html');
   await page.waitForSelector('#btn-add-step');
   await addStep(page, 'My first step', 'Somewhere');
+  await page.waitForTimeout(300);
   await page.reload();
   await page.waitForSelector('#config-steps-list');
   await page.waitForTimeout(500);
@@ -87,6 +88,7 @@ test('add steps in the editor: count badge updates, steps sort by time, data sur
   const titles = await page.$$eval('#config-steps-list .config-step-row p.font-bold', ps => ps.map(p => p.textContent.trim()));
   assert.deepEqual(titles, ['First thing', 'Second thing']);
 
+  await waitForSaved(page);
   await page.reload();
   await page.waitForSelector('#config-steps-list .config-step-row');
   const after = await page.$$eval('#config-steps-list .config-step-row p.font-bold', ps => ps.map(p => p.textContent.trim()));
@@ -165,6 +167,7 @@ test('Now view: "In progress" toggle and the status persists after reload', asyn
   await seedTrip(page, env.base, { steps: THREE() });
   await page.click('[data-action="toggle-on"]');
   await page.waitForFunction(() => KYT.store.get().stepsData[0].status === 'on');
+  await waitForSaved(page);
   await page.reload();
   await page.waitForFunction(() => window.KYT && KYT.store.get().stepsData.length === 3);
   assert.equal(await page.evaluate(() => KYT.store.get().stepsData[0].status), 'on');

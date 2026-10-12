@@ -84,8 +84,29 @@ async function seedTrip(page, base, { name = 'Seed Trip', notes = '', steps }) {
   await page.waitForFunction(() => window.KYT && KYT.store.get().stepsData.length > 0);
 }
 
+/**
+ * Wait until the trip held in memory has actually been written to IndexedDB.
+ * store.saveData() is asynchronous, so reloading right after a UI change can race the write.
+ */
+async function waitForSaved(page) {
+  await page.waitForFunction(() => new Promise(resolve => {
+    const open = indexedDB.open('kyt_db');
+    open.onerror = () => resolve(false);
+    open.onsuccess = () => {
+      const db = open.result;
+      if (!db.objectStoreNames.contains('kyt_store')) { db.close(); return resolve(false); }
+      const get = db.transaction('kyt_store').objectStore('kyt_store').get('kyt_stepsData');
+      get.onerror = () => { db.close(); resolve(false); };
+      get.onsuccess = () => { db.close(); resolve(get.result === JSON.stringify(KYT.store.get().stepsData)); };
+    };
+  }), null, { timeout: 5000 });
+  // Chromium can very occasionally serve the previous value to a page reloaded within a few ms of the
+  // commit (seen ~1 run in 40). Give the write a moment to settle before the test reloads.
+  await page.waitForTimeout(400);
+}
+
 const iso = (daysFromNow, hour = 9) => {
   const d = new Date(); d.setDate(d.getDate() + daysFromNow); d.setHours(hour, 0, 0, 0); return d.toISOString();
 };
 
-module.exports = { launch, newPhone, seedTrip, iso, ROOT };
+module.exports = { launch, newPhone, seedTrip, waitForSaved, iso, ROOT };

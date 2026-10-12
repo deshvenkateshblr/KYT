@@ -5,7 +5,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { launch, newPhone, seedTrip, iso } = require('./helpers');
+const { launch, newPhone, seedTrip, waitForSaved, iso } = require('./helpers');
 
 let env;
 before(async () => { env = await launch(); });
@@ -134,6 +134,7 @@ test('a photo added to a step is stored as a memory on that step', async () => {
   const tinyPng = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==', 'base64');
   await page.setInputFiles('#memory-upload-input', { name: 'p.png', mimeType: 'image/png', buffer: tinyPng });
   await page.waitForFunction(() => (KYT.store.get().stepsData[0].memories || []).length === 1, null, { timeout: 5000 });
+  await waitForSaved(page);
   await page.reload();
   await page.waitForFunction(() => window.KYT && KYT.store.get().stepsData.length === 2);
   assert.equal(await page.evaluate(() => KYT.store.get().stepsData[0].memories.length), 1);

@@ -215,8 +215,7 @@ test('catalog: any Maps link an attraction has is an https Google Maps URL', () 
   assert.deepEqual(bad, []);
 });
 
-// Known gap, not a crash: the Now card falls back to a Maps search on the place name when mapsUrl is empty.
-test('catalog: every attraction ships a direct Maps link', { todo: 'about 40 attractions in 13 newer cities have none' }, () => {
+test('catalog: every attraction ships a direct Maps link', () => {
   const cities = load('data/cities.js', 'KYT_CITIES');
   const missing = [];
   cities.forEach(c => c.beats.forEach(b => { if (!b.mapsUrl) missing.push(`${c.id}: ${b.title}`); }));
