@@ -109,15 +109,15 @@ window.KYT.config = (() => {
           </span>
 
           <div class="p-2 sm:p-2.5 bg-slate-50 text-kyt-subtext rounded-xl shrink-0 hidden sm:block">
-            <i data-lucide="${step.icon}" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+            <i data-lucide="${KYT.utils.escapeHTML(step.icon || 'map-pin')}" class="w-4 h-4 sm:w-5 sm:h-5"></i>
           </div>
 
           <div class="flex-1 overflow-hidden min-w-0">
-            <p class="text-[14px] sm:text-[15px] font-bold text-kyt-text truncate">${step.title}</p>
+            <p class="text-[14px] sm:text-[15px] font-bold text-kyt-text truncate">${KYT.utils.escapeHTML(step.title)}</p>
             <div class="flex items-center gap-1.5 mt-0.5 min-w-0">
               <span class="text-[11px] sm:text-[12px] font-semibold text-kyt-subtext whitespace-nowrap">${KYT.clock.formatTimeExact(step.targetTime)}</span>
               <span class="w-1 h-1 bg-slate-300 rounded-full shrink-0"></span>
-              <span class="text-[11px] sm:text-[12px] text-slate-500 truncate">${step.where || '—'}</span>
+              <span class="text-[11px] sm:text-[12px] text-slate-500 truncate">${KYT.utils.escapeHTML(step.where || '—')}</span>
             </div>
           </div>
 

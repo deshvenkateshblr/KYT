@@ -41,19 +41,21 @@ window.KYT.carousel = (() => {
   // ── Attachment pills ──────────────────────────────────────────────────────
   function buildAttachmentsHTML(step, stepIdx) {
     return step.attachments.map((att, i) => {
+      const safeName = KYT.utils.escapeHTML(att.name || 'Attachment');
       if (att.type === 'file') {
         return `
           <a href="#" onclick="KYT.fileViewer.open(event,${stepIdx},${i})"
              class="flex items-center gap-2 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 transition-colors shadow-sm">
             <i data-lucide="file" class="w-3.5 h-3.5 text-kyt-accent shrink-0"></i>
-            <span class="text-[12px] font-semibold text-slate-700 truncate max-w-[140px]">${att.name}</span>
+            <span class="text-[12px] font-semibold text-slate-700 truncate max-w-[140px]">${safeName}</span>
           </a>`;
       }
+      const safeUrl = (att.url && /^https?:\/\//i.test(att.url)) ? KYT.utils.escapeHTML(att.url) : '#';
       return `
-        <a href="${att.url}" target="_blank" rel="noopener noreferrer"
+        <a href="${safeUrl}" target="_blank" rel="noopener noreferrer"
            class="flex items-center gap-2 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 transition-colors shadow-sm">
           <i data-lucide="link" class="w-3.5 h-3.5 text-kyt-accent shrink-0"></i>
-          <span class="text-[12px] font-semibold text-slate-700 truncate max-w-[140px]">${att.name}</span>
+          <span class="text-[12px] font-semibold text-slate-700 truncate max-w-[140px]">${safeName}</span>
         </a>`;
     }).join('');
   }
@@ -162,7 +164,7 @@ window.KYT.carousel = (() => {
 
         <div class="flex items-center gap-4 mb-6">
           <div class="p-3 bg-blue-50 text-kyt-accent rounded-2xl shrink-0">
-            <i data-lucide="${step.icon}" class="w-8 h-8"></i>
+            <i data-lucide="${KYT.utils.escapeHTML(step.icon || 'map-pin')}" class="w-8 h-8"></i>
           </div>
           <h3 class="text-2xl font-extrabold text-kyt-text leading-tight">${KYT.utils.escapeHTML(step.title)}</h3>
         </div>
@@ -183,8 +185,8 @@ window.KYT.carousel = (() => {
             <div class="flex-1">
               <p class="text-[13px] font-bold text-kyt-subtext uppercase tracking-wide mb-0.5">Where</p>
               <div class="flex items-center justify-between gap-2">
-                <p class="text-[15px] font-bold text-kyt-text">${step.where || '—'}</p>
-                <a href="${mapLink}" target="_blank" rel="noopener noreferrer"
+                <p class="text-[15px] font-bold text-kyt-text">${KYT.utils.escapeHTML(step.where || '—')}</p>
+                <a href="${KYT.utils.escapeHTML(mapLink)}" target="_blank" rel="noopener noreferrer"
                    class="shrink-0 bg-blue-100/50 text-kyt-accent hover:bg-blue-100 p-2 rounded-xl transition-colors flex items-center gap-1.5 shadow-sm border border-blue-200/50">
                   <span class="text-[10px] font-extrabold uppercase tracking-wider">Map</span>
                   <i data-lucide="external-link" class="w-3.5 h-3.5"></i>

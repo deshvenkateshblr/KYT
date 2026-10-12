@@ -60,7 +60,7 @@ window.KYT.stepForm = (() => {
       <div class="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-200 rounded-xl animate-fade-in shadow-sm">
         <div class="flex items-center gap-2 overflow-hidden">
           <i data-lucide="${att.type === 'file' ? 'file' : 'link'}" class="w-4 h-4 text-kyt-accent shrink-0"></i>
-          <span class="text-[13px] font-semibold text-slate-700 truncate">${att.name}</span>
+          <span class="text-[13px] font-semibold text-slate-700 truncate">${KYT.utils.escapeHTML(att.name || 'Attachment')}</span>
         </div>
         <button type="button" onclick="KYT.stepForm.removeAttachment(${i})"
                 class="p-1.5 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-colors shrink-0">
