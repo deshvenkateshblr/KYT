@@ -100,7 +100,13 @@
       - *Know your travel.*
       - *Plan it your way.*
       - *Happy journey!*
-    - Bumped service worker cache to `kyt-v31` in [`sw.js`](file:///C:/Venkatesh/KYT/sw.js).
+
+17. **Full Test Suite Verification & Resiliency Polish**
+    - Executed the complete test suite covering all unit, catalog integrity, core itinerary engine, offline PWA, and browser e2e tests.
+    - Resolved DOM ID collision between `#main-toolbar` and [`curated_trips.html`](file:///C:/Venkatesh/KYT/curated_trips.html) drawer button by prefixing toolbar nav items with `kyt-nav-*` in [`js/header.js`](file:///C:/Venkatesh/KYT/js/header.js).
+    - Hardened offline cache fallback in [`sw.js`](file:///C:/Venkatesh/KYT/sw.js) with `{ ignoreSearch: true }` so requests with cache query params reliably serve the cached app shell assets.
+    - **110 passed, 0 failed** (56 admin core tests + 54 browser e2e tests across all four test suites).
+    - Bumped service worker cache to `kyt-v32` in [`sw.js`](file:///C:/Venkatesh/KYT/sw.js).
 
 ---
 

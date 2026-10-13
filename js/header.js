@@ -193,7 +193,7 @@ KYT.header = (function() {
       `;
     } else {
       rightBtnHtml = `
-        <a href="view_trip.html" id="btn-open-live-trip" class="flex flex-col items-center gap-0.5 px-2 py-1.5 bg-white rounded-xl shadow-sm text-kyt-accent hover:text-blue-600 active:scale-90 transition-all border border-slate-100 min-w-[42px]" title="View Current Trip">
+        <a href="view_trip.html" id="kyt-nav-live" class="flex flex-col items-center gap-0.5 px-2 py-1.5 bg-white rounded-xl shadow-sm text-kyt-accent hover:text-blue-600 active:scale-90 transition-all border border-slate-100 min-w-[42px]" title="View Current Trip">
           <i data-lucide="plane" class="w-4 h-4"></i>
           <span class="text-[9px] font-bold text-slate-400 leading-none">Live</span>
         </a>
@@ -208,25 +208,25 @@ KYT.header = (function() {
         </a>
 
         <!-- Trips -->
-        <a href="virtual_trip.html" id="btn-open-virtual-trips" class="flex flex-col items-center gap-0.5 px-2 py-1.5 bg-white rounded-xl shadow-sm ${active === 'virtual' ? 'text-blue-600 ring-2 ring-blue-500/20' : 'text-kyt-accent'} hover:text-blue-600 active:scale-90 transition-all border border-slate-100 min-w-[42px]" title="My Virtual Trips">
+        <a href="virtual_trip.html" id="kyt-nav-trips" class="flex flex-col items-center gap-0.5 px-2 py-1.5 bg-white rounded-xl shadow-sm ${active === 'virtual' ? 'text-blue-600 ring-2 ring-blue-500/20' : 'text-kyt-accent'} hover:text-blue-600 active:scale-90 transition-all border border-slate-100 min-w-[42px]" title="My Virtual Trips">
           <i data-lucide="compass" class="w-4 h-4"></i>
           <span class="text-[9px] font-bold ${active === 'virtual' ? 'text-blue-600' : 'text-slate-400'} leading-none">Trips</span>
         </a>
 
         <!-- Curated -->
-        <a href="curated_trips.html" id="btn-open-curated-trips" class="flex flex-col items-center gap-0.5 px-2 py-1.5 bg-white rounded-xl shadow-sm ${active === 'curated' ? 'text-blue-600 ring-2 ring-blue-500/20' : 'text-kyt-accent'} hover:text-blue-600 active:scale-90 transition-all border border-slate-100 min-w-[42px]" title="AI Curated Trips">
+        <a href="curated_trips.html" id="kyt-nav-curated" class="flex flex-col items-center gap-0.5 px-2 py-1.5 bg-white rounded-xl shadow-sm ${active === 'curated' ? 'text-blue-600 ring-2 ring-blue-500/20' : 'text-kyt-accent'} hover:text-blue-600 active:scale-90 transition-all border border-slate-100 min-w-[42px]" title="AI Curated Trips">
           <i data-lucide="sparkles" class="w-4 h-4"></i>
           <span class="text-[9px] font-bold ${active === 'curated' ? 'text-blue-600' : 'text-slate-400'} leading-none">Curated</span>
         </a>
 
         <!-- Album -->
-        <button type="button" id="btn-open-album" class="flex flex-col items-center gap-0.5 px-2 py-1.5 bg-white rounded-xl shadow-sm text-kyt-accent hover:text-blue-600 active:scale-90 transition-all border border-slate-100 min-w-[42px]" title="Memory Book">
+        <button type="button" id="kyt-nav-album" class="flex flex-col items-center gap-0.5 px-2 py-1.5 bg-white rounded-xl shadow-sm text-kyt-accent hover:text-blue-600 active:scale-90 transition-all border border-slate-100 min-w-[42px]" title="Memory Book">
           <i data-lucide="images" class="w-4 h-4"></i>
           <span class="text-[9px] font-bold text-slate-400 leading-none">Album</span>
         </button>
 
         <!-- Passport -->
-        <a href="visited.html" id="btn-open-passport" class="flex flex-col items-center gap-0.5 px-2 py-1.5 bg-white rounded-xl shadow-sm ${active === 'visited' ? 'text-blue-600 ring-2 ring-blue-500/20' : 'text-kyt-accent'} hover:text-blue-600 active:scale-90 transition-all border border-slate-100 min-w-[42px]" title="Digital Passport">
+        <a href="visited.html" id="kyt-nav-passport" class="flex flex-col items-center gap-0.5 px-2 py-1.5 bg-white rounded-xl shadow-sm ${active === 'visited' ? 'text-blue-600 ring-2 ring-blue-500/20' : 'text-kyt-accent'} hover:text-blue-600 active:scale-90 transition-all border border-slate-100 min-w-[42px]" title="Digital Passport">
           <i data-lucide="stamp" class="w-4 h-4"></i>
           <span class="text-[9px] font-bold ${active === 'visited' ? 'text-blue-600' : 'text-slate-400'} leading-none">Passport</span>
         </a>
@@ -237,7 +237,7 @@ KYT.header = (function() {
     `;
 
     // Wire Album button click
-    const albumBtn = el.querySelector('#btn-open-album');
+    const albumBtn = el.querySelector('#kyt-nav-album') || el.querySelector('#btn-open-album');
     if (albumBtn) {
       albumBtn.addEventListener('click', (e) => {
         e.preventDefault();
