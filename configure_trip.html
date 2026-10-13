@@ -60,13 +60,13 @@
   <link rel="stylesheet" href="./css/animations.css?v=4">
 </head>
 
-<body class="bg-kyt-bg text-kyt-text font-sans min-h-screen flex flex-col items-center overflow-x-hidden relative">
+<body class="bg-kyt-bg text-kyt-text font-sans h-screen flex flex-col overflow-hidden relative">
 
   <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        MAIN VIEW - Active trip / carousel
   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-  <!-- Top Toolbar -->
-  <header id="main-toolbar" class="w-full max-w-md mx-auto flex justify-between items-center z-[60] bg-white/40 backdrop-blur-md rounded-2xl p-2 border border-white/50 shadow-sm mt-10 px-4 mb-2 relative">
+  <!-- Top Toolbar (Legacy hidden on configure_trip.html) -->
+  <header id="main-toolbar" class="hidden">
     <div class="flex items-center gap-2">
       <a href="index.html" class="shrink-0 bg-white rounded-xl shadow-sm hover:scale-105 active:scale-95 transition-transform border border-slate-100 overflow-hidden flex items-center justify-center w-[44px] h-[44px]" title="Home">
           <img src="icons/KYT.jpg" alt="KYT" class="w-full h-full object-contain rounded-xl">
@@ -176,9 +176,18 @@
          class="flex flex-col w-full max-w-md mx-auto animate-fade-in overflow-hidden flex-1 h-full">
 
     <!-- Header -->
-    <div class="px-6 pt-6 pb-6 bg-white border-b border-slate-100 shadow-sm flex items-center justify-between">
-      <h2 class="text-xl font-extrabold text-kyt-text">Configure Trip</h2>
-      <!-- btn-close-config removed: Save & Close at bottom is the primary exit -->
+    <div class="px-4 py-3 bg-white border-b border-slate-200 shadow-sm flex items-center justify-between shrink-0 sticky top-0 z-30">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <a href="view_trip.html" id="btn-back-to-view" class="flex items-center gap-1.5 text-sm font-bold text-slate-700 hover:text-blue-600 active:scale-95 transition-all truncate" title="Back to View Trip">
+          <i data-lucide="arrow-left" class="w-4 h-4 shrink-0"></i>
+          <span class="truncate">View Trip</span>
+        </a>
+        <div class="h-4 w-px bg-slate-200 shrink-0"></div>
+        <h2 class="text-base font-black text-slate-800 tracking-tight truncate">Edit Itinerary</h2>
+      </div>
+      <a href="index.html" title="KYT Home" class="shrink-0 hover:scale-105 active:scale-95 transition-transform flex items-center">
+        <img src="./icons/KYT.jpg" alt="KYT Logo" class="h-8 w-auto rounded-lg shadow-xs object-contain">
+      </a>
     </div>
 
     <!-- Scrollable body -->

@@ -17,17 +17,20 @@
 </head>
 <body class="text-slate-800 antialiased h-screen flex flex-col overflow-hidden">
   
-  <!-- Header -->
-  <header class="bg-white border-b border-slate-200 px-4 py-3 shrink-0 flex items-center justify-between sticky top-0 z-10 shadow-sm">
-    <div class="flex items-center gap-2">
-      <a href="index.html" title="Back to Home" class="shrink-0 hover:scale-105 transition-transform"><img src="./icons/KYT.jpg" alt="KYT Logo" class="h-8 w-auto rounded-lg shadow-sm object-contain"></a>
-      <h1 class="text-lg font-black text-slate-800">Virtual Trip</h1>
-    </div>
-    
+  <!-- Floating App Toolbar (Driven by KYT.header.renderMainToolbar) -->
+  <header id="main-toolbar" class="w-full max-w-md mx-auto flex justify-between items-center z-[60] bg-white/50 backdrop-blur-md rounded-2xl p-2 border border-white/60 shadow-sm mt-3 px-3 sm:px-4 mb-2 relative shrink-0">
   </header>
 
   <!-- Main Content -->
   <main class="flex-1 overflow-y-auto hide-scrollbar">
+    <!-- Breadcrumb back link -->
+    <div class="max-w-5xl mx-auto px-4 pt-1 pb-2">
+      <a href="virtual_trip.html" id="detail-back-link" class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-blue-600 active:scale-95 transition-all bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-xs">
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+        <span id="detail-back-label">Back to My Trips</span>
+      </a>
+    </div>
+
     <!-- Hero Banner -->
     <div class="bg-blue-50 py-8 px-4 text-center border-b border-blue-100">
       <h2 class="text-3xl font-black text-blue-900 mb-2" id="trip-title">Explore your curated journey</h2>
@@ -141,19 +144,33 @@
   <script src="data/distance_matrix.js?v=1791377680"></script>
   <script src="data/city_videos_data.js?v=1791377680"></script>
   <script src="data/curated_trips.js?v=1791377680"></script>
+  <script src="js/header.js?v=1791377680"></script>
 
   <!-- Logic -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      lucide.createIcons();
-
       const params = new URLSearchParams(window.location.search);
       let tripName = params.get('trip') || 'My Trip';
       let citiesParam = params.get('cities');
       let tasteParam = params.get('taste') || '';
       let curatedParam = params.get('curated') || '';
-      
       const tripId = params.get('id');
+
+      // Setup Unified Header Navigation
+      const isFromCurated = Boolean(curatedParam && !tripId && (document.referrer.includes('curated_trips.html') || !document.referrer.includes('virtual_trip.html')));
+      const backUrl = isFromCurated ? 'curated_trips.html' : 'virtual_trip.html';
+      const backLabel = isFromCurated ? 'Curated Trips' : 'My Trips';
+
+      const backLink = document.getElementById('detail-back-link');
+      const backLinkText = document.getElementById('detail-back-label');
+      if (backLink) backLink.href = backUrl;
+      if (backLinkText) backLinkText.textContent = `Back to ${backLabel}`;
+
+      if (window.KYT && window.KYT.header) {
+        KYT.header.renderMainToolbar('main-toolbar', { active: isFromCurated ? 'curated' : 'virtual' });
+      }
+
+      lucide.createIcons();
       if (tripId) {
         try {
           const vtrips = JSON.parse(localStorage.getItem('kyt_virtual_trips') || '[]');

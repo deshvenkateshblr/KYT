@@ -22,13 +22,8 @@
 </head>
 <body class="pb-24">
 
-  <!-- Header -->
-  <header class="bg-white border-b border-slate-200 px-4 py-3 shrink-0 flex items-center justify-between sticky top-0 z-50 shadow-sm">
-    <div class="flex items-center gap-2">
-      <a href="index.html" title="Back to Home" class="shrink-0 hover:scale-105 transition-transform"><img src="./icons/KYT.jpg" alt="KYT Logo" class="h-8 w-auto rounded-lg shadow-sm object-contain"></a>
-      <h1 class="text-lg font-black text-slate-800">Been There Done That</h1>
-    </div>
-    <div class="text-[11px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-md border border-blue-100" id="verified-count">0 Visited</div>
+  <!-- Floating App Toolbar (Driven by KYT.header.renderMainToolbar) -->
+  <header id="main-toolbar" class="w-full max-w-md mx-auto flex justify-between items-center z-[60] bg-white/50 backdrop-blur-md rounded-2xl p-2 border border-white/60 shadow-sm mt-4 sm:mt-8 px-3 sm:px-4 mb-3 relative">
   </header>
 
   <main class="p-4 flex flex-col gap-6">
@@ -36,6 +31,9 @@
     <div class="text-center mt-2 mb-2">
       <h2 class="text-2xl font-black tracking-tight text-slate-800">Been There, Done That!</h2>
       <p class="text-sm text-slate-500 mt-2 max-w-xs mx-auto">Your epic travel hit list. Keep exploring, keep collecting!</p>
+      <div class="mt-3">
+        <span class="text-xs font-bold text-blue-600 bg-blue-50 px-3.5 py-1.5 rounded-full border border-blue-100 shadow-xs inline-block" id="verified-count">0 Visited</span>
+      </div>
       
       <!-- Filter and Sort Controls -->
       <div class="flex items-center justify-center gap-3 mt-5">
@@ -67,7 +65,12 @@
 
   <script src="./data/cities.js"></script>
   <script src="./js/passport-store.js"></script>
+  <script src="./js/header.js?v=1791377680"></script>
   <script>
+    if (window.KYT && window.KYT.header) {
+      KYT.header.renderMainToolbar('main-toolbar', { active: 'visited' });
+    }
+
     const container = document.getElementById('cards-container');
     const filterSelect = document.getElementById('filter-select');
     const sortSelect = document.getElementById('sort-select');

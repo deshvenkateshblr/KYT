@@ -228,8 +228,10 @@ window.KYT.config = (() => {
     KYT.store.setTripNotes(newNotes);
     KYT.store.saveData();
 
-    window.location.href = "index.html";
-    KYT.carousel.renderCard();
+    window.location.href = "view_trip.html";
+    if (KYT.carousel && KYT.carousel.renderCard) {
+      KYT.carousel.renderCard();
+    }
   }
 
   

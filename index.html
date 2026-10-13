@@ -135,7 +135,7 @@
                                   .k-menu-section { margin-top: 0; justify-content: flex-end; }
                                 }
                                 .k-menu-card {
-                                  width: 100%; max-width: 440px;
+                                  width: 100%; max-width: 480px;
                                   background: rgba(255, 255, 255, 0.14);
                                   border: 1.5px solid rgba(255, 255, 255, 0.32);
                                   border-radius: 28px;
@@ -163,20 +163,64 @@
                                 .k-menu-card .k-reassure { text-align: center; margin-top: 14px; opacity: 0.9; }
 
                                 /* Launcher: filled in by js/index.js (new user or returning user) */
-                                .k-launch { display: grid; gap: 10px; padding: 14px; max-width: 440px; background: #fff; color: var(--ink); border-radius: 22px; box-shadow: 0 22px 44px -22px rgba(6, 20, 66, 0.7); }
+                                .k-launch { display: grid; gap: 10px; padding: 12px; max-width: 480px; background: #fff; color: var(--ink); border-radius: 24px; box-shadow: 0 22px 44px -22px rgba(6, 20, 66, 0.7); }
                                 .k-launch.hidden { display: none; }
-                                .k-loading { padding: 18px 8px; text-align: center; color: #fff; font-size: 0.95rem; max-width: 440px; }
-                                #options-container > h2, #options-container > p { display: none; } /* the hero already says it */
-                                #options-container .btn {
-                                display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; min-height: 54px; padding: 0 18px;
-                                border-radius: 14px; border: 2px solid transparent; font-weight: 700; font-size: 1rem; text-decoration: none;
-                                background: #EEF3FC; color: var(--ink); border-color: #D5E1F7; transition: transform 0.15s ease, background-color 0.15s ease;
+                                .k-loading { padding: 18px 8px; text-align: center; color: #fff; font-size: 0.95rem; max-width: 480px; }
+
+                                .k-option-card {
+                                  display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px;
+                                  border-radius: 16px; background: #F8FAFD; border: 1.5px solid #E2E8F4;
+                                  text-decoration: none; color: var(--ink);
+                                  transition: transform 0.16s ease, background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+                                  cursor: pointer; text-align: left;
                                 }
-                                #options-container .btn:hover { transform: translateY(-2px); background: #E3ECFB; }
-                                #options-container .btn-primary { background: var(--dusk); border-color: var(--dusk); color: #fff; }
-                                #options-container .btn-primary:hover { background: #12306E; }
-                                #options-container a[href="visited.html"] { background: #fff; color: var(--sky-deep); border-color: #BFD2F7; }
-                                #options-container svg { width: 20px; height: 20px; flex: none; }
+                                .k-option-card:hover {
+                                  transform: translateY(-2px); background: #FFFFFF; border-color: #BFD3F8;
+                                  box-shadow: 0 8px 18px -4px rgba(37, 99, 235, 0.18);
+                                }
+                                .k-option-card:active { transform: scale(0.985); }
+
+                                .k-option-card.k-option-primary {
+                                  background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%);
+                                  border-color: #1E3A8A; color: #FFFFFF;
+                                  box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.35);
+                                }
+                                .k-option-card.k-option-primary:hover {
+                                  background: linear-gradient(135deg, #2563EB 0%, #1E3A8A 100%);
+                                  border-color: #3B82F6; box-shadow: 0 12px 24px -4px rgba(37, 99, 235, 0.4);
+                                }
+                                .k-option-card.k-option-primary .k-option-desc { color: #CBD5E1; }
+                                .k-option-card.k-option-primary .k-option-title { color: #FFFFFF; }
+                                .k-option-card.k-option-primary .k-option-arrow { color: #93C5FD; }
+
+                                .k-option-icon {
+                                  width: 42px; height: 42px; border-radius: 12px;
+                                  display: flex; align-items: center; justify-content: center;
+                                  flex-shrink: 0; margin-top: 1px;
+                                }
+                                .k-option-icon svg { width: 22px; height: 22px; }
+
+                                .k-option-body { flex: 1; min-width: 0; }
+                                .k-option-head {
+                                  display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 2px;
+                                }
+                                .k-option-title {
+                                  font-weight: 800; font-size: 0.95rem; letter-spacing: -0.01em; line-height: 1.25; color: #0F172A;
+                                }
+                                .k-option-badge {
+                                  font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;
+                                  padding: 2px 7px; border-radius: 999px; flex-shrink: 0;
+                                }
+                                .k-option-desc {
+                                  font-size: 0.78rem; line-height: 1.4; color: #64748B; font-weight: 500; margin: 0;
+                                }
+                                .k-option-arrow {
+                                  margin-top: 10px; width: 16px; height: 16px; color: #94A3B8; flex-shrink: 0;
+                                  transition: transform 0.15s ease, color 0.15s ease;
+                                }
+                                .k-option-card:hover .k-option-arrow {
+                                  transform: translateX(3px); color: #2563EB;
+                                }
                                 .k-launch :focus-visible { outline-color: var(--sky-deep); }
 
                                 /* ------------------------------------------------------------------
@@ -461,7 +505,7 @@
             <h1 class="k-h1">
               <span>Know your travel.</span>
               <span>Plan it your way.</span>
-              <span>Live every story.</span>
+              <span>Happy journey!</span>
             </h1>
             <p class="k-lead">India isn&rsquo;t a checklist&mdash;it&rsquo;s an adventure waiting to unfold. Map out your route step by step, keep tickets, chai stops, and memories in your pocket, and travel in effortless sync with the people riding with you.</p>
           </div>
@@ -485,10 +529,42 @@
                 <div id="options-container" class="k-launch hidden"></div>
                 <noscript>
                   <div class="k-launch">
-                    <a class="btn btn-primary" href="virtual_trip.html"><i data-lucide="compass"></i> Start a new virtual trip</a>
-                    <a class="btn btn-secondary" href="curated_trips.html"><i data-lucide="sparkles"></i> AI Curated Trips</a>
-                    <a class="btn btn-secondary" href="configure_trip.html"><i data-lucide="pencil"></i> Build a trip manually</a>
-                    <a class="btn btn-secondary" href="visited.html"><i data-lucide="book-open"></i> My digital passport</a>
+                    <a href="configure_trip.html" class="k-option-card">
+                      <div class="k-option-body">
+                        <div class="k-option-head">
+                          <span class="k-option-title">Have an Upcoming Trip?</span>
+                          <span class="k-option-badge" style="background: #EEF2FF; color: #4338CA;">Ready to go</span>
+                        </div>
+                        <p class="k-option-desc">Head here if you have ready travel plans! Add flights, hotels, tickets, boarding passes, and custom notes step-by-step.</p>
+                      </div>
+                    </a>
+                    <a href="virtual_trip.html" class="k-option-card">
+                      <div class="k-option-body">
+                        <div class="k-option-head">
+                          <span class="k-option-title">Start a Virtual Trip</span>
+                          <span class="k-option-badge" style="background: #EFF6FF; color: #1D4ED8;">Smart Planner</span>
+                        </div>
+                        <p class="k-option-desc">Pick destinations across India, choose your pace and dietary style, and get an automated day plan with inter-city travel legs.</p>
+                      </div>
+                    </a>
+                    <a href="curated_trips.html" class="k-option-card">
+                      <div class="k-option-body">
+                        <div class="k-option-head">
+                          <span class="k-option-title">AI Curated Journeys</span>
+                          <span class="k-option-badge" style="background: #FEF3C7; color: #B45309;">Handcrafted</span>
+                        </div>
+                        <p class="k-option-desc">Browse pre-crafted spiritual circuits, coastal getaways, and heritage trails with YouTube video guides ready to customize.</p>
+                      </div>
+                    </a>
+                    <a href="visited.html" class="k-option-card">
+                      <div class="k-option-body">
+                        <div class="k-option-head">
+                          <span class="k-option-title">My Digital Passport</span>
+                          <span class="k-option-badge" style="background: #ECFDF5; color: #047857;">Hit List</span>
+                        </div>
+                        <p class="k-option-desc">Been there, done that! Mark Indian cities you've explored, collect official stamps, and grow your personal travel scratchpad.</p>
+                      </div>
+                    </a>
                   </div>
                 </noscript>
               </div>

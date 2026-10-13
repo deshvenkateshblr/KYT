@@ -61,30 +61,12 @@
   
 </head>
 
-<body class="bg-kyt-bg text-kyt-text font-sans min-h-screen flex flex-col items-center overflow-x-hidden relative">
+<body class="bg-kyt-bg text-kyt-text font-sans h-screen flex flex-col overflow-hidden relative">
 
   <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        MAIN VIEW - Active trip / carousel
   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-  <!-- Top Toolbar -->
-  <header id="main-toolbar" class="w-full max-w-md mx-auto flex justify-between items-center z-[60] bg-white/40 backdrop-blur-md rounded-2xl p-2 border border-white/50 shadow-sm mt-10 px-4 mb-2 relative">
-    <div class="flex items-center gap-2">
-      <a href="index.html" class="shrink-0 bg-white rounded-xl shadow-sm hover:scale-105 active:scale-95 transition-transform border border-slate-100 overflow-hidden flex items-center justify-center w-[44px] h-[44px]" title="Home">
-          <img src="icons/KYT.jpg" alt="KYT" class="w-full h-full object-contain rounded-xl">
-        </a>
-      <button id="btn-open-virtual-trips" class="flex flex-col items-center gap-0.5 px-2 py-1.5 bg-white rounded-xl shadow-sm text-kyt-accent hover:text-blue-600 active:scale-90 transition-all border border-slate-100 min-w-[44px]" title="My Virtual Trips">
-          <i data-lucide="compass" class="w-4 h-4"></i>
-          <span class="text-[9px] font-bold text-slate-400 leading-none">Trips</span>
-        </button>
-<button id="btn-open-album" onclick="KYT.social.openAlbum()" class="flex flex-col items-center gap-0.5 px-2 py-1.5 bg-white rounded-xl shadow-sm text-kyt-accent hover:text-blue-600 active:scale-90 transition-all border border-slate-100 min-w-[44px]" title="Memory Book">
-          <i data-lucide="images" class="w-4 h-4"></i>
-          <span class="text-[9px] font-bold text-slate-400 leading-none">Album</span>
-        </button>
-    </div>
-    <button id="btn-edit-trip" class="p-3 bg-white rounded-xl shadow-sm text-kyt-subtext hover:text-kyt-text active:scale-90 transition-all border border-slate-100" title="Configure Trip">
-      <i data-lucide="settings-2" class="w-5 h-5"></i>
-    </button>
-  </header>
+
 
   <main id="main-view" class="hidden w-full max-w-md px-4 pb-8 flex-1 flex flex-col relative h-full transition-opacity duration-300">
     <!-- Cover image blurred background -->
@@ -583,25 +565,25 @@
   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   
   <!-- EXPLORE VIEW (Wishlist / Cities) -->
-<!-- VIRTUAL TRIPS VIEW -->
-  <aside id="virtual-trips-view" class="flex flex-col w-full max-w-md mx-auto bg-slate-50 text-slate-800 flex-1 h-full pt-4" aria-label="My Trips">
-    <header class="flex items-center justify-between px-5 py-3 bg-white border-b border-slate-100 shrink-0">
-      <h2 id="vt-header-title" class="text-lg font-black text-slate-800 tracking-tight flex items-center gap-2">
-        <i data-lucide="compass" class="w-5 h-5 text-blue-600"></i> My Trips
-      </h2>
-      <!-- ← Back to Home instead of confusing X -->
-      <div id="vt-header-actions" class="flex items-center gap-1">
-        <button id="btn-share-trip" class="hidden flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors px-2 py-1 rounded-lg hover:bg-blue-50" title="Share Trip">
-          <i data-lucide="share-2" class="w-3.5 h-3.5"></i> Share
-        </button>
-        <a href="index.html" class="flex items-center gap-1 text-xs font-bold text-slate-400 hover:text-slate-600 transition-colors px-2 py-1 rounded-lg hover:bg-slate-100">
-          <i data-lucide="home" class="w-3.5 h-3.5"></i> Home
-        </a>
-      </div>
+  <aside id="virtual-trips-view" class="flex flex-col w-full h-screen bg-slate-50 text-slate-800 flex-1 overflow-hidden" aria-label="My Trips">
+    <!-- Floating App Toolbar (Driven by KYT.header.renderMainToolbar) -->
+    <header id="main-toolbar" class="w-full max-w-md mx-auto flex justify-between items-center z-[60] bg-white/50 backdrop-blur-md rounded-2xl p-2 border border-white/60 shadow-sm mt-3 px-3 sm:px-4 mb-2 relative shrink-0">
     </header>
 
+    <!-- Subnav Bar (Contextual navigation for Canvas & Builder) -->
+    <div id="vt-subnav-bar" class="w-full max-w-4xl mx-auto px-4 pb-2 shrink-0 hidden flex items-center justify-between">
+      <button type="button" id="vt-subnav-back" class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-xs active:scale-95 transition-all">
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+        <span id="vt-subnav-back-label">My Trips</span>
+      </button>
+      <button type="button" id="vt-subnav-share" class="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-full border border-blue-200 shadow-xs active:scale-95 transition-all">
+        <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+        <span>Share</span>
+      </button>
+    </div>
+
     <!-- --- HUB: Trip list ------------------------------------------------ -->
-    <div id="vt-screen-hub" class="flex-1 overflow-y-auto p-4 space-y-4">
+    <div id="vt-screen-hub" class="flex-1 overflow-y-auto p-4 max-w-4xl mx-auto w-full space-y-4">
       <!-- Create new trip -->
       <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-4">
         <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-2">Plan a new trip</p>
@@ -620,9 +602,9 @@
     </div>
 
     <!-- --- PLAN: Choose cities & travel style --------------------------- -->
-    <div id="vt-screen-canvas" class="flex-1 hidden flex-col overflow-hidden">
+    <div id="vt-screen-canvas" class="flex-1 hidden flex-col overflow-hidden max-w-4xl mx-auto w-full">
       <!-- Sticky settings panel -->
-      <div class="p-4 bg-white shadow-sm shrink-0 border-b border-slate-200 space-y-4">
+      <div class="p-4 bg-white shadow-sm shrink-0 border-b border-slate-200 space-y-4 md:rounded-b-2xl md:border md:my-2 md:shadow-md">
 
         <!-- Trip name (editable inline) -->
         <input type="text" id="vt-edit-name"
@@ -664,7 +646,7 @@
     </div>
 
     <!-- --- ITINERARY: Review & edit generated plan ---------------------- -->
-    <div id="vt-screen-builder" class="flex-1 overflow-y-auto p-4 space-y-4 hidden bg-slate-50">
+    <div id="vt-screen-builder" class="flex-1 overflow-y-auto p-4 max-w-4xl mx-auto w-full space-y-4 hidden bg-slate-50">
       <div id="vt-itinerary-list" class="space-y-4"></div>
     </div>
   </aside>
@@ -753,7 +735,8 @@
   <script src="./data/distance_matrix.js?v=1791377680"></script>
   <script src="./data/city_videos_data.js?v=1791377680"></script>
   <script src="./data/curated_trips.js?v=1791377680"></script>
-<script src="./js/virtual-trips.js?v=1791377680"></script>
+  <script src="./js/header.js?v=1791377680"></script>
+  <script src="./js/virtual-trips.js?v=1791377680"></script>
   
   <script src="./js/app.js?v=1791377680"></script>
 

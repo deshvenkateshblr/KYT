@@ -13,20 +13,152 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (isReturningUser) {
     html = `
-      <a href="view_trip.html" class="btn btn-primary text-lg flex gap-2"><i data-lucide="map"></i> View Current Trip</a>
-      <a href="configure_trip.html" class="btn btn-secondary flex gap-2"><i data-lucide="settings"></i> Edit Itinerary</a>
-      <a href="curated_trips.html" class="btn btn-secondary flex gap-2"><i data-lucide="sparkles"></i> AI Curated Trips</a>
-      <a href="virtual_trip.html" class="btn btn-secondary flex gap-2"><i data-lucide="compass"></i> My Virtual Trips</a>
-      <a href="visited.html" class="btn btn-secondary flex gap-2 mt-4 text-blue-600 bg-blue-50 border-blue-200"><i data-lucide="book-open"></i> My Digital Passport</a>
+      <div style="padding: 2px 4px 6px;">
+        <p style="font-size: 0.74rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #2563EB; margin: 0 0 2px;">Welcome Back</p>
+        <p style="font-size: 0.88rem; font-weight: 700; color: #1E293B; margin: 0;">Continue your journey or explore something new:</p>
+      </div>
+
+      <!-- Option 1: Live Trip (Hero Highlight) -->
+      <a href="view_trip.html" class="k-option-card k-option-primary">
+        <div class="k-option-icon" style="background: #2563EB; color: #FFFFFF;">
+          <i data-lucide="plane"></i>
+        </div>
+        <div class="k-option-body">
+          <div class="k-option-head">
+            <span class="k-option-title">View Current Trip</span>
+            <span class="k-option-badge" style="background: rgba(255,255,255,0.22); color: #FFFFFF;">Live Itinerary</span>
+          </div>
+          <p class="k-option-desc">Resume your active journey! Live countdown clock, step checklist, attached tickets, and memory album.</p>
+        </div>
+        <i data-lucide="chevron-right" class="k-option-arrow"></i>
+      </a>
+
+      <!-- Option 2: Edit Itinerary -->
+      <a href="configure_trip.html" class="k-option-card">
+        <div class="k-option-icon" style="background: #EEF2FF; color: #4F46E5;">
+          <i data-lucide="settings-2"></i>
+        </div>
+        <div class="k-option-body">
+          <div class="k-option-head">
+            <span class="k-option-title">Edit Live Itinerary</span>
+            <span class="k-option-badge" style="background: #EEF2FF; color: #4338CA;">Manage</span>
+          </div>
+          <p class="k-option-desc">Add activities, adjust times, attach PDF tickets, or reorder steps for your current itinerary.</p>
+        </div>
+        <i data-lucide="chevron-right" class="k-option-arrow"></i>
+      </a>
+
+      <!-- Option 3: Virtual Trips -->
+      <a href="virtual_trip.html" class="k-option-card">
+        <div class="k-option-icon" style="background: #EFF6FF; color: #2563EB;">
+          <i data-lucide="compass"></i>
+        </div>
+        <div class="k-option-body">
+          <div class="k-option-head">
+            <span class="k-option-title">My Virtual Trips</span>
+            <span class="k-option-badge" style="background: #EFF6FF; color: #1D4ED8;">Blueprints</span>
+          </div>
+          <p class="k-option-desc">Access saved multi-city blueprints, experiment with routes, and generate day plans.</p>
+        </div>
+        <i data-lucide="chevron-right" class="k-option-arrow"></i>
+      </a>
+
+      <!-- Option 4: AI Curated Trips -->
+      <a href="curated_trips.html" class="k-option-card">
+        <div class="k-option-icon" style="background: #FEF3C7; color: #D97706;">
+          <i data-lucide="sparkles"></i>
+        </div>
+        <div class="k-option-body">
+          <div class="k-option-head">
+            <span class="k-option-title">AI Curated Journeys</span>
+            <span class="k-option-badge" style="background: #FEF3C7; color: #B45309;">Handcrafted</span>
+          </div>
+          <p class="k-option-desc">Explore themed road trips, spiritual circuits, and video highlights across India.</p>
+        </div>
+        <i data-lucide="chevron-right" class="k-option-arrow"></i>
+      </a>
+
+      <!-- Option 5: Digital Passport -->
+      <a href="visited.html" class="k-option-card">
+        <div class="k-option-icon" style="background: #ECFDF5; color: #059669;">
+          <i data-lucide="stamp"></i>
+        </div>
+        <div class="k-option-body">
+          <div class="k-option-head">
+            <span class="k-option-title">My Digital Passport</span>
+            <span class="k-option-badge" style="background: #ECFDF5; color: #047857;">Hit List</span>
+          </div>
+          <p class="k-option-desc">Track and stamp the destinations you've explored across India.</p>
+        </div>
+        <i data-lucide="chevron-right" class="k-option-arrow"></i>
+      </a>
     `;
   } else {
     html = `
-      <h2 class="text-xl font-bold mb-1 text-slate-800">Welcome to KYT!</h2>
-      <p class="text-sm text-slate-400 mb-5 leading-relaxed">Plan, track &amp; remember your real trips — or explore destinations virtually.</p>
-      <a href="virtual_trip.html" class="btn btn-primary text-lg mb-2 flex gap-2"><i data-lucide="compass"></i> Start a New Virtual Trip</a>
-      <a href="curated_trips.html" class="btn btn-secondary flex gap-2"><i data-lucide="sparkles"></i> AI Curated Trips</a>
-      <a href="configure_trip.html" class="btn btn-secondary flex gap-2"><i data-lucide="pencil"></i> Build Trip Manually</a>
-      <a href="visited.html" class="btn btn-secondary flex gap-2 mt-4 text-blue-600 bg-blue-50 border-blue-200"><i data-lucide="book-open"></i> My Digital Passport</a>
+      <div style="padding: 2px 4px 6px;">
+        <p style="font-size: 0.74rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #2563EB; margin: 0 0 2px;">Where to begin?</p>
+        <p style="font-size: 0.88rem; font-weight: 700; color: #1E293B; margin: 0;">Choose how you want to travel today:</p>
+      </div>
+
+      <!-- Option 1: Upcoming Trip (Clear recommendation for confirmed trips) -->
+      <a href="configure_trip.html" class="k-option-card">
+        <div class="k-option-icon" style="background: #EEF2FF; color: #4F46E5;">
+          <i data-lucide="calendar-check-2"></i>
+        </div>
+        <div class="k-option-body">
+          <div class="k-option-head">
+            <span class="k-option-title">Have an Upcoming Trip?</span>
+            <span class="k-option-badge" style="background: #EEF2FF; color: #4338CA;">Ready to go</span>
+          </div>
+          <p class="k-option-desc">Head here if you have confirmed travel plans! Add your flights, hotels, tickets, boarding passes, and custom notes step-by-step.</p>
+        </div>
+        <i data-lucide="chevron-right" class="k-option-arrow"></i>
+      </a>
+
+      <!-- Option 2: Smart Virtual Trip Planner -->
+      <a href="virtual_trip.html" class="k-option-card">
+        <div class="k-option-icon" style="background: #EFF6FF; color: #2563EB;">
+          <i data-lucide="compass"></i>
+        </div>
+        <div class="k-option-body">
+          <div class="k-option-head">
+            <span class="k-option-title">Start a Virtual Trip</span>
+            <span class="k-option-badge" style="background: #EFF6FF; color: #1D4ED8;">Smart Planner</span>
+          </div>
+          <p class="k-option-desc">Pick destinations across India, choose your pace and dietary style, and get an automated day plan with inter-city travel legs.</p>
+        </div>
+        <i data-lucide="chevron-right" class="k-option-arrow"></i>
+      </a>
+
+      <!-- Option 3: AI Curated Trips -->
+      <a href="curated_trips.html" class="k-option-card">
+        <div class="k-option-icon" style="background: #FEF3C7; color: #D97706;">
+          <i data-lucide="sparkles"></i>
+        </div>
+        <div class="k-option-body">
+          <div class="k-option-head">
+            <span class="k-option-title">AI Curated Journeys</span>
+            <span class="k-option-badge" style="background: #FEF3C7; color: #B45309;">Handcrafted</span>
+          </div>
+          <p class="k-option-desc">Browse pre-crafted spiritual circuits, coastal getaways, and heritage trails with YouTube video guides ready to customize.</p>
+        </div>
+        <i data-lucide="chevron-right" class="k-option-arrow"></i>
+      </a>
+
+      <!-- Option 4: Digital Passport -->
+      <a href="visited.html" class="k-option-card">
+        <div class="k-option-icon" style="background: #ECFDF5; color: #059669;">
+          <i data-lucide="stamp"></i>
+        </div>
+        <div class="k-option-body">
+          <div class="k-option-head">
+            <span class="k-option-title">My Digital Passport</span>
+            <span class="k-option-badge" style="background: #ECFDF5; color: #047857;">Hit List</span>
+          </div>
+          <p class="k-option-desc">Been there, done that! Mark Indian cities you've explored, collect official stamps, and grow your personal travel scratchpad.</p>
+        </div>
+        <i data-lucide="chevron-right" class="k-option-arrow"></i>
+      </a>
     `;
   }
 

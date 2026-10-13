@@ -25,20 +25,8 @@
 </head>
 <body class="min-h-screen text-slate-800 pb-20">
 
-  <!-- Header -->
-  <header class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40 px-4 py-3 shadow-xs">
-    <div class="max-w-6xl mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <a href="index.html" title="KYT Home" class="shrink-0 hover:scale-105 transition-transform flex items-center">
-          <img src="./icons/KYT.jpg" alt="KYT" class="h-8 w-auto rounded-xl shadow-xs object-contain">
-        </a>
-        <div class="h-4 w-px bg-slate-200"></div>
-        <div>
-          <h1 class="text-base sm:text-lg font-black text-slate-900 leading-tight">AI Curated Trip Ideas</h1>
-          <p class="text-[10px] sm:text-xs text-slate-500 font-medium">Explore curated destination concepts</p>
-        </div>
-      </div>
-    </div>
+  <!-- Floating App Toolbar (Driven by KYT.header.renderMainToolbar) -->
+  <header id="main-toolbar" class="w-full max-w-md mx-auto flex justify-between items-center z-[60] bg-white/50 backdrop-blur-md rounded-2xl p-2 border border-white/60 shadow-sm mt-4 sm:mt-8 px-3 sm:px-4 mb-3 relative">
   </header>
 
   <!-- Hero Section -->
@@ -191,6 +179,7 @@
   <script src="./data/curated_trips.js"></script>
   <script src="./js/store.js"></script>
   <script src="./js/clock.js"></script>
+  <script src="./js/header.js?v=1791377680"></script>
 
   <script>
     // Fallback if data/curated_trips.js was not loaded
@@ -213,6 +202,9 @@
     let currentSelectedTrip = null;
 
     document.addEventListener('DOMContentLoaded', () => {
+      if (window.KYT && window.KYT.header) {
+        KYT.header.renderMainToolbar('main-toolbar', { active: 'curated' });
+      }
       renderCuratedTrips('all');
       setupFilters();
       lucide.createIcons();
