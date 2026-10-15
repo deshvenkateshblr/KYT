@@ -611,6 +611,21 @@
                class="w-full text-xl font-black text-slate-800 border-b-2 border-transparent hover:border-slate-200 focus:border-blue-500 focus:outline-none transition-colors pb-1"
                placeholder="Trip name">
 
+        <!-- Starting Point (Origin City) -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest flex items-center gap-1">
+              <i data-lucide="navigation" class="w-3 h-3 text-blue-500"></i> Starting Point (Origin)
+            </p>
+            <span class="text-[10px] text-slate-400 italic" id="vt-origin-desc">Creates Day 0 transit</span>
+          </div>
+          <div class="relative">
+            <select id="vt-origin-city" class="w-full bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer appearance-none transition-colors pr-8">
+            </select>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+          </div>
+        </div>
+
         <!-- Travel style chips -->
         <div>
           <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-2">Travel Style</p>
@@ -650,6 +665,79 @@
       <div id="vt-itinerary-list" class="space-y-4"></div>
     </div>
   </aside>
+
+  <!-- DURATION & NIGHT STAYS MODAL -->
+  <div id="vt-stay-modal" class="fixed inset-0 z-[110] bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity duration-200 opacity-0">
+    <div id="vt-stay-modal-dialog" class="bg-white w-full max-w-lg rounded-2xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden transform scale-95 transition-transform duration-200">
+      
+      <!-- Sticky Header -->
+      <div class="flex items-center justify-between px-5 py-4 border-b border-slate-100 shrink-0 bg-white">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+            <i data-lucide="moon" class="w-4 h-4 text-indigo-600"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-black text-slate-800">Trip Duration & Night Stays</h3>
+            <p class="text-[11px] text-slate-400 font-medium">Customize your days and choose where you sleep each night.</p>
+          </div>
+        </div>
+        <button type="button" id="btn-close-stay-modal" class="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors" title="Close">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="flex-1 overflow-y-auto p-5 space-y-5 bg-slate-50/60">
+        
+        <!-- Trip Duration Section -->
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs space-y-2">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="calendar" class="w-3.5 h-3.5 text-blue-600"></i> Trip Duration
+              </p>
+              <p class="text-[11px] text-slate-400" id="vt-modal-duration-hint">Adjust total days</p>
+            </div>
+            
+            <!-- Stepper -->
+            <div class="flex items-center gap-2">
+              <button type="button" id="btn-modal-duration-minus" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 font-extrabold flex items-center justify-center transition-all border border-slate-200 text-base" title="Decrease days">−</button>
+              <div class="py-1.5 px-3 bg-slate-50 border border-slate-200 rounded-xl min-w-[76px] text-center">
+                <span id="vt-modal-duration-val" class="text-sm font-black text-slate-800">1</span>
+                <span class="text-xs font-bold text-slate-500 ml-1">Days</span>
+              </div>
+              <button type="button" id="btn-modal-duration-plus" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 font-extrabold flex items-center justify-center transition-all border border-slate-200 text-base" title="Increase days">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Night Stays & Base Allocation -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <p class="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+              <i data-lucide="home" class="w-3.5 h-3.5 text-indigo-600"></i> Night Stays & Bases
+            </p>
+            <span class="text-[10px] text-slate-400 italic">Where you sleep each night</span>
+          </div>
+          <div id="vt-modal-night-stays-list" class="space-y-2.5">
+            <!-- Dynamic night stay rows -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer CTA -->
+      <div class="flex items-center justify-end gap-2.5 px-5 py-3.5 bg-white border-t border-slate-100 shrink-0">
+        <button type="button" id="btn-cancel-stay-modal" class="px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors">
+          Cancel
+        </button>
+        <button type="button" id="btn-modal-confirm-build" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white text-xs font-black rounded-xl shadow-md flex items-center gap-1.5 transition-all">
+          <i data-lucide="wand-2" class="w-4 h-4"></i> Generate Day Plan
+        </button>
+      </div>
+
+    </div>
+  </div>
 
   <!--  RICH CITY DETAIL SLIDE-OVER  -->
   <div id="city-detail-overlay" class="fixed inset-0 z-[100] bg-slate-900/40 backdrop-blur-sm hidden transition-opacity opacity-0 flex flex-col justify-end">
@@ -731,12 +819,12 @@
   <script src="./js/social.js?v=1791377680"></script>
   
   <!-- New Arch -->
-  <script src="./data/cities.js?v=1791377680"></script>
+  <script src="./data/cities.js?v=1792056000"></script>
   <script src="./data/distance_matrix.js?v=1791377680"></script>
   <script src="./data/city_videos_data.js?v=1791377680"></script>
   <script src="./data/curated_trips.js?v=1791377680"></script>
   <script src="./js/header.js?v=1791377680"></script>
-  <script src="./js/virtual-trips.js?v=1791377680"></script>
+  <script src="./js/virtual-trips.js?v=1792065000"></script>
   
   <script src="./js/app.js?v=1791377680"></script>
 

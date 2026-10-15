@@ -15986,7 +15986,7 @@ window.KYT_CITIES = [
       },
       {
         "title": "Narmada Ghat",
-        "icon": "water",
+        "icon": "waves",
         "where": "Banks of Narmada River",
         "hour": 18,
         "intent": [
@@ -16544,7 +16544,7 @@ window.KYT_CITIES = [
       },
       {
         "title": "Chandrabhaga River Ghats",
-        "icon": "water",
+        "icon": "waves",
         "where": "Pandharpur",
         "hour": 17,
         "intent": [
@@ -16628,7 +16628,7 @@ window.KYT_CITIES = [
       },
       {
         "title": "Statue of Belief (Vishwas Swaroopam)",
-        "icon": "monument",
+        "icon": "landmark",
         "where": "Ganesh Tekri",
         "hour": 11,
         "intent": [
@@ -16735,7 +16735,7 @@ window.KYT_CITIES = [
       },
       {
         "title": "St. Mary's Island",
-        "icon": "island",
+        "icon": "palmtree",
         "where": "Off Malpe Coast",
         "hour": 10,
         "intent": [

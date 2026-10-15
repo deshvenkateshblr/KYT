@@ -86,11 +86,11 @@ test('building a plan groups attractions into one Day per city, in the order the
   await page.click('#btn-vt-build');
   await page.waitForSelector('#vt-screen-builder:not(.hidden)');
   const text = await page.locator('#vt-itinerary-list').innerText();
-  assert.match(text, /day 1/i); assert.match(text, /day 2/i);
+  assert.match(text, /day 0/i); assert.match(text, /day 1/i); assert.match(text, /day 2/i);
   assert.ok(text.indexOf('Agra') < text.indexOf('Jaipur'));
   const trip = (await stored(page))[0];
   assert.ok(trip.steps.length >= 2);
-  assert.deepEqual([...new Set(trip.steps.map(s => s.dayId))], [1, 2]);
+  assert.deepEqual([...new Set(trip.steps.map(s => s.dayId))], [0, 1, 2]);
   assert.equal(trip.steps.filter(s => s.dayId === 1).every(s => s.cityName === 'Agra'), true);
   await context.close();
 });
@@ -155,9 +155,12 @@ test('"Use as my trip" turns the plan into the live trip, honouring the chosen s
   assert.equal(live.name, 'Agra and Jaipur');
   assert.equal(live.n, planned.length);
   const ymd = d => { const x = new Date(d); return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}-${String(x.getDate()).padStart(2, '0')}`; };
-  assert.equal(ymd(live.steps[0].d), '2027-03-15', 'Day 1 lands on the start date');
-  assert.equal(ymd(live.steps.at(-1).d), '2027-03-16', 'Day 2 lands on the next day');
+  assert.equal(ymd(live.steps[0].d), '2027-03-15', 'Day 0 lands on the start date');
+  assert.equal(ymd(live.steps.at(-1).d), '2027-03-17', 'Day 2 lands on the subsequent day');
   assert.ok(live.steps.every(s => s.st === 'todo'));
+  for (let i = 1; i < live.steps.length; i++) {
+    assert.ok(live.steps[i].d > live.steps[i - 1].d, 'steps have strictly increasing timestamps without overlap');
+  }
   assert.match(await page.locator('#hero-card').innerText(), new RegExp(planned[0].title.slice(0, 8)));
   await context.close();
 });

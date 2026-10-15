@@ -108,6 +108,57 @@
     - **110 passed, 0 failed** (56 admin core tests + 54 browser e2e tests across all four test suites).
     - Bumped service worker cache to `kyt-v32` in [`sw.js`](file:///C:/Venkatesh/KYT/sw.js).
 
+18. **Origin City Selection, Day 0 Fluid Arrival, Day 1 Morning Start & Non-Overlapping Time Spacing**
+    - Added Starting Point (Origin City) selector to the Virtual Trip Canvas in [`virtual_trip.html`](file:///C:/Venkatesh/KYT/virtual_trip.html) with popular starting hubs and an "Already in destination" option.
+    - Implemented dedicated **Day 0: Travel & Arrival** generated with exactly one fluid block ("Activities for today are fluid depending on time of arrival") with Google Maps directions from the origin city.
+    - Ensured **Day 1 begins in the morning** with morning refreshment & breakfast followed by matched sightseeing beats.
+    - Removed rigid time slots (e.g. `15:00`) from the builder UI in favor of natural sequential order, day phase badges (`Arrival`, `Morning`, `Midday`, `Afternoon`, `Evening`), and suggestive timing hints.
+    - Resolved time overlapping in `useAsMyTrip()` by calculating strictly increasing, non-overlapping `targetTime`s with minimum buffer spacing and proper day offsets.
+    - Bumped service worker cache to `kyt-v33` in [`sw.js`](file:///C:/Venkatesh/KYT/sw.js).
+
+19. **Transit Days (Day 2+) Chronological Narrative Sequence & Post-Arrival Afternoon Beat Mapping**
+    - Fixed Day 2+ ordering defect where catalog beats with early morning hours (e.g., `Bhimashankar Jyotirlinga` at 06:00 AM) preceded the morning inter-city travel leg (`Travel to Bhimashankar`).
+    - Standardized transit day architecture across `generateSteps()` and `appendCitySteps()`:
+      1. Morning Transit (`Travel to <City>` at 07:30 AM)
+      2. Midday Hotel Check-in / Drop Luggage (12:00 PM)
+      3. Midday Regional Lunch (13:00 PM)
+      4. Afternoon & Evening Exploration Beats (scheduled post-arrival $\ge$ 14:30 PM with 1.5h pacing)
+      5. Evening Dinner & Leisure (20:00 PM)
+      6. Return Journey (21:00 PM on final day)
+    - Added self-healing routine (`sanitizeOrRegenerateSteps`) on builder launch so existing plans stored in localStorage automatically repair their order.
+    - Added a convenient "Reset Order" action to the builder header.
+    - Bumped service worker cache to `kyt-v34` in [`sw.js`](file:///C:/Venkatesh/KYT/sw.js).
+
+20. **Travel Duration & Daily Night Stay Allocation (Automatic Day Excursions & Night Travel)**
+    - Added **Trip Duration** stepper (`[-] X Days [+]`) on the Canvas with pacing hints.
+    - Added **Night Stays & Base Allocation** section on the Canvas allowing travelers to configure their night stay for each day:
+      - 🏨 **Base Stay** (e.g. Pune hotel)
+      - 🏨 **Transfer Stay** (e.g. Bhimashankar hotel)
+      - 🚂 **Overnight Travel** (Night train / sleeper coach)
+    - Automated smart defaults using `window.KYT_DISTANCE_MATRIX`: destinations $\le 130$ km from base (e.g. Bhimashankar from Pune = 119 km) intelligently suggest **Day Excursion** by default.
+    - Automatic narrative generation:
+      - **Day Excursion**: Morning Drive from base $\rightarrow$ Lunch $\rightarrow$ Afternoon Sights $\rightarrow$ Return Drive to base hotel $\rightarrow$ Dinner & Sleep at base (zero false hotel check-ins).
+      - **Base Transfer**: Morning Transit $\rightarrow$ Hotel Check-in $\rightarrow$ Lunch $\rightarrow$ Sights $\rightarrow$ Dinner & Sleep in destination.
+      - **Overnight Travel**: Evening departure milestone boarding night train or sleeper coach.
+    - Bumped service worker cache to `kyt-v35` in [`sw.js`](file:///C:/Venkatesh/KYT/sw.js).
+
+21. **Decoupled City Selection & Progressive Stay Modal**
+    - **Clean Canvas**: Removed inline duration and night stay wrappers from the Canvas top card so users can freely search, browse, and add multiple destinations without viewport obstruction.
+    - **Progressive Disclosure Modal (`#vt-stay-modal`)**: Tapping "Generate Day Plan" opens a dedicated modal asking for Trip Duration (- / + stepper with pacing hint) and daily night stays.
+    - **Clean "Overnight Travel" Terminology**: Removed all mentions of "Night Train" or "sleeper" coach; labeled simply and cleanly as `Overnight Travel` across select dropdowns, badges, and itinerary steps.
+    - **Seamless Next-Morning Arrival**: When previous night is `Overnight Travel`, the next morning generates a clean `Morning Arrival in <City>` milestone rather than a redundant highway drive.
+    - **Accessible in Builder**: Added `Stays & Days` quick-action button in the Builder header to easily adjust duration and night stays at any time.
+
+22. **Evening Base Transfers & Unified 4-Phase Daily Itinerary Pipeline**
+    - **Fixed Modal Badge Discrepancy**: Corrected `#vt-stay-modal` badge evaluation so choosing a different city for the night stay accurately displays `🏨 Evening Transfer (Explore <DayCity> → Sleep in <StayCity>)` instead of defaulting to `Base Stay in <DayCity>`.
+    - **Unified 4-Phase Itinerary Pipeline**:
+      - **Phase 1 (Morning)**: Accurately checks where the traveler woke up (`prevStayCityId`). Supports Morning Arrival from `overnight_travel`, Morning Excursion drive, Morning Base Move drive + check-in, or relaxed morning breakfast if already in the city.
+      - **Phase 2 (Midday & Sightseeing)**: Paces morning and afternoon sightseeing with dietary lunch. Automatically schedules sightseeing to wrap up by 17:30 when an evening transfer or excursion return is planned.
+      - **Phase 3 (Evening & Night Stay)**: Strictly driven by `tonightStay`. Supports **Evening Transfer** (`Travel to <StayCity>` at 18:00 $\rightarrow$ `Hotel Check-in, Dinner & Overnight Stay in <StayCity>` at 20:30), **Excursion Return**, **Overnight Travel**, or **Base Stay**.
+      - **Phase 4 (Final Day Return)**: Accurately sets return origin based on the final evening's actual location.
+    - **Seamless Next-Day Continuity**: When Day 1 ends with an evening transfer to Nashik, Day 2 correctly wakes up in Nashik with zero redundant morning transit.
+    - Bumped service worker cache to `kyt-v38` in [`sw.js`](file:///C:/Venkatesh/KYT/sw.js) and script query string to `v=1792065000` in [`virtual_trip.html`](file:///C:/Venkatesh/KYT/virtual_trip.html).
+
 ---
 
 ## 🟡 In Progress / Under Execution
@@ -115,8 +166,15 @@
 1. **KYT Product Specification & Roadmap Execution**
    - Detailed specification and governing principles captured in [kyt_product_specification_roadmap.md](file:///C:/Venkatesh/KYT/kyt_product_specification_roadmap.md).
    - **Phase 1**: Navigation & Header Unification across Virtual Trip, Trip Detail, and Builder (Completed ✅).
-   - **Phase 2**: Macro Trip Parameters on Canvas (Origin City, Stay Bases vs Day Visits, Party, Transit Modes) (Next up).
-   - **Phase 3**: Fluid Sequence Day Generation (Day phases, No Clock Clutter, High-Fidelity Curated Blueprint).
+   - **Phase 2 (Underway)**:
+     - [x] Origin City selector & dedicated Day 0: Travel & Arrival.
+     - [x] Day 1 begins in the morning without timetable clutter.
+     - [x] Non-overlapping sequential time spacing.
+     - [x] Travel Duration & Night Stay Allocation (*Overnight Base* 🏨 vs *Day Excursion* 🚗 vs *Overnight Travel* 🌙).
+     - [x] Decoupled city selection from stays modal; pure "Overnight Travel" labeling.
+     - [ ] Intelligent Prioritization Nudge when trip duration is shorter than selected cities (`duration < cities.length`).
+     - [ ] Party Composition chips (*Family with Elders, Kids, Friends, Solo*).
+   - **Phase 3**: Fluid Sequence Day Generation (High-Fidelity Curated Blueprint, meal collision suppression).
 
 ---
 
