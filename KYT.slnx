@@ -47,6 +47,7 @@
     <File Path="js/step-form.js" />
     <File Path="js/store.js" />
     <File Path="js/virtual-trips.js" />
+    <File Path="ui-components.js" />
   </Folder>
   <Folder Name="/Solution Items/scripts/">
     <File Path="scripts/bucket_list_source.json" />

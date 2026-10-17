@@ -6,18 +6,25 @@
 window.KYT = window.KYT || {};
 
 
-window.KYT.utils = {
-  escapeHTML: (str) => {
-    if (!str) return '';
-    return String(str).replace(/[&<>'"]/g, tag => ({
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      "'": '&#39;',
-      '"': '&quot;'
-    }[tag] || tag));
+// ── KYT.utils.escapeHTML — merge-safe bootstrap ───────────────────────────────
+// js/ui-components.js provides the same bootstrap; whichever loads first wins.
+// This ensures store.js pages (view_trip, configure_trip) also have escapeHTML.
+(function () {
+  const utils = window.KYT.utils || {};
+  if (typeof utils.escapeHTML !== 'function') {
+    utils.escapeHTML = (str) => {
+      if (!str) return '';
+      return String(str).replace(/[&<>'"]/g, tag => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+      }[tag] || tag));
+    };
   }
-};
+  window.KYT.utils = utils;
+})();
 
 window.KYT.store = (() => {
   // ── State ─────────────────────────────────────────────────────────────────
