@@ -200,8 +200,26 @@
         - **View 1 (`#ai-step-1`)**: Twist chips + custom requests + visible prompt preview + emerald feedback on copy (`✓ Copied to Clipboard!` for 2.5s) + `Next: Paste AI Response →` button and `Open Gemini ↗` link.
         - **View 2 (`#ai-step-2`)**: Clear guidance, paste textarea `#ai-response-textarea`, clipboard helper `#btn-paste-clipboard`, and primary CTA `#btn-preview-ai-changes` ("Preview What AI Did →").
         - **View 3 (`#ai-step-3`)**: Summary banner with badges (`📍 X Map Links`, `⚠️ Y Timing Alerts`, `🗓️ Z Steps`), day-by-day sequenced plan with timing alerts, collapsible list of filtered-out attractions, and sticky footer with `#btn-reject-ai` ("✗ Reject & Discard") and `#btn-accept-ai` ("✓ Accept & Update Trip").
-    - **Clean Integration in [`trip_detail.html`](file:///C:/Venkatesh/KYT/trip_detail.html)**: Removed all inline AI modal logic, replaced `<script src="admin/core.js">` with `<script src="js/ai-refine.js">`, and delegated modal lifecycle to `KYT.aiRefine.init({ getTripContext, onAccept })`. Preserved all previous bug fixes (`s.dayId`, `city.beats`, `tripId` linking).
     - **Verification**: **All 110 tests pass (56 unit tests + 54 browser E2E tests).**
+
+29. **URL Shortening & WhatsApp "URL too long" Share Fix**
+    - **Root Cause**: When an AI-refined itinerary was accepted in [`trip_detail.html`](file:///C:/Venkatesh/KYT/trip_detail.html), `onAccept` serialized the full trip object into a base64 query parameter `?ai=...`, injecting over 7,100 characters into the URL. Sharing this link via WhatsApp triggered an immediate error ("URL too long") due to messaging URL length limits.
+    - **Clean Share URL Construction**:
+      - Updated `#btn-share-trip` click listener in [`trip_detail.html`](file:///C:/Venkatesh/KYT/trip_detail.html) to always strip `&ai=` and construct a lightweight URL with standard compact parameters (`trip`, `cities`, `taste`, `origin`, `days`, `id`, `curated`). The shared link is reduced from >7,100 chars to <150 chars.
+      - Updated `onAccept` callback in [`trip_detail.html`](file:///C:/Venkatesh/KYT/trip_detail.html) to link `vTrip.id` and purge `ai` from `window.history.replaceState`.
+      - Added automatic address bar sanitization on page load when an incoming link contains legacy `?ai=`: imports the AI itinerary into `localStorage` (if not already present) and immediately removes `?ai=` from the address bar via `window.history.replaceState`.
+      - Added length safeguard in `KYT.ui.encodeAiTrip` ([`js/ui-components.js`](file:///C:/Venkatesh/KYT/js/ui-components.js)) to reject JSON payloads >800 characters, preventing oversized query strings across the app.
+      - Updated `shareCurrentTrip()` in [`js/virtual-trips.js`](file:///C:/Venkatesh/KYT/js/virtual-trips.js) to preserve `trip.id`.
+    - **Test Coverage**: Added automated E2E test in [`tests/e2e/04-passport-curated-pwa.test.js`](file:///C:/Venkatesh/KYT/tests/e2e/04-passport-curated-pwa.test.js) validating that sharing produces a clean URL (<300 chars, no `&ai=`), and that incoming URLs with `&ai=` are sanitized in the browser address bar immediately.
+
+30. **Client-Side Compressed Itinerary Sharing & Privacy Consent for GitHub Pages**
+    - **GitHub Pages Native Architecture**: As `vividnova.com` is hosted statically on GitHub Pages with zero server-side code, trip sharing uses a 100% serverless, zero-account client-side architecture.
+    - **Compact Plan Compression**: Built `compressPlan` and `decompressPlan` in [`js/ui-components.js`](file:///C:/Venkatesh/KYT/js/ui-components.js) using the browser's native `CompressionStream('deflate-raw')` / `DecompressionStream('deflate-raw')`. It packages all sequenced days, steps, hours, minutes, titles, locations, and icons into a compact ~890-char string (`&plan=...`). The entire URL is ~1,030 characters, well within WhatsApp's 2,048 limit.
+    - **Privacy Consent Modal**: Implemented `#share-consent-modal` in [`trip_detail.html`](file:///C:/Venkatesh/KYT/trip_detail.html) with explicit checkbox required before sharing:
+      `[ ] I understand that anyone with this URL can access your trip data.`
+      The share button is disabled until checked.
+    - **Automatic Plan Decompression on Recipient Device**: When a companion opens the link, [`trip_detail.html`](file:///C:/Venkatesh/KYT/trip_detail.html) decompresses the plan, restores all 18 customized steps and timings, auto-generates Google Maps links dynamically, saves the trip into `localStorage`, and cleans `plan` from the address bar via `history.replaceState`.
+    - **Full Test Verification**: **All 56 tests pass (0 failures).**
 
 ---
 

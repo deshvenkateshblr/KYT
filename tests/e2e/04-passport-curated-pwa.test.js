@@ -242,3 +242,69 @@ test('catalog: curated trips reference real cities and have steps on every day',
     t.days.forEach(d => assert.ok(d.steps && d.steps.length > 0, `${t.id} day ${d.day} has no steps`));
   });
 });
+
+test('sharing a trip from trip_detail requires privacy consent and generates valid share link', async () => {
+  const { context, page } = await newPhone(env.browser);
+  await context.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: env.base });
+  
+  const testUrl = `${env.base}/trip_detail.html?trip=Mumbai+and+Nashik&cities=mum,nas&taste=mas&origin=bengaluru&days=2&id=test_123`;
+
+  await page.goto(testUrl);
+  await page.waitForSelector('#btn-share-trip');
+
+  await page.evaluate(() => { navigator.share = undefined; });
+  await page.click('#btn-share-trip');
+
+  // Verify privacy consent modal appears
+  await page.waitForSelector('#share-consent-modal:not(.hidden)');
+  assert.equal(await page.isDisabled('#btn-confirm-share-url'), true, 'Confirm button must be disabled before consent');
+
+  // Verify checkbox text contains required privacy wording
+  const consentText = await page.locator('#share-consent-modal label').innerText();
+  assert.match(consentText, /anyone with this URL can access your trip data/i);
+
+  // Check the consent box
+  await page.check('#share-privacy-consent-cb');
+  assert.equal(await page.isDisabled('#btn-confirm-share-url'), false, 'Confirm button must be enabled after consent');
+
+  // Confirm share
+  await page.click('#btn-confirm-share-url');
+  await page.waitForTimeout(300);
+
+  const copiedLink = await page.evaluate(() => navigator.clipboard.readText());
+  assert.ok(copiedLink.length < 500, `Share URL must be lightweight (<500 chars, got ${copiedLink.length})`);
+  assert.ok(!copiedLink.includes('&ai='), 'Shared link must never contain legacy &ai= param');
+  assert.match(copiedLink, /trip_detail\.html\?/);
+  assert.match(copiedLink, /cities=mum/);
+  assert.match(copiedLink, /id=test_123/);
+
+  await context.close();
+});
+
+test('importing a compressed plan parameter into trip_detail restores customized steps and timings', async () => {
+  const { context, page } = await newPhone(env.browser);
+  const zlib = require('zlib');
+  const compactPlan = [
+    { d: 0, s: [[18, 0, 'Arrival at Gateway Hotel', 'Colaba, Mumbai', 'car']] },
+    { d: 1, s: [[9, 30, 'Elephanta Special Heritage Tour', 'Elephanta Island', 'compass']] }
+  ];
+  const def = zlib.deflateRawSync(Buffer.from(JSON.stringify(compactPlan)));
+  const planB64 = def.toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+
+  const testUrl = `${env.base}/trip_detail.html?trip=Custom+Gateway+Trip&cities=mum&taste=mas&origin=bengaluru&days=2&plan=${planB64}`;
+
+  await page.goto(testUrl);
+  await page.waitForSelector('#refined-itinerary-section');
+
+  // Address bar URL should have ?plan= stripped
+  assert.ok(!page.url().includes('plan='), 'URL should strip plan parameter from address bar');
+
+  // Content should display the restored customized steps
+  const scheduleText = await page.locator('#refined-itinerary-section').innerText();
+  assert.match(scheduleText, /Arrival at Gateway Hotel/);
+  assert.match(scheduleText, /Elephanta Special Heritage Tour/);
+
+  await context.close();
+});
+
+

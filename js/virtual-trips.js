@@ -261,6 +261,9 @@ KYT.virtualTrips = (function () {
       url.searchParams.set('origin', c && c.code ? c.code : trip.originCity);
     }
     url.searchParams.set('days', String(trip.duration || trip.cities.length || 1));
+    if (trip.id) {
+      url.searchParams.set('id', trip.id);
+    }
 
     const shareData = {
       title: `Check out my ${trip.name} on KYT`,

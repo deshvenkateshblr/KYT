@@ -894,6 +894,10 @@ window.KYT.ui = (function () {
     if (!tripData) return '';
     try {
       const jsonStr = JSON.stringify(tripData);
+      // Safeguard: Never produce URLs or base64 blobs exceeding safe messaging limits (keep < 1KB)
+      if (jsonStr.length > 800) {
+        return '';
+      }
       if (typeof TextEncoder !== 'undefined') {
         const u8 = new TextEncoder().encode(jsonStr);
         let binary = '';
@@ -932,6 +936,48 @@ window.KYT.ui = (function () {
     }
   }
 
+  async function compressPlan(compactData) {
+    if (!compactData) return '';
+    const jsonStr = typeof compactData === 'string' ? compactData : JSON.stringify(compactData);
+    if (typeof CompressionStream !== 'undefined') {
+      try {
+        const stream = new Blob([jsonStr]).stream().pipeThrough(new CompressionStream('deflate-raw'));
+        const buffer = await new Response(stream).arrayBuffer();
+        const bytes = new Uint8Array(buffer);
+        let binary = '';
+        for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
+        return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      } catch(e) {}
+    }
+    try {
+      return btoa(unescape(encodeURIComponent(jsonStr))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    } catch(e) {
+      return '';
+    }
+  }
+
+  async function decompressPlan(str) {
+    if (!str || typeof str !== 'string') return null;
+    let base64 = str.replace(/-/g, '+').replace(/_/g, '/');
+    while (base64.length % 4) base64 += '=';
+    if (typeof DecompressionStream !== 'undefined') {
+      try {
+        const binary = atob(base64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+        const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+        const jsonStr = await new Response(stream).text();
+        return JSON.parse(jsonStr);
+      } catch(e) {}
+    }
+    try {
+      const jsonStr = decodeURIComponent(escape(atob(base64)));
+      return JSON.parse(jsonStr);
+    } catch(e) {
+      return null;
+    }
+  }
+
   return {
     /** Shared metadata — single source of truth */
     constants: {
@@ -953,6 +999,8 @@ window.KYT.ui = (function () {
     categoryMeta,
     encodeAiTrip,
     decodeAiTrip,
+    compressPlan,
+    decompressPlan,
     /** Renderers */
     renderAttractionAccordion,
     renderCityCard,
