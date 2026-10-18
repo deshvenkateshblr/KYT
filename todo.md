@@ -157,7 +157,51 @@
       - **Phase 3 (Evening & Night Stay)**: Strictly driven by `tonightStay`. Supports **Evening Transfer** (`Travel to <StayCity>` at 18:00 $\rightarrow$ `Hotel Check-in, Dinner & Overnight Stay in <StayCity>` at 20:30), **Excursion Return**, **Overnight Travel**, or **Base Stay**.
       - **Phase 4 (Final Day Return)**: Accurately sets return origin based on the final evening's actual location.
     - **Seamless Next-Day Continuity**: When Day 1 ends with an evening transfer to Nashik, Day 2 correctly wakes up in Nashik with zero redundant morning transit.
-    - Bumped service worker cache to `kyt-v38` in [`sw.js`](file:///C:/Venkatesh/KYT/sw.js) and script query string to `v=1792065000` in [`virtual_trip.html`](file:///C:/Venkatesh/KYT/virtual_trip.html).
+23. **UI Unification Step 4 & Component Modernization (`KYT.ui`)**
+    - **`visited.html`**: Configured passport card rendering loop via `KYT.ui.renderCityCard(city, { variant: 'passport' })`, preserving all action buttons (`unmarkVisited`, `markVisited`, `updateDate`) and circular stamp graphics.
+    - **`js/config.js`**: Unified `renderConfigSteps()` to use `KYT.ui.renderStepCard(step, { variant: 'config', ... })` for each row, loading `js/ui-components.js` before `js/config.js` in both `configure_trip.html` and `view_trip.html`.
+    - **`curated_trips.html`**: Converted preview timeline cards to `KYT.ui.renderStepCard(s, { variant: 'curated-preview' })` and updated "Open in Virtual Trips to Edit" action to use `KYT.ui.convertCuratedTripToVirtual(trip)`.
+    - **Harness & Resiliency**: Updated `tests/e2e/helpers.js` to auto-detect installed Chromium browsers (Edge/Chrome) when `KYT_CHROMIUM` is unset; updated curated trips count regex in `04-passport-curated-pwa.test.js` to match full catalog size.
+    - **110 passed, 0 failed** across all unit and functional E2E test suites.
+    - Bumped service worker cache to `kyt-v40` in [`sw.js`](file:///C:/Venkatesh/KYT/sw.js).
+
+24. **Trip-Level Metadata URL Preservation & Hero Banner Badges**
+    - **`js/virtual-trips.js`**: Encoded `origin` (`'0'` if destination-starts / `already_there`, else resolved city code) and `days` (`trip.duration || trip.cities.length || 1`) in `shareCurrentTrip()`. In `init()`, read `origin` and `days` during shared trip imports, resolved origin via `KYT.ui.resolveCity`, assigned duration, and cleaned URL params.
+    - **`trip_detail.html`**: Added `#trip-meta-pills` container in the hero banner. Loaded `originParam` and `daysParam`, preserved them in `window.history.replaceState` when loading by ID or curated trip, and dynamically rendered clean badges for Starting Point (`📍 Starts in destination` or `📍 From <City>`), Duration (`🗓️ X Days`), and Taste Profile (Intent, Diet, Pace).
+
+25. **"Refine with AI" Feature in `trip_detail.html` & PWA Integration**
+    - **Mobile Bottom-Sheet (`#ai-refine-modal`)**: Anchored to bottom on mobile (`items-end sm:items-center`) with slide-up sheet (`rounded-t-3xl sm:rounded-3xl max-h-[90vh]`) preventing virtual keyboard clipping.
+    - **Two-Step Wizard**:
+      - **Step 1 (`#ai-step-1`)**: Thumb-friendly twist chips (`Exact Google Maps links & timings`, `Strictly Vegetarian / Satvik dining`, `Relaxed pace, fewer stops`, `Family & senior-friendly`, `Hidden local gems`), optional custom input `#ai-custom-twist`, primary button `#btn-copy-open-gemini` (copies prompt & opens Gemini), native OS share `#btn-share-prompt-native`, and collapsible raw prompt `<details>`.
+      - **Step 2 (`#ai-step-2`)**: Back button, giant 1-tap clipboard button `#btn-paste-clipboard` with auto-pulse on tab return (`visibilitychange`), instant auto-apply on paste (`paste` listener triggers after 100ms when `{` and `}` are detected), and explicit `#btn-apply-ai-plan`.
+    - **Validation & Rendering**: Parses with `KYTAdmin.extractJson`, `KYTAdmin.toTripList`, and `KYTAdmin.validateTrip`, converting to virtual trip via `KYT.ui.convertCuratedTripToVirtual`. Automatically saves to `localStorage` (`kyt_virtual_trips`), triggers haptic vibration (`navigator.vibrate(40)`), renders `#refined-itinerary-section` with day-by-day preview timeline, and smoothly scrolls into view.
+    - **PWA Caching**: Added `./admin/core.js` to `APP_SHELL` in [`sw.js`](file:///C:/Venkatesh/KYT/sw.js) and bumped cache to `kyt-v41`. All 110 tests pass.
+
+26. **"Refine with AI" Visibility Fix & Action Disambiguation in `trip_detail.html`**
+    - **Visibility & Contrast Fix**: Resolved root cause of the faint button by replacing Tailwind v4 `bg-linear-to-*` syntax with valid Tailwind v3 `bg-gradient-to-*` syntax. Applied vibrant, high-contrast gradient (`bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700`) with sparkles badge and elevation shadow to `#btn-open-ai-refine`, modal header, and primary modal CTAs.
+    - **CTA Disambiguation**: Resolved confusion between multiple "Customize" buttons:
+      - **Hero Banner**: Primary actions clearly differentiated as `[✨ Refine with AI]`, `[✏️ Edit in Builder]`, and `[📤 Share]`.
+      - **Itinerary Card Header**: Removed duplicate blue "Customize in Builder" button. Replaced with an accurate context badge (`✨ AI-Refined Plan` vs `⭐ Curated Blueprint` vs `📅 Day-by-Day Plan`), an inline `[✨ Refine with AI / Refine Again]` trigger, and a clean text link `[Open Builder →]`.
+    - **Full Test Verification**: Verified all 110 tests pass (56 unit tests + 54 browser E2E tests).
+
+27. **Four Key Bug Fixes in `trip_detail.html` & `js/virtual-trips.js`**
+    - **Bug 1 (`s.dayId` vs `s.day` mismatch in `trip_detail.html`)**: Corrected step day bucketing across `getTripForPrompt()` and `renderRefinedItinerary()` to use `s.dayId != null ? s.dayId : (s.day != null ? s.day : 1)`. Displayed `Day 0: Travel & Arrival` when `Number(d) === 0` and standardized the day subtitle to `dayBuckets[d][0]?.cityName || 'Itinerary Schedule'`.
+    - **Bug 2 (`city.beats` & `att.title` in `getTripForPrompt()`)**: Updated the fallback synthesis loop in `getTripForPrompt()` (`trip_detail.html`) to correctly read `city.beats` and `att.title` matching `data/cities.js`.
+    - **Bug 3 (`DOM.btnBuild` Regression in `js/virtual-trips.js`)**: Fixed `DOM.btnBuild` ("Generate Day Plan") click listener to open the progressive stays & duration modal (`openStayModal()`) instead of prematurely executing `generateSteps(trip)` and bypassing stay customization. Updated e2e test helper to confirm the stay modal during tests.
+    - **Bug 4 (Trip ID Linking & Cross-Device Sharing for AI-Refined Trips)**: Changed `tripId` to mutable `let tripId` in `trip_detail.html`; when an AI-refined plan is applied in `applyAiResponseText`, `tripId = vTrip.id` is linked and URL state is updated (`window.history.replaceState`). Updated `#btn-edit-plan` to open the active AI trip (`virtual_trip.html?id=${activeId}`) instead of redirecting to raw params. Added URL-safe compression/decompression helpers (`KYT.ui.encodeAiTrip` & `KYT.ui.decodeAiTrip`) to share AI itineraries across devices via `?ai=`, and protected AI trips from unwanted regeneration in `sanitizeOrRegenerateSteps`.
+    - Bumped service worker cache to `kyt-v42` in [`sw.js`](file:///C:/Venkatesh/KYT/sw.js). **All 110 tests pass (56 unit tests + 54 browser E2E tests).**
+
+28. **Decoupled "Refine with AI" into Standalone `js/ai-refine.js` & 3-Step Review Wizard**
+    - **Reverted `admin/core.js` & Service Worker**: Removed all trip-refinement logic from `admin/core.js` so it remains exclusively for the admin catalog editor. Replaced `'./admin/core.js'` with `'./js/ai-refine.js'` in `APP_SHELL` in [`sw.js`](file:///C:/Venkatesh/KYT/sw.js) and bumped cache to `kyt-v43`.
+    - **Standalone Module [`js/ai-refine.js`](file:///C:/Venkatesh/KYT/js/ai-refine.js) (`window.KYT.aiRefine`)**:
+      - **`buildEnrichPrompt(tripContext, twistText)`**: Generates structured, human-readable Google Gemini prompts with locked destinations, taste/pace filtering, logical fluid sequence phases (`Morning`, `Midday`, `Afternoon`, `Evening`), temple opening/afternoon closure windows (12:30 PM–4:00 PM), and exact Google Maps links (`mapsUrl`).
+      - **`parseAndDiff(rawText, originalTripContext)`**: Tolerantly extracts JSON (supporting code fences, Unicode curly quotes, trailing commas, and comment stripping without breaking `https://` URLs). Auto-generates Google Maps search links for any steps lacking URLs and calculates a detailed diff summary (`totalSteps`, `mapsCount`, `verifyCount`, `addedOrEnriched`, and `removedSteps`).
+      - **3-Step Modal UI Controller (`init(options)`)**:
+        - **View 1 (`#ai-step-1`)**: Twist chips + custom requests + visible prompt preview + emerald feedback on copy (`✓ Copied to Clipboard!` for 2.5s) + `Next: Paste AI Response →` button and `Open Gemini ↗` link.
+        - **View 2 (`#ai-step-2`)**: Clear guidance, paste textarea `#ai-response-textarea`, clipboard helper `#btn-paste-clipboard`, and primary CTA `#btn-preview-ai-changes` ("Preview What AI Did →").
+        - **View 3 (`#ai-step-3`)**: Summary banner with badges (`📍 X Map Links`, `⚠️ Y Timing Alerts`, `🗓️ Z Steps`), day-by-day sequenced plan with timing alerts, collapsible list of filtered-out attractions, and sticky footer with `#btn-reject-ai` ("✗ Reject & Discard") and `#btn-accept-ai` ("✓ Accept & Update Trip").
+    - **Clean Integration in [`trip_detail.html`](file:///C:/Venkatesh/KYT/trip_detail.html)**: Removed all inline AI modal logic, replaced `<script src="admin/core.js">` with `<script src="js/ai-refine.js">`, and delegated modal lifecycle to `KYT.aiRefine.init({ getTripContext, onAccept })`. Preserved all previous bug fixes (`s.dayId`, `city.beats`, `tripId` linking).
+    - **Verification**: **All 110 tests pass (56 unit tests + 54 browser E2E tests).**
 
 ---
 

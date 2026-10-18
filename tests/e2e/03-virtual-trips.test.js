@@ -21,6 +21,14 @@ async function addCity(page, query, id) {
   await page.fill('#vt-city-search', query);
   await page.click(`.btn-add-city[data-id="${id}"]`);
 }
+async function buildPlan(page) {
+  await page.click('#btn-vt-build');
+  const confirmBtn = page.locator('#btn-modal-confirm-build');
+  try {
+    await confirmBtn.waitFor({ state: 'visible', timeout: 1000 });
+    await confirmBtn.click();
+  } catch(e) {}
+}
 const stored = page => page.evaluate(() => JSON.parse(localStorage.getItem('kyt_virtual_trips') || '[]'));
 
 test('empty hub invites the user to name a trip; blank names are ignored', async () => {
@@ -83,7 +91,7 @@ test('building a plan groups attractions into one Day per city, in the order the
   await addCity(page, 'Agra', 'agra');
   await page.fill('#vt-city-search', '');
   await addCity(page, 'Jaipur', 'jaipur');
-  await page.click('#btn-vt-build');
+  await buildPlan(page);
   await page.waitForSelector('#vt-screen-builder:not(.hidden)');
   const text = await page.locator('#vt-itinerary-list').innerText();
   assert.match(text, /day 0/i); assert.match(text, /day 1/i); assert.match(text, /day 2/i);
@@ -101,7 +109,7 @@ test('taste: Culinary intent keeps food stops and drops sightseeing-only stops',
   await createTrip(page, 'Foodie Agra');
   await page.click('.vt-chip[data-field="intent"][data-id="culinary"]');
   await addCity(page, 'Agra', 'agra');
-  await page.click('#btn-vt-build');
+  await buildPlan(page);
   await page.waitForSelector('#vt-screen-builder:not(.hidden)');
   const titles = (await stored(page))[0].steps.map(s => s.title);
   assert.ok(titles.includes('Petha & chaat at Kinari Bazaar'), `got: ${titles.join(' | ')}`);
@@ -117,7 +125,7 @@ test('taste: Jain diet never includes a stop that is tagged for other diets only
   for (const [q, id] of [['Jaipur', 'jaipur'], ['Varanasi', 'varanasi'], ['Goa', 'goa'], ['Delhi', 'delhi']]) {
     await addCity(page, q, id); await page.fill('#vt-city-search', '');
   }
-  await page.click('#btn-vt-build');
+  await buildPlan(page);
   await page.waitForSelector('#vt-screen-builder:not(.hidden)');
   const offenders = await page.evaluate(() => {
     const trip = JSON.parse(localStorage.getItem('kyt_virtual_trips'))[0];
@@ -140,7 +148,7 @@ test('"Use as my trip" turns the plan into the live trip, honouring the chosen s
   await addCity(page, 'Agra', 'agra');
   await page.fill('#vt-city-search', '');
   await addCity(page, 'Jaipur', 'jaipur');
-  await page.click('#btn-vt-build');
+  await buildPlan(page);
   await page.waitForSelector('#vt-start-date');
   await page.fill('#vt-start-date', '2027-03-15');
   const planned = (await stored(page))[0].steps;
@@ -170,7 +178,7 @@ test('"Use as my trip" with no date defaults to today', async () => {
   await openHub(page);
   await createTrip(page, 'Quick');
   await addCity(page, 'Agra', 'agra');
-  await page.click('#btn-vt-build');
+  await buildPlan(page);
   await page.waitForSelector('#vt-start-date');
   await page.getByRole('button', { name: /Use as my trip/ }).click();
   await page.waitForURL('**/view_trip.html');
@@ -189,7 +197,7 @@ test('"Use as my trip" asks before overwriting an existing active trip, and Canc
   await openHub(page);
   await createTrip(page, 'New plan');
   await addCity(page, 'Agra', 'agra');
-  await page.click('#btn-vt-build');
+  await buildPlan(page);
   await page.waitForSelector('#vt-start-date');
   page.removeAllListeners('dialog');
   let asked = '';
@@ -208,7 +216,7 @@ test('delete a step in the builder; the edit persists across reload and the trip
   await openHub(page);
   await createTrip(page, 'Edit me');
   await addCity(page, 'Agra', 'agra');
-  await page.click('#btn-vt-build');
+  await buildPlan(page);
   await page.waitForSelector('#vt-screen-builder:not(.hidden)');
   const before = (await stored(page))[0].steps.length;
   const firstId = (await stored(page))[0].steps[0].id;

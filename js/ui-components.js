@@ -890,6 +890,48 @@ window.KYT.ui = (function () {
     return { configure, open, close };
   })();
 
+  function encodeAiTrip(tripData) {
+    if (!tripData) return '';
+    try {
+      const jsonStr = JSON.stringify(tripData);
+      if (typeof TextEncoder !== 'undefined') {
+        const u8 = new TextEncoder().encode(jsonStr);
+        let binary = '';
+        const len = u8.byteLength;
+        for (let i = 0; i < len; i++) {
+          binary += String.fromCharCode(u8[i]);
+        }
+        return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      } else {
+        return btoa(unescape(encodeURIComponent(jsonStr))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      }
+    } catch(e) {
+      return '';
+    }
+  }
+
+  function decodeAiTrip(str) {
+    if (!str || typeof str !== 'string') return null;
+    try {
+      let base64 = str.replace(/-/g, '+').replace(/_/g, '/');
+      while (base64.length % 4) base64 += '=';
+      let jsonStr = '';
+      if (typeof TextDecoder !== 'undefined') {
+        const binary = atob(base64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) {
+          bytes[i] = binary.charCodeAt(i);
+        }
+        jsonStr = new TextDecoder().decode(bytes);
+      } else {
+        jsonStr = decodeURIComponent(escape(atob(base64)));
+      }
+      return JSON.parse(jsonStr);
+    } catch(e) {
+      return null;
+    }
+  }
+
   return {
     /** Shared metadata — single source of truth */
     constants: {
@@ -909,6 +951,8 @@ window.KYT.ui = (function () {
     renderPaceBadge,
     renderMobilityBadge,
     categoryMeta,
+    encodeAiTrip,
+    decodeAiTrip,
     /** Renderers */
     renderAttractionAccordion,
     renderCityCard,

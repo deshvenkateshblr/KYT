@@ -35,11 +35,25 @@ function startServer() {
   });
 }
 
+function findChromium() {
+  if (process.env.KYT_CHROMIUM && fs.existsSync(process.env.KYT_CHROMIUM)) return process.env.KYT_CHROMIUM;
+  const candidates = [
+    'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
+    'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe',
+    'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+    'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
+  ];
+  for (const c of candidates) {
+    if (fs.existsSync(c)) return c;
+  }
+  return undefined;
+}
+
 async function launch() {
   const { server, base } = await startServer();
   const browser = await chromium.launch({
     headless: true,
-    executablePath: process.env.KYT_CHROMIUM || undefined
+    executablePath: findChromium()
   });
   return { server, browser, base };
 }

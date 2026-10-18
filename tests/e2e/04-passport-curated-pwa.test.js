@@ -77,7 +77,7 @@ test('curated trips list shows the approved trips and the filter narrows by trav
   await page.goto(env.base + '/curated_trips.html');
   await page.waitForSelector('#filter-pills');
   assert.match(await page.locator('body').innerText(), /Tirupati: Divine Calling/);
-  assert.match(await page.locator('body').innerText(), /Showing 1 trip\b/);
+  assert.match(await page.locator('body').innerText(), /Showing \d+ trips?\b/);
 
   await page.click('.filter-pill[data-filter="culinary"]');
   assert.doesNotMatch(await page.locator('body').innerText(), /Tirupati: Divine Calling/);

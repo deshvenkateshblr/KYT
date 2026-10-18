@@ -116,73 +116,9 @@
         });
       }
 
-      cities.forEach(city => {
-        const bgStampHTML = city.visited ? `
-          <!-- Huge Background BTDT Stamp (Centered, Bold) -->
-          <div class="absolute inset-0 m-auto w-40 h-40 ${city.color} opacity-30 rotate-[-15deg] group-hover:rotate-[-5deg] group-hover:scale-110 transition-transform duration-700 origin-center pointer-events-none z-0">
-            <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
-              <path id="curve-${city.id}" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="transparent" />
-              <text font-size="10.5" font-weight="900" fill="currentColor" letter-spacing="3.5">
-                <textPath href="#curve-${city.id}" startOffset="0%">BEEN THERE DONE THAT • </textPath>
-              </text>
-              <circle cx="50" cy="50" r="24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.4"/>
-              <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="4 2" opacity="0.8"/>
-            </svg>
-          </div>
-        ` : '';
-
-        const topRightHTML = city.visited ? '' : `
-          <!-- Empty Placeholder for Unvisited -->
-          <div class="w-10 h-10 flex items-center justify-center opacity-30 relative z-10">
-            <i data-lucide="lock" class="w-5 h-5 text-slate-400"></i>
-          </div>
-        `;
-
-        const footerActionHTML = city.visited ? `
-          <button onclick="unmarkVisited('${city.id}')" class="text-[11px] font-bold ${city.actionColor} hover:text-slate-500 flex items-center gap-1 transition-colors relative z-10">
-            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Undo Visit
-          </button>
-        ` : `
-          <button onclick="markVisited('${city.id}')" class="text-[11px] font-bold text-blue-600 flex items-center gap-1 group-hover:translate-x-1 transition-transform bg-blue-50 px-2 py-1 rounded border border-blue-100 relative z-10">
-            Mark Visited <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
-          </button>
-        `;
-
-        const dateDisplay = city.visited ? 
-          `<input type="date" value="${city.date}" onchange="updateDate('${city.id}', this.value)" class="bg-transparent text-[10px] font-semibold text-slate-700 p-0 border-none focus:ring-0 cursor-pointer w-auto mt-0.5">` : 
-          `<span class="text-[10px] font-semibold text-slate-400 mt-0.5">${city.date}</span>`;
-
-        const cardHTML = `
-          <div class="bg-white/90 backdrop-blur-sm rounded-[16px] p-5 shadow-sm border border-slate-200 hover:border-slate-300 transition-all flex flex-col relative group overflow-hidden ${city.visited ? '' : 'grayscale-[0.5]'}">
-            
-            ${bgStampHTML}
-
-            <div class="flex justify-between items-start mb-4 relative z-10">
-              <!-- Left: City Logo -->
-              <div class="w-12 h-12 rounded-[12px] ${city.bg} flex items-center justify-center ${city.color} border ${city.border} shadow-sm bg-white">
-                <i data-lucide="${city.icon}" class="w-6 h-6"></i>
-              </div>
-              
-              ${topRightHTML}
-            </div>
-            
-            <!-- Content -->
-            <h3 class="text-base font-bold text-slate-800 tracking-tight relative z-10 drop-shadow-sm">${city.name}</h3>
-            <p class="text-xs text-slate-600 font-medium mt-1 mb-5 flex-1 leading-relaxed relative z-10">${city.desc}</p>
-            
-            <!-- Footer -->
-            <div class="flex items-center justify-between mt-auto relative z-10 pt-2 border-t border-slate-100/50">
-              <div class="flex flex-col">
-                <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">${city.visited ? 'Unlocked' : 'Status'}</span>
-                ${dateDisplay}
-              </div>
-              ${footerActionHTML}
-            </div>
-          </div>
-        `;
-        
-        container.insertAdjacentHTML('beforeend', cardHTML);
-      });
+      container.innerHTML = cities.map(city =>
+        KYT.ui.renderCityCard(city, { variant: 'passport' })
+      ).join('');
       lucide.createIcons();
     }
 

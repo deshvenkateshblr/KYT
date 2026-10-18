@@ -3,11 +3,14 @@
  * Stage 1: Hub (Trip List)
  * Stage 2: Canvas (Select Cities & Taste)
  * Stage 3: Builder (Auto-bucket into days, save state)
+ *
+ * Uses KYT.ui (js/ui-components.js) for unified City Cards, Step Cards,
+ * Curated Trip Blueprint conversion, and City Detail Slide-Over.
  */
 
 window.KYT = window.KYT || {};
 
-KYT.virtualTrips = (function() {
+KYT.virtualTrips = (function () {
   const STORAGE_KEY_VTRIPS = 'kyt_virtual_trips';
   const MOBILITY_RANK = { easy: 1, walk: 2, trek: 3 };
 
@@ -52,17 +55,17 @@ KYT.virtualTrips = (function() {
     view: document.getElementById('virtual-trips-view'),
     title: document.getElementById('vt-header-title'),
     btnClose: document.getElementById('btn-close-virtual-trips'),
-    
+
     // Screens
     screenHub: document.getElementById('vt-screen-hub'),
     screenCanvas: document.getElementById('vt-screen-canvas'),
     screenBuilder: document.getElementById('vt-screen-builder'),
-    
+
     // Hub
     newNameInput: document.getElementById('vt-new-name'),
     btnCreate: document.getElementById('btn-vt-create'),
     listRoot: document.getElementById('vt-list'),
-    
+
     // Canvas
     editNameInput: document.getElementById('vt-edit-name'),
     originCitySelect: document.getElementById('vt-origin-city'),
@@ -94,7 +97,7 @@ KYT.virtualTrips = (function() {
   function loadVTrips() {
     try {
       return JSON.parse(localStorage.getItem(STORAGE_KEY_VTRIPS) || '[]');
-    } catch(e) { return []; }
+    } catch (e) { return []; }
   }
   function saveVTrips() { localStorage.setItem(STORAGE_KEY_VTRIPS, JSON.stringify(vtrips)); }
   function getActiveTrip() { return vtrips.find(t => t.id === currentTripId); }
@@ -144,49 +147,33 @@ KYT.virtualTrips = (function() {
     renderHub();
   }
 
-  // --- Attraction Details Modal ---
-  // --- Attraction Detail Expansion (Inline) ---
+  // --- Attraction Detail Expansion (Inline on Library Card) ---
   function expandAttractionDetail(cityId, attraction) {
-    console.log('[VT-DEBUG] expandAttractionDetail called:', { cityId, attractionTitle: attraction.title, attractionNotes: attraction.notes });
-
-    // Close any other expanded details first
     document.querySelectorAll('.vt-attraction-detail').forEach(detail => {
       detail.classList.add('hidden');
       detail.classList.remove('animate-expand');
     });
 
-    // Find the detail section for this city and populate it
     const cityCard = document.querySelector(`article[data-city-id="${cityId}"]`);
-    if (!cityCard) {
-      console.error('[VT-DEBUG] City card not found for cityId:', cityId);
-      return;
-    }
+    if (!cityCard) return;
 
     const detailSection = cityCard.querySelector('.vt-attraction-detail');
-    if (!detailSection) {
-      console.error('[VT-DEBUG] Detail section not found in city card');
-      return;
-    }
+    if (!detailSection) return;
 
-    // Clear any animation classes before populating
     detailSection.classList.remove('animate-expand');
 
-    // Populate title
     const titleEl = detailSection.querySelector('.vt-detail-title');
     if (titleEl) titleEl.textContent = attraction.title || 'Attraction';
 
-    // Populate location
     const whereEl = detailSection.querySelector('.vt-detail-where');
     if (whereEl) whereEl.textContent = attraction.where || 'Location TBD';
 
-    // Populate time
     const timeEl = detailSection.querySelector('.vt-detail-time');
     if (timeEl) {
       const hour = attraction.hour != null ? String(attraction.hour).padStart(2, '0') : '--';
       timeEl.textContent = hour + ':00';
     }
 
-    // Populate travel style (intent)
     const intentEl = detailSection.querySelector('.vt-detail-intent');
     if (intentEl) {
       const intents = attraction.intent || ['cultural'];
@@ -196,19 +183,19 @@ KYT.virtualTrips = (function() {
       intentEl.innerHTML = intents.map(intent => {
         const icon = iconMap[intent] || 'map-pin';
         const color = colorMap[intent] || 'slate';
-        const textColor = `text-${color}-700`;
-        const bgColor = `bg-${color}-50 border-${color}-200`;
-        return `<span class="inline-flex items-center gap-1 ${bgColor} border ${textColor} text-[10px] font-semibold px-2.5 py-1 rounded-lg">
+        return `<span class="inline-flex items-center gap-1 bg-${color}-50 border-${color}-200 border text-${color}-700 text-[10px] font-semibold px-2.5 py-1 rounded-lg">
                   <i data-lucide="${icon}" class="w-3 h-3"></i> ${intent.charAt(0).toUpperCase() + intent.slice(1)}
                 </span>`;
       }).join('');
     }
 
-    // Populate pace
     const paceEl = detailSection.querySelector('.vt-detail-pace');
     if (paceEl) {
       const paces = attraction.pace || ['standard'];
       paceEl.innerHTML = paces.map(pace => {
+        if (window.KYT && KYT.ui && KYT.ui.renderPaceBadge) {
+          return KYT.ui.renderPaceBadge(pace);
+        }
         const labels = { short: '⚡ Short (< 1 hour)', standard: '🚶 Standard (1-2 hours)', deep: '🔍 Deep Dive (2+ hours)' };
         return `<span class="inline-flex items-center gap-1 bg-slate-100 border border-slate-200 text-slate-700 text-[10px] font-semibold px-2.5 py-1 rounded-lg">
                   ${labels[pace] || pace}
@@ -216,14 +203,12 @@ KYT.virtualTrips = (function() {
       }).join('');
     }
 
-    // Populate mobility/accessibility
     const mobilityEl = detailSection.querySelector('.vt-detail-mobility');
     if (mobilityEl) {
       const mobilityLabels = { easy: '✅ Easy Access', walk: '🚶 Walking Required', trek: '⛰️ Trek/Strenuous' };
       mobilityEl.textContent = mobilityLabels[attraction.mobility] || (attraction.mobility || 'Easy');
     }
 
-    // Populate dietary (if applicable)
     const dietSection = detailSection.querySelector('.vt-detail-dietary');
     const dietEl = detailSection.querySelector('.vt-detail-diet');
     if (attraction.diet && attraction.diet.length > 0 && !attraction.diet.includes('any')) {
@@ -240,21 +225,16 @@ KYT.virtualTrips = (function() {
       if (dietSection) dietSection.classList.add('hidden');
     }
 
-    // Populate notes/description - THIS IS CRITICAL
     const notesEl = detailSection.querySelector('.vt-detail-notes');
     if (notesEl) {
-      console.log('[VT-DEBUG] Setting notes:', attraction.notes);
       notesEl.textContent = attraction.notes || 'Explore this attraction and soak in the experience.';
     }
 
-    // Show the detail section with smooth animation
     detailSection.classList.remove('hidden');
-    // Trigger reflow to ensure animation plays
     void detailSection.offsetHeight;
     detailSection.classList.add('animate-expand');
     if (window.lucide) lucide.createIcons();
 
-    // Scroll into view on mobile
     setTimeout(() => {
       detailSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 100);
@@ -264,7 +244,7 @@ KYT.virtualTrips = (function() {
   function shareCurrentTrip() {
     const trip = getActiveTrip();
     if (!trip || !trip.cities.length) return alert('Add some cities to share this trip!');
-    
+
     const url = new URL(window.location.href);
     url.pathname = url.pathname.replace(/\/[^\/]*$/, '/trip_detail.html');
     url.search = '';
@@ -274,7 +254,14 @@ KYT.virtualTrips = (function() {
     if (trip.curatedId) {
       url.searchParams.set('curated', trip.curatedId);
     }
-    
+    if (trip.originCity === 'already_there') {
+      url.searchParams.set('origin', '0');
+    } else if (trip.originCity) {
+      const c = (window.KYT && KYT.ui && KYT.ui.resolveCity) ? KYT.ui.resolveCity(trip.originCity) : null;
+      url.searchParams.set('origin', c && c.code ? c.code : trip.originCity);
+    }
+    url.searchParams.set('days', String(trip.duration || trip.cities.length || 1));
+
     const shareData = {
       title: `Check out my ${trip.name} on KYT`,
       text: `I planned a trip on KYT! Check out my itinerary for ${trip.cities.length} cities.`,
@@ -369,6 +356,9 @@ KYT.virtualTrips = (function() {
 
   function sanitizeOrRegenerateSteps(trip) {
     if (!trip || !trip.steps || trip.steps.length === 0) return;
+    // Preserve curated trip blueprints and AI-refined trips without overwriting them
+    if (trip.curatedId || (trip.id && trip.id.startsWith('ai_')) || trip.isAiRefined) return;
+
     const days = {};
     trip.steps.forEach(s => {
       const d = s.dayId != null ? s.dayId : 1;
@@ -379,7 +369,6 @@ KYT.virtualTrips = (function() {
     let needsRegen = false;
     Object.keys(days).forEach(dId => {
       if (Number(dId) > 1) {
-        // In morning transit or excursion days, the transit leg must always be step 0 of that day
         const travelIdx = days[dId].findIndex(s => s.phase === 'Morning' && s.title && (s.title.startsWith('Travel to ') || s.title.startsWith('Day Excursion:')));
         if (travelIdx > 0) {
           needsRegen = true;
@@ -393,7 +382,7 @@ KYT.virtualTrips = (function() {
     }
   }
 
-  window.regenerateVirtualTripSteps = function() {
+  window.regenerateVirtualTripSteps = function () {
     const trip = getActiveTrip();
     if (!trip) return;
     trip.steps = generateSteps(trip);
@@ -484,7 +473,6 @@ KYT.virtualTrips = (function() {
       const dayCity = activeCityObjs[dayIdx] || activeCityObjs[activeCityObjs.length - 1];
       if (!dayCity) continue;
 
-      // Determine previous stay base
       let prevStayId;
       if (dayIdx === 0) {
         prevStayId = (trip.originCity && trip.originCity !== 'already_there' && activeCityObjs[0] && trip.originCity === activeCityObjs[0].id) ? trip.originCity : (activeCityObjs[0]?.id || 'pune');
@@ -492,7 +480,6 @@ KYT.virtualTrips = (function() {
         prevStayId = trip.nightStays[dayId - 1] || activeCityObjs[Math.min(dayIdx - 1, activeCityObjs.length - 1)]?.id;
       }
 
-      // Default night stay if not yet explicitly selected
       if (!trip.nightStays[dayId]) {
         if (dayIdx === 0) {
           trip.nightStays[dayId] = dayCity.id;
@@ -511,7 +498,6 @@ KYT.virtualTrips = (function() {
       const stayCityObj = window.KYT_CITIES ? window.KYT_CITIES.find(c => c.id === currentStay) : null;
       const stayCityName = stayCityObj ? stayCityObj.name : currentStay;
 
-      // Status badge - pure Overnight Travel with NO mention of train
       let statusBadge = '';
       if (currentStay === 'overnight_travel') {
         statusBadge = `<span class="inline-flex items-center gap-1 text-[10px] font-bold text-purple-700 bg-purple-50 border border-purple-200 px-2 py-0.5 rounded-md mt-1"><i data-lucide="moon" class="w-3 h-3 text-purple-600"></i> Overnight Travel</span>`;
@@ -525,7 +511,6 @@ KYT.virtualTrips = (function() {
         statusBadge = `<span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md mt-1"><i data-lucide="home" class="w-3 h-3 text-emerald-600"></i> Base Stay in ${dayCity.name}</span>`;
       }
 
-      // Build select options - pure Overnight Travel with NO mention of train
       let selectOptions = activeCityObjs.map(c => {
         const selected = currentStay === c.id ? 'selected' : '';
         return `<option value="${c.id}" ${selected}>🏨 Stay in ${c.name}</option>`;
@@ -576,7 +561,7 @@ KYT.virtualTrips = (function() {
         return city ? city.name : 'Unknown';
       }).join(', ');
       if (!citiesPreview) citiesPreview = 'No cities added yet.';
-      
+
       const badge = vt.steps && vt.steps.length > 0 ? `<span class="bg-green-100 text-green-700 text-[9px] px-2 py-0.5 rounded uppercase font-bold ml-2 shrink-0">Built</span>` : '';
 
       return `
@@ -603,7 +588,6 @@ KYT.virtualTrips = (function() {
       });
       html += `</optgroup>`;
 
-      // Other catalog cities
       if (window.KYT_CITIES && window.KYT_CITIES.length) {
         const popularIds = new Set(POPULAR_ORIGINS.map(o => o.id));
         const others = window.KYT_CITIES
@@ -647,7 +631,7 @@ KYT.virtualTrips = (function() {
     DOM.tasteRoot.innerHTML = Object.keys(TASTE_FIELDS).map(key => {
       const chips = TASTE_FIELDS[key].map(opt => {
         const isOn = trip.taste[key] === opt.id;
-        const classes = isOn 
+        const classes = isOn
           ? "vt-chip bg-blue-600 text-white font-bold px-3 py-1.5 rounded-full text-xs shadow-sm whitespace-nowrap"
           : "vt-chip bg-white text-slate-600 border border-slate-200 font-medium px-3 py-1.5 rounded-full text-xs hover:bg-slate-50 whitespace-nowrap";
         return `<button type="button" class="${classes}" data-field="${key}" data-id="${opt.id}">${opt.label}</button>`;
@@ -719,9 +703,9 @@ KYT.virtualTrips = (function() {
   function renderCityLibrary() {
     const trip = getActiveTrip();
     if (!trip) return;
-    
+
     const query = (DOM.citySearchInput.value || '').toLowerCase().trim();
-    
+
     const available = window.KYT_CITIES.filter(c => {
       if (!query) return true;
       if (c.name.toLowerCase().includes(query)) return true;
@@ -734,15 +718,12 @@ KYT.virtualTrips = (function() {
       available.sort((a, b) => {
         const aName = a.name.toLowerCase();
         const bName = b.name.toLowerCase();
-        
         if (aName === query && bName !== query) return -1;
         if (aName !== query && bName === query) return 1;
-        
         const aStarts = aName.startsWith(query);
         const bStarts = bName.startsWith(query);
         if (aStarts && !bStarts) return -1;
         if (!aStarts && bStarts) return 1;
-        
         return 0;
       });
     }
@@ -752,123 +733,15 @@ KYT.virtualTrips = (function() {
       return;
     }
 
-    DOM.cityListRoot.innerHTML = available.map(city => {
-      const beats = city.beats || [];
-      const beatCount = beats.length;
+    DOM.cityListRoot.innerHTML = available.map(city =>
+      KYT.ui.renderCityCard(city, {
+        variant: 'library',
+        isAdded: trip.cities.includes(city.id)
+      })
+    ).join('');
 
-      // Intent → colour map for pill badges
-      const intentColor = { spiritual:'purple', cultural:'blue', adventure:'emerald', culinary:'orange' };
-      const iconColor   = { spiritual:'text-purple-500', cultural:'text-blue-500', adventure:'text-emerald-500', culinary:'text-orange-500' };
-
-      const attractionPills = beats.slice(0, 4).map(b => {
-        const primaryIntent = (b.intent || ['cultural'])[0];
-        const col = iconColor[primaryIntent] || 'text-slate-500';
-        return `<button class="vt-attraction-pill inline-flex items-center gap-1 bg-slate-50 border border-slate-200 text-slate-700 text-[10px] font-semibold px-2 py-1 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors cursor-pointer" data-city-id="${city.id}" data-attraction-index="${beats.indexOf(b)}" title="${b.notes || b.title}">
-                  <i data-lucide="${b.icon || 'map-pin'}" class="w-3 h-3 ${col} shrink-0"></i>${b.title}
-                </button>`;
-      }).join('');
-      const moreCount = beatCount > 4 ? `<span class="text-[10px] text-slate-400 font-bold px-1">+${beatCount - 4} more</span>` : '';
-
-      return `
-        <article class="bg-white rounded-2xl shadow-sm border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all" data-city-id="${city.id}">
-          <!-- City Header -->
-          <div class="p-4">
-            <div class="flex justify-between items-start gap-3">
-              <div class="flex-1 min-w-0">
-                <div class="flex items-center gap-2 mb-1 flex-wrap">
-                  <h4 class="font-black text-slate-800 text-base">${city.name}</h4>
-                  ${city.aliases && city.aliases.length ? `<span class="text-xs font-medium text-slate-400">(${city.aliases.join(', ')})</span>` : ''}
-                  <span class="text-[9px] font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full shrink-0">${beatCount} attraction${beatCount !== 1 ? 's' : ''}</span>
-                </div>
-                <p class="text-xs text-slate-500 leading-relaxed line-clamp-2">${city.notes || 'Explore this destination'}</p>
-              </div>
-              <div class="shrink-0 flex items-center gap-2">
-                ${city.lat && city.lng ? `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(city.name + ', India')}" target="_blank" rel="noopener noreferrer" class="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="View on Google Maps" onclick="event.stopPropagation()">
-                  <i data-lucide="map" class="w-4 h-4"></i>
-                </a>` : ''}
-                ${trip.cities.includes(city.id) ? 
-                  `<button class="bg-emerald-100 text-emerald-700 font-bold px-4 py-2 rounded-xl text-xs shadow-sm flex items-center gap-1" disabled>
-                    <i data-lucide="check" class="w-3 h-3"></i> Added
-                  </button>` : 
-                  `<button class="btn-add-city bg-blue-600 text-white font-bold px-4 py-2 rounded-xl text-xs hover:bg-blue-700 active:scale-95 transition-all shadow-sm" data-id="${city.id}">
-                    Add +
-                  </button>`
-                }
-              </div>
-            </div>
-            ${beatCount > 0 ? `<div class="mt-3 flex flex-wrap gap-1.5 vt-attraction-list">${attractionPills}${moreCount}</div>` : ''}
-          </div>
-
-          <!-- Expandable Attraction Detail Section -->
-          <div class="vt-attraction-detail hidden border-t border-slate-100 p-4 space-y-4 bg-slate-50">
-            <button class="ml-auto text-slate-400 hover:text-slate-600 transition-colors" onclick="event.stopPropagation(); this.closest('.vt-attraction-detail').classList.add('hidden');">
-              <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-
-            <!-- Title -->
-            <div>
-              <h5 class="text-lg font-extrabold text-slate-800 vt-detail-title">Attraction</h5>
-            </div>
-
-            <!-- Location -->
-            <div>
-              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Location</p>
-              <div class="flex items-start gap-2">
-                <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 mt-0.5 shrink-0"></i>
-                <p class="text-sm font-bold text-slate-700 vt-detail-where">Location TBD</p>
-              </div>
-            </div>
-
-            <!-- Time -->
-            <div>
-              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Suggested Time</p>
-              <div class="flex items-start gap-2">
-                <i data-lucide="clock" class="w-4 h-4 text-slate-400 mt-0.5 shrink-0"></i>
-                <p class="text-sm font-bold text-slate-700 vt-detail-time">09:00</p>
-              </div>
-            </div>
-
-            <!-- Travel Style -->
-            <div>
-              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Travel Style</p>
-              <div class="flex flex-wrap gap-1.5 vt-detail-intent"></div>
-            </div>
-
-            <!-- Travel Pace -->
-            <div>
-              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Travel Pace</p>
-              <div class="flex flex-wrap gap-1.5 vt-detail-pace"></div>
-            </div>
-
-            <!-- Accessibility -->
-            <div>
-              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Accessibility</p>
-              <p class="text-sm font-bold text-slate-700 capitalize vt-detail-mobility">Easy</p>
-            </div>
-
-            <!-- Dietary (if applicable) -->
-            <div class="vt-detail-dietary hidden">
-              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Dietary Options</p>
-              <div class="flex flex-wrap gap-1.5 vt-detail-diet"></div>
-            </div>
-
-            <!-- Notes -->
-            <div class="pt-2 border-t border-slate-200">
-              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">About This Attraction</p>
-              <p class="text-sm leading-relaxed text-slate-600 font-medium vt-detail-notes">Explore this attraction and soak in the experience.</p>
-            </div>
-
-            <!-- Got It Button -->
-            <button class="w-full py-2 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold rounded-lg text-sm transition-all" onclick="event.stopPropagation(); this.closest('.vt-attraction-detail').classList.add('hidden');">
-              Got It
-            </button>
-          </div>
-        </article>
-      `;
-    }).join('');
     if (window.lucide) lucide.createIcons();
 
-    // Attach click handlers to attraction pills
     document.querySelectorAll('.vt-attraction-pill').forEach(pill => {
       pill.addEventListener('click', (e) => {
         e.preventDefault();
@@ -877,13 +750,11 @@ KYT.virtualTrips = (function() {
         const attractionIndex = parseInt(pill.dataset.attractionIndex, 10);
         const city = window.KYT_CITIES.find(c => c.id === cityId);
         if (city && city.beats && city.beats[attractionIndex]) {
-          const attraction = city.beats[attractionIndex];
-          KYT.virtualTrips.expandAttractionDetail(cityId, attraction);
+          expandAttractionDetail(cityId, city.beats[attractionIndex]);
         }
       });
     });
   }
-
 
   // --- Logic Matching ---
   function dietAllows(beatDiet, selected) {
@@ -910,7 +781,6 @@ KYT.virtualTrips = (function() {
     let steps = [];
     let stepCounter = 0;
 
-    // Filter cities active for the selected pace
     const activeCities = trip.cities.map(cId => window.KYT_CITIES.find(c => c.id === cId)).filter(c => {
       if (!c) return false;
       return !(c.skipOnPace && c.skipOnPace.includes(trip.taste.pace));
@@ -928,11 +798,9 @@ KYT.virtualTrips = (function() {
     const originName = originCityObj ? originCityObj.name : (originCityId === 'delhi' ? 'Delhi' : (originCityId.charAt(0).toUpperCase() + originCityId.slice(1)));
 
     // ── Day 0: Travel & Arrival from origin city to first city ──
-    // "Our days begin with Day 0 to reach first city from origin city, 
-    // Day 0 activities are fluid depending on time of arrival so just one block saying exactly that and Day 1 begins in the morning."
     if (!isAlreadyThere) {
       const driveUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(originName + ' India')}&destination=${encodeURIComponent(firstCity.name + ' India')}&travelmode=driving`;
-      
+
       steps.push({
         id: Date.now().toString() + '_' + (++stepCounter),
         dayId: 0,
@@ -958,7 +826,6 @@ KYT.virtualTrips = (function() {
       const isLastDay = dayIdx === numDays - 1;
       const city = activeCities[dayIdx] || activeCities[activeCities.length - 1];
 
-      // Determine previous night stay base
       let prevStayCityId;
       if (isFirstDay) {
         prevStayCityId = isAlreadyThere ? (trip.originCity !== 'already_there' ? trip.originCity : firstCity.id) : firstCity.id;
@@ -966,7 +833,6 @@ KYT.virtualTrips = (function() {
         prevStayCityId = (trip.nightStays && trip.nightStays[dayId - 1]) || activeCities[Math.min(dayIdx - 1, activeCities.length - 1)]?.id || firstCity.id;
       }
 
-      // Determine tonight's stay
       let tonightStay = (trip.nightStays && trip.nightStays[dayId]);
       if (!tonightStay) {
         if (isFirstDay) {
@@ -974,7 +840,7 @@ KYT.virtualTrips = (function() {
         } else {
           const dist = (window.KYT_DISTANCE_MATRIX && window.KYT_DISTANCE_MATRIX[prevStayCityId]) ? window.KYT_DISTANCE_MATRIX[prevStayCityId][city.id] : null;
           if (dist != null && dist <= 130 && prevStayCityId !== 'overnight_travel') {
-            tonightStay = prevStayCityId; // Excursion default for close cities
+            tonightStay = prevStayCityId;
           } else {
             tonightStay = city.id;
           }
@@ -992,7 +858,6 @@ KYT.virtualTrips = (function() {
       const isOvernightTravel = tonightStay === 'overnight_travel';
       const isEveningTransfer = !isExcursion && !isOvernightTravel && (tonightStay !== city.id);
 
-      // Matched Sightseeing Beats
       const matched = (city.beats || []).filter(b => beatMatches(b, trip.taste)).sort((a, b) => (a.hour || 0) - (b.hour || 0));
       const hasMiddayMeal = matched.some(b => (b.hour >= 12 && b.hour < 15) && (b.icon === 'utensils' || (b.title && /lunch|chaat|thali|food|sweets|petha/i.test(b.title))));
       const hasEveningMeal = matched.some(b => (b.hour >= 18) && (b.icon === 'utensils' || (b.title && /dinner|food|thali|dhabha/i.test(b.title))));
@@ -1076,7 +941,6 @@ KYT.virtualTrips = (function() {
           minute: 30
         });
       } else {
-        // Base stay in current city
         daySteps.push({
           id: Date.now().toString() + '_' + (++stepCounter),
           dayId: dayId,
@@ -1098,7 +962,6 @@ KYT.virtualTrips = (function() {
       let currentHour = (isExcursion || isMorningTransfer) ? 13.5 : 10.0;
       let addedLunch = false;
 
-      // If arriving mid-day from morning transfer or excursion, schedule lunch first
       if (isExcursion || isMorningTransfer) {
         daySteps.push({
           id: Date.now().toString() + '_' + (++stepCounter),
@@ -1131,7 +994,6 @@ KYT.virtualTrips = (function() {
           currentHour = beatHour + 1.5;
         }
 
-        // Add lunch before afternoon beats if not yet added
         if (!addedLunch && !hasMiddayMeal && beatHour >= 13.0) {
           daySteps.push({
             id: Date.now().toString() + '_' + (++stepCounter),
@@ -1153,13 +1015,8 @@ KYT.virtualTrips = (function() {
 
         const h = Math.floor(beatHour);
         const m = Math.round((beatHour - h) * 60);
-        let phase = 'Afternoon';
-        if (h < 12) phase = 'Morning';
-        else if (h >= 12 && h < 15) phase = 'Midday';
-        else if (h >= 15 && h < 18) phase = 'Afternoon';
-        else phase = 'Evening';
-
-        const suggested = `${phase} (~${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')})`;
+        const phase = KYT.ui.hourToPhase(h);
+        const suggested = KYT.ui.formatSuggestedTime(h, m, phase);
 
         daySteps.push({
           id: Date.now().toString() + '_' + (++stepCounter),
@@ -1177,7 +1034,6 @@ KYT.virtualTrips = (function() {
         });
       });
 
-      // Ensure lunch is added if still missing
       if (!addedLunch && !hasMiddayMeal) {
         daySteps.push({
           id: Date.now().toString() + '_' + (++stepCounter),
@@ -1198,7 +1054,6 @@ KYT.virtualTrips = (function() {
 
       // ── PHASE 3: EVENING & NIGHT STAY ──
       if (isOvernightTravel) {
-        // E1: Overnight Travel (NO mentions of train)
         if (!hasEveningMeal) {
           daySteps.push({
             id: Date.now().toString() + '_' + (++stepCounter),
@@ -1234,7 +1089,6 @@ KYT.virtualTrips = (function() {
         });
 
       } else if (isExcursion) {
-        // E2: Return to Excursion Base
         const returnDriveUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(city.name + ' India')}&destination=${encodeURIComponent(prevBaseName + ' India')}&travelmode=driving`;
         daySteps.push({
           id: Date.now().toString() + '_' + (++stepCounter),
@@ -1267,7 +1121,6 @@ KYT.virtualTrips = (function() {
         });
 
       } else if (isEveningTransfer) {
-        // E3: Evening Transfer to Another Base (Explores current city, moves to stay base in evening)
         const transferUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(city.name + ' India')}&destination=${encodeURIComponent(stayCityName + ' India')}&travelmode=driving`;
         daySteps.push({
           id: Date.now().toString() + '_' + (++stepCounter),
@@ -1300,7 +1153,6 @@ KYT.virtualTrips = (function() {
         });
 
       } else {
-        // E4: Base Stay in Current City
         if (!hasEveningMeal) {
           daySteps.push({
             id: Date.now().toString() + '_' + (++stepCounter),
@@ -1338,9 +1190,7 @@ KYT.virtualTrips = (function() {
         });
       }
 
-      // Sort daySteps chronologically by hour/minute
       daySteps.sort((a, b) => ((a.hour || 0) * 60 + (a.minute || 0)) - ((b.hour || 0) * 60 + (b.minute || 0)));
-
       steps = steps.concat(daySteps);
     }
 
@@ -1354,7 +1204,7 @@ KYT.virtualTrips = (function() {
   }
 
   // --- Rendering Builder ---
-  window.deleteVirtualTripStep = function(stepId) {
+  window.deleteVirtualTripStep = function (stepId) {
     const trip = getActiveTrip();
     if (!trip || !trip.steps) return;
     trip.steps = trip.steps.filter(s => s.id !== stepId);
@@ -1406,43 +1256,11 @@ KYT.virtualTrips = (function() {
         const cityName = days[dayId][0].cityName;
         const isDay0 = dayId === 0;
 
-        const stepsHtml = days[dayId].map(beat => {
-          const mapsLink = beat.mapsUrl ? `<a href="${beat.mapsUrl}" target="_blank" rel="noopener" class="inline-flex items-center gap-0.5 text-[9px] font-bold text-blue-500 hover:text-blue-700 mt-1"><i data-lucide="map-pin" class="w-2.5 h-2.5"></i> Map</a>` : '';
-          const notesText = beat.notes ? `<p class="text-[11px] text-slate-500 leading-relaxed mt-1">${beat.notes}</p>` : '';
+        const stepsHtml = days[dayId].map(beat =>
+          KYT.ui.renderStepCard(beat, { variant: 'builder' })
+        ).join('');
 
-          const phaseStyles = {
-            'Arrival': 'bg-emerald-50 text-emerald-700 border-emerald-200',
-            'Morning': 'bg-amber-50 text-amber-700 border-amber-200',
-            'Midday': 'bg-sky-50 text-sky-700 border-sky-200',
-            'Afternoon': 'bg-indigo-50 text-indigo-700 border-indigo-200',
-            'Evening': 'bg-purple-50 text-purple-700 border-purple-200'
-          };
-          const pStyle = phaseStyles[beat.phase] || 'bg-slate-100 text-slate-600 border-slate-200';
-          const phaseBadge = beat.phase ? `<span class="text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md border ${pStyle}">${beat.phase}</span>` : '';
-          const suggestiveText = (beat.suggestedTime && beat.suggestedTime !== beat.phase) ? `<span class="text-[10px] text-slate-400 font-medium">· ${beat.suggestedTime}</span>` : '';
-
-          return `
-            <div class="relative flex items-start gap-3 p-3.5 bg-white rounded-xl border border-slate-100 shadow-sm mt-2 group hover:border-slate-200 transition-colors">
-              <div class="p-2 bg-blue-50 text-blue-600 rounded-lg shrink-0 mt-0.5">
-                <i data-lucide="${beat.icon || 'map-pin'}" class="w-4 h-4"></i>
-              </div>
-              <div class="flex-1 min-w-0 pr-8">
-                <div class="flex items-center gap-1.5 flex-wrap mb-1">
-                  ${phaseBadge}
-                  ${suggestiveText}
-                </div>
-                <p class="text-sm font-bold text-slate-800 leading-tight">${beat.title}</p>
-                ${notesText}
-                ${mapsLink}
-              </div>
-              <button type="button" class="absolute right-2 top-2.5 p-1.5 text-slate-300 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all" onclick="deleteVirtualTripStep('${beat.id}')" title="Delete step">
-                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-              </button>
-            </div>
-          `;
-        }).join('');
-
-        const dayBadge = isDay0 
+        const dayBadge = isDay0
           ? `<span class="text-[10px] font-black text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full uppercase tracking-widest">Day 0: Travel & Arrival</span>`
           : `<span class="text-[10px] font-black text-blue-600 bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-full uppercase tracking-widest">Day ${dayId}</span>`;
 
@@ -1450,7 +1268,7 @@ KYT.virtualTrips = (function() {
           <div class="mb-5">
             <div class="flex items-center gap-2 mb-2">
               ${dayBadge}
-              <span class="text-[11px] font-bold text-slate-500">${cityName}</span>
+              <span class="text-[11px] font-bold text-slate-500">${KYT.utils.escapeHTML(cityName)}</span>
             </div>
             <div class="relative">${stepsHtml}</div>
           </div>
@@ -1458,15 +1276,14 @@ KYT.virtualTrips = (function() {
       });
     }
 
-    // ── Success footer — always visible at the bottom of builder ─────────────────
     const totalSteps = trip.steps.length;
-    const totalDays  = Object.keys(days).length;
+    const totalDays = Object.keys(days).length;
     html += `
       <div class="sticky bottom-0 -mx-4 px-4 pb-4 pt-3 bg-gradient-to-t from-slate-50 via-slate-50/95 to-transparent mt-4">
         <div class="bg-white rounded-2xl border border-slate-200 shadow-md p-4 flex flex-col gap-3">
           <div class="flex items-center gap-2 text-sm text-slate-500">
             <i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 shrink-0"></i>
-            <span><strong class="text-slate-800">${totalSteps} activities</strong> across <strong class="text-slate-800">${totalDays} day${totalDays > 1 ? 's' : ''}</strong> planned for <strong class="text-slate-800">${trip.name}</strong></span>
+            <span><strong class="text-slate-800">${totalSteps} activities</strong> across <strong class="text-slate-800">${totalDays} day${totalDays > 1 ? 's' : ''}</strong> planned for <strong class="text-slate-800">${KYT.utils.escapeHTML(trip.name)}</strong></span>
           </div>
           <div class="flex items-center gap-2 text-sm text-slate-500 mb-1">
             <i data-lucide="calendar" class="w-4 h-4 shrink-0"></i>
@@ -1497,21 +1314,89 @@ KYT.virtualTrips = (function() {
     openCanvas(currentTripId);
   }
 
-  // ─── Navigation ───────────────────────────────────────────────────────────────
-  // Simple page-level navigation. All toolbar buttons use window.location so they
-  // work correctly regardless of which HTML page is currently loaded.
-  function openView()  { window.location.href = 'virtual_trip.html'; }
+  // ─── Navigation & City Detail Slide-Over Delegation ───────────────────────────
+  function openView() { window.location.href = 'virtual_trip.html'; }
   function closeView() { window.location.href = 'index.html'; }
+
+  function openCityDetail(cityId, pushHistory = true) {
+    KYT.ui.cityDetail.open(cityId, pushHistory, {
+      mode: 'add',
+      isCityAdded: (cId) => {
+        const trip = getActiveTrip();
+        return Boolean(trip && trip.cities.includes(cId));
+      },
+      onPrimaryAction: (cId) => {
+        const tripToUse = ensureActiveTrip();
+        if (!tripToUse.cities.includes(cId)) {
+          tripToUse.cities.push(cId);
+          if (tripToUse.steps && tripToUse.steps.length > 0) {
+            appendCitySteps(tripToUse, cId);
+          } else {
+            tripToUse.steps = null;
+          }
+          saveVTrips();
+          if (DOM.citySearchInput) DOM.citySearchInput.value = '';
+          renderCanvas();
+        }
+      }
+    });
+  }
+
+  function closeCityDetail(pushHistory = true) {
+    KYT.ui.cityDetail.close(pushHistory);
+  }
+
+  function addNearby(cityId) {
+    const trip = ensureActiveTrip();
+    if (!trip.cities.includes(cityId)) {
+      trip.cities.push(cityId);
+      if (trip.steps && trip.steps.length > 0) {
+        appendCitySteps(trip, cityId);
+      } else {
+        trip.steps = null;
+      }
+      saveVTrips();
+      renderCanvas();
+
+      const currentCityId = document.getElementById('cd-title')?.dataset.cityId;
+      if (currentCityId) {
+        openCityDetail(currentCityId, false);
+      }
+    }
+  }
+
+  const tasteCodeMap = {
+    intent: { mixed: 'm', spiritual: 's', nature: 'n', cultural: 'c', adventure: 'a', culinary: 'u' },
+    diet: { any: 'a', veg: 'v', jain: 'j', satvik: 'k' },
+    pace: { short: 'h', standard: 's', deep: 'd', relaxed: 'r', fast: 'f' }
+  };
+  const reverseTasteCodeMap = {
+    intent: { m: 'mixed', s: 'spiritual', n: 'nature', c: 'cultural', a: 'adventure', u: 'culinary' },
+    diet: { a: 'any', v: 'veg', j: 'jain', k: 'satvik' },
+    pace: { h: 'short', s: 'standard', d: 'deep', r: 'relaxed', f: 'fast' }
+  };
+
+  function encodeTaste(taste) {
+    return (tasteCodeMap.intent[taste.intent] || 'm') +
+      (tasteCodeMap.diet[taste.diet] || 'a') +
+      (tasteCodeMap.pace[taste.pace] || 's');
+  }
+
+  function decodeTaste(code) {
+    if (!code || code.length !== 3) return ['mixed', 'any', 'standard'];
+    return [
+      reverseTasteCodeMap.intent[code[0]] || 'mixed',
+      reverseTasteCodeMap.diet[code[1]] || 'any',
+      reverseTasteCodeMap.pace[code[2]] || 'standard'
+    ];
+  }
 
   // ─── Init ─────────────────────────────────────────────────────────────────────
   function init() {
     vtrips = loadVTrips();
 
-    // Wire the Close button inside virtual_trip.html
     if (DOM.btnClose) DOM.btnClose.addEventListener('click', closeView);
 
-    // Wire the toolbar compass icon from *any* page.
-    // cloneNode trick removes any stale listeners from prior JS loads.
     const btnOpen = document.getElementById('btn-open-virtual-trips');
     if (btnOpen) {
       const fresh = btnOpen.cloneNode(true);
@@ -1519,7 +1404,7 @@ KYT.virtualTrips = (function() {
       fresh.addEventListener('click', openView);
     }
 
-    // ── Hub ──────────────────────────────────────────────────────────────────────
+    // ── Hub ──
     if (DOM.btnCreate) DOM.btnCreate.addEventListener('click', createNewTrip);
     if (DOM.newNameInput) {
       DOM.newNameInput.addEventListener('keypress', e => {
@@ -1532,14 +1417,13 @@ KYT.virtualTrips = (function() {
         const delBtn = e.target.closest('.btn-del-vt');
         if (delBtn) { e.stopPropagation(); deleteTrip(delBtn.dataset.id); return; }
         const card = e.target.closest('.vt-card');
-                if (card) {
-          const trip = vtrips.find(t => t.id === card.dataset.id);
+        if (card) {
           window.location.href = 'trip_detail.html?id=' + card.dataset.id;
         }
       });
     }
 
-    // ── Canvas ───────────────────────────────────────────────────────────────────
+    // ── Canvas ──
     if (DOM.editNameInput) {
       DOM.editNameInput.addEventListener('change', e => {
         const trip = getActiveTrip();
@@ -1635,7 +1519,7 @@ KYT.virtualTrips = (function() {
       });
     }
 
-    // ── Stay Modal Controls ──────────────────────────────────────────────────────
+    // ── Stay Modal Controls ──
     const stayModalEl = document.getElementById('vt-stay-modal');
     if (stayModalEl) {
       stayModalEl.addEventListener('click', (e) => {
@@ -1722,7 +1606,6 @@ KYT.virtualTrips = (function() {
               trip.steps = null;
             }
             saveVTrips();
-            // Clear search box UX Reset
             if (DOM.citySearchInput) DOM.citySearchInput.value = '';
             renderCanvas();
           }
@@ -1736,23 +1619,37 @@ KYT.virtualTrips = (function() {
       });
     }
 
-    // Bind close button for city detail overlay
+    // ── City Detail Slide-Over Events ──
     const btnCloseCD = document.getElementById('btn-close-city-detail');
     if (btnCloseCD) {
-      btnCloseCD.addEventListener('click', closeCityDetail);
+      btnCloseCD.addEventListener('click', () => closeCityDetail(true));
     }
-    
-    // Bind back button for city detail overlay
+
     const btnBackCD = document.getElementById('btn-back-city-detail');
     if (btnBackCD) {
       btnBackCD.addEventListener('click', () => window.history.back());
     }
-    
-    // Bind click outside panel to close
+
     const cdOverlay = document.getElementById('city-detail-overlay');
     if (cdOverlay) {
       cdOverlay.addEventListener('click', (e) => {
-        if (e.target === cdOverlay) closeCityDetail();
+        if (e.target === cdOverlay) closeCityDetail(true);
+      });
+    }
+
+    const nearbyListEl = document.getElementById('cd-nearby-list');
+    if (nearbyListEl) {
+      nearbyListEl.addEventListener('click', (e) => {
+        const addNearbyBtn = e.target.closest('.btn-nearby-add');
+        if (addNearbyBtn) {
+          e.stopPropagation();
+          addNearby(addNearbyBtn.dataset.nearbyAdd);
+          return;
+        }
+        const nCard = e.target.closest('[data-nearby-id]');
+        if (nCard) {
+          openCityDetail(nCard.dataset.nearbyId, true);
+        }
       });
     }
 
@@ -1771,46 +1668,17 @@ KYT.virtualTrips = (function() {
 
     const btnShareTrip = document.getElementById('btn-share-trip');
     if (btnShareTrip) {
-      btnShareTrip.addEventListener('click', () => {
-        const trip = getActiveTrip();
-        if (!trip || !trip.cities.length) return alert('Add some cities to share this trip!');
-        
-        const url = new URL(window.location.href);
-        url.pathname = url.pathname.replace(/\/[^\/]*$/, '/trip_detail.html');
-        url.search = '';
-        url.searchParams.set('trip', trip.name || 'Shared Trip');
-        url.searchParams.set('cities', trip.cities.join(','));
-        url.searchParams.set('taste', encodeTaste(trip.taste));
-        if (trip.curatedId) {
-          url.searchParams.set('curated', trip.curatedId);
-        }
-        
-        const shareData = {
-          title: `Check out my ${trip.name} on KYT`,
-          text: `I planned a trip on KYT! Check out my itinerary for ${trip.cities.length} cities.`,
-          url: url.toString()
-        };
-
-        if (navigator.share) {
-          navigator.share(shareData).catch(err => console.log('Error sharing:', err));
-        } else {
-          navigator.clipboard.writeText(url.toString())
-            .then(() => alert('Trip link copied to clipboard!'))
-            .catch(err => console.error('Error copying link:', err));
-        }
-      });
+      btnShareTrip.addEventListener('click', () => shareCurrentTrip());
     }
 
-    // Share logic for city detail
     const btnShareCity = document.getElementById('btn-share-city');
     if (btnShareCity) {
       btnShareCity.addEventListener('click', () => {
         const titleEl = document.getElementById('cd-title');
-        const cityId = titleEl.dataset.cityId;
+        const cityId = titleEl?.dataset.cityId;
         if (!cityId) return;
 
         const url = new URL(window.location.href);
-        // Ensure we are pointing to the correct page if shared from somewhere else
         url.pathname = url.pathname.replace(/\/[^\/]*$/, '/virtual_trip.html');
         url.searchParams.set('city', cityId);
 
@@ -1830,8 +1698,7 @@ KYT.virtualTrips = (function() {
       });
     }
 
-    // Routing Logic for Deep Links & History
-    window.addEventListener('popstate', (e) => {
+    window.addEventListener('popstate', () => {
       const p = new URLSearchParams(window.location.search);
       const cId = p.get('city');
       if (cId) {
@@ -1841,59 +1708,47 @@ KYT.virtualTrips = (function() {
       }
     });
 
-    
-    const tasteCodeMap = {
-      intent: { mixed: 'm', spiritual: 's', nature: 'n', cultural: 'c', adventure: 'a', culinary: 'u' },
-      diet: { any: 'a', veg: 'v', jain: 'j', satvik: 'k' },
-      pace: { short: 'h', standard: 's', deep: 'd', relaxed: 'r', fast: 'f' }
-    };
-    const reverseTasteCodeMap = {
-      intent: { m: 'mixed', s: 'spiritual', n: 'nature', c: 'cultural', a: 'adventure', u: 'culinary' },
-      diet: { a: 'any', v: 'veg', j: 'jain', k: 'satvik' },
-      pace: { h: 'short', s: 'standard', d: 'deep', r: 'relaxed', f: 'fast' }
-    };
-
-    function encodeTaste(taste) {
-      return (tasteCodeMap.intent[taste.intent] || 'm') +
-             (tasteCodeMap.diet[taste.diet] || 'a') +
-             (tasteCodeMap.pace[taste.pace] || 's');
-    }
-    
-    function decodeTaste(code) {
-      if (!code || code.length !== 3) return ['mixed', 'any', 'standard'];
-      return [
-        reverseTasteCodeMap.intent[code[0]] || 'mixed',
-        reverseTasteCodeMap.diet[code[1]] || 'any',
-        reverseTasteCodeMap.pace[code[2]] || 'standard'
-      ];
-    }
-
     const params = new URLSearchParams(window.location.search);
     const sharedCity = params.get('city');
     const sharedCities = params.get('cities');
     const sharedTripName = params.get('trip');
     const sharedTaste = params.get('taste');
     const localTripId = params.get('id');
-    
-    // Always launch hub first in virtual_trip.html
+
     if (window.location.pathname.includes('virtual_trip.html')) {
       openHub();
-      
-      if (localTripId && vtrips.some(t => t.id === localTripId)) {
-        // Clean URL
+
+      let activeTripId = localTripId;
+      const aiParam = params.get('ai');
+      if (aiParam && (!activeTripId || !vtrips.some(t => t.id === activeTripId))) {
+        try {
+          const aiData = (window.KYT && KYT.ui && KYT.ui.decodeAiTrip) ? KYT.ui.decodeAiTrip(aiParam) : null;
+          if (aiData) {
+            const importedVTrip = KYT.ui.convertCuratedTripToVirtual(aiData, activeTripId || ('ai_' + Date.now().toString(36)));
+            if (importedVTrip) {
+              importedVTrip.isAiRefined = true;
+              vtrips.unshift(importedVTrip);
+              saveVTrips();
+              activeTripId = importedVTrip.id;
+            }
+          }
+        } catch(e) {}
+      }
+
+      if (activeTripId && vtrips.some(t => t.id === activeTripId)) {
         const url = new URL(window.location.href);
         url.searchParams.delete('id');
+        url.searchParams.delete('ai');
         window.history.replaceState({}, '', url.toString());
-        
-        // Slight delay to ensure DOM is ready
+
         setTimeout(() => {
-            currentTripId = localTripId;
-            const targetTrip = vtrips.find(t => t.id === localTripId);
-            if (targetTrip && targetTrip.steps && targetTrip.steps.length > 0) {
-              openBuilder();
-            } else {
-              openCanvas(localTripId);
-            }
+          currentTripId = activeTripId;
+          const targetTrip = vtrips.find(t => t.id === activeTripId);
+          if (targetTrip && targetTrip.steps && targetTrip.steps.length > 0) {
+            openBuilder();
+          } else {
+            openCanvas(activeTripId);
+          }
         }, 50);
       } else if (sharedCities) {
         try {
@@ -1903,75 +1758,78 @@ KYT.virtualTrips = (function() {
             url.searchParams.delete('cities');
             url.searchParams.delete('taste');
             url.searchParams.delete('curated');
+            url.searchParams.delete('origin');
+            url.searchParams.delete('days');
             window.history.replaceState({}, '', url.toString());
             return;
           }
           const sharedCurated = params.get('curated');
+          const sharedOrigin = params.get('origin');
+          const sharedDays = parseInt(params.get('days'), 10);
           const tasteParts = sharedTaste && sharedTaste.length === 3 ? decodeTaste(sharedTaste) : (sharedTaste ? sharedTaste.split('|') : ['mixed', 'any', 'standard']);
           const fullCities = sharedCities.split(',').map(code => {
-            const c = window.KYT_CITIES ? window.KYT_CITIES.find(x => x.code === code || x.id === code) : null;
+            const c = KYT.ui.resolveCity(code);
             return c ? c.id : code;
           });
 
-          // Check if it's a curated trip and populate curated steps
-          let curatedSteps = null;
-          let curatedObj = null;
-          if (sharedCurated && window.KYT_CURATED_TRIPS) {
-            curatedObj = window.KYT_CURATED_TRIPS.find(t => t.id === sharedCurated);
-            if (curatedObj && curatedObj.days) {
-              curatedSteps = [];
-              let stepCounter = 0;
-              curatedObj.days.forEach(d => {
-                (d.steps || []).forEach(s => {
-                  curatedSteps.push({
-                    id: Date.now().toString() + '_' + (++stepCounter),
-                    dayId: d.day,
-                    cityName: d.cityName || 'Destination',
-                    title: s.title,
-                    notes: s.notes || '',
-                    where: s.where || d.cityName || 'Destination',
-                    mapsUrl: s.mapsUrl || '',
-                    hour: s.hour != null ? s.hour : 9,
-                    minute: s.minute || 0,
-                    icon: s.icon || 'map-pin'
-                  });
-                });
+          const resolvedOrigin = (sharedOrigin === '0' || sharedOrigin === 'already_there')
+            ? 'already_there'
+            : (((window.KYT && KYT.ui && KYT.ui.resolveCity) ? KYT.ui.resolveCity(sharedOrigin)?.id : null) || sharedOrigin || 'bengaluru');
+          const resolvedDuration = (!isNaN(sharedDays) && sharedDays > 0) ? sharedDays : fullCities.length;
+
+          let newTrip = null;
+          const curatedObj = (sharedCurated && window.KYT_CURATED_TRIPS)
+            ? window.KYT_CURATED_TRIPS.find(t => t.id === sharedCurated)
+            : null;
+
+          if (curatedObj) {
+            newTrip = KYT.ui.convertCuratedTripToVirtual(curatedObj, Date.now().toString());
+            if (sharedTripName) newTrip.name = sharedTripName;
+            newTrip.cities = fullCities;
+            if (sharedOrigin) newTrip.originCity = resolvedOrigin;
+            if (!isNaN(sharedDays) && sharedDays > 0) newTrip.duration = sharedDays;
+            if (sharedTaste) {
+              newTrip.taste = {
+                intent: tasteParts[0] || newTrip.taste.intent,
+                diet: tasteParts[1] || newTrip.taste.diet,
+                pace: tasteParts[2] || newTrip.taste.pace
+              };
+            }
+            if (Array.isArray(curatedObj.cities)) {
+              const extraCities = fullCities.filter(c => !curatedObj.cities.includes(c));
+              extraCities.forEach(extraC => {
+                appendCitySteps(newTrip, extraC);
               });
             }
-          }
-
-          const newTrip = {
-            id: Date.now().toString(),
-            name: sharedTripName || (curatedObj ? curatedObj.title : 'Shared Trip'),
-            cities: fullCities,
-            taste: {
-              intent: tasteParts[0] || (curatedObj?.taste?.intent || 'mixed'),
-              diet: tasteParts[1] || (curatedObj?.taste?.diet || 'any'),
-              pace: tasteParts[2] || (curatedObj?.taste?.pace || 'standard')
-            },
-            steps: curatedSteps,
-            curatedId: sharedCurated || ''
-          };
-
-          // If extra cities were added on top of curated cities, append steps for them
-          if (curatedSteps && curatedObj && Array.isArray(curatedObj.cities)) {
-            const extraCities = fullCities.filter(c => !curatedObj.cities.includes(c));
-            extraCities.forEach(extraC => {
-              appendCitySteps(newTrip, extraC);
-            });
+          } else {
+            newTrip = {
+              id: Date.now().toString(),
+              name: sharedTripName || 'Shared Trip',
+              originCity: resolvedOrigin,
+              duration: resolvedDuration,
+              cities: fullCities,
+              taste: {
+                intent: tasteParts[0] || 'mixed',
+                diet: tasteParts[1] || 'any',
+                pace: tasteParts[2] || 'standard'
+              },
+              steps: null,
+              curatedId: ''
+            };
           }
 
           vtrips.push(newTrip);
           saveVTrips();
-          
-          // Clean URL so refresh doesn't duplicate
+
           const url = new URL(window.location.href);
           url.searchParams.delete('trip');
           url.searchParams.delete('cities');
           url.searchParams.delete('taste');
           url.searchParams.delete('curated');
+          url.searchParams.delete('origin');
+          url.searchParams.delete('days');
           window.history.replaceState({}, '', url.toString());
-          
+
           currentTripId = newTrip.id;
           if (newTrip.steps && newTrip.steps.length > 0) {
             openBuilder();
@@ -1983,301 +1841,11 @@ KYT.virtualTrips = (function() {
         }
       }
     }
-    
+
     if (sharedCity) {
       setTimeout(() => {
         openCityDetail(sharedCity, false);
       }, 100);
-    }
-  }
-
-  function openCityDetail(cityId, pushHistory = true) {
-    const city = window.KYT_CITIES.find(c => c.id === cityId);
-    if (!city) return;
-
-    if (pushHistory) {
-      const url = new URL(window.location.href);
-      url.searchParams.set('city', cityId);
-      window.history.pushState({ cityId }, '', url.toString());
-    }
-
-    const overlay = document.getElementById('city-detail-overlay');
-    const panel = document.getElementById('city-detail-panel');
-    if (!overlay || !panel) return;
-
-    // Populate data
-    document.getElementById('cd-title').textContent = city.name;
-    document.getElementById('cd-title').dataset.cityId = city.id;
-    document.getElementById('cd-state-tag').textContent = city.state || 'India';
-    document.getElementById('cd-description').textContent = city.notes || 'A beautiful destination to explore.';
-
-    // YouTube Video Carousel Logic
-    const heroPlaceholder = document.getElementById('cd-hero-placeholder');
-    const headerDiv = heroPlaceholder.parentElement;
-    
-    // Cleanup old iframe/controls if exists
-    const oldIframe = document.getElementById('cd-hero-yt');
-    if (oldIframe) oldIframe.remove();
-    const oldControls = document.getElementById('cd-yt-controls');
-    if (oldControls) oldControls.remove();
-
-    const allVideos = window.KYT_CITY_VIDEOS ? (window.KYT_CITY_VIDEOS[city.id] || []) : [];
-    
-    // Use all available videos (ignoring strict language constraints) to increase relevance
-    // and fallback to Hindi/local language videos if they are more appropriate.
-    let videos = allVideos;
-
-    if (videos.length > 0) {
-      heroPlaceholder.classList.add('hidden');
-      
-      let currentVidIdx = 0;
-      
-      const iframe = document.createElement('iframe');
-      iframe.id = 'cd-hero-yt';
-      iframe.className = 'absolute inset-0 w-full h-full object-cover z-0';
-      iframe.src = `https://www.youtube-nocookie.com/embed/${videos[currentVidIdx].id}?rel=0&modestbranding=1`;
-      iframe.allowFullscreen = true;
-      iframe.style.border = 'none';
-      
-      headerDiv.insertBefore(iframe, heroPlaceholder);
-      
-      if (videos.length > 1) {
-        const controls = document.createElement('div');
-        controls.id = 'cd-yt-controls';
-        controls.className = 'absolute inset-0 pointer-events-none flex justify-between items-center px-2 z-10';
-        controls.innerHTML = `
-          <button class="pointer-events-auto bg-black/40 hover:bg-black/60 backdrop-blur-md text-white p-2 rounded-full transition-colors" id="btn-yt-prev">
-            <i data-lucide="chevron-left" class="w-4 h-4"></i>
-          </button>
-          <button class="pointer-events-auto bg-black/40 hover:bg-black/60 backdrop-blur-md text-white p-2 rounded-full transition-colors" id="btn-yt-next">
-            <i data-lucide="chevron-right" class="w-4 h-4"></i>
-          </button>
-        `;
-        headerDiv.appendChild(controls);
-        
-        document.getElementById('btn-yt-prev').onclick = (e) => {
-          e.stopPropagation();
-          currentVidIdx = (currentVidIdx - 1 + videos.length) % videos.length;
-          iframe.src = `https://www.youtube-nocookie.com/embed/${videos[currentVidIdx].id}?rel=0&modestbranding=1`;
-        };
-        document.getElementById('btn-yt-next').onclick = (e) => {
-          e.stopPropagation();
-          currentVidIdx = (currentVidIdx + 1) % videos.length;
-          iframe.src = `https://www.youtube-nocookie.com/embed/${videos[currentVidIdx].id}?rel=0&modestbranding=1`;
-        };
-      }
-    } else {
-      heroPlaceholder.classList.remove('hidden');
-    }
-
-    // Populate Attractions
-    const attrList = document.getElementById('cd-attractions-list');
-    if (city.beats && city.beats.length > 0) {
-      attrList.innerHTML = city.beats.map(b => {
-        const intentMap = {
-          spiritual: { icon: "om", color: "purple" },
-          cultural: { icon: "compass", color: "blue" },
-          heritage: { icon: "landmark", color: "amber" },
-          nature: { icon: "tree-pine", color: "emerald" },
-          leisure: { icon: "coffee", color: "orange" },
-          adventure: { icon: "mountain", color: "red" }
-        };
-        const intents = (b.intent || []).map(intent => {
-          const map = intentMap[intent] || { icon: "star", color: "slate" };
-          return `<span class="inline-flex items-center gap-1 bg-${map.color}-50 border border-${map.color}-200 text-${map.color}-700 text-[10px] font-semibold px-2.5 py-1 rounded-lg">
-                    <i data-lucide="${map.icon}" class="w-3 h-3"></i> ${intent.charAt(0).toUpperCase() + intent.slice(1)}
-                  </span>`;
-        }).join('');
-
-        const paceLabels = { short: '⚡ Short (< 1 hour)', standard: '🚶 Standard (1-2 hours)', deep: '🔍 Deep Dive (2+ hours)' };
-        const paces = (b.pace || ['standard']).map(pace => {
-          return `<span class="inline-flex items-center gap-1 bg-slate-100 border border-slate-200 text-slate-700 text-[10px] font-semibold px-2.5 py-1 rounded-lg">
-                    ${paceLabels[pace] || pace}
-                  </span>`;
-        }).join('');
-
-        const mobilityLabels = { easy: '♿ Easy Access', walk: '🚶 Walking Required', trek: '🧗 Trek/Strenuous' };
-        const mobility = mobilityLabels[b.mobility] || (b.mobility || 'Easy');
-        const formattedHour = b.hour ? (b.hour.toString().padStart(2, '0') + ':00') : 'N/A';
-
-        return `
-        <details class="group bg-white rounded-xl border border-slate-100 shadow-sm mb-3">
-          <summary class="flex items-center justify-between p-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-            <div class="flex items-center gap-3">
-              <div class="bg-blue-50 p-2 rounded-lg text-blue-600 shrink-0">
-                <i data-lucide="${b.icon || 'map-pin'}" class="w-5 h-5"></i>
-              </div>
-              <h4 class="font-bold text-slate-800 text-base m-0">${b.title}</h4>
-            </div>
-            <div class="text-slate-400 group-open:rotate-180 transition-transform">
-              <i data-lucide="chevron-down" class="w-5 h-5"></i>
-            </div>
-          </summary>
-          
-          <div class="p-4 pt-0 border-t border-slate-50">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <div>
-                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-1">Location</p>
-                <div class="flex items-center gap-1.5 text-sm font-medium text-slate-700">
-                  <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 shrink-0"></i> <span class="truncate">${b.where || 'Various'}</span>
-                </div>
-              </div>
-              <div>
-                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-1">Suggested Time</p>
-                <div class="flex items-center gap-1.5 text-sm font-medium text-slate-700">
-                  <i data-lucide="clock" class="w-4 h-4 text-slate-400 shrink-0"></i> ${formattedHour}
-                </div>
-              </div>
-            </div>
-
-            <div class="mt-4 space-y-3">
-              ${intents ? `<div>
-                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-1.5">Travel Style</p>
-                <div class="flex flex-wrap gap-1.5">${intents}</div>
-              </div>` : ''}
-              
-              ${paces ? `<div>
-                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-1.5">Travel Pace</p>
-                <div class="flex flex-wrap gap-1.5">${paces}</div>
-              </div>` : ''}
-            </div>
-
-            <div class="mt-4">
-              <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-1">Accessibility</p>
-              <p class="text-sm font-medium text-slate-700 flex items-center gap-1.5"><i data-lucide="footprints" class="w-4 h-4 text-slate-400 shrink-0"></i> ${mobility}</p>
-            </div>
-
-            ${b.notes ? `
-            <div class="mt-4 pt-3 border-t border-slate-50">
-              <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-1.5">About this attraction</p>
-              <p class="text-sm text-slate-600 leading-relaxed">${b.notes}</p>
-            </div>` : ''}
-          </div>
-        </details>
-        `;
-      }).join('');
-    } else {
-      attrList.innerHTML = `<p class="text-xs text-slate-400 italic">No top attractions listed yet.</p>`;
-    }
-
-    // Main Add button logic
-    const mainAdd = document.getElementById('cd-btn-add-main');
-    const trip = getActiveTrip();
-    if (trip && trip.cities.includes(city.id)) {
-      mainAdd.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> Added`;
-      mainAdd.classList.replace('bg-blue-600', 'bg-emerald-600');
-      mainAdd.disabled = true;
-    } else {
-      mainAdd.innerHTML = `<i data-lucide="plus" class="w-4 h-4"></i> Add to Trip`;
-      mainAdd.classList.replace('bg-emerald-600', 'bg-blue-600');
-      mainAdd.disabled = false;
-      mainAdd.onclick = () => {
-        const tripToUse = ensureActiveTrip();
-        if (!tripToUse.cities.includes(city.id)) {
-          tripToUse.cities.push(city.id);
-          if (tripToUse.steps && tripToUse.steps.length > 0) {
-            appendCitySteps(tripToUse, city.id);
-          } else {
-            tripToUse.steps = null;
-          }
-          saveVTrips();
-          if (DOM.citySearchInput) DOM.citySearchInput.value = '';
-          renderCanvas();
-          // Update button state immediately without closing the panel
-          mainAdd.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> Added`;
-          mainAdd.classList.replace('bg-blue-600', 'bg-emerald-600');
-          mainAdd.disabled = true;
-          lucide.createIcons();
-        }
-      };
-    }
-
-    // Populate Nearby Cities using Distance Matrix
-    const nearbyList = document.getElementById('cd-nearby-list');
-    if (window.KYT_DISTANCE_MATRIX && window.KYT_DISTANCE_MATRIX[city.id]) {
-      // Get all nearby cities and sort by distance
-      const nearby = Object.entries(window.KYT_DISTANCE_MATRIX[city.id])
-        .sort((a, b) => a[1] - b[1])
-        .slice(0, 8); // top 8 closest
-      
-      if (nearby.length > 0) {
-        const CITY_ALIASES = { bangalore: 'bengaluru', mangalore: 'udupi', mangaluru: 'udupi', hubballi: 'hubli' };
-        nearbyList.innerHTML = nearby.map(([nId, dist]) => {
-          const targetId = CITY_ALIASES[nId] || nId;
-          const nCity = window.KYT_CITIES.find(c => c.id === targetId);
-          if (!nCity) return '';
-          const isAdded = trip && trip.cities.includes(targetId);
-          const btnHtml = isAdded 
-            ? `<button class="w-full mt-2 py-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-[10px] font-bold" disabled>Added</button>`
-            : `<button class="w-full mt-2 py-1.5 bg-slate-100 text-slate-700 hover:bg-blue-600 hover:text-white rounded-lg text-[10px] font-bold transition-colors" onclick="KYT.virtualTrips.addNearby('${targetId}')">Add +</button>`;
-          
-          return `
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3 cursor-pointer hover:border-blue-300 transition-colors flex flex-col h-full" onclick="KYT.virtualTrips.openCityDetail('${targetId}')">
-              <h4 class="font-black text-slate-800 text-xs truncate">${nCity.name}</h4>
-              <p class="text-[10px] text-slate-500 font-medium mb-1.5">${dist} km away</p>
-              <p class="text-[10px] text-slate-500 leading-tight line-clamp-3 mb-2 flex-1">${nCity.notes || 'Explore this nearby destination.'}</p>
-              <div class="mt-auto">
-                ${btnHtml}
-              </div>
-            </div>
-          `;
-        }).join('');
-      } else {
-        nearbyList.innerHTML = `<p class="text-xs text-slate-400 italic px-5">No nearby cities found within 600km.</p>`;
-      }
-    } else {
-      nearbyList.innerHTML = `<p class="text-xs text-slate-400 italic px-5">Distance matrix not loaded.</p>`;
-    }
-
-    if (window.lucide) lucide.createIcons();
-
-    // Show overlay
-    overlay.classList.remove('hidden');
-    // small delay to allow display block to take effect before animating opacity and transform
-    setTimeout(() => {
-      overlay.classList.remove('opacity-0');
-      panel.classList.remove('translate-y-full', 'md:translate-x-full');
-    }, 10);
-  }
-
-  function closeCityDetail(pushHistory = true) {
-    const overlay = document.getElementById('city-detail-overlay');
-    const panel = document.getElementById('city-detail-panel');
-    if (!overlay || !panel) return;
-
-    if (pushHistory) {
-      const url = new URL(window.location.href);
-      if (url.searchParams.has('city')) {
-        url.searchParams.delete('city');
-        window.history.pushState({ cityId: null }, '', url.toString());
-      }
-    }
-
-    overlay.classList.add('opacity-0');
-    panel.classList.add('translate-y-full', 'md:translate-x-full');
-    
-    setTimeout(() => {
-      overlay.classList.add('hidden');
-    }, 300); // match transition duration
-  }
-  
-  function addNearby(cityId) {
-    const trip = ensureActiveTrip();
-    if (!trip.cities.includes(cityId)) {
-      trip.cities.push(cityId);
-      if (trip.steps && trip.steps.length > 0) {
-        appendCitySteps(trip, cityId);
-      } else {
-        trip.steps = null;
-      }
-      saveVTrips();
-      renderCanvas();
-      
-      // Refresh the currently open city detail to update the nearby buttons
-      const currentCityId = document.getElementById('cd-title').dataset.cityId;
-      if (currentCityId) {
-        openCityDetail(currentCityId, false);
-      }
     }
   }
 
@@ -2290,7 +1858,7 @@ KYT.virtualTrips = (function() {
   async function useAsMyTrip(tripId) {
     const trip = vtrips.find(t => t.id === tripId);
     if (!trip || !trip.steps || trip.steps.length === 0) return;
-    
+
     const currentStore = KYT.store.get();
     if (currentStore && currentStore.stepsData && currentStore.stepsData.length > 0) {
       if (!confirm(`This will overwrite your current active trip ("${currentStore.tripName}"). Do you want to proceed?`)) {
@@ -2298,15 +1866,13 @@ KYT.virtualTrips = (function() {
       }
     }
     const dateInput = document.getElementById('vt-start-date');
-    let startDate = new Date(); // default today
+    let startDate = new Date();
     if (dateInput && dateInput.value) {
       startDate = new Date(dateInput.value);
     }
-    
-    // Set time to start of day for base calculation
+
     startDate.setHours(0, 0, 0, 0);
 
-    // Group steps by dayId to eliminate time collisions and ensure sequential ordering
     const stepsByDay = {};
     trip.steps.forEach(s => {
       const dId = s.dayId != null ? s.dayId : 1;
@@ -2330,19 +1896,16 @@ KYT.virtualTrips = (function() {
 
       daySteps.forEach((s, stepInDayIdx) => {
         const stepDate = new Date(targetDay);
-        
+
         if (dayId === 0) {
-          // Day 0: Travel & Arrival in late afternoon
           stepDate.setHours(16, 0, 0, 0);
         } else {
-          // Indicative hour & minute
           let h = s.hour != null ? s.hour : 9;
           let m = s.minute != null ? s.minute : 0;
           stepDate.setHours(h, m, 0, 0);
 
-          // Guarantee strictly increasing times to prevent any collisions or unstable sorting
           if (stepInDayIdx > 0 && stepDate.getTime() <= prevTimeForDay) {
-            const nextTime = new Date(prevTimeForDay + 45 * 60 * 1000); // 45 minute buffer
+            const nextTime = new Date(prevTimeForDay + 45 * 60 * 1000);
             stepDate.setTime(nextTime.getTime());
           }
         }
@@ -2368,7 +1931,6 @@ KYT.virtualTrips = (function() {
     KYT.store.setCurrentIndex(0);
     await KYT.store.saveData();
 
-    // Redirect to view_trip.html (Now cards)
     window.location.href = 'view_trip.html';
   }
 
@@ -2392,7 +1954,3 @@ KYT.virtualTrips = (function() {
 
   return api;
 })();
-
-
-
-
