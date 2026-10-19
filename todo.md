@@ -221,6 +221,20 @@
     - **Automatic Plan Decompression on Recipient Device**: When a companion opens the link, [`trip_detail.html`](file:///C:/Venkatesh/KYT/trip_detail.html) decompresses the plan, restores all 18 customized steps and timings, auto-generates Google Maps links dynamically, saves the trip into `localStorage`, and cleans `plan` from the address bar via `history.replaceState`.
     - **Full Test Verification**: **All 56 tests pass (0 failures).**
 
+31. **Cloudflare Worker URL Shortener Integration (Ultra-Short 55-char links)**
+    - **Worker & KV Namespace Setup**:
+      - Created [`cloudflare-worker/worker.js`](file:///C:/Venkatesh/KYT/cloudflare-worker/worker.js) handling `POST /api/trip` (stores itinerary JSON in `TRIP_KV` with 60-day auto-expiry, returns 6-character random alphanumeric code `id`) and `GET /api/trip/:id` (retrieves stored trip with full CORS support).
+      - User deployed the worker to `https://kyt-share.deshvenkatesh.workers.dev` bound to KV namespace `TRIP_KV`.
+    - **Front-End Integration & Robust Protocol Handling**:
+      - Configured `window.KYT_SHORTENER_URL = 'https://kyt-share.deshvenkatesh.workers.dev'` in [`trip_detail.html`](file:///C:/Venkatesh/KYT/trip_detail.html).
+      - Added `getShortenerEndpoint()` helper ensuring protocol normalization (`https://` automatically prepended if omitted) for both link generation (`POST /api/trip`) and retrieval (`GET /api/trip/:id`).
+      - Verified live end-to-end worker connectivity: health check, trip creation, and trip retrieval tests all returned HTTP 200 with stored itinerary intact.
+      - Preserved seamless fallback to browser-deflated compact link (`&plan=...`) if worker is unreachable.
+    - **Test Suite**:
+      - Added automated E2E test in [`tests/e2e/04-passport-curated-pwa.test.js`](file:///C:/Venkatesh/KYT/tests/e2e/04-passport-curated-pwa.test.js) validating `?c=` shortcode generation upon privacy consent and cross-device restoration into a fresh browser session.
+      - Bumped service worker cache to `kyt-v46` in [`sw.js`](file:///C:/Venkatesh/KYT/sw.js).
+      - **All 57 automated tests pass (57 pass, 0 fail).**
+
 ---
 
 ## 🟡 In Progress / Under Execution

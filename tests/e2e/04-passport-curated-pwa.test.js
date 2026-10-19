@@ -307,4 +307,97 @@ test('importing a compressed plan parameter into trip_detail restores customized
   await context.close();
 });
 
+test('sharing a refined trip with shortener generates ?c= link and loading ?c= restores trip', async () => {
+  const { context, page } = await newPhone(env.browser);
+  await context.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: env.base });
+
+  const corsHeaders = {
+    'access-control-allow-origin': '*',
+    'access-control-allow-methods': 'GET, POST, OPTIONS',
+    'access-control-allow-headers': 'Content-Type'
+  };
+
+  let storedTrip = null;
+  await context.route(/\/api\/trip/, async route => {
+    const req = route.request();
+    if (req.method() === 'OPTIONS') {
+      return route.fulfill({ status: 204, headers: corsHeaders });
+    }
+    if (req.method() === 'POST') {
+      storedTrip = JSON.parse(req.postData());
+      return route.fulfill({
+        status: 200,
+        headers: corsHeaders,
+        contentType: 'application/json',
+        body: JSON.stringify({ id: 'abc123', success: true })
+      });
+    } else if (req.method() === 'GET') {
+      return route.fulfill({
+        status: 200,
+        headers: corsHeaders,
+        contentType: 'application/json',
+        body: JSON.stringify(storedTrip)
+      });
+    }
+    route.continue();
+  });
+
+  const seededTrip = {
+    id: 'trip_worker_test',
+    name: 'Shared Shortener Trip',
+    duration: 1,
+    originCity: 'bengaluru',
+    cities: ['mum'],
+    taste: { intent: 'mixed', diet: 'any', pace: 'standard' },
+    steps: [
+      { dayId: 1, hour: 11, minute: 30, title: 'Private Heritage Walk', where: 'Fort Mumbai', icon: 'footprints' }
+    ]
+  };
+
+  await page.goto(`${env.base}/trip_detail.html`);
+  await page.evaluate(trip => {
+    localStorage.setItem('kyt_virtual_trips', JSON.stringify([trip]));
+  }, seededTrip);
+
+  await page.goto(`${env.base}/trip_detail.html?id=trip_worker_test`);
+  await page.waitForSelector('#btn-share-trip');
+
+  await page.evaluate(() => { navigator.share = undefined; });
+  await page.click('#btn-share-trip');
+
+  await page.waitForSelector('#share-consent-modal:not(.hidden)');
+  await page.check('#share-privacy-consent-cb');
+  await page.click('#btn-confirm-share-url');
+  await page.waitForTimeout(300);
+
+  const copiedLink = await page.evaluate(() => navigator.clipboard.readText());
+  assert.ok(copiedLink.includes('?c=abc123'), `Link must contain shortcode ?c=abc123, got ${copiedLink}`);
+  assert.ok(copiedLink.length < 80, `Link length must be under 80 characters, got ${copiedLink.length}`);
+
+  // Test loading a new clean browser session with this ?c= link
+  const { context: context2, page: page2 } = await newPhone(env.browser);
+  await context2.route(/\/api\/trip/, async route => {
+    const req = route.request();
+    if (req.method() === 'OPTIONS') {
+      return route.fulfill({ status: 204, headers: corsHeaders });
+    }
+    return route.fulfill({
+      status: 200,
+      headers: corsHeaders,
+      contentType: 'application/json',
+      body: JSON.stringify(storedTrip)
+    });
+  });
+
+  await page2.goto(`${env.base}/trip_detail.html?c=abc123`);
+  await page2.waitForSelector('#refined-itinerary-section > div');
+
+  const pageText = await page2.locator('#refined-itinerary-section').innerText();
+  assert.match(pageText, /Private Heritage Walk/);
+  assert.match(pageText, /Fort Mumbai/);
+
+  await context2.close();
+  await context.close();
+});
+
 
