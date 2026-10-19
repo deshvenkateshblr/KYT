@@ -71,6 +71,32 @@ test('passport: the visit date can be edited and persists; Undo Visit removes th
   await context.close();
 });
 
+test('passport search filters cities by name, alias, and state, with clear search support', async () => {
+  const { context, page } = await newPhone(env.browser);
+  await page.goto(env.base + '/visited.html');
+  await page.waitForSelector('#cards-container');
+
+  // Search by alias "Kashi" -> Varanasi
+  await page.fill('#search-input', 'kashi');
+  await page.waitForTimeout(100);
+  const matchedNames = await page.$$eval('#cards-container h3', hs => hs.map(h => h.textContent.trim()));
+  assert.ok(matchedNames.includes('Varanasi'));
+  assert.ok(matchedNames.length <= 3);
+
+  // Search by unknown query -> empty state
+  await page.fill('#search-input', 'zzzzqqq');
+  await page.waitForTimeout(100);
+  assert.match(await page.locator('#cards-container').innerText(), /No destinations found/);
+
+  // Clear search via button
+  await page.click('#btn-clear-search');
+  await page.waitForTimeout(100);
+  const total = await page.getByRole('button', { name: /Mark Visited/ }).count();
+  assert.ok(total >= 100);
+
+  await context.close();
+});
+
 // ── Curated trips ───────────────────────────────────────────────────────────
 test('curated trips list shows the approved trips and the filter narrows by travel style', async () => {
   const { context, page } = await newPhone(env.browser);

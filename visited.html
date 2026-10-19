@@ -4,67 +4,139 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>KYT - My Passport</title>
-  <link rel="stylesheet" href="./css/index.css">
-  <script src="./lib/tailwindcss.js"></script>
-  <script src="./lib/lucide.js"></script>
+  <link rel="icon" type="image/jpeg" href="./icons/KYT.jpg">
+  <link rel="stylesheet" href="./css/index.css?v=1791377680">
+  <script src="./lib/tailwindcss.js?v=1791377680"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="./lib/lucide.js?v=1791377680"></script>
   <style>
     body { 
-      background-color: #f1f5f9; 
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f8fafc; 
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       -webkit-tap-highlight-color: transparent;
-    }
-    .glass-header {
-      background: rgba(241, 245, 249, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
     }
   </style>
 </head>
-<body class="pb-24">
+<body class="min-h-screen text-slate-800 pb-24">
 
   <!-- Floating App Toolbar (Driven by KYT.header.renderMainToolbar) -->
-  <header id="main-toolbar" class="w-full max-w-md mx-auto flex justify-between items-center z-[60] bg-white/50 backdrop-blur-md rounded-2xl p-2 border border-white/60 shadow-sm mt-4 sm:mt-8 px-3 sm:px-4 mb-3 relative">
+  <header id="main-toolbar" class="w-full max-w-md mx-auto flex justify-between items-center z-[60] bg-white/50 backdrop-blur-md rounded-2xl p-2 border border-white/60 shadow-sm mt-3 sm:mt-6 px-3 sm:px-4 mb-3 relative">
   </header>
 
-  <main class="p-4 flex flex-col gap-6">
+  <main class="flex flex-col gap-5 sm:gap-6">
 
-    <div class="text-center mt-2 mb-2">
-      <h2 class="text-2xl font-black tracking-tight text-slate-800">Been There, Done That!</h2>
-      <p class="text-sm text-slate-500 mt-2 max-w-xs mx-auto">Your epic travel hit list. Keep exploring, keep collecting!</p>
-      <div class="mt-3">
-        <span class="text-xs font-bold text-blue-600 bg-blue-50 px-3.5 py-1.5 rounded-full border border-blue-100 shadow-xs inline-block" id="verified-count">0 Visited</span>
-      </div>
-      
-      <!-- Filter and Sort Controls -->
-      <div class="flex items-center justify-center gap-3 mt-5">
-        <div class="relative">
-          <select id="filter-select" class="appearance-none bg-white border border-slate-200 text-slate-700 py-2 pl-3 pr-8 rounded-[12px] text-sm font-bold shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option value="all">All Cities</option>
-            <option value="visited">Visited</option>
-            <option value="unvisited">Unvisited</option>
-          </select>
-          <i data-lucide="filter" class="w-4 h-4 text-slate-400 absolute right-3 top-2.5 pointer-events-none"></i>
+    <!-- Passport Hero Section -->
+    <section class="max-w-6xl mx-auto px-4 pt-2 sm:pt-4 w-full">
+      <div class="bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden border border-indigo-900/50">
+        <!-- Ambient Decorative Effects -->
+        <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-blue-500/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -left-12 -top-12 w-64 h-64 bg-amber-400/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute right-8 top-1/2 -translate-y-1/2 opacity-5 pointer-events-none hidden sm:block">
+          <i data-lucide="compass" class="w-56 h-56 text-white"></i>
         </div>
-        <div class="relative">
-          <select id="sort-select" class="appearance-none bg-white border border-slate-200 text-slate-700 py-2 pl-3 pr-8 rounded-[12px] text-sm font-bold shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option value="default">Default Sort</option>
-            <option value="recent">Recent First</option>
-            <option value="alpha">A-Z</option>
-          </select>
-          <i data-lucide="arrow-up-down" class="w-4 h-4 text-slate-400 absolute right-3 top-2.5 pointer-events-none"></i>
+
+        <div class="relative z-10 max-w-2xl text-center sm:text-left mx-auto sm:mx-0">
+          <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-xs font-bold text-amber-300 mb-3 shadow-inner">
+            <i data-lucide="stamp" class="w-3.5 h-3.5 text-amber-300"></i>
+            <span>Official Travel Passport</span>
+          </div>
+
+          <h1 class="text-2xl sm:text-4xl font-black tracking-tight leading-tight text-white mb-2">
+            Been There, Done That!
+          </h1>
+          <p class="text-slate-300 text-xs sm:text-sm sm:text-base leading-relaxed font-medium max-w-lg mb-5">
+            Your epic travel hit list across India. Mark the cities you've visited, collect stamps, and track your wanderlust journey.
+          </p>
+
+          <!-- Passport Stats Card -->
+          <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+            <!-- Large Prominent Visited Counter -->
+            <div class="inline-flex items-center gap-3 px-4 py-2.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-sm">
+              <div class="w-9 h-9 rounded-xl bg-amber-400/20 text-amber-300 flex items-center justify-center shrink-0">
+                <i data-lucide="award" class="w-5 h-5"></i>
+              </div>
+              <div class="flex flex-col text-left">
+                <span class="text-[9px] font-black uppercase tracking-widest text-slate-300">Passport Status</span>
+                <span class="text-lg sm:text-2xl font-black text-white tracking-tight leading-none" id="verified-count">0 Visited</span>
+              </div>
+            </div>
+
+            <!-- Total Cities / Percentage Pill -->
+            <div class="inline-flex items-center gap-2 px-3.5 py-2.5 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl text-xs font-bold text-slate-200">
+              <i data-lucide="map-pin" class="w-4 h-4 text-blue-400 shrink-0"></i>
+              <span id="verified-progress">0% of India Explored</span>
+            </div>
+          </div>
+
+          <!-- Animated Progress Bar -->
+          <div class="mt-4 max-w-md w-full">
+            <div class="w-full bg-white/10 rounded-full h-2 overflow-hidden backdrop-blur-sm border border-white/10">
+              <div id="verified-progress-bar" class="bg-gradient-to-r from-amber-400 via-amber-300 to-emerald-400 h-2 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
+
+    <!-- Search, Filter & Sort Bar -->
+    <section class="max-w-6xl mx-auto px-4 w-full">
+      <div class="bg-white rounded-2xl border border-slate-200/90 p-3 sm:p-4 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+        
+        <!-- Live City Search -->
+        <div class="relative flex-1">
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+          <input type="text" id="search-input" placeholder="Search 130+ cities, states, or aliases (e.g. Kashi, Ooty, Goa)..."
+            class="w-full bg-slate-50 hover:bg-slate-100/70 focus:bg-white border border-slate-200 text-slate-800 text-xs sm:text-sm font-semibold rounded-xl pl-9 pr-9 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder:text-slate-400">
+          <button type="button" id="btn-clear-search" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-200 transition-colors" title="Clear search">
+            <i data-lucide="x" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+
+        <!-- Filter and Sort Controls -->
+        <div class="flex items-center gap-2.5 shrink-0">
+          <!-- Status Filter -->
+          <div class="relative flex-1 sm:flex-initial">
+            <select id="filter-select" class="w-full sm:w-auto appearance-none bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-slate-700 py-2.5 pl-3.5 pr-8 rounded-xl text-xs sm:text-sm font-bold shadow-2xs focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer transition-all">
+              <option value="all">All Cities</option>
+              <option value="visited">Visited Only</option>
+              <option value="unvisited">Unvisited Only</option>
+            </select>
+            <i data-lucide="filter" class="w-3.5 h-3.5 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+          </div>
+
+          <!-- Sort Selection -->
+          <div class="relative flex-1 sm:flex-initial">
+            <select id="sort-select" class="w-full sm:w-auto appearance-none bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-slate-700 py-2.5 pl-3.5 pr-8 rounded-xl text-xs sm:text-sm font-bold shadow-2xs focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer transition-all">
+              <option value="default">Default Sort</option>
+              <option value="recent">Recent First</option>
+              <option value="alpha">A-Z</option>
+            </select>
+            <i data-lucide="arrow-up-down" class="w-3.5 h-3.5 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Results Indicator -->
+      <div class="flex items-center justify-between text-xs text-slate-500 font-semibold px-1 mt-2.5">
+        <span id="results-count">Showing all destinations</span>
+      </div>
+    </section>
 
     <!-- The Visual Cards Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="cards-container">
-      <!-- Cards injected by JS -->
-    </div>
+    <section class="max-w-6xl mx-auto px-4 w-full">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="cards-container">
+        <!-- Cards injected by JS -->
+      </div>
+    </section>
 
   </main>
 
-  <script src="./data/cities.js"></script>
-  <script src="./js/passport-store.js"></script>
+  <!-- Data & Script Dependencies -->
+  <script src="./data/cities.js?v=1791377680"></script>
+  <script src="./js/passport-store.js?v=1792065000"></script>
   <script src="./js/ui-components.js?v=1792065000"></script>
   <script src="./js/header.js?v=1791377680"></script>
   <script>
@@ -75,9 +147,14 @@
     const container = document.getElementById('cards-container');
     const filterSelect = document.getElementById('filter-select');
     const sortSelect = document.getElementById('sort-select');
+    const searchInput = document.getElementById('search-input');
+    const btnClearSearch = document.getElementById('btn-clear-search');
+    const resultsCountEl = document.getElementById('results-count');
 
     window.unmarkVisited = function(cityId) {
-      if (window.PassportStore.lockCity(cityId)) { renderCities(); }
+      if (window.PassportStore.lockCity(cityId)) { 
+        renderCities(); 
+      }
     };
 
     window.markVisited = function(cityId) {
@@ -91,21 +168,53 @@
     };
 
     function renderCities() {
+      if (!container) return;
       container.innerHTML = '';
-      let cities = window.PassportStore.getPassportCities();
+      const allCities = window.PassportStore.getPassportCities();
+      const totalCitiesCount = allCities.length;
+      const visitedCount = allCities.filter(c => c.visited).length;
       
-      const visitedCount = cities.filter(c => c.visited).length;
-      document.getElementById('verified-count').textContent = `${visitedCount} Visited`;
+      // Update Prominent Visited Counter and Progress
+      const verifiedCountEl = document.getElementById('verified-count');
+      if (verifiedCountEl) {
+        verifiedCountEl.textContent = `${visitedCount} Visited`;
+      }
+      const progressPercent = totalCitiesCount > 0 ? Math.round((visitedCount / totalCitiesCount) * 100) : 0;
+      const progressEl = document.getElementById('verified-progress');
+      if (progressEl) {
+        progressEl.textContent = `${progressPercent}% of India Explored (${visitedCount} of ${totalCitiesCount})`;
+      }
+      const progressBar = document.getElementById('verified-progress-bar');
+      if (progressBar) {
+        progressBar.style.width = `${Math.min(100, Math.max(progressPercent, visitedCount > 0 ? 3 : 0))}%`;
+      }
+
+      let cities = [...allCities];
 
       const filterVal = filterSelect ? filterSelect.value : 'all';
       const sortVal = sortSelect ? sortSelect.value : 'default';
+      const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
 
+      // 1. Filter by Visited status
       if (filterVal === 'visited') {
         cities = cities.filter(c => c.visited);
       } else if (filterVal === 'unvisited') {
         cities = cities.filter(c => !c.visited);
       }
 
+      // 2. Filter by search query (city name, notes/description, aliases, state, or district)
+      if (query) {
+        cities = cities.filter(c => {
+          if (c.name && c.name.toLowerCase().includes(query)) return true;
+          if ((c.desc || c.notes || '').toLowerCase().includes(query)) return true;
+          if (c.state && c.state.toLowerCase().includes(query)) return true;
+          if (c.district && c.district.toLowerCase().includes(query)) return true;
+          if (c.aliases && c.aliases.some(a => a.toLowerCase().includes(query))) return true;
+          return false;
+        });
+      }
+
+      // 3. Sorting
       if (sortVal === 'alpha') {
         cities.sort((a, b) => a.name.localeCompare(b.name));
       } else if (sortVal === 'recent') {
@@ -114,22 +223,91 @@
           const tB = b.visited ? new Date(b.date).getTime() || 1 : 0;
           return tB - tA;
         });
+      } else if (query) {
+        // When searching in default mode, rank exact/prefix matches first
+        cities.sort((a, b) => {
+          const aName = a.name.toLowerCase();
+          const bName = b.name.toLowerCase();
+          if (aName === query && bName !== query) return -1;
+          if (aName !== query && bName === query) return 1;
+          const aStarts = aName.startsWith(query);
+          const bStarts = bName.startsWith(query);
+          if (aStarts && !bStarts) return -1;
+          if (!aStarts && bStarts) return 1;
+          return 0;
+        });
       }
 
-      container.innerHTML = cities.map(city =>
-        KYT.ui.renderCityCard(city, { variant: 'passport' })
-      ).join('');
-      lucide.createIcons();
+      // 4. Update results count indicator
+      if (resultsCountEl) {
+        if (query) {
+          resultsCountEl.textContent = `Showing ${cities.length} matching "${query}"`;
+        } else if (filterVal === 'visited') {
+          resultsCountEl.textContent = `Showing ${cities.length} visited cities`;
+        } else if (filterVal === 'unvisited') {
+          resultsCountEl.textContent = `Showing ${cities.length} unvisited cities`;
+        } else {
+          resultsCountEl.textContent = `Showing all ${cities.length} destinations`;
+        }
+      }
+
+      // 5. Render cards or empty state
+      if (cities.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-12 px-4 text-center bg-white rounded-2xl border border-dashed border-slate-200">
+            <div class="w-12 h-12 mx-auto rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400 mb-3">
+              <i data-lucide="search-x" class="w-6 h-6"></i>
+            </div>
+            <h4 class="text-base font-bold text-slate-700">No destinations found</h4>
+            <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">Try searching for another city name, state, or clearing your filter.</p>
+            <button type="button" id="btn-reset-search-empty" class="mt-4 px-4 py-2 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-xl text-xs font-bold transition-colors cursor-pointer">
+              Clear Search
+            </button>
+          </div>
+        `;
+        const resetBtn = document.getElementById('btn-reset-search-empty');
+        if (resetBtn && searchInput) {
+          resetBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            if (btnClearSearch) btnClearSearch.classList.add('hidden');
+            renderCities();
+          });
+        }
+      } else {
+        container.innerHTML = cities.map(city =>
+          KYT.ui.renderCityCard(city, { variant: 'passport' })
+        ).join('');
+      }
+
+      if (window.lucide) lucide.createIcons();
     }
 
+    // Attach event listeners
     if (filterSelect) filterSelect.addEventListener('change', renderCities);
     if (sortSelect) sortSelect.addEventListener('change', renderCities);
+
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        if (btnClearSearch) {
+          btnClearSearch.classList.toggle('hidden', !searchInput.value);
+        }
+        renderCities();
+      });
+    }
+
+    if (btnClearSearch) {
+      btnClearSearch.addEventListener('click', () => {
+        if (searchInput) {
+          searchInput.value = '';
+          btnClearSearch.classList.add('hidden');
+          searchInput.focus();
+          renderCities();
+        }
+      });
+    }
 
     // Initial render
     renderCities();
   </script>
 </body>
 </html>
-
-
-

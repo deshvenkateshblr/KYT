@@ -419,40 +419,56 @@ window.KYT.ui = (function () {
         </div>
       ` : '';
 
-      const topRightHTML = city.visited ? '' : `
-        <div class="w-10 h-10 flex items-center justify-center opacity-30 relative z-10">
-          <i data-lucide="lock" class="w-5 h-5 text-slate-400"></i>
+      const topRightHTML = city.visited ? `
+        <div class="px-2.5 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200/90 rounded-full text-[10px] font-black uppercase tracking-wider flex items-center gap-1 relative z-10 shadow-2xs">
+          <i data-lucide="check" class="w-3.5 h-3.5 stroke-[3]"></i> Stamped
+        </div>
+      ` : `
+        <div class="w-8 h-8 rounded-xl bg-slate-100/90 border border-slate-200/60 flex items-center justify-center text-slate-400 relative z-10" title="Not yet visited">
+          <i data-lucide="lock" class="w-4 h-4"></i>
         </div>
       `;
 
       const footerActionHTML = city.visited ? `
-        <button onclick="unmarkVisited('${esc(city.id)}')" class="text-[11px] font-bold ${city.actionColor} hover:text-slate-500 flex items-center gap-1 transition-colors relative z-10">
+        <button type="button" onclick="unmarkVisited('${esc(city.id)}')" class="px-3 py-1.5 text-xs font-bold text-rose-600 hover:text-rose-700 bg-rose-50/90 hover:bg-rose-100 rounded-xl border border-rose-200/80 flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer relative z-10 shadow-2xs" title="Remove stamp">
           <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Undo Visit
         </button>
       ` : `
-        <button onclick="markVisited('${esc(city.id)}')" class="text-[11px] font-bold text-blue-600 flex items-center gap-1 group-hover:translate-x-1 transition-transform bg-blue-50 px-2 py-1 rounded border border-blue-100 relative z-10">
-          Mark Visited <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+        <button type="button" onclick="markVisited('${esc(city.id)}')" class="px-4 py-2 text-xs font-black text-white bg-blue-600 hover:bg-blue-700 active:scale-95 transition-all rounded-xl shadow-md shadow-blue-500/25 hover:shadow-blue-500/40 flex items-center gap-1.5 cursor-pointer relative z-10">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-white"></i>
+          <span>Mark Visited</span>
         </button>
       `;
 
       const dateDisplay = city.visited
-        ? `<input type="date" value="${esc(city.date)}" onchange="updateDate('${esc(city.id)}', this.value)" class="bg-transparent text-[10px] font-semibold text-slate-700 p-0 border-none focus:ring-0 cursor-pointer w-auto mt-0.5">`
-        : `<span class="text-[10px] font-semibold text-slate-400 mt-0.5">${esc(city.date)}</span>`;
+        ? `<input type="date" value="${esc(city.date)}" onchange="updateDate('${esc(city.id)}', this.value)" class="bg-white hover:bg-slate-50 text-[11px] font-bold text-slate-800 px-2 py-1 rounded-lg border border-slate-200 shadow-2xs focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer w-auto mt-0.5">`
+        : `<span class="text-[11px] font-semibold text-slate-400 mt-0.5">${esc(city.date)}</span>`;
+
+      const statePill = city.state
+        ? `<span class="text-[10px] font-extrabold uppercase tracking-wider text-blue-600 bg-blue-50/80 border border-blue-100 px-2 py-0.5 rounded-md inline-block mb-1.5">${esc(city.state)}</span>`
+        : '';
+      const aliasText = (city.aliases && city.aliases.length)
+        ? `<p class="text-[11px] font-medium text-slate-400 -mt-0.5 mb-1.5">Also known as: ${esc(city.aliases.slice(0, 3).join(', '))}</p>`
+        : '';
 
       return `
-        <div class="bg-white/90 backdrop-blur-sm rounded-[16px] p-5 shadow-sm border border-slate-200 hover:border-slate-300 transition-all flex flex-col relative group overflow-hidden ${city.visited ? '' : 'grayscale-[0.5]'}">
+        <div class="bg-white rounded-2xl p-5 shadow-sm border ${city.visited ? 'border-emerald-200/70 bg-gradient-to-b from-emerald-50/20 via-white to-white' : 'border-slate-200 hover:border-blue-300 hover:shadow-md'} transition-all flex flex-col relative group overflow-hidden">
           ${bgStampHTML}
-          <div class="flex justify-between items-start mb-4 relative z-10">
-            <div class="w-12 h-12 rounded-[12px] ${city.bg} flex items-center justify-center ${city.color} border ${city.border} shadow-sm bg-white">
+          <div class="flex justify-between items-start mb-3 relative z-10">
+            <div class="w-12 h-12 rounded-xl ${city.bg} flex items-center justify-center ${city.color} border ${city.border} shadow-2xs bg-white">
               <i data-lucide="${esc(city.icon)}" class="w-6 h-6"></i>
             </div>
             ${topRightHTML}
           </div>
-          <h3 class="text-base font-bold text-slate-800 tracking-tight relative z-10 drop-shadow-sm">${esc(city.name)}</h3>
-          <p class="text-xs text-slate-600 font-medium mt-1 mb-5 flex-1 leading-relaxed relative z-10">${esc(city.desc)}</p>
-          <div class="flex items-center justify-between mt-auto relative z-10 pt-2 border-t border-slate-100/50">
+          <div class="relative z-10 mb-1">
+            ${statePill}
+            <h3 class="text-lg font-black text-slate-800 tracking-tight">${esc(city.name)}</h3>
+            ${aliasText}
+          </div>
+          <p class="text-xs text-slate-600 font-medium mb-5 flex-1 leading-relaxed relative z-10">${esc(city.desc)}</p>
+          <div class="flex items-center justify-between mt-auto relative z-10 pt-3 border-t border-slate-100">
             <div class="flex flex-col">
-              <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">${city.visited ? 'Unlocked' : 'Status'}</span>
+              <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">${city.visited ? 'Unlocked' : 'Status'}</span>
               ${dateDisplay}
             </div>
             ${footerActionHTML}
