@@ -491,7 +491,8 @@
               diet: { any: 'a', veg: 'v', jain: 'j', satvik: 'k' },
               pace: { short: 'h', standard: 's', deep: 'd' }
             };
-            tasteParam = (codeMap.intent[trip.taste.intent] || 'm') + (codeMap.diet[trip.taste.diet] || 'a') + (codeMap.pace[trip.taste.pace] || 's');
+            const tasteObj = trip.taste || { intent: 'mixed', diet: 'any', pace: 'standard' };
+            tasteParam = (codeMap.intent[tasteObj.intent] || 'm') + (codeMap.diet[tasteObj.diet] || 'a') + (codeMap.pace[tasteObj.pace] || 's');
             const curQ = curatedParam ? `&curated=${encodeURIComponent(curatedParam)}` : '';
             window.history.replaceState({}, '', `?trip=${encodeURIComponent(tripName)}&cities=${citiesParam}&taste=${tasteParam}${curQ}&origin=${encodeURIComponent(originParam)}&days=${daysParam}&id=${encodeURIComponent(tripId)}`);
           }
@@ -746,9 +747,9 @@
       document.getElementById('btn-edit-plan').addEventListener('click', () => {
         const activeId = (loadedVirtualTrip && loadedVirtualTrip.id) || tripId;
         if (activeId) {
-          window.location.href = `virtual_trip.html?id=${encodeURIComponent(activeId)}`;
+          window.location.href = `virtual_trip.html?id=${encodeURIComponent(activeId)}&screen=builder`;
         } else {
-          window.location.href = `virtual_trip.html${window.location.search}`;
+          window.location.href = `virtual_trip.html${window.location.search}&screen=builder`;
         }
       });
 

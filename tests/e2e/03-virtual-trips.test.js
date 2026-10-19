@@ -27,6 +27,10 @@ async function buildPlan(page) {
   try {
     await confirmBtn.waitFor({ state: 'visible', timeout: 1000 });
     await confirmBtn.click();
+    await page.waitForURL('**/trip_detail.html*');
+    await page.waitForSelector('#btn-edit-plan');
+    await page.click('#btn-edit-plan');
+    await page.waitForSelector('#vt-screen-builder:not(.hidden)');
   } catch(e) {}
 }
 const stored = page => page.evaluate(() => JSON.parse(localStorage.getItem('kyt_virtual_trips') || '[]'));
@@ -271,3 +275,39 @@ test('city detail opens from a deep link and shows attractions', async () => {
   assert.match(await page.locator('#city-detail-panel').innerText(), /Taj Mahal/);
   await context.close();
 });
+
+test('generating a day plan leads to trip-detail with Refine with AI, and Edit in Builder returns to editor', async () => {
+  const { context, page } = await newPhone(env.browser);
+  await openHub(page);
+  await createTrip(page, 'Jaipur Journey');
+  await addCity(page, 'Jaipur', 'jaipur');
+  await page.click('#btn-vt-build');
+  await page.waitForSelector('#btn-modal-confirm-build:not(.hidden)');
+  await page.click('#btn-modal-confirm-build');
+
+  // Verify navigation to trip_detail.html with the trip id
+  await page.waitForURL('**/trip_detail.html*');
+  assert.ok(page.url().includes('trip_detail.html'));
+  assert.match(page.url(), /id=/);
+
+  // Verify trip title, Refine with AI button, and Edit in Builder button
+  assert.match(await page.locator('#trip-title').innerText(), /Jaipur Journey/);
+  assert.equal(await page.locator('#btn-open-ai-refine').isVisible(), true);
+  assert.equal(await page.locator('#btn-edit-plan').isVisible(), true);
+
+  // Verify day-by-day plan rendered on trip_detail.html
+  assert.match(await page.locator('#refined-itinerary-section').innerText(), /day 1/i);
+
+  // Click "Edit in Builder" and verify it navigates back to virtual_trip.html builder
+  await page.click('#btn-edit-plan');
+  await page.waitForURL('**/virtual_trip.html*');
+  await page.waitForSelector('#vt-screen-builder:not(.hidden)');
+  assert.match(await page.locator('#vt-itinerary-list').innerText(), /Jaipur/);
+
+  // Verify Builder has Trip Details & AI navigation link
+  const detailsLink = page.locator('a[href*="trip_detail.html"]');
+  assert.ok((await detailsLink.count()) >= 2, 'Builder contains links back to trip_detail.html');
+
+  await context.close();
+});
+

@@ -295,6 +295,8 @@ KYT.virtualTrips = (function () {
       KYT.header.renderMainToolbar('main-toolbar', { active: 'virtual' });
     }
 
+    const subnavDetails = document.getElementById('vt-subnav-detail');
+
     if (screen === 'hub') {
       DOM.screenHub.classList.remove('hidden');
       if (subnavBar) subnavBar.classList.add('hidden');
@@ -302,18 +304,24 @@ KYT.virtualTrips = (function () {
       DOM.screenCanvas.classList.remove('hidden');
       DOM.screenCanvas.classList.add('flex');
       const trip = getActiveTrip();
-      const hasPlan = (trip && trip.steps && trip.steps.length > 0);
-      const backLabel = hasPlan ? 'View Itinerary' : 'My Trips';
-      const backHandler = hasPlan ? openBuilder : openHub;
+      const hasPlan = Boolean(trip && trip.steps && trip.steps.length > 0);
 
       if (subnavBar) {
         subnavBar.classList.remove('hidden');
-        if (subnavBackLabel) subnavBackLabel.textContent = backLabel;
+        if (subnavBackLabel) subnavBackLabel.textContent = 'My Trips';
         if (subnavBack) {
           subnavBack.onclick = (e) => {
             e.preventDefault();
-            backHandler();
+            openHub();
           };
+        }
+        if (subnavDetails) {
+          if (hasPlan && trip) {
+            subnavDetails.classList.remove('hidden');
+            subnavDetails.href = `trip_detail.html?id=${encodeURIComponent(trip.id)}`;
+          } else {
+            subnavDetails.classList.add('hidden');
+          }
         }
         if (subnavShare) {
           subnavShare.onclick = (e) => {
@@ -324,6 +332,7 @@ KYT.virtualTrips = (function () {
       }
     } else if (screen === 'builder') {
       DOM.screenBuilder.classList.remove('hidden');
+      const trip = getActiveTrip();
       if (subnavBar) {
         subnavBar.classList.remove('hidden');
         if (subnavBackLabel) subnavBackLabel.textContent = 'Edit Cities';
@@ -332,6 +341,10 @@ KYT.virtualTrips = (function () {
             e.preventDefault();
             openCanvas(currentTripId);
           };
+        }
+        if (subnavDetails && trip) {
+          subnavDetails.classList.remove('hidden');
+          subnavDetails.href = `trip_detail.html?id=${encodeURIComponent(trip.id)}`;
         }
         if (subnavShare) {
           subnavShare.onclick = (e) => {
@@ -658,21 +671,28 @@ KYT.virtualTrips = (function () {
         if (!existingRebuild) {
           const actionGroup = document.createElement('div');
           actionGroup.id = 'btn-vt-rebuild';
-          actionGroup.className = 'flex items-center justify-between gap-2 mt-2 pt-2 border-t border-slate-100';
+          actionGroup.className = 'flex items-center justify-between gap-2 mt-2 pt-2 border-t border-slate-100 flex-wrap';
           actionGroup.innerHTML = `
-            <button type="button" class="btn-open-stays-config text-[11px] text-blue-600 hover:text-blue-700 font-bold flex items-center gap-1 transition-colors">
-              <i data-lucide="moon" class="w-3 h-3 text-indigo-500"></i> Stays & Duration
-            </button>
+            <div class="flex items-center gap-2">
+              <button type="button" class="btn-open-builder text-[11px] text-indigo-600 hover:text-indigo-700 font-bold flex items-center gap-1 transition-colors">
+                <i data-lucide="sliders" class="w-3 h-3 text-indigo-500"></i> Edit Activities
+              </button>
+              <span class="text-slate-300">•</span>
+              <button type="button" class="btn-open-stays-config text-[11px] text-blue-600 hover:text-blue-700 font-bold flex items-center gap-1 transition-colors">
+                <i data-lucide="moon" class="w-3 h-3 text-blue-500"></i> Stays & Duration
+              </button>
+            </div>
             <button type="button" class="btn-reset-attractions text-[11px] text-slate-400 hover:text-rose-600 font-bold transition-colors">
               Reset Itinerary
             </button>
           `;
+          actionGroup.querySelector('.btn-open-builder').onclick = () => openBuilder();
           actionGroup.querySelector('.btn-open-stays-config').onclick = () => openStayModal();
           actionGroup.querySelector('.btn-reset-attractions').onclick = () => {
             if (confirm("Reset this itinerary? This will replace your customized activities and timings with default attractions from the city catalog.")) {
               trip.steps = generateSteps(trip);
               saveVTrips();
-              openBuilder();
+              window.location.href = `trip_detail.html?id=${encodeURIComponent(trip.id)}`;
             }
           };
           DOM.btnBuild.insertAdjacentElement('afterend', actionGroup);
@@ -1224,12 +1244,16 @@ KYT.virtualTrips = (function () {
     if (!trip || !trip.steps) return;
 
     let html = `
-      <div class="flex justify-between items-center mb-3">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
         <div>
           <h2 class="text-xl font-black text-slate-800 tracking-tight">${KYT.utils.escapeHTML(trip.name)}</h2>
           <p class="text-xs text-slate-500 font-medium">Customized Day-by-Day Itinerary</p>
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <a href="trip_detail.html?id=${encodeURIComponent(trip.id)}" class="inline-flex items-center gap-1.5 text-xs font-black text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 px-3.5 py-1.5 rounded-xl shadow-xs transition-all active:scale-95" title="View details, weather, video catalog, and AI refiner">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-white"></i>
+            <span>Trip Details & AI</span>
+          </a>
           <button type="button" class="btn-builder-stays-modal inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-blue-600 bg-white hover:bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200 transition-colors shadow-xs" title="Adjust Duration & Stays" onclick="window.openStayModal ? window.openStayModal() : (window.KYT && window.KYT.virtualTrips && window.KYT.virtualTrips.openStayModal && window.KYT.virtualTrips.openStayModal())">
             <i data-lucide="moon" class="w-3.5 h-3.5 text-indigo-500"></i>
             <span>Stays & Days</span>
@@ -1297,11 +1321,18 @@ KYT.virtualTrips = (function () {
             <label class="font-bold text-slate-700" for="vt-start-date">Start Date:</label>
             <input type="date" id="vt-start-date" class="ml-auto bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-sm font-medium text-slate-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
           </div>
-          <button onclick="KYT.virtualTrips.useAsMyTrip('${trip.id}')"
-             class="w-full py-3 bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white font-extrabold rounded-xl text-sm flex items-center justify-center gap-2 transition-all shadow-sm shadow-blue-200">
-            <i data-lucide="map" class="w-4 h-4"></i>
-            Use as my trip
-          </button>
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            <a href="trip_detail.html?id=${encodeURIComponent(trip.id)}"
+               class="flex-1 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 active:scale-[0.98] text-white font-extrabold rounded-xl text-sm flex items-center justify-center gap-2 transition-all shadow-sm shadow-indigo-200 text-center">
+              <i data-lucide="sparkles" class="w-4 h-4 text-white"></i>
+              View Trip Details & AI
+            </a>
+            <button onclick="KYT.virtualTrips.useAsMyTrip('${trip.id}')"
+               class="sm:w-auto py-3 px-5 bg-slate-100 hover:bg-slate-200 active:scale-[0.98] text-slate-700 font-extrabold rounded-xl text-sm flex items-center justify-center gap-2 transition-all border border-slate-200 shrink-0">
+              <i data-lucide="map" class="w-4 h-4 text-slate-500"></i>
+              Use as my trip
+            </button>
+          </div>
         </div>
       </div>
     `;
@@ -1590,7 +1621,7 @@ KYT.virtualTrips = (function () {
           closeStayModal();
           trip.steps = generateSteps(trip);
           saveVTrips();
-          openBuilder();
+          window.location.href = `trip_detail.html?id=${encodeURIComponent(trip.id)}`;
         }
       });
     }
@@ -1665,7 +1696,7 @@ KYT.virtualTrips = (function () {
         const trip = getActiveTrip();
         if (trip) {
           if (trip.steps && trip.steps.length > 0) {
-            openBuilder();
+            window.location.href = `trip_detail.html?id=${encodeURIComponent(trip.id)}`;
           } else {
             openStayModal();
           }
@@ -1742,16 +1773,22 @@ KYT.virtualTrips = (function () {
         } catch(e) {}
       }
 
+      const screenParam = params.get('screen');
       if (activeTripId && vtrips.some(t => t.id === activeTripId)) {
         const url = new URL(window.location.href);
         url.searchParams.delete('id');
         url.searchParams.delete('ai');
+        url.searchParams.delete('screen');
         window.history.replaceState({}, '', url.toString());
 
         setTimeout(() => {
           currentTripId = activeTripId;
           const targetTrip = vtrips.find(t => t.id === activeTripId);
-          if (targetTrip && targetTrip.steps && targetTrip.steps.length > 0) {
+          if (screenParam === 'builder') {
+            openBuilder();
+          } else if (screenParam === 'canvas') {
+            openCanvas(activeTripId);
+          } else if (targetTrip && targetTrip.steps && targetTrip.steps.length > 0) {
             openBuilder();
           } else {
             openCanvas(activeTripId);

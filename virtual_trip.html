@@ -683,11 +683,18 @@
         <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
         <span id="vt-subnav-back-label">My Trips</span>
       </button>
-      <button type="button" id="vt-subnav-share"
-        class="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-full border border-blue-200 shadow-xs active:scale-95 transition-all">
-        <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
-        <span>Share</span>
-      </button>
+      <div class="flex items-center gap-2">
+        <a id="vt-subnav-detail" href="#"
+          class="hidden inline-flex items-center gap-1.5 text-xs font-black text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 px-3 py-1.5 rounded-full shadow-xs active:scale-95 transition-all">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-white"></i>
+          <span>Trip Details & AI</span>
+        </a>
+        <button type="button" id="vt-subnav-share"
+          class="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-full border border-blue-200 shadow-xs active:scale-95 transition-all">
+          <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+          <span>Share</span>
+        </button>
+      </div>
     </div>
 
     <!-- --- HUB: Trip list ------------------------------------------------ -->
