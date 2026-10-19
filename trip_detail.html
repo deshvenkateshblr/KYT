@@ -396,8 +396,7 @@
           <input type="checkbox" id="share-privacy-consent-cb"
             class="mt-0.5 rounded text-blue-600 focus:ring-blue-500 w-4 h-4 border-slate-300 cursor-pointer">
           <span class="text-xs font-semibold text-slate-700 leading-snug">
-            I understand that <span class="text-amber-900 font-bold underline decoration-amber-400">anyone with this URL
-              can access your trip data</span>.
+            Anyone with this URL can only see this trip plan.
           </span>
         </label>
       </div>
@@ -521,14 +520,49 @@
         }
       }
 
-      const cityIds = citiesParam ? citiesParam.split(',').map(code => {
+      let cityIds = citiesParam ? citiesParam.split(',').map(code => {
         const c = KYT.ui.resolveCity(code);
         return c ? c.id : code;
       }) : [];
 
+      function extractCitiesFromTrip(trip) {
+        if (!trip) return [];
+        if (trip.cities && Array.isArray(trip.cities) && trip.cities.length) {
+          return trip.cities.map(code => {
+            const c = (window.KYT && KYT.ui && KYT.ui.resolveCity) ? KYT.ui.resolveCity(code) : null;
+            return c ? c.id : code;
+          }).filter(Boolean);
+        }
+        if (trip.curatedId && window.KYT_CURATED_TRIPS) {
+          const c = window.KYT_CURATED_TRIPS.find(t => t.id === trip.curatedId);
+          if (c && c.cities && c.cities.length) {
+            return c.cities.map(code => {
+              const rc = (window.KYT && KYT.ui && KYT.ui.resolveCity) ? KYT.ui.resolveCity(code) : null;
+              return rc ? rc.id : code;
+            }).filter(Boolean);
+          }
+        }
+        const found = [];
+        if (trip.steps && Array.isArray(trip.steps)) {
+          trip.steps.forEach(s => {
+            const candidates = [s.cityId, s.cityName, s.where];
+            for (const cand of candidates) {
+              if (!cand) continue;
+              const c = (window.KYT && KYT.ui && KYT.ui.resolveCity) ? KYT.ui.resolveCity(cand) : null;
+              if (c && !found.includes(c.id)) {
+                found.push(c.id);
+                break;
+              }
+            }
+          });
+        }
+        return found;
+      }
+
       // Render Hero Banner Trip Metadata Badges (Origin, Duration, Taste Profile)
-      const pillsContainer = document.getElementById('trip-meta-pills');
-      if (pillsContainer) {
+      function renderMetaPills() {
+        const pillsContainer = document.getElementById('trip-meta-pills');
+        if (!pillsContainer) return;
         const pillItems = [];
         const esc = (s) => (window.KYT && KYT.utils && KYT.utils.escapeHTML) ? KYT.utils.escapeHTML(s) : s;
         const pillClass = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-white text-blue-900 border border-blue-200/80 shadow-xs';
@@ -586,6 +620,7 @@
 
         pillsContainer.innerHTML = pillItems.join('');
       }
+      renderMetaPills();
 
       // ── Share Privacy Consent Modal Controller ──────────────────────────────
       const shareModal = document.getElementById('share-consent-modal');
@@ -758,6 +793,32 @@
                   if (descEl) descEl.textContent = cTrip.tagline;
                 }
               }
+
+              // Synchronize cities and trip metadata
+              const extractedCities = extractCitiesFromTrip(remoteTrip);
+              if (extractedCities.length) {
+                cityIds = extractedCities;
+                citiesParam = cityIds.join(',');
+              }
+              if (remoteTrip.originCity) originParam = remoteTrip.originCity;
+              if (remoteTrip.duration) daysParam = remoteTrip.duration;
+              if (remoteTrip.taste) {
+                if (typeof remoteTrip.taste === 'string') {
+                  tasteParam = remoteTrip.taste;
+                } else if (typeof remoteTrip.taste === 'object') {
+                  const codeMap = {
+                    intent: { mixed: 'm', spiritual: 's', cultural: 'c', adventure: 'a', culinary: 'u' },
+                    diet: { any: 'a', veg: 'v', jain: 'j', satvik: 'k' },
+                    pace: { short: 'h', standard: 's', deep: 'd' }
+                  };
+                  tasteParam = (codeMap.intent[remoteTrip.taste.intent] || 'm') +
+                               (codeMap.diet[remoteTrip.taste.diet] || 'a') +
+                               (codeMap.pace[remoteTrip.taste.pace] || 's');
+                }
+              }
+
+              renderMetaPills();
+              renderCitiesAndVideos();
             }
           }
         } catch (e) {
@@ -821,6 +882,14 @@
               localStorage.setItem('kyt_virtual_trips', JSON.stringify(stored));
               loadedVirtualTrip = vTrip;
               tripId = vTrip.id;
+
+              const extractedPlanCities = extractCitiesFromTrip(vTrip);
+              if (extractedPlanCities.length) {
+                cityIds = extractedPlanCities;
+                citiesParam = cityIds.join(',');
+              }
+              renderMetaPills();
+              renderCitiesAndVideos();
             }
           }
           const cleanUrl = new URL(window.location.href);
@@ -1065,14 +1134,6 @@
                 <h3 class="text-xl sm:text-2xl font-black text-slate-800 tracking-tight">${KYT.utils.escapeHTML(title)}</h3>
                 ${tagline ? `<p class="text-xs sm:text-sm text-slate-600">${KYT.utils.escapeHTML(tagline)}</p>` : ''}
               </div>
-              <div class="flex items-center gap-2 shrink-0">
-                <button type="button" id="btn-re-refine-trigger" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-indigo-50 to-purple-50 hover:from-indigo-100 hover:to-purple-100 text-indigo-700 text-xs font-bold border border-indigo-200 transition-all shadow-2xs cursor-pointer">
-                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i> ${isAiRefined ? 'Refine Again' : 'Refine with AI'}
-                </button>
-                <a href="${customizeUrl}" class="inline-flex items-center gap-1 text-xs font-bold text-slate-500 hover:text-blue-600 transition-colors py-1 px-2.5">
-                  <span>Open Builder</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                </a>
-              </div>
             </div>
 
             ${highlightsHtml}
@@ -1088,9 +1149,10 @@
           </div>
         `;
 
-        document.getElementById('btn-re-refine-trigger')?.addEventListener('click', () => {
-          if (window.KYT && KYT.aiRefine) KYT.aiRefine.open();
-        });
+        const refineBtnSpan = document.querySelector('#btn-open-ai-refine span:last-child');
+        if (refineBtnSpan) {
+          refineBtnSpan.textContent = isAiRefined ? 'Refine Again' : 'Refine with AI';
+        }
         if (window.lucide) lucide.createIcons();
       }
 
@@ -1128,6 +1190,8 @@
             }
 
             renderRefinedItinerary(vTrip, curatedTrip, true);
+            renderMetaPills();
+            renderCitiesAndVideos();
 
             const refEl = document.getElementById('refined-itinerary-section');
             if (refEl) {
@@ -1137,94 +1201,115 @@
         });
       }
 
-      const citiesGrid = document.getElementById('cities-grid');
-      const videoGallery = document.getElementById('video-gallery');
-      const videoFilters = document.getElementById('video-filters');
+      function renderCitiesAndVideos() {
+        const citiesGrid = document.getElementById('cities-grid');
+        const videoGallery = document.getElementById('video-gallery');
+        const videoFilters = document.getElementById('video-filters');
+        if (!citiesGrid || !videoGallery) return;
 
-      if (!citiesParam) {
-        citiesGrid.innerHTML = '<p class="text-sm text-slate-500">No cities selected in this trip.</p>';
-        lucide.createIcons();
-        return;
-      }
+        // Auto-extract city IDs if not yet set
+        if ((!cityIds || !cityIds.length) && loadedVirtualTrip) {
+          cityIds = extractCitiesFromTrip(loadedVirtualTrip);
+          if (cityIds.length) citiesParam = cityIds.join(',');
+        }
+        if ((!cityIds || !cityIds.length) && cTrip) {
+          cityIds = extractCitiesFromTrip(cTrip);
+          if (cityIds.length) citiesParam = cityIds.join(',');
+        }
 
-      let citiesHtml = '';
-      const allVideos = [];
-      const filterCities = [];
-
-      cityIds.forEach(cId => {
-        const city = KYT.ui.resolveCity(cId);
-        if (!city) return;
-
-        filterCities.push({ id: city.id, name: city.name });
-        citiesHtml += KYT.ui.renderCityCard(city, { variant: 'summary' });
-
-        const cityVideos = window.KYT_CITY_VIDEOS ? (window.KYT_CITY_VIDEOS[city.id] || []) : [];
-        cityVideos.forEach(vid => {
-          allVideos.push({ ...vid, cityName: city.name, cityId: city.id });
-        });
-      });
-
-      citiesGrid.innerHTML = citiesHtml || '<p class="text-sm text-slate-500">Could not load city details.</p>';
-
-      // Video Gallery Rendering
-      let currentFilter = 'all';
-
-      function renderVideos() {
-        const filtered = currentFilter === 'all' ? allVideos : allVideos.filter(v => v.cityId === currentFilter);
-        if (filtered.length === 0) {
+        if (!cityIds || !cityIds.length) {
+          citiesGrid.innerHTML = '<p class="text-sm text-slate-500">No cities selected in this trip.</p>';
           videoGallery.innerHTML = '<p class="text-sm text-slate-500 p-4 border border-dashed border-slate-200 rounded-xl text-center w-full col-span-full">No videos available.</p>';
+          if (videoFilters) videoFilters.innerHTML = '';
+          if (window.lucide) lucide.createIcons();
           return;
         }
 
-        videoGallery.innerHTML = filtered.map(vid => `
-      <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
-        <div class="relative w-full aspect-video bg-slate-100">
-          <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/${KYT.utils.escapeHTML(vid.id)}?rel=0" frameborder="0" allowfullscreen=""></iframe>
-        </div>
-        <div class="p-3 flex-1 flex flex-col justify-between">
-          <p class="text-sm font-bold text-slate-800 line-clamp-2 mb-2">${KYT.utils.escapeHTML(vid.title)}</p>
-          <div class="flex justify-between items-center mt-auto">
-            <span class="text-[10px] font-bold text-blue-500 uppercase">${KYT.utils.escapeHTML(vid.cityName)}</span>
-            <span class="text-[10px] text-slate-400 font-bold">${KYT.utils.escapeHTML(vid.channel)}</span>
-          </div>
-        </div>
-      </div>
-      `).join('');
-      }
+        let citiesHtml = '';
+        const allVideos = [];
+        const filterCities = [];
 
-      function renderFilters() {
-        if (allVideos.length === 0) return;
+        cityIds.forEach(cId => {
+          const city = (window.KYT && KYT.ui && KYT.ui.resolveCity) ? KYT.ui.resolveCity(cId) : null;
+          if (!city) return;
 
-        let filtersHtml = `
-      <button class="filter-btn px-3 py-1 rounded-full text-xs font-bold transition-colors ${currentFilter === 'all' ? 'bg-slate-800 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}" data-id="all">
-        All
-      </button>
-      `;
+          filterCities.push({ id: city.id, name: city.name });
+          citiesHtml += KYT.ui.renderCityCard(city, { variant: 'summary' });
 
-        filterCities.forEach(city => {
-          if (allVideos.some(v => v.cityId === city.id)) {
-            const isActive = currentFilter === city.id;
-            filtersHtml += `
-      <button class="filter-btn px-3 py-1 rounded-full text-xs font-bold transition-colors ${isActive ? 'bg-slate-800 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}" data-id="${KYT.utils.escapeHTML(city.id)}">
-        ${KYT.utils.escapeHTML(city.name)}
-      </button>
-      `;
-          }
-        });
-
-        videoFilters.innerHTML = filtersHtml;
-
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            currentFilter = e.target.dataset.id;
-            renderFilters();
-            renderVideos();
+          const cityVideos = window.KYT_CITY_VIDEOS ? (window.KYT_CITY_VIDEOS[city.id] || []) : [];
+          cityVideos.forEach(vid => {
+            allVideos.push({ ...vid, cityName: city.name, cityId: city.id });
           });
         });
+
+        citiesGrid.innerHTML = citiesHtml || '<p class="text-sm text-slate-500">Could not load city details.</p>';
+
+        let currentFilter = 'all';
+
+        function updateVideosDisplay() {
+          const filtered = currentFilter === 'all' ? allVideos : allVideos.filter(v => v.cityId === currentFilter);
+          if (filtered.length === 0) {
+            videoGallery.innerHTML = '<p class="text-sm text-slate-500 p-4 border border-dashed border-slate-200 rounded-xl text-center w-full col-span-full">No videos available.</p>';
+            return;
+          }
+
+          videoGallery.innerHTML = filtered.map(vid => `
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+              <div class="relative w-full aspect-video bg-slate-100">
+                <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/${KYT.utils.escapeHTML(vid.id)}?rel=0" frameborder="0" allowfullscreen=""></iframe>
+              </div>
+              <div class="p-3 flex-1 flex flex-col justify-between">
+                <p class="text-sm font-bold text-slate-800 line-clamp-2 mb-2">${KYT.utils.escapeHTML(vid.title)}</p>
+                <div class="flex justify-between items-center mt-auto">
+                  <span class="text-[10px] font-bold text-blue-500 uppercase">${KYT.utils.escapeHTML(vid.cityName)}</span>
+                  <span class="text-[10px] text-slate-400 font-bold">${KYT.utils.escapeHTML(vid.channel)}</span>
+                </div>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        function updateFiltersDisplay() {
+          if (!videoFilters) return;
+          if (allVideos.length === 0) {
+            videoFilters.innerHTML = '';
+            return;
+          }
+
+          let filtersHtml = `
+            <button class="filter-btn px-3 py-1 rounded-full text-xs font-bold transition-colors ${currentFilter === 'all' ? 'bg-slate-800 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}" data-id="all">
+              All
+            </button>
+          `;
+
+          filterCities.forEach(city => {
+            if (allVideos.some(v => v.cityId === city.id)) {
+              const isActive = currentFilter === city.id;
+              filtersHtml += `
+                <button class="filter-btn px-3 py-1 rounded-full text-xs font-bold transition-colors ${isActive ? 'bg-slate-800 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}" data-id="${KYT.utils.escapeHTML(city.id)}">
+                  ${KYT.utils.escapeHTML(city.name)}
+                </button>
+              `;
+            }
+          });
+
+          videoFilters.innerHTML = filtersHtml;
+
+          videoFilters.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              currentFilter = e.currentTarget.dataset.id;
+              updateFiltersDisplay();
+              updateVideosDisplay();
+            });
+          });
+        }
+
+        updateFiltersDisplay();
+        updateVideosDisplay();
+        if (window.lucide) lucide.createIcons();
       }
 
-      renderFilters();
-      renderVideos();
+      renderCitiesAndVideos();
 
       // Configure Unified City Detail Slide-Over
       KYT.ui.cityDetail.configure({
@@ -1239,12 +1324,15 @@
       const btnBackCity = document.getElementById('btn-back-city-detail');
       const btnShareCity = document.getElementById('btn-share-city');
 
-      citiesGrid.addEventListener('click', (e) => {
-        const card = e.target.closest('[data-city-id]');
-        if (card) {
-          KYT.ui.cityDetail.open(card.dataset.cityId, true);
-        }
-      });
+      const citiesGridEl = document.getElementById('cities-grid');
+      if (citiesGridEl) {
+        citiesGridEl.addEventListener('click', (e) => {
+          const card = e.target.closest('[data-city-id]');
+          if (card) {
+            KYT.ui.cityDetail.open(card.dataset.cityId, true);
+          }
+        });
+      }
 
       const nearbyContainer = document.getElementById('cd-nearby-list');
       if (nearbyContainer) {

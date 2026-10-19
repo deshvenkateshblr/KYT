@@ -261,7 +261,7 @@ test('sharing a trip from trip_detail requires privacy consent and generates val
 
   // Verify checkbox text contains required privacy wording
   const consentText = await page.locator('#share-consent-modal label').innerText();
-  assert.match(consentText, /anyone with this URL can access your trip data/i);
+  assert.match(consentText, /anyone with this URL can only see this trip plan/i);
 
   // Check the consent box
   await page.check('#share-privacy-consent-cb');
@@ -395,6 +395,17 @@ test('sharing a refined trip with shortener generates ?c= link and loading ?c= r
   const pageText = await page2.locator('#refined-itinerary-section').innerText();
   assert.match(pageText, /Private Heritage Walk/);
   assert.match(pageText, /Fort Mumbai/);
+
+  // Verify duplicate buttons are removed from itinerary card
+  assert.equal(await page2.locator('#btn-re-refine-trigger').count(), 0, 'Duplicate refine button must not exist in itinerary card');
+
+  // Verify cities grid and video gallery are populated for shared shortlink
+  const citiesText = await page2.locator('#cities-grid').innerText();
+  assert.match(citiesText, /Mumbai/i, 'Cities section must display destination cards');
+  assert.ok(!citiesText.includes('No cities selected in this trip'), 'Must not show empty cities message');
+
+  const videoCount = await page2.locator('#video-gallery iframe').count();
+  assert.ok(videoCount > 0, `Video gallery must display city videos, got ${videoCount}`);
 
   await context2.close();
   await context.close();
