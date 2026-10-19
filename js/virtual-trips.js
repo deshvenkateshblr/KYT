@@ -707,6 +707,10 @@ KYT.virtualTrips = (function () {
     const trip = getActiveTrip();
     if (!trip) return;
 
+    if (DOM.citySearchInput && window.KYT_CITIES && window.KYT_CITIES.length) {
+      DOM.citySearchInput.placeholder = `Search ${window.KYT_CITIES.length}+ destinations...`;
+    }
+
     const query = (DOM.citySearchInput.value || '').toLowerCase().trim();
 
     const available = window.KYT_CITIES.filter(c => {
