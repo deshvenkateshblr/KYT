@@ -41,14 +41,6 @@ window.KYT_CITY_VIDEOS = {
       "views": 160008,
       "subs": 317000,
       "language": "en-US"
-    },
-    {
-      "id": "7cPLbiblb84",
-      "title": "Jaipur | Jaipur Tourist Places | Jaipur Travel Guide & Jaipur Tour Budget | Jaipur Vlog | Rajasthan",
-      "channel": "TheSocialTraveller",
-      "views": 2729275,
-      "subs": 93200,
-      "language": "hi"
     }
   ],
   "goa": [
@@ -357,22 +349,6 @@ window.KYT_CITY_VIDEOS = {
       "language": "hi"
     },
     {
-      "id": "IQcsbyCW-5w",
-      "title": "Manali | Manali Tourist Places | Manali Travel Guide | Manali Tour Budget | Kasol | Rohtang Pass",
-      "channel": "TheSocialTraveller",
-      "views": 3183989,
-      "subs": 93200,
-      "language": "hi"
-    },
-    {
-      "id": "B_rgWd50mjc",
-      "title": "Manali | Manali Tourist Places | Manali Travel Guide | Manali Tour Budget | Kasol | Rohtang Pass",
-      "channel": "TheSocialTraveller",
-      "views": 49316,
-      "subs": 93200,
-      "language": "hi"
-    },
-    {
       "id": "PByK6EOfdjw",
       "title": "Shimla Manali Tourist Places 2026 | Shimla Manali Tour Guide | Shimla Manali Tour Plan & Budget",
       "channel": "TheSocialTraveller",
@@ -390,14 +366,6 @@ window.KYT_CITY_VIDEOS = {
     }
   ],
   "shimla": [
-    {
-      "id": "pxeS2j6L1mE",
-      "title": "Shimla | Shimla Tourist Places | Shimla Tour Plan | Shimla Tour Budget | Shimla Tour Guide |Himachal",
-      "channel": "TheSocialTraveller",
-      "views": 2869847,
-      "subs": 93200,
-      "language": "hi"
-    },
     {
       "id": "ntin51JYH-E",
       "title": "A Himalayan Pilgrimage: Family, Memory, and the Magic of Shimla",
@@ -799,14 +767,6 @@ window.KYT_CITY_VIDEOS = {
       "language": "hi"
     },
     {
-      "id": "aWw_INtGjdY",
-      "title": "Amritsar full tour in telugu | Amritsar tourist places | Golden Temple Attari Wagha Border | Punjab",
-      "channel": "Nanda's Journey",
-      "views": 202803,
-      "subs": 639000,
-      "language": "te"
-    },
-    {
       "id": "gMjUurYj2oA",
       "title": "Amritsar Tourist Places | Amritsar Tour Plan 2023 | Amritsar City Tour | Golden Temple #amritsar",
       "channel": "Saturday Shooters",
@@ -838,14 +798,6 @@ window.KYT_CITY_VIDEOS = {
       "channel": "Traveling Mondays",
       "views": 1273174,
       "subs": 670000,
-      "language": "hi"
-    },
-    {
-      "id": "g5XVDLpwYWc",
-      "title": "Jaisalmer | Jaisalmer Tourist Places | Jaisalmer Tour Guide | Jaisalmer Travel Guide | Sam Sand Dune",
-      "channel": "TheSocialTraveller",
-      "views": 182785,
-      "subs": 93200,
       "language": "hi"
     },
     {
@@ -1156,14 +1108,6 @@ window.KYT_CITY_VIDEOS = {
     }
   ],
   "nainital": [
-    {
-      "id": "O-OKQo9O-68",
-      "title": "Nainital | Nainital Tourist Places | How to Travel Nainital | Nainital Travel Guide | Nainital Vlog",
-      "channel": "TheSocialTraveller",
-      "views": 1858995,
-      "subs": 93200,
-      "language": "hi"
-    },
     {
       "id": "bpFT-ehWAZY",
       "title": "The Most USEFUL Nainital Travel Guide You'll Come Across! | Things To Do In Nainital | Tripoto",
@@ -1495,14 +1439,6 @@ window.KYT_CITY_VIDEOS = {
       "views": 994627,
       "subs": 192000,
       "language": "hi"
-    },
-    {
-      "id": "a6EycPxs3_M",
-      "title": "Dwarka full tour in telugu | Dwarka yatra information in telugu | Dwarkadhish temple | Gujarat",
-      "channel": "Nanda's Journey",
-      "views": 980328,
-      "subs": 639000,
-      "language": "hi"
     }
   ],
   "somnath": [
@@ -1572,14 +1508,6 @@ window.KYT_CITY_VIDEOS = {
       "channel": "Tripoto",
       "views": 10408,
       "subs": 349000,
-      "language": "hi"
-    },
-    {
-      "id": "HnTDSAcLt1A",
-      "title": "Orchha Touris places | ओरछा में घूमने की जगह | Places to visit in Orchha #orchha #orchhafort #jhansi",
-      "channel": "Rise of Journey",
-      "views": 377255,
-      "subs": 35900,
       "language": "hi"
     },
     {
@@ -2125,14 +2053,6 @@ window.KYT_CITY_VIDEOS = {
   ],
   "matheran": [
     {
-      "id": "wXccrN6TrBU",
-      "title": "Matheran | The Only Place Where Motor Vehicles Are Banned | Maharashtra | Vlog#101",
-      "channel": "Navigator - The Explorer",
-      "views": 62219,
-      "subs": 192000,
-      "language": "ml"
-    },
-    {
       "id": "vj7wy2i0D-I",
       "title": "MATHERAN Hill Station | Best Places To Visit In Matheran (Monsoon) | Cinematic Travel Video",
       "channel": "Bidur Travel Vlogs",
@@ -2234,14 +2154,6 @@ window.KYT_CITY_VIDEOS = {
     }
   ],
   "badrinath": [
-    {
-      "id": "ZGpklVmkURg",
-      "title": "Badrinath yatra full tour in telugu | Badrinath temple complete guide | How to plan Badrinath yatra",
-      "channel": "Nanda's Journey",
-      "views": 202661,
-      "subs": 639000,
-      "language": "te"
-    },
     {
       "id": "GG3el2JO-5o",
       "title": "Haridwar to Badrinath - Most Scenic & High-Altitude Road in India 🇮🇳",
@@ -2463,14 +2375,6 @@ window.KYT_CITY_VIDEOS = {
       "language": "hi"
     },
     {
-      "id": "j9DwADUv5Ck",
-      "title": "Gaya vishnu pada temple full tour in telugu | Mangala Gowri Shakti Peetam | Bodh Gaya | Bihar",
-      "channel": "Nanda's Journey",
-      "views": 638397,
-      "subs": 639000,
-      "language": "te"
-    },
-    {
       "id": "2W7QavVrOVE",
       "title": "Bodh Gaya Low Budget Trip | Bodh Gaya Tour Guide | Bodhgaya Tour Plan | Bodhgaya Tourist Places",
       "channel": "TLT Tour Guide",
@@ -2520,14 +2424,6 @@ window.KYT_CITY_VIDEOS = {
       "channel": "Bihar Tourism",
       "views": 245967,
       "subs": 76800,
-      "language": "hi"
-    },
-    {
-      "id": "AXHk2ktttBQ",
-      "title": "EP 6 একদিনেই ঘুরে দেখুন সম্পূর্ণ রাজগীর || Weekend Trip || places to visit Rajgir || Rajgir Bihar",
-      "channel": "Anindya's Travelogue",
-      "views": 280030,
-      "subs": 188000,
       "language": "hi"
     }
   ],
@@ -2772,14 +2668,6 @@ window.KYT_CITY_VIDEOS = {
       "channel": "Shashank Voyage",
       "views": 26303,
       "subs": 53800,
-      "language": "hi"
-    },
-    {
-      "id": "-qnsP9Anezk",
-      "title": "Best Place To Stay in Neil Island | Neil Island Hotels & Best Resorts",
-      "channel": "Adira Travels",
-      "views": 31351,
-      "subs": 40900,
       "language": "hi"
     }
   ],
@@ -3250,7 +3138,6 @@ window.KYT_CITY_VIDEOS = {
     }
   ],
   "patna": [
-    
     {
       "id": "wyGlSfF3uzY",
       "title": "ஜாலியான Bihar கடினமான உழைப்பாளி bhaiya | Patna food tour | Bihar Special foods",
@@ -3480,14 +3367,6 @@ window.KYT_CITY_VIDEOS = {
   ],
   "raipur": [
     {
-      "id": "J7o4u3E7s0c",
-      "title": "Raipur tourist places | Raipur top 10 tourist places | Raipur city | India tourist 2.0",
-      "channel": "R-World Explorer",
-      "views": 85693,
-      "subs": 36500,
-      "language": "hi"
-    },
-    {
       "id": "4PRUzS2IOfU",
       "title": "Raipur city | A beautiful city of Chhattisgarh | informative video 🌿🇮🇳",
       "channel": "EXPLORE YRS",
@@ -3594,14 +3473,6 @@ window.KYT_CITY_VIDEOS = {
       "views": 49601,
       "subs": 42900,
       "language": "en"
-    },
-    {
-      "id": "2XWOCitf9yU",
-      "title": "Kolkata To Tatanagar Tour | Tatanagar Tour Guide | Tatanagar Jamshedpur Tourist Places | Chandil dam",
-      "channel": "My Travel Support",
-      "views": 197990,
-      "subs": 622000,
-      "language": "hi"
     }
   ],
   "dhanbad": [
@@ -3834,14 +3705,6 @@ window.KYT_CITY_VIDEOS = {
       "views": 1825319,
       "subs": 1030000,
       "language": "hi"
-    },
-    {
-      "id": "GDbpzH6QqZc",
-      "title": "Siliguri top 10 tourist spot || 10 best places in Siliguri || শিলিগুড়ির 10 টি ঘোরার জায়গা ||",
-      "channel": "DebTourVlog",
-      "views": 411560,
-      "subs": 5370,
-      "language": "en"
     },
     {
       "id": "S_DN6cLM9UU",
@@ -4170,14 +4033,6 @@ window.KYT_CITY_VIDEOS = {
       "language": "unknown"
     },
     {
-      "id": "w8h0EtF9Rs8",
-      "title": "Srisailam full tour in telugu | Srisailam temple | Srisailam tourist places | Ista kameswari temple",
-      "channel": "Nanda's Journey",
-      "views": 1218612,
-      "subs": 639000,
-      "language": "te"
-    },
-    {
       "id": "LGlW0c5c6vY",
       "title": "Srisailam Full Tour Plan In Kannada| ಶ್ರೀಶೈಲ ಯಾತ್ರೆಯ ಪೂರ್ತಿಮಾಹಿತಿ|Srisailam Information In Kannada|",
       "channel": "Arjun563",
@@ -4302,14 +4157,6 @@ window.KYT_CITY_VIDEOS = {
       "language": "hi"
     },
     {
-      "id": "JZjL5jB85CM",
-      "title": "Bhimashankar jyotirlinga temple full tour in telugu | Bhimashankar information | Pune | Maharashtra",
-      "channel": "Nanda's Journey",
-      "views": 432395,
-      "subs": 639000,
-      "language": "te"
-    },
-    {
       "id": "KfjHwi4_8IY",
       "title": "Bhimashankar Jyotirlinga Complete Guide 2026 | Pune to Bhimashankar Bus, Darshan & Monsoon Trip",
       "channel": "Akhilesh Rathod",
@@ -4349,14 +4196,6 @@ window.KYT_CITY_VIDEOS = {
       "channel": "Yatra Mitra",
       "views": 182269,
       "subs": 500000,
-      "language": "hi"
-    },
-    {
-      "id": "_M2TMx0p-6c",
-      "title": "Nashik full tour in telugu | Panchavati | Nashik temples information | Trimbakeshwar | Maharashtra",
-      "channel": "Nanda's Journey",
-      "views": 624329,
-      "subs": 639000,
       "language": "hi"
     },
     {
@@ -4494,14 +4333,6 @@ window.KYT_CITY_VIDEOS = {
       "language": "hi"
     },
     {
-      "id": "nbFfZGN47Zo",
-      "title": "Thiruvananthapuram full tour in telugu | Trivandrum tourist places | Kovalam | Varkala | Kerala",
-      "channel": "Nanda's Journey",
-      "views": 338166,
-      "subs": 639000,
-      "language": "hi"
-    },
-    {
       "id": "qnnJXOaHX7E",
       "title": "Trivandrum Tour Plan & Budget | A-Z Trivandrum Trip Guide | Trivandrum Tourist Place",
       "channel": "Mani & Avi",
@@ -4554,14 +4385,6 @@ window.KYT_CITY_VIDEOS = {
       "language": "kn"
     },
     {
-      "id": "OK4OQbJfAsY",
-      "title": "Pandharapur Full Tour Plan In Kannada | ಪಂಡರಾಪುರ ಯಾತ್ರೆಯ ಮಾಹಿತಿ | Pandharpur details in kannada 🚩🕉️🙏",
-      "channel": "Walk With Couple",
-      "views": 22004,
-      "subs": 9140,
-      "language": "kn"
-    },
-    {
       "id": "Sblnuhz9o3k",
       "title": "Pandharapur Full Tour Plan In Kannada | ಪಂಡರಾಪುರ ಯಾತ್ರೆಯ ಮಾಹಿತಿ | Pandharpur details in kannada 🚩🕉️🙏",
       "channel": "Arjun563",
@@ -4575,14 +4398,6 @@ window.KYT_CITY_VIDEOS = {
       "channel": "Traveller Rishabh",
       "views": 3527794,
       "subs": 499000,
-      "language": "hi"
-    },
-    {
-      "id": "7wP21eXhUY8",
-      "title": "Pandaripuram panduranga swamy temple full tour in telugu | Pandaripur temple history | Maharashtra",
-      "channel": "Nanda's Journey",
-      "views": 1586467,
-      "subs": 639000,
       "language": "hi"
     },
     {
@@ -4718,19 +4533,12 @@ window.KYT_CITY_VIDEOS = {
       "views": 324671,
       "subs": 49700,
       "language": "hi"
-    },
-    {
-      "id": "e3xqn7t2VVY",
-      "title": "Maheshwar Madhya Pradesh | Maheshwar Tour Plan & Guide | Maheshwar Road Trip| Maheshwar Ka kila |",
-      "channel": "Travel Distance",
-      "views": 142718,
-      "subs": 56500,
-      "language": "hi"
     }
-  ], "hubli": [
+  ],
+  "hubli": [
     {
       "id": "n2CjxMyIFi4",
-        "title": "Hubli City Tour | Top Places to visit in Hubballi",
+      "title": "Hubli City Tour | Top Places to visit in Hubballi",
       "channel": "Travel Vlogs",
       "views": 150000,
       "subs": 10000,
@@ -4738,7 +4546,7 @@ window.KYT_CITY_VIDEOS = {
     },
     {
       "id": "-iSMIBwAPBA",
-        "title": "Hubballi Dharwad Street Food | Famous food in Hubli",
+      "title": "Hubballi Dharwad Street Food | Famous food in Hubli",
       "channel": "Food Explorer",
       "views": 250000,
       "subs": 50000,
@@ -4746,6 +4554,3 @@ window.KYT_CITY_VIDEOS = {
     }
   ]
 };
-
-
-

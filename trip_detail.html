@@ -1254,9 +1254,9 @@
           }
 
           videoGallery.innerHTML = filtered.map(vid => `
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col transition-all duration-300" data-video-card="${KYT.utils.escapeHTML(vid.id)}">
               <div class="relative w-full aspect-video bg-slate-100">
-                <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/${KYT.utils.escapeHTML(vid.id)}?rel=0" frameborder="0" allowfullscreen=""></iframe>
+                <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/${KYT.utils.escapeHTML(vid.id)}?enablejsapi=1&rel=0" frameborder="0" allowfullscreen=""></iframe>
               </div>
               <div class="p-3 flex-1 flex flex-col justify-between">
                 <p class="text-sm font-bold text-slate-800 line-clamp-2 mb-2">${KYT.utils.escapeHTML(vid.title)}</p>
@@ -1310,6 +1310,36 @@
       }
 
       renderCitiesAndVideos();
+
+      // Just-in-time removal for any video that restricts embedding at playback time (error 101/150/100)
+      window.addEventListener('message', (e) => {
+        try {
+          const data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+          if (data && (data.event === 'onError' || (data.info && data.info.error))) {
+            const iframes = document.querySelectorAll('#video-gallery iframe');
+            for (const iframe of iframes) {
+              if (iframe.contentWindow === e.source) {
+                const card = iframe.closest('[data-video-card]');
+                if (card) {
+                  card.style.opacity = '0';
+                  card.style.transform = 'scale(0.95)';
+                  setTimeout(() => {
+                    card.remove();
+                    const remaining = document.querySelectorAll('#video-gallery [data-video-card]');
+                    if (remaining.length === 0) {
+                      const gallery = document.getElementById('video-gallery');
+                      if (gallery) {
+                        gallery.innerHTML = '<p class="text-sm text-slate-500 p-4 border border-dashed border-slate-200 rounded-xl text-center w-full col-span-full">No videos available.</p>';
+                      }
+                    }
+                  }, 200);
+                }
+                break;
+              }
+            }
+          }
+        } catch (err) {}
+      });
 
       // Configure Unified City Detail Slide-Over
       KYT.ui.cityDetail.configure({

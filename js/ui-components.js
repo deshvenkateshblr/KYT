@@ -770,10 +770,29 @@ window.KYT.ui = (function () {
         const iframe = document.createElement('iframe');
         iframe.id = 'cd-hero-yt';
         iframe.className = 'absolute inset-0 w-full h-full object-cover z-0';
-        iframe.src = `https://www.youtube-nocookie.com/embed/${videos[currentVidIdx].id}?rel=0&modestbranding=1`;
+        iframe.src = `https://www.youtube-nocookie.com/embed/${videos[currentVidIdx].id}?enablejsapi=1&rel=0&modestbranding=1`;
         iframe.allowFullscreen = true;
         iframe.style.border = 'none';
         headerDiv.insertBefore(iframe, heroPlaceholder);
+
+        // Fallback if video embedding is restricted by owner
+        const onHeroYtError = (e) => {
+          try {
+            const data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+            if (data && (data.event === 'onError' || (data.info && data.info.error))) {
+              if (iframe.contentWindow === e.source) {
+                if (videos.length > 1) {
+                  currentVidIdx = (currentVidIdx + 1) % videos.length;
+                  iframe.src = `https://www.youtube-nocookie.com/embed/${videos[currentVidIdx].id}?enablejsapi=1&rel=0&modestbranding=1`;
+                } else {
+                  iframe.remove();
+                  if (heroPlaceholder) heroPlaceholder.classList.remove('hidden');
+                }
+              }
+            }
+          } catch (err) {}
+        };
+        window.addEventListener('message', onHeroYtError);
 
         if (videos.length > 1) {
           const controls = document.createElement('div');
@@ -792,12 +811,12 @@ window.KYT.ui = (function () {
           document.getElementById('btn-yt-prev').onclick = (e) => {
             e.stopPropagation();
             currentVidIdx = (currentVidIdx - 1 + videos.length) % videos.length;
-            iframe.src = `https://www.youtube-nocookie.com/embed/${videos[currentVidIdx].id}?rel=0&modestbranding=1`;
+            iframe.src = `https://www.youtube-nocookie.com/embed/${videos[currentVidIdx].id}?enablejsapi=1&rel=0&modestbranding=1`;
           };
           document.getElementById('btn-yt-next').onclick = (e) => {
             e.stopPropagation();
             currentVidIdx = (currentVidIdx + 1) % videos.length;
-            iframe.src = `https://www.youtube-nocookie.com/embed/${videos[currentVidIdx].id}?rel=0&modestbranding=1`;
+            iframe.src = `https://www.youtube-nocookie.com/embed/${videos[currentVidIdx].id}?enablejsapi=1&rel=0&modestbranding=1`;
           };
         }
       } else if (heroPlaceholder) {

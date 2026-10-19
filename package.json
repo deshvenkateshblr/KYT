@@ -5,7 +5,9 @@
   "scripts": {
     "test:admin": "node admin/tests/core.test.js",
     "test:e2e": "node --test --test-concurrency=1 \"tests/e2e/*.test.js\"",
-    "test": "npm run test:admin && npm run test:e2e"
+    "test": "npm run test:admin && npm run test:e2e",
+    "check-videos": "node scripts/prune_unembeddable_videos.js --dry-run",
+    "prune-videos": "node scripts/prune_unembeddable_videos.js"
   },
   "devDependencies": {
     "playwright": "^1.56.0"
