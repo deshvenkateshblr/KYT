@@ -136,6 +136,7 @@ window.KYT_CITIES = [
     "lng": 78.0098161,
     "state": "Uttar Pradesh",
     "district": "Agra",
+    "setting": "plains",
     "code": "agr"
   },
   {
@@ -295,10 +296,12 @@ window.KYT_CITIES = [
     "lng": 75.8189817,
     "state": "Rajasthan",
     "district": "Jaipur",
+    "setting": "plains",
     "code": "jai"
   },
   {
     "id": "goa",
+    "setting": "coast",
     "code": "goa",
     "name": "Goa",
     "icon": "waves",
@@ -570,6 +573,7 @@ window.KYT_CITIES = [
     "lng": 77.0600915,
     "state": "Kerala",
     "district": "Idukki",
+    "setting": "hills",
     "code": "mun"
   },
   {
@@ -732,6 +736,7 @@ window.KYT_CITIES = [
     "lng": 73.6862571,
     "state": "Rajasthan",
     "district": "Udaipur",
+    "setting": "plains",
     "code": "uda"
   },
   {
@@ -874,6 +879,7 @@ window.KYT_CITIES = [
     "lng": 83.0076292,
     "state": "Uttar Pradesh",
     "district": "Varanasi",
+    "setting": "plains",
     "code": "var"
   },
   {
@@ -1034,6 +1040,7 @@ window.KYT_CITIES = [
     "lng": 77.2169781,
     "state": "Delhi",
     "district": "Old Delhi",
+    "setting": "plains",
     "code": "del"
   },
   {
@@ -1171,6 +1178,7 @@ window.KYT_CITIES = [
     "lng": 72.8692035,
     "state": "Maharashtra",
     "district": "Mumbai Suburban",
+    "setting": "coast",
     "code": "mum"
   },
   {
@@ -1306,6 +1314,7 @@ window.KYT_CITIES = [
     "lng": 76.2444378,
     "state": "Kerala",
     "district": "Ernakulam",
+    "setting": "coast",
     "code": "koc"
   },
   {
@@ -1440,6 +1449,7 @@ window.KYT_CITIES = [
     "lng": 78.2916193,
     "state": "Uttarakhand",
     "district": "Dehradun",
+    "setting": "hills",
     "code": "ris"
   },
   {
@@ -1576,6 +1586,7 @@ window.KYT_CITIES = [
     "lng": 77.1872926,
     "state": "Himachal Pradesh",
     "district": "Kullu",
+    "setting": "hills",
     "code": "man"
   },
   {
@@ -1713,6 +1724,7 @@ window.KYT_CITIES = [
     "lng": 77.1707923,
     "state": "Himachal Pradesh",
     "district": "Shimla",
+    "setting": "hills",
     "code": "shi"
   },
   {
@@ -1878,6 +1890,7 @@ window.KYT_CITIES = [
     "lng": 88.263176,
     "state": "West Bengal",
     "district": "Darjeeling",
+    "setting": "hills",
     "code": "dar"
   },
   {
@@ -2014,6 +2027,7 @@ window.KYT_CITIES = [
     "lng": 76.7030504,
     "state": "Tamil Nadu",
     "district": "Nilgiris",
+    "setting": "hills",
     "code": "oot"
   },
   {
@@ -2152,6 +2166,7 @@ window.KYT_CITIES = [
     "lng": 76.6553609,
     "state": "Karnataka",
     "district": "Mysuru",
+    "setting": "plains",
     "code": "mys"
   },
   {
@@ -2288,6 +2303,7 @@ window.KYT_CITIES = [
     "lng": 78.4740613,
     "state": "Telangana",
     "district": "Hyderabad",
+    "setting": "plains",
     "code": "hyd"
   },
   {
@@ -2425,6 +2441,7 @@ window.KYT_CITIES = [
     "lng": 88.3638953,
     "state": "West Bengal",
     "district": "Kolkata",
+    "setting": "plains",
     "code": "kol"
   },
   {
@@ -2564,6 +2581,7 @@ window.KYT_CITIES = [
     "lng": 80.2807978,
     "state": "Tamil Nadu",
     "district": "Chennai",
+    "setting": "coast",
     "code": "che"
   },
   {
@@ -2700,10 +2718,12 @@ window.KYT_CITIES = [
     "lng": 79.8069488,
     "state": "Puducherry",
     "district": "Karaikal",
+    "setting": "coast",
     "code": "pon"
   },
   {
     "id": "hampi",
+    "setting": "plains",
     "code": "hmp",
     "name": "Hampi",
     "icon": "landmark",
@@ -2967,6 +2987,7 @@ window.KYT_CITIES = [
     "lng": 92.8316541,
     "state": "Andaman and Nicobar Islands",
     "district": "North and Middle Andaman",
+    "setting": "coast",
     "code": "and"
   },
   {
@@ -3104,6 +3125,7 @@ window.KYT_CITIES = [
     "lng": 74.8204443,
     "state": "Jammu and Kashmir",
     "district": "Srinagar",
+    "setting": "hills",
     "code": "sri"
   },
   {
@@ -3237,6 +3259,7 @@ window.KYT_CITIES = [
     "lng": 77.6573483,
     "state": "Ladakh",
     "district": "Leh",
+    "setting": "hills",
     "code": "leh"
   },
   {
@@ -3382,6 +3405,7 @@ window.KYT_CITIES = [
     "lng": 74.8787496,
     "state": "Punjab",
     "district": "Amritsar",
+    "setting": "plains",
     "code": "amr"
   },
   {
@@ -3519,6 +3543,7 @@ window.KYT_CITIES = [
     "lng": 70.777512,
     "state": "Rajasthan",
     "district": "Jaisalmer",
+    "setting": "plains",
     "code": "ja1"
   },
   {
@@ -3659,6 +3684,7 @@ window.KYT_CITIES = [
     "lng": 73.0351433,
     "state": "Rajasthan",
     "district": "Jodhpur",
+    "setting": "plains",
     "code": "jod"
   },
   {
@@ -3776,6 +3802,7 @@ window.KYT_CITIES = [
     "lng": 74.5578484,
     "state": "Rajasthan",
     "district": "Ajmer",
+    "setting": "plains",
     "code": "pus"
   },
   {
@@ -3885,6 +3912,7 @@ window.KYT_CITIES = [
     "lng": 79.9259786,
     "state": "Madhya Pradesh",
     "district": "Chhatarpur",
+    "setting": "plains",
     "code": "kha"
   },
   {
@@ -3998,10 +4026,12 @@ window.KYT_CITIES = [
     "lng": 76.3209537,
     "state": "Kerala",
     "district": "Alappuzha",
+    "setting": "coast",
     "code": "all"
   },
   {
     "id": "gokarna",
+    "setting": "coast",
     "code": "gkn",
     "name": "Gokarna",
     "icon": "waves",
@@ -4221,6 +4251,7 @@ window.KYT_CITIES = [
     "lng": 78.1140983,
     "state": "Tamil Nadu",
     "district": "Madurai",
+    "setting": "plains",
     "code": "mad"
   },
   {
@@ -4353,6 +4384,7 @@ window.KYT_CITIES = [
     "lng": 77.5499338,
     "state": "Tamil Nadu",
     "district": "Kanniyakumari",
+    "setting": "coast",
     "code": "kan"
   },
   {
@@ -4462,6 +4494,7 @@ window.KYT_CITIES = [
     "lng": 76.4559761,
     "state": "Rajasthan",
     "district": "Sawai Madhopur",
+    "setting": "hills",
     "code": "ran"
   },
   {
@@ -4570,6 +4603,7 @@ window.KYT_CITIES = [
     "lng": 78.842495,
     "state": "Uttarakhand",
     "district": "Pauri Garhwal",
+    "setting": "hills",
     "code": "jim"
   },
   {
@@ -4704,6 +4738,7 @@ window.KYT_CITIES = [
     "lng": 79.4162511,
     "state": "Uttarakhand",
     "district": "Nainital",
+    "setting": "hills",
     "code": "nai"
   },
   {
@@ -4838,6 +4873,7 @@ window.KYT_CITIES = [
     "lng": 78.0782906,
     "state": "Uttarakhand",
     "district": "Dehradun",
+    "setting": "hills",
     "code": "mus"
   },
   {
@@ -4973,6 +5009,7 @@ window.KYT_CITIES = [
     "lng": 75.6640715,
     "state": "Karnataka",
     "district": "Kodagu",
+    "setting": "hills",
     "code": "coo"
   },
   {
@@ -5082,6 +5119,7 @@ window.KYT_CITIES = [
     "lng": 76.1271185,
     "state": "Kerala",
     "district": "Wayanad",
+    "setting": "hills",
     "code": "way"
   },
   {
@@ -5194,6 +5232,7 @@ window.KYT_CITIES = [
     "lng": 73.6575799,
     "state": "Maharashtra",
     "district": "Satara",
+    "setting": "hills",
     "code": "mah"
   },
   {
@@ -5309,6 +5348,7 @@ window.KYT_CITIES = [
     "lng": 73.4069436,
     "state": "Maharashtra",
     "district": "Pune",
+    "setting": "hills",
     "code": "lon"
   },
   {
@@ -5445,6 +5485,7 @@ window.KYT_CITIES = [
     "lng": 73.8545071,
     "state": "Maharashtra",
     "district": "Pune",
+    "setting": "plains",
     "code": "pun"
   },
   {
@@ -5582,6 +5623,7 @@ window.KYT_CITIES = [
     "lng": 75.3390241,
     "state": "Maharashtra",
     "district": "Chhatrapati Sambhajinagar",
+    "setting": "plains",
     "code": "aur"
   },
   {
@@ -5729,6 +5771,7 @@ window.KYT_CITIES = [
     "lng": 72.5800568,
     "state": "Gujarat",
     "district": "Ahmedabad",
+    "setting": "plains",
     "code": "ahm"
   },
   {
@@ -5840,6 +5883,7 @@ window.KYT_CITIES = [
     "lng": 70,
     "state": "Gujarat",
     "district": "Kutch",
+    "setting": "plains",
     "code": "kut"
   },
   {
@@ -5953,6 +5997,7 @@ window.KYT_CITIES = [
     "lng": 68.9671448,
     "state": "Gujarat",
     "district": "Devbhumi Dwaraka",
+    "setting": "coast",
     "code": "dwa"
   },
   {
@@ -6065,6 +6110,7 @@ window.KYT_CITIES = [
     "lng": 70.4080467,
     "state": "Gujarat",
     "district": "Gir Somnath",
+    "setting": "coast",
     "code": "som"
   },
   {
@@ -6179,6 +6225,7 @@ window.KYT_CITIES = [
     "lng": 78.1573628,
     "state": "Madhya Pradesh",
     "district": "Gwalior",
+    "setting": "plains",
     "code": "gwa"
   },
   {
@@ -6289,6 +6336,7 @@ window.KYT_CITIES = [
     "lng": 78.6402465,
     "state": "Madhya Pradesh",
     "district": "Niwari",
+    "setting": "plains",
     "code": "orc"
   },
   {
@@ -6398,6 +6446,7 @@ window.KYT_CITIES = [
     "lng": 77.401989,
     "state": "Madhya Pradesh",
     "district": "Bhopal",
+    "setting": "plains",
     "code": "bho"
   },
   {
@@ -6522,6 +6571,7 @@ window.KYT_CITIES = [
     "lng": 75.8681996,
     "state": "Madhya Pradesh",
     "district": "Indore",
+    "setting": "plains",
     "code": "ind"
   },
   {
@@ -6633,6 +6683,7 @@ window.KYT_CITIES = [
     "lng": 85.8252538,
     "state": "Odisha",
     "district": "Puri",
+    "setting": "coast",
     "code": "pur"
   },
   {
@@ -6774,6 +6825,7 @@ window.KYT_CITIES = [
     "lng": 85.8394521,
     "state": "Odisha",
     "district": "Khordha",
+    "setting": "plains",
     "code": "bhu"
   },
   {
@@ -6882,6 +6934,7 @@ window.KYT_CITIES = [
     "lng": 86.1420195,
     "state": "Odisha",
     "district": "Puri",
+    "setting": "coast",
     "code": "kon"
   },
   {
@@ -7018,6 +7071,7 @@ window.KYT_CITIES = [
     "lng": 91.753943,
     "state": "Assam",
     "district": "Kamrup Metropolitan",
+    "setting": "plains",
     "code": "guw"
   },
   {
@@ -7129,6 +7183,7 @@ window.KYT_CITIES = [
     "lng": 91.8827872,
     "state": "Meghalaya",
     "district": "East Khasi Hills",
+    "setting": "hills",
     "code": "sh1"
   },
   {
@@ -7234,6 +7289,7 @@ window.KYT_CITIES = [
     "lng": 91.7292416,
     "state": "Meghalaya",
     "district": "East Khasi Hills",
+    "setting": "hills",
     "code": "ch1"
   },
   {
@@ -7342,6 +7398,7 @@ window.KYT_CITIES = [
     "lng": 91.863733,
     "state": "Arunachal Pradesh",
     "district": "Tawang",
+    "setting": "hills",
     "code": "taw"
   },
   {
@@ -7456,6 +7513,7 @@ window.KYT_CITIES = [
     "lng": 88.6122673,
     "state": "Sikkim",
     "district": "Gangtok",
+    "setting": "hills",
     "code": "gan"
   },
   {
@@ -7567,6 +7625,7 @@ window.KYT_CITIES = [
     "lng": 88.2356503,
     "state": "Sikkim",
     "district": "Gyalshing",
+    "setting": "hills",
     "code": "pel"
   },
   {
@@ -7680,6 +7739,7 @@ window.KYT_CITIES = [
     "lng": 93.4084741,
     "state": "Assam",
     "district": "Golaghat",
+    "setting": "hills",
     "code": "kaz"
   },
   {
@@ -7818,6 +7878,7 @@ window.KYT_CITIES = [
     "lng": 76.3196717,
     "state": "Himachal Pradesh",
     "district": "Kangra",
+    "setting": "hills",
     "code": "dha"
   },
   {
@@ -7926,6 +7987,7 @@ window.KYT_CITIES = [
     "lng": 75.9448409,
     "state": "Himachal Pradesh",
     "district": "Chamba",
+    "setting": "hills",
     "code": "dal"
   },
   {
@@ -8053,6 +8115,7 @@ window.KYT_CITIES = [
       "Spiti",
       "Kaza"
     ],
+    "setting": "hills",
     "code": "spi",
     "lat": 32.2461,
     "lng": 78.0349,
@@ -8190,6 +8253,7 @@ window.KYT_CITIES = [
     "lng": 79.3125553,
     "state": "Tamil Nadu",
     "district": "Ramanathapuram",
+    "setting": "coast",
     "code": "ram"
   },
   {
@@ -8299,6 +8363,7 @@ window.KYT_CITIES = [
     "lng": 79.2014278,
     "state": "Tamil Nadu",
     "district": "Thanjavur",
+    "setting": "plains",
     "code": "tha"
   },
   {
@@ -8407,6 +8472,7 @@ window.KYT_CITIES = [
     "lng": 77.4919719,
     "state": "Tamil Nadu",
     "district": "Dindigul",
+    "setting": "hills",
     "code": "kod"
   },
   {
@@ -8520,6 +8586,7 @@ window.KYT_CITIES = [
     "lng": 73.2700191,
     "state": "Maharashtra",
     "district": "Raigad",
+    "setting": "hills",
     "code": "mat"
   },
   {
@@ -8626,6 +8693,7 @@ window.KYT_CITIES = [
     "lng": 79.5657242,
     "state": "Uttarakhand",
     "district": "Chamoli",
+    "setting": "hills",
     "code": "aul"
   },
   {
@@ -8738,6 +8806,7 @@ window.KYT_CITIES = [
     "lng": 79.0669073,
     "state": "Uttarakhand",
     "district": "Rudraprayag",
+    "setting": "hills",
     "code": "ked"
   },
   {
@@ -8849,6 +8918,7 @@ window.KYT_CITIES = [
     "lng": 79.4930256,
     "state": "Uttarakhand",
     "district": "Chamoli",
+    "setting": "hills",
     "code": "bad"
   },
   {
@@ -8967,6 +9037,7 @@ window.KYT_CITIES = [
     "lng": 78.1452985,
     "state": "Uttarakhand",
     "district": "Haridwar",
+    "setting": "plains",
     "code": "har"
   },
   {
@@ -9086,6 +9157,7 @@ window.KYT_CITIES = [
     "lng": 77.6855554,
     "state": "Uttar Pradesh",
     "district": "Mathura",
+    "setting": "plains",
     "code": "ma1"
   },
   {
@@ -9200,6 +9272,7 @@ window.KYT_CITIES = [
     "lng": 77.6938045,
     "state": "Uttar Pradesh",
     "district": "Mathura",
+    "setting": "plains",
     "code": "vri"
   },
   {
@@ -9315,6 +9388,7 @@ window.KYT_CITIES = [
     "lng": 82.2052321,
     "state": "Uttar Pradesh",
     "district": "Ayodhya",
+    "setting": "plains",
     "code": "ayo"
   },
   {
@@ -9432,6 +9506,7 @@ window.KYT_CITIES = [
     "lng": 81.8338005,
     "state": "Uttar Pradesh",
     "district": "Prayagraj",
+    "setting": "plains",
     "code": "pra"
   },
   {
@@ -9544,6 +9619,7 @@ window.KYT_CITIES = [
     "lng": 85.0079563,
     "state": "Bihar",
     "district": "Gaya",
+    "setting": "plains",
     "code": "gay"
   },
   {
@@ -9652,6 +9728,7 @@ window.KYT_CITIES = [
     "lng": 85.4436546,
     "state": "Bihar",
     "district": "Nalanda",
+    "setting": "plains",
     "code": "nal"
   },
   {
@@ -9762,6 +9839,7 @@ window.KYT_CITIES = [
     "lng": 85.4207368,
     "state": "Bihar",
     "district": "Nalanda",
+    "setting": "plains",
     "code": "raj"
   },
   {
@@ -9872,6 +9950,7 @@ window.KYT_CITIES = [
     "lng": 83.0275999,
     "state": "Uttar Pradesh",
     "district": "Varanasi",
+    "setting": "plains",
     "code": "sar"
   },
   {
@@ -9979,6 +10058,7 @@ window.KYT_CITIES = [
     "lng": 91.9155148,
     "state": "Meghalaya",
     "district": "East Khasi Hills",
+    "setting": "hills",
     "code": "maw"
   },
   {
@@ -10089,6 +10169,7 @@ window.KYT_CITIES = [
     "lng": 93.815355,
     "state": "Arunachal Pradesh",
     "district": "Lower Subansiri",
+    "setting": "hills",
     "code": "zir"
   },
   {
@@ -10201,6 +10282,7 @@ window.KYT_CITIES = [
     "lng": 94.327423,
     "state": "Assam",
     "district": "Majuli",
+    "setting": "plains",
     "code": "maj"
   },
   {
@@ -10309,6 +10391,7 @@ window.KYT_CITIES = [
     "lng": 92.9956211,
     "state": "Andaman and Nicobar Islands",
     "district": "South Andaman",
+    "setting": "coast",
     "code": "hav"
   },
   {
@@ -10418,6 +10501,7 @@ window.KYT_CITIES = [
     "lng": 93.0419302,
     "state": "Andaman and Nicobar Islands",
     "district": "South Andaman",
+    "setting": "coast",
     "code": "nei"
   },
   {
@@ -10527,6 +10611,7 @@ window.KYT_CITIES = [
     "lng": 72.9205386,
     "state": "Lakshadweep",
     "district": "Lakshadweep",
+    "setting": "coast",
     "code": "lak"
   },
   {
@@ -10637,6 +10722,7 @@ window.KYT_CITIES = [
     "lng": 79.367685,
     "state": "Uttarakhand",
     "district": "Chamoli",
+    "setting": "hills",
     "code": "cho"
   },
   {
@@ -10745,6 +10831,7 @@ window.KYT_CITIES = [
     "lng": 72.7081876,
     "state": "Rajasthan",
     "district": "Sirohi",
+    "setting": "hills",
     "code": "mou"
   },
   {
@@ -10865,6 +10952,7 @@ window.KYT_CITIES = [
     "lng": 73.3171367,
     "state": "Rajasthan",
     "district": "Bikaner",
+    "setting": "plains",
     "code": "bik"
   },
   {
@@ -10974,6 +11062,7 @@ window.KYT_CITIES = [
     "lng": 74.4718129,
     "state": "Rajasthan",
     "district": "Chittorgarh",
+    "setting": "plains",
     "code": "chi"
   },
   {
@@ -11084,6 +11173,7 @@ window.KYT_CITIES = [
     "lng": 76.4305378,
     "state": "Kerala",
     "district": "Kottayam",
+    "setting": "coast",
     "code": "kum"
   },
   {
@@ -11195,6 +11285,7 @@ window.KYT_CITIES = [
     "lng": 76.9785152,
     "state": "Kerala",
     "district": "Thiruvananthapuram",
+    "setting": "coast",
     "code": "kov"
   },
   {
@@ -11310,6 +11401,7 @@ window.KYT_CITIES = [
     "lng": 76.7252855,
     "state": "Kerala",
     "district": "Thiruvananthapuram",
+    "setting": "coast",
     "code": "va1"
   },
   {
@@ -11424,6 +11516,7 @@ window.KYT_CITIES = [
     "lng": 76.214621,
     "state": "Kerala",
     "district": "Thrissur",
+    "setting": "plains",
     "code": "thr"
   },
   {
@@ -11532,6 +11625,7 @@ window.KYT_CITIES = [
     "lng": 75.8634851,
     "state": "Karnataka",
     "district": "Hassan",
+    "setting": "plains",
     "code": "bel"
   },
   {
@@ -11642,6 +11736,7 @@ window.KYT_CITIES = [
     "lng": 76.6913469,
     "state": "Karnataka",
     "district": "Mandya",
+    "setting": "plains",
     "code": "hal"
   },
   {
@@ -11752,6 +11847,7 @@ window.KYT_CITIES = [
     "lng": 75.6807865,
     "state": "Karnataka",
     "district": "Bagalkote",
+    "setting": "plains",
     "code": "ba1"
   },
   {
@@ -11862,6 +11958,7 @@ window.KYT_CITIES = [
     "lng": 75.8159703,
     "state": "Karnataka",
     "district": "Bagalkote",
+    "setting": "plains",
     "code": "pat"
   },
   {
@@ -11973,6 +12070,7 @@ window.KYT_CITIES = [
     "lng": 80.6160469,
     "state": "Andhra Pradesh",
     "district": "NTR",
+    "setting": "plains",
     "code": "vij"
   },
   {
@@ -12086,6 +12184,7 @@ window.KYT_CITIES = [
     "lng": 79.4231711,
     "state": "Andhra Pradesh",
     "district": "Tirupati",
+    "setting": "hills",
     "code": "tir"
   },
   {
@@ -12194,6 +12293,7 @@ window.KYT_CITIES = [
     "lng": 83.2921297,
     "state": "Andhra Pradesh",
     "district": "Visakhapatnam",
+    "setting": "coast",
     "code": "vis"
   },
   {
@@ -12308,6 +12408,7 @@ window.KYT_CITIES = [
     "lng": 85.3250387,
     "state": "Jharkhand",
     "district": "Ranchi",
+    "setting": "plains",
     "code": "ra1"
   },
   {
@@ -12424,6 +12525,7 @@ window.KYT_CITIES = [
     "lng": 85.1235252,
     "state": "Bihar",
     "district": "Patna",
+    "setting": "plains",
     "code": "pa1"
   },
   {
@@ -12536,6 +12638,7 @@ window.KYT_CITIES = [
     "lng": 84.968231,
     "state": "Bihar",
     "district": "Gaya",
+    "setting": "plains",
     "code": "bod"
   },
   {
@@ -12650,6 +12753,7 @@ window.KYT_CITIES = [
     "lng": 72.8317058,
     "state": "Gujarat",
     "district": "Surat",
+    "setting": "coast",
     "code": "sur"
   },
   {
@@ -12764,6 +12868,7 @@ window.KYT_CITIES = [
     "lng": 73.1942567,
     "state": "Gujarat",
     "district": "Vadodara",
+    "setting": "plains",
     "code": "vad"
   },
   {
@@ -12876,6 +12981,7 @@ window.KYT_CITIES = [
     "lng": 70.8028377,
     "state": "Gujarat",
     "district": "Rajkot",
+    "setting": "plains",
     "code": "ra2"
   },
   {
@@ -12985,6 +13091,7 @@ window.KYT_CITIES = [
     "lng": 72.6492267,
     "state": "Gujarat",
     "district": "Gandhinagar",
+    "setting": "plains",
     "code": "ga1"
   },
   {
@@ -13098,6 +13205,7 @@ window.KYT_CITIES = [
     "lng": 76.7797143,
     "state": "Chandigarh",
     "district": "Chandigarh",
+    "setting": "plains",
     "code": "cha"
   },
   {
@@ -13207,6 +13315,7 @@ window.KYT_CITIES = [
     "lng": 75.851601,
     "state": "Punjab",
     "district": "Ludhiana",
+    "setting": "plains",
     "code": "lud"
   },
   {
@@ -13321,6 +13430,7 @@ window.KYT_CITIES = [
     "lng": 75.5678878,
     "state": "Punjab",
     "district": "Jalandhar",
+    "setting": "plains",
     "code": "jal"
   },
   {
@@ -13432,6 +13542,7 @@ window.KYT_CITIES = [
     "lng": 76.3397231,
     "state": "Punjab",
     "district": "Patiala",
+    "setting": "plains",
     "code": "pa2"
   },
   {
@@ -13544,6 +13655,7 @@ window.KYT_CITIES = [
     "lng": 81.6336993,
     "state": "Chhattisgarh",
     "district": "Raipur",
+    "setting": "plains",
     "code": "rai"
   },
   {
@@ -13653,6 +13765,7 @@ window.KYT_CITIES = [
     "lng": 81.3732849,
     "state": "Chhattisgarh",
     "district": "Durg",
+    "setting": "plains",
     "code": "bhi"
   },
   {
@@ -13763,6 +13876,7 @@ window.KYT_CITIES = [
     "lng": 86.2029579,
     "state": "Jharkhand",
     "district": "East Singhbhum",
+    "setting": "plains",
     "code": "jam"
   },
   {
@@ -13870,6 +13984,7 @@ window.KYT_CITIES = [
     "lng": 86.4309638,
     "state": "Jharkhand",
     "district": "Dhanbad",
+    "setting": "plains",
     "code": "dh1"
   },
   {
@@ -14003,6 +14118,7 @@ window.KYT_CITIES = [
     "lng": 78.0436813,
     "state": "Uttarakhand",
     "district": "Dehradun",
+    "setting": "hills",
     "code": "deh"
   },
   {
@@ -14117,6 +14233,7 @@ window.KYT_CITIES = [
     "lng": 74.8580917,
     "state": "Jammu and Kashmir",
     "district": "Jammu",
+    "setting": "plains",
     "code": "ja2"
   },
   {
@@ -14227,6 +14344,7 @@ window.KYT_CITIES = [
     "lng": 74.39212,
     "state": "Jammu and Kashmir",
     "district": "Baramulla",
+    "setting": "hills",
     "code": "gul"
   },
   {
@@ -14335,6 +14453,7 @@ window.KYT_CITIES = [
     "lng": 75.3226479,
     "state": "Jammu and Kashmir",
     "district": "Anantnag",
+    "setting": "hills",
     "code": "pah"
   },
   {
@@ -14442,6 +14561,7 @@ window.KYT_CITIES = [
     "lng": 75.2965551,
     "state": "Jammu and Kashmir",
     "district": "Ganderbal",
+    "setting": "hills",
     "code": "son"
   },
   {
@@ -14550,6 +14670,7 @@ window.KYT_CITIES = [
     "lng": 76.4730096,
     "state": "Ladakh",
     "district": "Kargil",
+    "setting": "hills",
     "code": "kar"
   },
   {
@@ -14662,6 +14783,7 @@ window.KYT_CITIES = [
     "lng": 88.4309916,
     "state": "West Bengal",
     "district": "Darjeeling",
+    "setting": "plains",
     "code": "sil"
   },
   {
@@ -14774,6 +14896,7 @@ window.KYT_CITIES = [
     "lng": 88.4723676,
     "state": "West Bengal",
     "district": "Kalimpong",
+    "setting": "hills",
     "code": "kal"
   },
   {
@@ -14882,6 +15005,7 @@ window.KYT_CITIES = [
     "lng": 88.1888396,
     "state": "West Bengal",
     "district": "Darjeeling",
+    "setting": "hills",
     "code": "mir"
   },
   {
@@ -14991,6 +15115,7 @@ window.KYT_CITIES = [
     "lng": 87.5082534,
     "state": "West Bengal",
     "district": "Purba Medinipur",
+    "setting": "coast",
     "code": "dig"
   },
   {
@@ -15098,6 +15223,7 @@ window.KYT_CITIES = [
     "lng": 87.6986139,
     "state": "West Bengal",
     "district": "Purba Medinipur",
+    "setting": "coast",
     "code": "ma2"
   },
   {
@@ -15205,6 +15331,7 @@ window.KYT_CITIES = [
     "lng": 88.6873161,
     "state": "West Bengal",
     "district": "South 24 Parganas",
+    "setting": "coast",
     "code": "sun"
   },
   {
@@ -15346,6 +15473,7 @@ window.KYT_CITIES = [
     "lng": 77.590082,
     "state": "Karnataka",
     "district": "Bengaluru Urban",
+    "setting": "plains",
     "code": "ben"
   },
   {
@@ -15482,6 +15610,7 @@ window.KYT_CITIES = [
     "lng": 80.9346001,
     "state": "Uttar Pradesh",
     "district": "Lucknow",
+    "setting": "plains",
     "code": "luc"
   },
   {
@@ -15620,6 +15749,7 @@ window.KYT_CITIES = [
     "lng": 74.4754386,
     "state": "Maharashtra",
     "district": "Ahilyanagar",
+    "setting": "plains",
     "code": "sh2"
   },
   {
@@ -15787,6 +15917,7 @@ window.KYT_CITIES = [
     "lng": 79.7042762,
     "state": "Tamil Nadu",
     "district": "Kanchipuram",
+    "setting": "plains",
     "code": "ka1"
   },
   {
@@ -15877,6 +16008,7 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Ram%20Ghat%2C%20Ujjain"
       }
     ],
+    "setting": "plains",
     "code": "ujj"
   },
   {
@@ -15960,6 +16092,7 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Srisailam%20Dam%2C%20Andhra%20Pradesh"
       }
     ],
+    "setting": "hills",
     "code": "sr1",
     "notes": "Home to the Mallikarjuna Jyotirlinga and Bhramaramba Shakti Peeth, a sacred town on the banks of River Krishna.",
     "icon": "landmark",
@@ -16054,6 +16187,7 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Narmada%20Ghat%2C%20Omkareshwar"
       }
     ],
+    "setting": "plains",
     "code": "omk",
     "notes": "A sacred island on the Narmada river, shaped like the holy 'Om', housing one of the 12 revered Jyotirlingas.",
     "icon": "landmark",
@@ -16146,6 +16280,7 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Gupt%20Bhimashankar%2C%20Maharashtra"
       }
     ],
+    "setting": "hills",
     "code": "bh1",
     "notes": "An ancient shrine in the Sahyadri mountains, famous for its Jyotirlinga and the lush Bhimashankar Wildlife Sanctuary.",
     "icon": "mountain",
@@ -16238,6 +16373,7 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sula%20Vineyards%2C%20Nashik"
       }
     ],
+    "setting": "plains",
     "code": "nas",
     "notes": "An ancient holy city on the Godavari river, famous for the Kumbh Mela, Trimbakeshwar Jyotirlinga, and vineyards.",
     "icon": "landmark",
@@ -16332,6 +16468,7 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Tapovan%20Caves%2C%20Deoghar"
       }
     ],
+    "setting": "plains",
     "code": "deo",
     "notes": "A major Hindu pilgrimage site renowned for the Baidyanath Jyotirlinga temple, attracting millions during Shravan.",
     "icon": "landmark",
@@ -16426,6 +16563,7 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Jambukeswarar%20Temple%2C%20Thiruvanaikaval%2C%20Tiruchirappalli"
       }
     ],
+    "setting": "plains",
     "code": "ti1",
     "notes": "An ancient city centered around the Rock Fort, and home to the massive Sri Ranganathaswamy Temple in Srirangam.",
     "icon": "landmark",
@@ -16519,6 +16657,7 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kovalam%20Beach%2C%20Kerala"
       }
     ],
+    "setting": "coast",
     "code": "thi",
     "notes": "The capital of Kerala, distinguished by its British colonial architecture, art galleries, and the magnificent Padmanabhaswamy Temple.",
     "icon": "landmark",
@@ -16607,6 +16746,7 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mammiyoor%20Temple%2C%20Guruvayur"
       }
     ],
+    "setting": "plains",
     "code": "gur",
     "notes": "A bustling temple town in Kerala, home to the revered Guruvayur Sri Krishna Temple, often called the 'Dwarka of the South'.",
     "icon": "landmark",
@@ -16699,6 +16839,7 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kaivalya%20Dham%2C%20Pandharpur"
       }
     ],
+    "setting": "plains",
     "code": "pan",
     "notes": "A major pilgrimage city on the banks of the Chandrabhaga River, dedicated to Lord Vitthal and Rukmini.",
     "icon": "landmark",
@@ -16791,6 +16932,7 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Haldighati%2C%20Rajasthan"
       }
     ],
+    "setting": "plains",
     "code": "nat",
     "notes": "A picturesque town in the Aravalli hills, famous for its Shrinathji Temple, dedicated to Lord Krishna.",
     "icon": "landmark",
@@ -16804,6 +16946,7 @@ window.KYT_CITIES = [
   },
   {
     "id": "udupi",
+    "setting": "coast",
     "code": "udp",
     "name": "Udupi",
     "state": "Karnataka",
@@ -16979,10 +17122,12 @@ window.KYT_CITIES = [
     "lng": 75.5861,
     "state": "Madhya Pradesh",
     "district": "Khargone",
+    "setting": "plains",
     "code": "ma3"
   },
   {
     "id": "hubli",
+    "setting": "plains",
     "code": "hbl",
     "name": "Hubballi (Hubli)",
     "icon": "plane",

@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>
         <div class="k-option-body">
           <div class="k-option-head">
-            <span class="k-option-title">My Digital Passport</span>
+            <span class="k-option-title">India Explorer Passport</span>
             <span class="k-option-badge" style="background: #ECFDF5; color: #047857;">Hit List</span>
           </div>
           <p class="k-option-desc">Track and stamp the destinations you've explored across India.</p>
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>
         <div class="k-option-body">
           <div class="k-option-head">
-            <span class="k-option-title">My Digital Passport</span>
+            <span class="k-option-title">India Explorer Passport</span>
             <span class="k-option-badge" style="background: #ECFDF5; color: #047857;">Hit List</span>
           </div>
           <p class="k-option-desc">Been there, done that! Mark Indian cities you've explored, collect official stamps, and grow your personal travel scratchpad.</p>

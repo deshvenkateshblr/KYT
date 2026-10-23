@@ -452,7 +452,7 @@ window.KYT.ui = (function () {
         : '';
 
       return `
-        <div class="bg-white rounded-2xl p-5 shadow-sm border ${city.visited ? 'border-emerald-200/70 bg-gradient-to-b from-emerald-50/20 via-white to-white' : 'border-slate-200 hover:border-blue-300 hover:shadow-md'} transition-all flex flex-col relative group overflow-hidden">
+        <div data-city-id="${esc(city.id)}" class="cursor-pointer bg-white rounded-2xl p-5 shadow-sm border ${city.visited ? 'border-emerald-200/70 bg-gradient-to-b from-emerald-50/20 via-white to-white' : 'border-slate-200 hover:border-blue-300 hover:shadow-md'} transition-all flex flex-col relative group overflow-hidden">
           ${bgStampHTML}
           <div class="flex justify-between items-start mb-3 relative z-10">
             <div class="w-12 h-12 rounded-xl ${city.bg} flex items-center justify-center ${city.color} border ${city.border} shadow-2xs bg-white">

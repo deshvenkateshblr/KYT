@@ -8,6 +8,7 @@
     <File Path="trip_detail.html" />
     <File Path="view_trip.html" />
     <File Path="virtual_trip.html" />
+    <File Path="visited.html" />
   </Folder>
   <Folder Name="/Solution Items/admin/">
     <File Path="admin/admin.css" />
@@ -41,13 +42,14 @@
     <File Path="js/explore.js" />
     <File Path="js/file-viewer.js" />
     <File Path="js/index.js" />
+    <File Path="js/passport-extras.js" />
     <File Path="js/passport-store.js" />
     <File Path="js/share.js" />
     <File Path="js/social.js" />
     <File Path="js/step-form.js" />
     <File Path="js/store.js" />
+    <File Path="js/ui-components.js" />
     <File Path="js/virtual-trips.js" />
-    <File Path="ui-components.js" />
   </Folder>
   <Folder Name="/Solution Items/scripts/">
     <File Path="scripts/bucket_list_source.json" />
