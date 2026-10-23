@@ -562,7 +562,10 @@ window.KYT_CITIES = [
         "notes": "Scenic reservoir framed by tea gardens and eucalyptus forests; enjoy speed boating and occasional wild elephant sightings on the banks."
       }
     ],
-    "aliases": [],
+    "aliases": [
+      "High Ranges",
+      "Munnar Hills"
+    ],
     "lat": 10.0869959,
     "lng": 77.0600915,
     "state": "Kerala",
@@ -3875,7 +3878,9 @@ window.KYT_CITIES = [
         "notes": "Open-air evening narrative with Amitabh Bachchan's voiceover set against the illuminated western temples recounting the Chandela dynasty."
       }
     ],
-    "aliases": [],
+    "aliases": [
+      "Khajuraho Temples"
+    ],
     "lat": 24.8515132,
     "lng": 79.9259786,
     "state": "Madhya Pradesh",
@@ -4095,7 +4100,9 @@ window.KYT_CITIES = [
         "notes": "Scenic cliffside coastal trek connecting isolated coves only accessible on foot or by local fishing boat, with breathtaking sea views."
       }
     ],
-    "aliases": [],
+    "aliases": [
+      "Gokarn"
+    ],
     "lat": 14.5439629,
     "lng": 74.3184418,
     "state": "Karnataka",
@@ -7328,7 +7335,9 @@ window.KYT_CITIES = [
         "notes": "Stupa-shaped memorial honoring Indian Army martyrs of the 1962 Sino-Indian War, with evening patriotic audio-visual presentation."
       }
     ],
-    "aliases": [],
+    "aliases": [
+      "Tawang Monastery"
+    ],
     "lat": 27.5879186,
     "lng": 91.863733,
     "state": "Arunachal Pradesh",
@@ -7440,7 +7449,9 @@ window.KYT_CITIES = [
         "notes": "Litter-free, vehicle-free paved boulevard with flower gardens, statues, cafes, hot pork or cheese momos, thukpa, and fermented millet tongba."
       }
     ],
-    "aliases": [],
+    "aliases": [
+      "Gangtok Sikkim"
+    ],
     "lat": 27.329046,
     "lng": 88.6122673,
     "state": "Sikkim",
@@ -7549,7 +7560,9 @@ window.KYT_CITIES = [
         "notes": "Sacred lake holy to both Buddhists and Hindus, nestled in dense forests where legend holds that birds swiftly pick any leaf that drops in the water."
       }
     ],
-    "aliases": [],
+    "aliases": [
+      "West Sikkim"
+    ],
     "lat": 27.3003722,
     "lng": 88.2356503,
     "state": "Sikkim",
@@ -7660,7 +7673,9 @@ window.KYT_CITIES = [
         "notes": "Visit the certified organic tea plantation bordering the park and taste strong, malty orthodox Assam black and green tea."
       }
     ],
-    "aliases": [],
+    "aliases": [
+      "Kaziranga National Park"
+    ],
     "lat": 26.5892533,
     "lng": 93.4084741,
     "state": "Assam",
@@ -8038,7 +8053,11 @@ window.KYT_CITIES = [
       "Spiti",
       "Kaza"
     ],
-    "code": "spi"
+    "code": "spi",
+    "lat": 32.2461,
+    "lng": 78.0349,
+    "state": "Himachal Pradesh",
+    "district": "Lahaul and Spiti"
   },
   {
     "id": "rameswaram",
@@ -9626,7 +9645,9 @@ window.KYT_CITIES = [
         "notes": "Major Jain pilgrimage shrine believed by Digambara Jains to be the birthplace of the 24th Tirthankara, Lord Mahavira."
       }
     ],
-    "aliases": [],
+    "aliases": [
+      "Nalanda Mahavihara"
+    ],
     "lat": 25.1364914,
     "lng": 85.4436546,
     "state": "Bihar",
@@ -10173,7 +10194,9 @@ window.KYT_CITIES = [
         "notes": "Ancient craft village practicing beaten pottery without a potter's wheel, followed by a serene riverbank sunset over the Brahmaputra."
       }
     ],
-    "aliases": [],
+    "aliases": [
+      "Majuli Island"
+    ],
     "lat": 27.0219529,
     "lng": 94.327423,
     "state": "Assam",
@@ -10503,7 +10526,7 @@ window.KYT_CITIES = [
     "lat": 10.3337313,
     "lng": 72.9205386,
     "state": "Lakshadweep",
-    "district": "",
+    "district": "Lakshadweep",
     "code": "lak"
   },
   {
@@ -12846,7 +12869,9 @@ window.KYT_CITIES = [
         "notes": "Feast on rustic Kathiyawadi cuisine: ringna no olo (smoked roasted brinjal), bajra rotla with white butter, garlic chutney, and Rajkot peda."
       }
     ],
-    "aliases": [],
+    "aliases": [
+      "Rangilu Rajkot"
+    ],
     "lat": 22.3053263,
     "lng": 70.8028377,
     "state": "Gujarat",
@@ -12953,7 +12978,9 @@ window.KYT_CITIES = [
         "notes": "Lush botanical garden on the banks of the Sabarmati River, popular for birdwatching peacocks, spotted deer, and scenic evening walks."
       }
     ],
-    "aliases": [],
+    "aliases": [
+      "Capital of Gujarat"
+    ],
     "lat": 23.2232877,
     "lng": 72.6492267,
     "state": "Gujarat",
@@ -13173,7 +13200,9 @@ window.KYT_CITIES = [
         "notes": "Indulge in Punjab's legendary rich cream-simmered butter chicken, tandoori fish tikka, and crisp garlic naans in Model Town."
       }
     ],
-    "aliases": [],
+    "aliases": [
+      "Manchester of India"
+    ],
     "lat": 30.9090157,
     "lng": 75.851601,
     "state": "Punjab",
@@ -13508,7 +13537,9 @@ window.KYT_CITIES = [
         "notes": "Taste authentic Chhattisgarhi steamed rice fara dumplings, savory rice chila with tomato chutney, and stroll along the vibrant Marine Drive."
       }
     ],
-    "aliases": [],
+    "aliases": [
+      "Capital of Chhattisgarh"
+    ],
     "lat": 21.2380912,
     "lng": 81.6336993,
     "state": "Chhattisgarh",
@@ -14736,7 +14767,9 @@ window.KYT_CITIES = [
         "notes": "Sample traditional Swiss-style Kalimpong gouda cheese, local chewy lollipops, dalle khursani chili pickles, and Tibetan street snacks."
       }
     ],
-    "aliases": [],
+    "aliases": [
+      "Kalimpong Hills"
+    ],
     "lat": 27.0702869,
     "lng": 88.4723676,
     "state": "West Bengal",
@@ -14842,7 +14875,9 @@ window.KYT_CITIES = [
         "notes": "Drive along the Nepal border through sweet citrus orange groves, crossing into Pashupati Nagar market for electronics, tea, and woolens."
       }
     ],
-    "aliases": [],
+    "aliases": [
+      "Mirik Lake"
+    ],
     "lat": 26.8881872,
     "lng": 88.1888396,
     "state": "West Bengal",
@@ -14949,7 +14984,9 @@ window.KYT_CITIES = [
         "notes": "Serene, uncrowded virgin beach right at the state border, offering banana boat rides, quad bikes, and peaceful sunset tides."
       }
     ],
-    "aliases": [],
+    "aliases": [
+      "Digha Beach"
+    ],
     "lat": 21.623077,
     "lng": 87.5082534,
     "state": "West Bengal",
@@ -15923,7 +15960,17 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Srisailam%20Dam%2C%20Andhra%20Pradesh"
       }
     ],
-    "code": "sr1"
+    "code": "sr1",
+    "notes": "Home to the Mallikarjuna Jyotirlinga and Bhramaramba Shakti Peeth, a sacred town on the banks of River Krishna.",
+    "icon": "landmark",
+    "dayOffset": 0,
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Srisailam%20Andhra%20Pradesh%20India",
+    "district": "Nandyal",
+    "aliases": [
+      "Sree Sailam",
+      "Mallikarjuna",
+      "Srisaila"
+    ]
   },
   {
     "id": "omkareshwar",
@@ -16007,7 +16054,16 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Narmada%20Ghat%2C%20Omkareshwar"
       }
     ],
-    "code": "omk"
+    "code": "omk",
+    "notes": "A sacred island on the Narmada river, shaped like the holy 'Om', housing one of the 12 revered Jyotirlingas.",
+    "icon": "landmark",
+    "dayOffset": 0,
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Omkareshwar%20Madhya%20Pradesh%20India",
+    "district": "Khandwa",
+    "aliases": [
+      "Mandhata",
+      "Shivpuri"
+    ]
   },
   {
     "id": "bhimashankar",
@@ -16090,7 +16146,15 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Gupt%20Bhimashankar%2C%20Maharashtra"
       }
     ],
-    "code": "bh1"
+    "code": "bh1",
+    "notes": "An ancient shrine in the Sahyadri mountains, famous for its Jyotirlinga and the lush Bhimashankar Wildlife Sanctuary.",
+    "icon": "mountain",
+    "dayOffset": 0,
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Bhimashankar%20Maharashtra%20India",
+    "district": "Pune",
+    "aliases": [
+      "Bhimashankara"
+    ]
   },
   {
     "id": "nashik",
@@ -16174,7 +16238,17 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sula%20Vineyards%2C%20Nashik"
       }
     ],
-    "code": "nas"
+    "code": "nas",
+    "notes": "An ancient holy city on the Godavari river, famous for the Kumbh Mela, Trimbakeshwar Jyotirlinga, and vineyards.",
+    "icon": "landmark",
+    "dayOffset": 0,
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Nashik%20Maharashtra%20India",
+    "district": "Nashik",
+    "aliases": [
+      "Nasik",
+      "Trimbak",
+      "Trimbakeshwar"
+    ]
   },
   {
     "id": "deoghar",
@@ -16258,7 +16332,16 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Tapovan%20Caves%2C%20Deoghar"
       }
     ],
-    "code": "deo"
+    "code": "deo",
+    "notes": "A major Hindu pilgrimage site renowned for the Baidyanath Jyotirlinga temple, attracting millions during Shravan.",
+    "icon": "landmark",
+    "dayOffset": 0,
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Deoghar%20Jharkhand%20India",
+    "district": "Deoghar",
+    "aliases": [
+      "Baidyanath Dham",
+      "Baba Dham"
+    ]
   },
   {
     "id": "tiruchirappalli",
@@ -16343,7 +16426,17 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Jambukeswarar%20Temple%2C%20Thiruvanaikaval%2C%20Tiruchirappalli"
       }
     ],
-    "code": "ti1"
+    "code": "ti1",
+    "notes": "An ancient city centered around the Rock Fort, and home to the massive Sri Ranganathaswamy Temple in Srirangam.",
+    "icon": "landmark",
+    "dayOffset": 0,
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Tiruchirappalli%20Tamil%20Nadu%20India",
+    "district": "Tiruchirappalli",
+    "aliases": [
+      "Trichy",
+      "Tiruchi",
+      "Srirangam"
+    ]
   },
   {
     "id": "thiruvananthapuram",
@@ -16426,7 +16519,16 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kovalam%20Beach%2C%20Kerala"
       }
     ],
-    "code": "thi"
+    "code": "thi",
+    "notes": "The capital of Kerala, distinguished by its British colonial architecture, art galleries, and the magnificent Padmanabhaswamy Temple.",
+    "icon": "landmark",
+    "dayOffset": 0,
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Thiruvananthapuram%20Kerala%20India",
+    "district": "Thiruvananthapuram",
+    "aliases": [
+      "Trivandrum",
+      "Ananthapuri"
+    ]
   },
   {
     "id": "guruvayur",
@@ -16505,7 +16607,16 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mammiyoor%20Temple%2C%20Guruvayur"
       }
     ],
-    "code": "gur"
+    "code": "gur",
+    "notes": "A bustling temple town in Kerala, home to the revered Guruvayur Sri Krishna Temple, often called the 'Dwarka of the South'.",
+    "icon": "landmark",
+    "dayOffset": 0,
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Guruvayur%20Kerala%20India",
+    "district": "Thrissur",
+    "aliases": [
+      "Guruvayoor",
+      "Gurupavanapuri"
+    ]
   },
   {
     "id": "pandharpur",
@@ -16588,7 +16699,16 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kaivalya%20Dham%2C%20Pandharpur"
       }
     ],
-    "code": "pan"
+    "code": "pan",
+    "notes": "A major pilgrimage city on the banks of the Chandrabhaga River, dedicated to Lord Vitthal and Rukmini.",
+    "icon": "landmark",
+    "dayOffset": 0,
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Pandharpur%20Maharashtra%20India",
+    "district": "Solapur",
+    "aliases": [
+      "Pandhari",
+      "Vitthal Dham"
+    ]
   },
   {
     "id": "nathdwara",
@@ -16671,7 +16791,16 @@ window.KYT_CITIES = [
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Haldighati%2C%20Rajasthan"
       }
     ],
-    "code": "nat"
+    "code": "nat",
+    "notes": "A picturesque town in the Aravalli hills, famous for its Shrinathji Temple, dedicated to Lord Krishna.",
+    "icon": "landmark",
+    "dayOffset": 0,
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Nathdwara%20Rajasthan%20India",
+    "district": "Rajsamand",
+    "aliases": [
+      "Shrinathji",
+      "Nathdwara Temple"
+    ]
   },
   {
     "id": "udupi",
@@ -16755,6 +16884,15 @@ window.KYT_CITIES = [
         "notes": "Known for its distinctive hexagonal basalt rock formations.",
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=St.%20Mary%27s%20Island%2C%20Malpe%2C%20Udupi"
       }
+    ],
+    "notes": "A coastal city renowned for its Hindu temples, particularly the 13th-century Sri Krishna Matha, and its unique local cuisine.",
+    "icon": "landmark",
+    "dayOffset": 0,
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Udupi%20Karnataka%20India",
+    "district": "Udupi",
+    "aliases": [
+      "Odipu",
+      "Udupi Krishna"
     ]
   },
   {
@@ -16932,6 +17070,10 @@ window.KYT_CITIES = [
     "lat": 15.3647,
     "lng": 75.124,
     "district": "Dharwad",
-    "state": "Karnataka"
+    "state": "Karnataka",
+    "aliases": [
+      "Hubballi",
+      "Dharwad"
+    ]
   }
 ];

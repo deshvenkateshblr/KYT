@@ -265,7 +265,7 @@ window.KYT.ui = (function () {
               </div>
               <div>
                 <h4 class="text-lg font-bold text-slate-800 group-hover:text-blue-600 transition-colors">${esc(city.name)}</h4>
-                <p class="text-xs text-slate-500 mt-1 line-clamp-3">${esc(city.notes || 'A beautiful destination to explore.')}</p>
+                <p class="text-xs text-slate-500 mt-1 line-clamp-3">${esc(city.notes || city.description || 'A beautiful destination to explore.')}</p>
               </div>
             </div>
             <div class="text-slate-300 group-hover:text-blue-500 group-hover:translate-x-0.5 transition-all shrink-0 p-1">
@@ -307,7 +307,7 @@ window.KYT.ui = (function () {
                   ${city.aliases && city.aliases.length ? `<span class="text-xs font-medium text-slate-400">(${esc(city.aliases.join(', '))})</span>` : ''}
                   <span class="text-[9px] font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full shrink-0">${beatCount} attraction${beatCount !== 1 ? 's' : ''}</span>
                 </div>
-                <p class="text-xs text-slate-500 leading-relaxed line-clamp-2">${esc(city.notes || 'Explore this destination')}</p>
+                <p class="text-xs text-slate-500 leading-relaxed line-clamp-2">${esc(city.notes || city.description || 'Explore this destination')}</p>
               </div>
               <div class="shrink-0 flex items-center gap-2">
                 ${city.lat && city.lng ? `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(city.name + ', India')}" target="_blank" rel="noopener noreferrer" class="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="View on Google Maps" onclick="event.stopPropagation()">
@@ -397,7 +397,7 @@ window.KYT.ui = (function () {
         <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3 cursor-pointer hover:border-blue-400 transition-all flex flex-col h-full" data-nearby-id="${esc(city.id)}">
           <h4 class="font-black text-slate-800 text-xs truncate">${esc(city.name)}</h4>
           ${dist != null ? `<p class="text-[10px] text-blue-600 font-semibold mb-1.5">${esc(dist)} km away</p>` : ''}
-          <p class="text-[10px] text-slate-500 leading-tight line-clamp-2 mb-2 flex-1">${esc(city.notes || 'Explore this nearby destination.')}</p>
+          <p class="text-[10px] text-slate-500 leading-tight line-clamp-2 mb-2 flex-1">${esc(city.notes || city.description || 'Explore this nearby destination.')}</p>
           <div class="mt-auto">
             ${btnHtml}
           </div>
@@ -751,7 +751,7 @@ window.KYT.ui = (function () {
         titleEl.dataset.cityId = city.id;
       }
       if (stateEl) stateEl.textContent = city.state || 'India';
-      if (descEl) descEl.textContent = city.notes || 'A beautiful destination to explore.';
+      if (descEl) descEl.textContent = city.notes || city.description || 'A beautiful destination to explore.';
 
       // YouTube Video Carousel
       const heroPlaceholder = document.getElementById('cd-hero-placeholder');

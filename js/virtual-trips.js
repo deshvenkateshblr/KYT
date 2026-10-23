@@ -736,7 +736,7 @@ KYT.virtualTrips = (function () {
     const available = window.KYT_CITIES.filter(c => {
       if (!query) return true;
       if (c.name.toLowerCase().includes(query)) return true;
-      if ((c.notes || '').toLowerCase().includes(query)) return true;
+      if ((c.notes || c.description || '').toLowerCase().includes(query)) return true;
       if (c.aliases && c.aliases.some(a => a.toLowerCase().includes(query))) return true;
       return false;
     });

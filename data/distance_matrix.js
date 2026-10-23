@@ -377,7 +377,8 @@ window.KYT_DISTANCE_MATRIX = {
     "gulmarg": 329,
     "pahalgam": 264,
     "sonamarg": 288,
-    "kargil": 186
+    "kargil": 186,
+    "spiti-valley": 180
   },
   "shimla": {
     "agra": 444,
@@ -414,7 +415,8 @@ window.KYT_DISTANCE_MATRIX = {
     "pahalgam": 369,
     "sonamarg": 397,
     "kargil": 307,
-    "lucknow": 599
+    "lucknow": 599,
+    "spiti-valley": 410
   },
   "darjeeling": {
     "varanasi": 557,
@@ -721,7 +723,8 @@ window.KYT_DISTANCE_MATRIX = {
     "gulmarg": 301,
     "pahalgam": 215,
     "sonamarg": 220,
-    "kargil": 112
+    "kargil": 112,
+    "spiti-valley": 450
   },
   "amritsar": {
     "agra": 581,
@@ -4250,8 +4253,8 @@ window.KYT_DISTANCE_MATRIX = {
     "nashik": 307,
     "pandharpur": 501,
     "nathdwara": 355
-  }
-, "hubli": {
+  },
+  "hubli": {
     "badami": 105,
     "pattadakal": 128,
     "gokarna": 142,
@@ -4260,6 +4263,13 @@ window.KYT_DISTANCE_MATRIX = {
     "udupi": 295,
     "bengaluru": 412,
     "pune": 430
+  },
+  "spiti-valley": {
+    "manali": 180,
+    "shimla": 410,
+    "leh": 450,
+    "dharamshala": 415,
+    "chandigarh": 460,
+    "delhi": 730
   }
 };
-
