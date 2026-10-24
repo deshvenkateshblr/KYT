@@ -296,9 +296,9 @@ test('passport cards open the city detail sheet; stamping from the sheet updates
   // the card's own Mark Visited button stamps and does NOT open the sheet
   await page.locator('[data-city-id="jaipur"]').scrollIntoViewIfNeeded();
   await page.locator('[data-city-id="jaipur"] button', { hasText: 'Mark Visited' }).click();
+  await page.waitForFunction(() => !!JSON.parse(localStorage.getItem('kyt_passport') || '{}').jaipur);
   await page.waitForTimeout(250);
   assert.equal(await overlay.isHidden(), true, 'button clicks keep their own behaviour');
-  assert.equal(await page.evaluate(() => !!JSON.parse(localStorage.getItem('kyt_passport')).jaipur), true);
 
   // tapping the card body opens the sheet for that city, with the stamp state reflected
   await page.locator('[data-city-id="jaipur"] h3').click();
@@ -310,8 +310,8 @@ test('passport cards open the city detail sheet; stamping from the sheet updates
 
   // undo from inside the sheet, and the card behind it follows
   await page.click('#cd-btn-add-main');
+  await page.waitForFunction(() => !JSON.parse(localStorage.getItem('kyt_passport') || '{}').jaipur);
   assert.match(await page.textContent('#cd-btn-add-main'), /Mark Visited/);
-  assert.equal(await page.evaluate(() => !JSON.parse(localStorage.getItem('kyt_passport') || '{}').jaipur), true);
 
   // nearby city opens inside the sheet and Back appears; Escape closes
   await page.locator('#cd-nearby-list [data-nearby-id]').first().click();
@@ -329,4 +329,18 @@ test('passport page deep link ?city=<id> opens that city sheet', async () => {
   await page.waitForSelector('#city-detail-overlay:not(.hidden)');
   assert.equal(await page.textContent('#cd-title'), 'Udaipur');
   await context.close();
+});
+
+test('every inline <script> in every page parses (an HTML auto-formatter once broke string literals in index.html)', () => {
+  const vm = require('node:vm'), fsx = require('node:fs'), pth = require('node:path');
+  const root = pth.resolve(__dirname, '..', '..');
+  const pages = fsx.readdirSync(root).filter(f => f.endsWith('.html'));
+  assert.ok(pages.length >= 7);
+  for (const f of pages) {
+    const html = fsx.readFileSync(pth.join(root, f), 'utf8');
+    for (const m of html.matchAll(/<script(?![^>]*\bsrc=)([^>]*)>([\s\S]*?)<\/script>/g)) {
+      if (!m[2].trim() || /type="(?!text\/javascript)/.test(m[1])) continue;
+      assert.doesNotThrow(() => new vm.Script(m[2], { filename: f }), `inline script in ${f} has a syntax error`);
+    }
+  }
 });
