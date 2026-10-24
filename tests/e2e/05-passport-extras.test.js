@@ -270,6 +270,17 @@ test('strength panel: always open beside the title on desktop; tablet remembers 
   await context.close();
 });
 
+test('data: every city carries valid vibes (1-3 of spiritual/heritage/nature/adventure/foodie), effort (easy/trek) and setting', () => {
+  const fsx = require('node:fs'), vm = require('node:vm');
+  const win = {}; new vm.Script(fsx.readFileSync(require('node:path').resolve(__dirname, '..', '..', 'data', 'cities.js'), 'utf8')).runInNewContext({ window: win });
+  const V = new Set(['spiritual', 'heritage', 'nature', 'adventure', 'foodie']), bad = [];
+  for (const c of win.KYT_CITIES) {
+    const okV = Array.isArray(c.vibes) && c.vibes.length >= 1 && c.vibes.length <= 3 && c.vibes.every(v => V.has(v)) && new Set(c.vibes).size === c.vibes.length;
+    if (!okV || !['easy', 'trek'].includes(c.effort) || !['coast', 'hills', 'plains'].includes(c.setting)) bad.push(c.id);
+  }
+  assert.deepEqual(bad, [], 'cities need "vibes": [1-3 of spiritual|heritage|nature|adventure|foodie], "effort": "easy"|"trek", "setting": "coast"|"hills"|"plains" in data/cities.js');
+});
+
 test('setting: every city carries a valid setting in data/cities.js, and known cities classify correctly (Kutch is not hills)', async () => {
   const { context, page } = await newPhone(env.browser);
   await page.goto(env.base + '/visited.html');

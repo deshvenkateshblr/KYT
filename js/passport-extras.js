@@ -27,7 +27,7 @@ window.PassportExtras = (function () {
 
   // Filter groups. Each option: key -> label; a city's `attrs` lists the keys it has.
   const GROUPS = [
-    { id: 'vibe', label: 'Vibe', options: { spiritual: 'Spiritual', heritage: 'Heritage & culture', adventure: 'Adventure', foodie: 'Foodie' } },
+    { id: 'vibe', label: 'Vibe', options: { spiritual: 'Spiritual', heritage: 'Heritage & culture', nature: 'Nature & beaches', adventure: 'Adventure', foodie: 'Foodie' } },
     { id: 'setting', label: 'Setting', options: { coast: 'Coast & backwaters', hills: 'Hills & forest' } },
     { id: 'effort', label: 'Effort', options: { easy: 'Easy going', trek: 'Has a trek' } },
     { id: 'food', label: 'Food', options: { veg: 'Veg / satvik', jain: 'Jain-friendly' } },
@@ -43,17 +43,11 @@ window.PassportExtras = (function () {
     if (cache.has(city.id)) return cache.get(city.id);
     city = src(city);
     const beats = city.beats || [];
-    const n = beats.length || 1;
-    const strong = k => { const c = beats.filter(b => (b.intent || []).includes(k)).length; return c >= 2 || c / n >= 0.4; };
     const has = (k, f) => beats.some(b => [].concat(b[f] || []).includes(k));
-    const a = { vibe: [], setting: [], effort: [], food: [], region: [] };
-    if (strong('spiritual')) a.vibe.push('spiritual');
-    if (strong('cultural')) a.vibe.push('heritage');
-    if (strong('adventure')) a.vibe.push('adventure');
-    if (has('culinary', 'intent') || beats.some(b => b.icon === 'utensils')) a.vibe.push('foodie');
+    // vibe, setting and effort are data: each city in data/cities.js carries "vibes", "setting" and "effort". Food comes from the diet tags on its attractions.
+    const a = { vibe: [].concat(city.vibes || []), setting: [], effort: [city.effort === 'trek' ? 'trek' : 'easy'], food: [], region: [] };
     if (city.setting === 'coast') a.setting.push('coast');
     if (city.setting === 'hills') a.setting.push('hills');
-    if (has('trek', 'mobility') || has('stairs', 'mobility')) a.effort.push('trek'); else a.effort.push('easy');
     if (has('veg', 'diet') || has('satvik', 'diet')) a.food.push('veg');
     if (has('jain', 'diet')) a.food.push('jain');
     if (REGION_OF[city.state]) a.region.push(REGION_OF[city.state]);
@@ -209,7 +203,7 @@ window.PassportExtras = (function () {
    * out of the values that exist in the catalog, and `missing` names what would fill the next segment.
    */
   function meters(all, visited) {
-    const VIBES = { spiritual: 'Spiritual', heritage: 'Heritage', adventure: 'Adventure', foodie: 'Foodie' };
+    const VIBES = { spiritual: 'Spiritual', heritage: 'Heritage', nature: 'Nature', adventure: 'Adventure', foodie: 'Foodie' };
     const dims = [
       { id: 'states', label: 'States & UTs', pick: c => [stateOf(c)] },
       { id: 'regions', label: 'Regions', pick: c => attrs(c).region, order: REGIONS },
@@ -363,14 +357,14 @@ window.PassportExtras = (function () {
 
   /** Dark-panel chips for a meter's named values; lit when stamped. Returns the y below the last row. */
   function drawChips(ctx, items, x, y, maxW, F) {
-    const h = 30, gx = 6, gy = 8; ctx.font = F(700, 18); ctx.textAlign = 'left';
+    const h = 28, gx = 6, gy = 6; ctx.font = F(700, 18); ctx.textAlign = 'left';
     let cx = x, cy = y;
     items.forEach(it => {
       const w = ctx.measureText(it.name).width + 22;
       if (cx > x && cx + w > x + maxW) { cx = x; cy += h + gy; }
       if (it.on) { ctx.fillStyle = '#fbbf24'; rr(ctx, cx, cy, w, h, 15); ctx.fill(); ctx.fillStyle = NAVY; }
       else { ctx.strokeStyle = 'rgba(255,255,255,.28)'; ctx.lineWidth = 2; rr(ctx, cx + 1, cy + 1, w - 2, h - 2, 14); ctx.stroke(); ctx.fillStyle = 'rgba(199,210,254,.6)'; }
-      ctx.fillText(it.name, cx + 11, cy + 21); cx += w + gx;
+      ctx.fillText(it.name, cx + 11, cy + 20); cx += w + gx;
     });
     return cy + h;
   }
@@ -423,11 +417,11 @@ window.PassportExtras = (function () {
     M.forEach(m => {
       ctx.textAlign = 'left'; ctx.fillStyle = '#fff'; ctx.font = F(700, 22); ctx.fillText(m.label, tx, y + 18);
       ctx.textAlign = 'right'; ctx.fillStyle = '#c7d2fe'; ctx.fillText(`${m.got}/${m.of}`, tx + tw, y + 18);
-      if (m.items) y = drawChips(ctx, m.items, tx, y + 28, tw, F) + 16;
+      if (m.items) y = drawChips(ctx, m.items, tx, y + 28, tw, F) + 12;
       else {
         const n = 10, lit = Math.round(m.got / m.of * n), gap = 6, sw = (tw - gap * (n - 1)) / n;
         for (let k = 0; k < n; k++) { ctx.fillStyle = k < lit ? '#fbbf24' : 'rgba(255,255,255,.16)'; rr(ctx, tx + k * (sw + gap), y + 30, sw, 11, 5); ctx.fill(); }
-        y += 58;
+        y += 54;
       }
     });
 
