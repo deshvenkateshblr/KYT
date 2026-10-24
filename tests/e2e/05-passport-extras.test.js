@@ -355,3 +355,17 @@ test('every inline <script> in every page parses (an HTML auto-formatter once br
     }
   }
 });
+
+test('page scripts live in js/page-*.js, are referenced by a page, parse, and are in the service-worker shell (offline)', () => {
+  const fsx = require('node:fs'), pth = require('node:path'), vm = require('node:vm');
+  const root = pth.resolve(__dirname, '..', '..');
+  const files = fsx.readdirSync(pth.join(root, 'js')).filter(f => /^page-.*\.js$/.test(f));
+  assert.ok(files.length >= 4);
+  const htmls = fsx.readdirSync(root).filter(f => f.endsWith('.html')).map(f => fsx.readFileSync(pth.join(root, f), 'utf8')).join('\n');
+  const sw = fsx.readFileSync(pth.join(root, 'sw.js'), 'utf8');
+  for (const f of files) {
+    assert.doesNotThrow(() => new vm.Script(fsx.readFileSync(pth.join(root, 'js', f), 'utf8'), { filename: f }), `${f} has a syntax error`);
+    assert.ok(htmls.includes(`./js/${f}`), `${f} is not referenced by any page`);
+    assert.ok(sw.includes(`./js/${f}`), `${f} is missing from the service worker's APP_SHELL, so the page would break offline`);
+  }
+});
